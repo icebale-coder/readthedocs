@@ -24,7 +24,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/reactive7deer
+      link: https://github.com/reactive7deer/manuals
     - icon: fontawesome/brands/vk
       link: https://vk.com/reactive_deer
     - icon: fontawesome/brands/telegram
