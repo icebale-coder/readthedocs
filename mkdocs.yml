@@ -2,24 +2,30 @@ site_name: Reactive Deer's networking
 site_description: Some self-written manuals
 site_author: Reactive Deer
 nav:
-    - Home: index.md
-    - About: about.md
+    - Cisco: cisco.md
+    - Huawei: huawei.md
+    - Unix: unix.md
+    - Windows: win.md
     
-theme: material
-  name: material
-  language: en
-  palette:
-    primary: teal
-    accent: teal
-  font:
+theme:
+    name: material
+    language: en
+    palette:
+        primary: teal
+        accent: teal
+    font:
     text: Roboto
     code: Roboto Mono
-  features:
+    features:
     - tabs
+#    favicon: images/favicon.png
+#    logo: img/icon.png
 
 extra:
   social:
-    - icon: fontawesome/brands/github-alt
+    - icon: fontawesome/brands/github
       link: https://github.com/reactive7deer
     - icon: fontawesome/brands/vk
       link: https://vk.com/reactive_deer
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/reactive_deer
