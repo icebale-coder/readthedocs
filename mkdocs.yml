@@ -5,21 +5,21 @@ nav:
     - Cisco: cisco.md
     - Huawei: huawei.md
     - Unix: unix.md
-    - Windows: win.md
+    - Windows: windows.md
     
 theme:
     name: material
     language: en
     palette:
-        primary: teal
+        primary: black
         accent: teal
     font:
     text: Roboto
     code: Roboto Mono
     features:
     - tabs
-#    favicon: images/favicon.png
-#    logo: img/icon.png
+    favicon: img/icon.png
+    logo: img/icon.png
 
 extra:
   social:
