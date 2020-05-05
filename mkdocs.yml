@@ -14,7 +14,7 @@ theme:
         primary: black
         accent: amber
     font:
-    text: Julius Sans One
+    text: Roboto
     code: Roboto Mono
     features:
     - tabs
