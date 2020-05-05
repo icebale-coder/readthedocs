@@ -61,3 +61,6 @@ source_suffix = {
 }
 
 source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
+
+master_doc = 'index.md'
+master_doc = 'index.md'
