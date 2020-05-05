@@ -12,9 +12,9 @@ theme:
     language: en
     palette:
         primary: black
-        accent: teal
+        accent: amber
     font:
-    text: Roboto
+    text: Julius Sans One
     code: Roboto Mono
     features:
     - tabs
