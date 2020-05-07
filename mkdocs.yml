@@ -2,7 +2,7 @@ site_name: Reactive Deer's networking
 site_description: Some self-written manuals
 site_author: Reactive Deer
 nav:
-    - Cisco: cisco.md
+    - Cisco: index.md
     - Huawei: huawei.md
     - Unix: unix.md
     - Windows: windows.md
