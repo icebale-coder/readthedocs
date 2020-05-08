@@ -1,3 +1,6 @@
 mkdocs==1.1
 mkdocs-material==5.1.5
 mkdocs-material-extensions==1.0b2
+mkdocs-git-revision-date-localized-plugin
+mkdocs-awesome-pages-plugin
+mkdocs-minify-plugin

@@ -37,3 +37,7 @@ theme:
 
 plugins:
   - search
+  - minify:
+      minify_html: true
+  - git-revision-date-localized
+  - awesome-pages
