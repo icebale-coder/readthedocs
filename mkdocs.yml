@@ -1,6 +1,19 @@
 site_name: Reactive Deer's networking
-site_description: Some self-written manuals
-site_author: Reactive Deer
+site_description: Everything I know is here (almost)
+site_author: Dmitriy Salatkin
+repo_name: reactive7deer/knowledge_database
+repo_url: https://github.com/reactive7deer/knowledge_database
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/reactive7deer
+    - icon: fontawesome/brands/vk
+      link: https://vk.com/reactive_deer
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/reactive_deer
+
+
 nav:
     - Cisco: index.md
     - Huawei: huawei.md
@@ -22,11 +35,5 @@ theme:
     favicon: img/icon.png
     logo: img/icon.png
 
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/reactive7deer/manuals
-    - icon: fontawesome/brands/vk
-      link: https://vk.com/reactive_deer
-    - icon: fontawesome/brands/telegram
-      link: https://t.me/reactive_deer
+plugins:
+  - search
