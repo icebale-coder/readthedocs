@@ -1,3 +1,4 @@
+title: Home
 # Hello there!
 === "Fruit List"
     - :apple: Apple

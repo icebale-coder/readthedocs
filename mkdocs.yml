@@ -5,6 +5,9 @@ repo_name: reactive7deer/knowledge_database
 repo_url: https://github.com/reactive7deer/knowledge_database
 
 markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
   - pymdownx.arithmatex
   - pymdownx.betterem:
       smart_enable: all
@@ -51,5 +54,6 @@ plugins:
   - search
   - minify:
       minify_html: true
-  - git-revision-date-localized
+  - git-revision-date-localized:
+      type: timeago
   - awesome-pages
