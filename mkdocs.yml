@@ -1,8 +1,15 @@
+# Main config
+
+# Basic info
 site_name: Reactive Deer's networking
 site_description: Everything I know is here (almost)
 site_author: Dmitriy Salatkin
 repo_name: reactive7deer/knowledge_database
 repo_url: https://github.com/reactive7deer/knowledge_database
+
+# Navigation
+nav:
+  - Home: "index.md"
 
 markdown_extensions:
   - admonition
@@ -56,4 +63,3 @@ plugins:
       minify_html: true
   - git-revision-date-localized:
       type: timeago
-  - awesome-pages
