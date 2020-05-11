@@ -10,6 +10,20 @@ repo_url: https://github.com/reactive7deer/knowledge_database
 # Navigation
 nav:
   - Home: "index.md"
+  - Networking:
+    - Introduction: "networking/introduction.md"
+    - Technologies:
+      - Device configuration: "networking/tech/device.md"
+      - AAA: "networking/tech/aaa.md"
+    - Cheat sheets: "networking/cheat_sheet.md"
+  - Unix:
+    - Services:
+      - Basic: "unix/services/basic.md"
+    - Cheat sheets: "unix/cheat_sheet.md"
+  - Windows: "windows/win.md"
+  - References: "references/references.md"
+  - About: "about.md"
+
 
 markdown_extensions:
   - admonition
