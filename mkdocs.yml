@@ -28,9 +28,9 @@ nav:
 
 # Extensions to MD
 markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite
+  - markdown.extensions.footnotes
   - pymdownx.arithmatex
   - pymdownx.betterem:
       smart_enable: all
