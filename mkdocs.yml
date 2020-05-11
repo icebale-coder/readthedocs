@@ -10,6 +10,7 @@ repo_url: https://github.com/reactive7deer/knowledge_database
 # Navigation
 nav:
   - Home: "index.md"
+  - About: "about.md"
   - Networking:
     - Introduction: "networking/introduction.md"
     - Technologies:
@@ -20,11 +21,12 @@ nav:
     - Services:
       - Basic: "unix/services/basic.md"
     - Cheat sheets: "unix/cheat_sheet.md"
-  - Windows: "windows/win.md"
-  - References: "references/references.md"
-  - About: "about.md"
+  - Windows:
+    - Basic: "windows/win.md"
+  - References:
+    - Mathematical: "references/references.md"
 
-
+# Extensions to MD
 markdown_extensions:
   - admonition
   - codehilite
@@ -48,6 +50,7 @@ markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.tilde
 
+# Social network links
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -57,6 +60,7 @@ extra:
     - icon: fontawesome/brands/telegram
       link: https://t.me/reactive_deer
 
+# MKDocs theme params
 theme:
     name: material
     language: en
@@ -64,16 +68,21 @@ theme:
         primary: black
         accent: amber
     font:
-    text: Roboto
-    code: Roboto Mono
+      text: "Ubuntu"
+      code: "Ubuntu Mono"
     features:
-    - tabs
+      - tabs
+      - instant
     favicon: img/icon.png
     logo: img/icon.png
 
+# Used plugins
 plugins:
   - search
   - minify:
       minify_html: true
   - git-revision-date-localized:
       type: timeago
+
+# Copyright
+copyright: "No copyright &copy; @2020"
