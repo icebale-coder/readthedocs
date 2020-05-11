@@ -29,26 +29,36 @@ nav:
 # Extensions to MD
 markdown_extensions:
   - markdown.extensions.admonition
-  - markdown.extensions.codehilite
+  - markdown.extensions.sane_lists
   - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.def_list
+  - markdown.extensions.abbr
+  - markdown.extensions.tables
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.toc:
+      permalink: True
+      separator: "_"
+  - pymdownx.extra
   - pymdownx.arithmatex
-  - pymdownx.betterem:
-      smart_enable: all
   - pymdownx.caret
   - pymdownx.critic
   - pymdownx.details
-  - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
+  - pymdownx.keys
   - pymdownx.smartsymbols
   - pymdownx.superfences
+  - pymdownx.tilde
+  - pyembed.markdown
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.tasklist:
       custom_checkbox: true
-  - pymdownx.tabbed
-  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
 
 # Social network links
 extra:
