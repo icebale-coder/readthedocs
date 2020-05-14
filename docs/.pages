@@ -1,6 +1,9 @@
 arrange:
+    - index.md
+    - about.md
     - networking
     - linux
     - windows
     - standards
     - references
+    

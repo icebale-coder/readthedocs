@@ -53,7 +53,7 @@ extra:
 # MKDocs theme params
 theme:
     name: material
-    language: en
+    language: ru
     palette:
         primary: black
         accent: amber
@@ -75,6 +75,7 @@ plugins:
       type: timeago
   - awesome-pages:
       collapse_single_pages: true
+      strict: false
 
 
 # Copyright
