@@ -17,12 +17,17 @@ nav:
       - Device configuration: "networking/tech/device.md"
       - AAA: "networking/tech/aaa.md"
     - Cheat sheets: "networking/cheat_sheet.md"
-  - Unix:
-    - Services:
-      - Basic: "unix/services/basic.md"
-    - Cheat sheets: "unix/cheat_sheet.md"
+  - Linux: "linux"
+    - Services: "services"
+      - Basic: "basic.md"
+    - Manuals: "manuals"
+      - tac_plus: "tac_plus.md"
+      - tac_plus.conf: "tac_plus.conf.md"
+    - Cheat sheets: "cheat_sheet.md"
   - Windows:
     - Basic: "windows/win.md"
+  - Standards:
+    - RFC 1149 IPv
   - References:
     - Mathematical: "references/references.md"
 
