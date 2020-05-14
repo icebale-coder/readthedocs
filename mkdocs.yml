@@ -7,30 +7,6 @@ site_author: Dmitriy Salatkin
 repo_name: reactive7deer/knowledge_database
 repo_url: https://github.com/reactive7deer/knowledge_database
 
-# Navigation
-nav:
-  - Home: "index.md"
-  - About: "about.md"
-  - Networking:
-    - Introduction: "networking/introduction.md"
-    - Technologies:
-      - Device configuration: "networking/tech/device.md"
-      - AAA: "networking/tech/aaa.md"
-    - Cheat sheets: "networking/cheat_sheet.md"
-  - Linux:
-    - Services:
-      - Basic: "linux/services/basic.md"
-    - Manuals:
-      - tac_plus: "linux/manuals/tac_plus.md"
-      - tac_plus.conf: "linux/manuals/tac_plus.conf.md"
-    - Cheat sheets: "linux/cheat_sheet.md"
-  - Windows:
-    - Basic: "windows/win.md"
-  - Standards:
-    - RFC 1149: "standartds/rfc1149.md"
-  - References:
-    - Mathematical: "references/references.md"
-
 # Extensions to MD
 markdown_extensions:
   - markdown.extensions.admonition
@@ -97,7 +73,9 @@ plugins:
       minify_html: true
   - git-revision-date-localized:
       type: timeago
-  - awesome-pages
+  - awesome-pages:
+      collapse_single_pages: true
+
 
 # Copyright
 copyright: "No copyright ahaha &copy; 2020"
