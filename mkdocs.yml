@@ -65,6 +65,8 @@ theme:
       - instant
     favicon: img/icon.png
     logo: img/icon.png
+#extra_css:
+#  - stylesheets/extra.css
 
 # Used plugins
 plugins:

@@ -1,5 +1,6 @@
 title: Linux
 arrange:
+    - index.md
     - services
     - man
     - cheat_sheet.md
