@@ -17,6 +17,8 @@ rsyslogd, как и его предшественник syslogd собирают
 
 ### rsyslog.conf
 
+== Modules
+
 **Секция ## MODULES ##** rsyslog.conf позволяет включать/отключать особые фичи в rsyslog. Пример такой секции в Debian 10:
 
 ```bash
@@ -38,6 +40,8 @@ module(load="imklog")   # provides kernel logging support
 ```
 
 Записи $ModLoad определяют загружаемые модули. Отключаются модули путём комментирования этой записи (# в начале).
+
+== Rules
 
 **Секция ## RULES ##** перечисляет правила по которым rsyslog будет собирать логи.
 
@@ -137,11 +141,13 @@ udp    0   0 :::514          :::*                         1264/rsyslogd
 
 ### Дополнительно
 
-logrotate logwatch
-
 ##### man
 
 rsyslogd rsyslog.conf
+
+##### Связанные материалы
+
+logrotate logwatch
 
 ##### Литература
 
