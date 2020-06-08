@@ -1,196 +1,710 @@
-# tac_plus
+# rsyslog.conf
 
 ```
-tac_plus(8)                                  System Manager's Manual                                  tac_plus(8)
+RSYSLOG.CONF(5)               Linux System Administration               RSYSLOG.CONF(5)
 
 NAME
-       tac_plus - tacacs plus daemon
-
-SYNOPSIS
-       tac_plus -C <configfile> [-GghiLPSstv] [-B <bind_address>] [-d <level>] [-l <logfile>] [-p <tcp_port>] [-u
-       <wtmpfile>] [-w <wholog>]
+       rsyslog.conf - rsyslogd(8) configuration file
 
 DESCRIPTION
-       By default, tac_plus listens on tcp port 49 and provides network  devices  (normally  routers  and  access
-       servers) with authentication, authorization and accounting services.
+       The  rsyslog.conf  file is the main configuration file for the rsyslogd(8) which
+       logs system messages on *nix systems.  This file specifies  rules  for  logging.
+       For  special features see the rsyslogd(8) manpage. Rsyslog.conf is backward-com‐
+       patible with sysklogd's syslog.conf file. So if you migrate  from  sysklogd  you
+       can rename it and it should work.
 
-       A configuration file controls the details of authentication, authorization and accounting.
+       Note  that  this  version  of rsyslog ships with extensive documentation in HTML
+       format.  This is provided in the ./doc subdirectory and probably in  a  separate
+       package  if  you installed rsyslog via a packaging system.  To use rsyslog's ad‐
+       vanced features, you need to look at the HTML  documentation,  because  the  man
+       pages only cover basic aspects of operation.
 
-COMMAND-LINE OPTIONS
-       -C <configfile>
+MODULES
+       Rsyslog  has  a  modular design. Consequently, there is a growing number of mod‐
+       ules. See the HTML documentation for their full description.
 
-              Specify the configuration file name.  The -C option is required.
+       omsnmp SNMP trap output module
 
-       -B <bind address>
+       omgssapi
+              Output module for GSS-enabled syslog
 
-              Specify  the  address  on  which  the  daemon  should bind(2).  Successive instances of -B override
-              previous instances.  By default, the daemon listens on all addresses.  Note: this changes the  name
-              of the pid file created by the daemon.
+       ommysql
+              Output module for MySQL
 
-       -G     Remain in the foreground, but not single-threaded nor logging to the tty.
+       omrelp Output module for the reliable RELP  protocol  (prevents  message  loss).
+              For  details,  see below at imrelp and the HTML documentation.  It can be
+              used like this:
 
-       -d <level>
-              Switch on debugging.  By default the output will appear in the log file and syslog(3).
+              *.*  :omrelp:server:port
 
-              NOTE: The -g flag will cause these messages to also appear on stdout.  The -t flag will cause these
-              messages to also be written to /dev/console.
+              *.*  :omrelp:192.168.0.1:2514 # actual sample
 
-              The value of level is as described below.  These values represent bits that can be  logically  OR'd
-              together.  The daemon logically ORs successive occurrences of the -d option.
+       ompgsql
+              Output module for PostgreSQL
 
-              Value   Meaning
-              2       configuration parsing debugging
-              4       fork(1) debugging
-              8       authorization debugging
-              16      authentication debugging
-              32      password file processing debugging
-              64      accounting debugging
-              128     config file parsing & lookup
-              256     packet transmission/reception
-              512     encryption/decryption
-              1024    MD5 hash algorithm debugging
-              2048    very low level encryption/decryption
-              32768   max session debugging
-              65536   lock debugging
+       omlibdbi
+              Generic database  output  module  (Firebird/Interbase,  MS  SQL,  Sybase,
+              SQLite, Ingres, Oracle, mSQL)
 
-       -g     Single  threaded  mode.   The  daemon  will  only  accept and service a single connection at a time
-              without forking and without closing file descriptors.  All log messages appear on standard output.
+       imfile Input module for text files
 
-              This is intended only for debugging and not for normal service.
+       imudp  Input  plugin  for  UDP syslog. Replaces the deprecated -r option. Can be
+              used like this:
 
-              This option does not work with single-connection sessions.
+              $ModLoad imudp
 
-       -h     Display help message.
+              $UDPServerRun 514
 
-       -i     tac_plus will be run from inetd(8).  In inetd mode, the configuration file  is  parsed  every  time
-              tac_plus starts.
+       imtcp  Input plugin for plain TCP syslog. Replaces the deprecated -t option. Can
+              be used like this:
 
-              If  the configuration is large or the frequency of connections is high, this negatively will affect
-              the responsiveness of the daemon.
+              $ModLoad imtcp
 
-              If the config file is small, connections are infrequent,  and  authentication  is  being  done  via
-              passwd(5)  files  or  SKEY  (which  are not cached), running in inetd mode should be tolerable, but
-              still is not recommended.
+              $InputTCPServerRun 514
 
-              This option does not work with single-connection sessions.
+       imrelp Input  plugin  for  the RELP protocol. RELP can be used instead of UDP or
+              plain TCP syslog to provide reliable delivery of syslog messages.  Please
+              note that plain TCP syslog does NOT provide truly reliable delivery, with
+              it messages may be lost when there is a connection problem or the  server
+              shuts  down.   RELP prevents message loss in those cases.  It can be used
+              like this:
 
-       -l <logfile>
-              Specify an alternate log file location.  This file is only used when the -d option  is  used.   The
-              logs are still posted to syslog.
+              $ModLoad imrelp
 
-       -L     Lookup  DNS PTR (Domain Name System PoinTeR) record of client addresses.  The resulting FQDN (Fully
-              Qualified Domain Name), if it resolves, will  be  used  in  log  messages,  libwrap  (tcp_wrappers)
-              checks, and for matching host clauses of the configuration file.  Also see tac_plus.conf(5).
+              $InputRELPServerRun 2514
 
-       -P     Parse  the  configuration  file, echo it to standard output while parsing, and then exit.  tac_plus
-              will exit non-zero when a parser error occurs.
+       imgssapi
+              Input plugin for plain TCP and GSS-enable syslog
 
-              Useful for debugging configuration file syntax.
+       immark Support for mark messages
 
-       -p <port>
-              Listen on the specified port number instead of the default port 49 for  incoming  tcp  connections.
-              Note: this changes the name of the pid file created by the daemon.
+       imklog Kernel logging. To include kernel log messages, you need to do
 
-       -S     Enables or allows client single-connection mode, where-by the client will create one connection and
-              interleave queries.
+              $ModLoad imklog
 
-              Note: this is broken in IOS and IOS-XE.
+              Please note that the klogd daemon is no longer necessary and consequently
+              no longer provided by the rsyslog package.
 
-              Note: this is currently only partially supported in the daemon.
+       imuxsock
+              Unix sockets, including the system log socket. You need to specify
 
-       -s     Causes the daemon to always reject authentication requests which contain a minor version number  of
-              zero  (SENDPASS).   This enhances security in the event that someone discovers your encryption key.
-              SENDPASS requests permit requesters to obtain CHAP, PAP and ARAP passwords from the daemon, iff the
-              encryption key is known.
+              $ModLoad imuxsock
 
-              Note: IOS versions preceding 11.2 will fail.
+              in order to receive log messages from local system processes. This config
+              directive should only left out if you know exactly what you are doing.
 
-       -t     Log  all  informational,  debugging  or  error  messages  to /dev/console in addition to logging to
-              syslogd. Useful for debugging.
+BASIC STRUCTURE
+       Lines starting with a hash mark ('#') and empty lines are ignored.  Rsyslog.conf
+       should contain following sections (sorted by recommended order in file):
 
-       -u <wtmpfile>
-              Write wtmp entries to the specified wtmp file.
+       Global directives
+              Global directives set some global properties of whole rsyslog daemon, for
+              example size of main message queue ($MainMessageQueueSize),  loading  ex‐
+              ternal  modules  ($ModLoad)  and so on.  All global directives need to be
+              specified on a line by their own and must start with a  dollar-sign.  The
+              complete  list of global directives can be found in HTML documentation in
+              doc directory or online on web pages.
 
-       -v     Display version information and exit.
+       Templates
+              Templates allow you to specify format of the  logged  message.  They  are
+              also  used  for dynamic file name generation. They have to be defined be‐
+              fore they are used in rules. For more info about templates see  TEMPLATES
+              section of this manpage.
 
-       -w <wholog>
-              Specify the location of the max session file.
+       Output channels
+              Output  channels provide an umbrella for any type of output that the user
+              might want.  They have to be defined before they are used in  rules.  For
+              more  info about output channels see OUTPUT CHANNELS section of this man‐
+              page.
 
-STARTING
-       tac_plus is normally invoked by root, as follows:
+       Rules (selector + action)
+              Every rule line consists of two fields, a selector field  and  an  action
+              field.  These two fields are separated by one or more spaces or tabs. The
+              selector field specifies a pattern of facilities and priorities belonging
+              to the specified action.
 
-           # tac_plus -C <configfile>
+SELECTORS
+       The  selector  field itself again consists of two parts, a facility and a prior‐
+       ity, separated by a period ('.'). Both parts are case insensitive and  can  also
+       be  specified as decimal numbers, but don't do that, you have been warned.  Both
+       facilities and priorities are described in syslog(3). The names mentioned  below
+       correspond to the similar LOG_-values in /usr/include/syslog.h.
 
-       where <configfile> is a full path to the configuration file.  Tac_plus will background  itself  and  start
-       listening on port 49 for incoming tcp connections.
+       The  facility  is  one  of the following keywords: auth, authpriv, cron, daemon,
+       kern, lpr, mail, mark, news, security (same as auth), syslog, user, uucp and lo‐
+       cal0 through local7. The keyword security should not be used anymore and mark is
+       only for internal use and therefore should not be used in applications.  Anyway,
+       you may want to specify and redirect these messages here. The facility specifies
+       the subsystem that produced the message, i.e. all mail  programs  log  with  the
+       mail facility (LOG_MAIL) if they log using syslog.
 
-       Tac_plus  must  be  invoked  as  root  to  obtain  privileged  network socket 49 and to read the protected
-       configuration file, which may contain confidential information  such  as  encryption  keys  and  cleartext
-       passwords.
+       The  priority is one of the following keywords, in ascending order: debug, info,
+       notice, warning, warn (same as warning), err, error (same as err), crit,  alert,
+       emerg,  panic (same as emerg). The keywords error, warn and panic are deprecated
+       and should not be used anymore. The priority defines the severity  of  the  mes‐
+       sage.
 
-       After  the  port is acquired and the config file is read, root privileges are no longer required.  You can
-       arrange that tac_plus will change its user and group IDs to a  more  innocuous  user  and  group  via  the
-       configuration file.
+       The  behavior  of the original BSD syslogd is that all messages of the specified
+       priority and higher are logged according to the given action.  Rsyslogd  behaves
+       the same, but has some extensions.
 
-       NOTE:  The new user and group still needs permission to read any passwd(5) (and shadow(5)) files and S/KEY
-       database if these are being used.
+       In addition to the above mentioned names the rsyslogd(8) understands the follow‐
+       ing extensions: An asterisk ('*') stands for all facilities or  all  priorities,
+       depending  on  where  it  is used (before or after the period). The keyword none
+       stands for no priority of the given facility.
 
-TCP WRAPPERS
-       If tac_plus was compiled with libwrap (aka. tcp_wrappers) support, upon connection the daemon will consult
-       with  tcp_wrappers on whether the client has permission to connect.  The daemon name used in a daemon list
-       of the access control file is the name of the executable, normally "tac_plus".  See hosts_access(5).
+       You can specify multiple facilities with the same priority pattern in one state‐
+       ment  using  the comma (',') operator. You may specify as much facilities as you
+       want. Remember that only the facility part from such a  statement  is  taken,  a
+       priority part would be skipped.
 
-PERMISSIONS
-       The configuration file should be unreadable  and  unwriteable  by  anyone  except  root,  as  it  contains
-       passwords and keys.
+       Multiple  selectors  may  be  specified  for a single action using the semicolon
+       (';') separator. Remember that each selector in the selector field is capable to
+       overwrite  the  preceding ones. Using this behavior you can exclude some priori‐
+       ties from the pattern.
 
-SIGNALS
-       If  the  daemon is receives a SIGHUP or SIGUSR1, it will reinitialize itself and re-read its configuration
-       file.
+       Rsyslogd has a syntax extension to the original BSD source, that makes  its  use
+       more  intuitively.  You  may precede every priority with an equals sign ('=') to
+       specify only this single priority and not any of the above. You may  also  (both
+       is valid, too) precede the priority with an exclamation mark ('!') to ignore all
+       that priorities, either exact this one or this and any higher priority.  If  you
+       use both extensions then the exclamation mark must occur before the equals sign,
+       just use it intuitively.
 
-       Note: if an error is encountered in the configuration file or the file can not be opened for reading, such
-       as  due to insufficient permissions resulting from process ownership and file permissions, the daemon will
-       exit.
+ACTIONS
+       The action field of a rule describes what to do with the  message.  In  general,
+       message  content is written to a kind of "logfile". But also other actions might
+       be done, like writing to a database table or forwarding to another host.
 
-       Likewise, if the daemon is configured to send accounting records to a file and that file can not be opened
-       for  writing,  such  as  due  to  insufficient  permissions  resulting  from  process  ownership  and file
-       permissions, the daemon will exit.
+   Regular file
+       Typically messages are logged to real files. The file has to be  specified  with
+       full pathname, beginning with a slash ('/').
 
-LOG MESSAGES
-       tac_plus logs error and informational messages to syslog facility LOG_DAEMON.
+       Example:
+              *.*     /var/log/traditionalfile.log;RSYSLOG_TraditionalFileFormat      #
+              log to a file in the traditional format
+
+       Note: if you would like to use high-precision timestamps in your log files, just
+       remove  the ";RSYSLOG_TraditionalFormat". That will select the default template,
+       which, if not changed, uses RFC 3339 timestamps.
+
+       Example:
+              *.*     /var/log/file.log # log to a file with RFC3339 timestamps
+
+       By default, files are not synced after earch write. To  enable  syncing  of  log
+       files  globally,  use either the "$ActionFileEnableSync" directive or the "sync"
+       parameter to omfile. Enabling this option degrades performance and it is advised
+       not  to  enable syncing unless you know what you are doing.  To selectively dis‐
+       able syncing for certain files, you may prefix the file path with a  minus  sign
+       ("-").
+
+   Named pipes
+       This  version  of rsyslogd(8) has support for logging output to named pipes (fi‐
+       fos). A fifo or named pipe can be used as a  destination  for  log  messages  by
+       prepending a pipe symbol ('|') to the name of the file. This is handy for debug‐
+       ging. Note that the fifo must be created with the mkfifo(1) command before rsys‐
+       logd(8) is started.
+
+   Terminal and console
+       If  the  file  you  specified  is a tty, special tty-handling is done, same with
+       /dev/console.
+
+   Remote machine
+       There are three ways to forward message: the traditional UDP transport, which is
+       extremely lossy but standard, the plain TCP based transport which loses messages
+       only during certain situations but is widely available and  the  RELP  transport
+       which does not lose messages but is currently available only as part of rsyslogd
+       3.15.0 and above.
+
+       To forward messages to another host via UDP, prepend the hostname  with  the  at
+       sign  ("@").   To forward it via plain tcp, prepend two at signs ("@@"). To for‐
+       ward via RELP, prepend the string ":omrelp:" in front of the hostname.
+
+       Example:
+              *.* @192.168.0.1
+
+       In the example above, messages are forwarded via UDP to the machine 192.168.0.1,
+       the  destination port defaults to 514. Due to the nature of UDP, you will proba‐
+       bly lose some messages in transit.  If you expect high traffic volume,  you  can
+       expect  to  lose  a quite noticeable number of messages (the higher the traffic,
+       the more likely and severe is message loss).
+
+       Sockets for forwarded messages can be bound to a specific device using the  "de‐
+       vice" option for the omfwd module.
+
+       Example:
+              action(type="omfwd"  Target="192.168.0.1"  Device="eth0"  Port=514 Proto‐
+              col="udp")
+
+       In the example above, messages are forwarded via UDP to the machine  192.168.0.1
+       at  port  514 over the device eth0. TCP can be used by setting Protocol to "tcp"
+       in the above example.
+
+       For Linux with VRF support, the device option is used to specify the VRF to send
+       messages.
+
+       If you would like to prevent message loss, use RELP:
+              *.* :omrelp:192.168.0.1:2514
+
+       Note that a port number was given as there is no standard port for relp.
+
+       Keep  in  mind  that  you need to load the correct input and output plugins (see
+       "Modules" above).
+
+       Please note that rsyslogd offers a variety of options  in  regarding  to  remote
+       forwarding. For full details, please see the HTML documentation.
+
+   List of users
+       Usually critical messages are also directed to ``root'' on that machine. You can
+       specify a list of users that shall get the message  by  simply  writing  ":omus‐
+       rmsg:"  followed  by the login name. You may specify more than one user by sepa‐
+       rating them with commas (','). If they're logged in they get  the  message  (for
+       example: ":omusrmsg:root,user1,user2").
+
+   Everyone logged on
+       Emergency  messages  often  go to all users currently online to notify them that
+       something strange is happening with the system. To specify this  wall(1)-feature
+       use an ":omusrmsg:*".
+
+   Database table
+       This  allows logging of the message to a database table.  By default, a Monitor‐
+       Ware-compatible schema is required for this to work. You can create that  schema
+       with  the createDB.SQL file that came with the rsyslog package. You can also use
+       any other schema of your liking - you just need to define a proper template  and
+       assign this template to the action.
+
+       See the HTML documentation for further details on database logging.
+
+   Discard
+       If  the  discard action is carried out, the received message is immediately dis‐
+       carded. Discard can be highly effective if you want to filter out some  annoying
+       messages that otherwise would fill your log files. To do that, place the discard
+       actions early in your log files.  This often plays well with property-based fil‐
+       ters, giving you great freedom in specifying what you do not want.
+
+       Discard is just the single 'stop' command with no further parameters.
+
+       Example:
+              *.*   stop      # discards everything.
+
+   Output channel
+       Binds  an output channel definition (see there for details) to this action. Out‐
+       put channel actions must start with a $-sign, e.g. if you  would  like  to  bind
+       your output channel definition "mychannel" to the action, use "$mychannel". Out‐
+       put channels support template definitions like all all other actions.
+
+   Shell execute
+       This executes a program in a subshell. The program is passed the template-gener‐
+       ated message as the only command line parameter. Rsyslog waits until the program
+       terminates and only then continues to run.
+
+       Example:
+              ^program-to-execute;template
+
+       The program-to-execute can be any valid executable.  It  receives  the  template
+       string as a single parameter (argv[1]).
+
+FILTER CONDITIONS
+       Rsyslog offers three different types "filter conditions":
+          * "traditional" severity and facility based selectors
+          * property-based filters
+          * expression-based filters
+
+   Selectors
+       Selectors  are the traditional way of filtering syslog messages.  They have been
+       kept in rsyslog with their original syntax, because it is well-known, highly ef‐
+       fective  and  also  needed  for  compatibility  with stock syslogd configuration
+       files. If you just need to filter based on priority and facility, you should  do
+       this  with selector lines. They are not second-class citizens in rsyslog and of‐
+       fer the best performance for this job.
+
+   Property-Based Filters
+       Property-based filters are unique to rsyslogd. They allow to filter on any prop‐
+       erty, like HOSTNAME, syslogtag and msg.
+
+       A property-based filter must start with a colon in column 0. This tells rsyslogd
+       that it is the new filter type. The colon must be followed by the property name,
+       a  comma, the name of the compare operation to carry out, another comma and then
+       the value to compare against. This value must be quoted.  There  can  be  spaces
+       and tabs between the commas. Property names and compare operations are case-sen‐
+       sitive, so "msg" works, while "MSG" is an invalid property name. In  brief,  the
+       syntax is as follows:
+
+              :property, [!]compare-operation, "value"
+
+       The following compare-operations are currently supported:
+
+              contains
+                     Checks  if  the string provided in value is contained in the prop‐
+                     erty
+
+              isequal
+                     Compares the "value" string provided and  the  property  contents.
+                     These two values must be exactly equal to match.
+
+              startswith
+                     Checks if the value is found exactly at the beginning of the prop‐
+                     erty value
+
+              regex
+                     Compares the property against the provided regular expression.
+
+   Expression-Based Filters
+       See the HTML documentation for this feature.
+
+TEMPLATES
+       Every output in rsyslog uses templates - this holds true for  files,  user  mes‐
+       sages  and  so on. Templates compatible with the stock syslogd formats are hard‐
+       coded into rsyslogd. If no template is specified, we use one of these  hardcoded
+       templates.  Search  for "template_" in syslogd.c and you will find the hardcoded
+       ones.
+
+       A template consists of a template directive, a name, the  actual  template  text
+       and optional options. A sample is:
+
+              $template MyTemplateName,"\7Text %property% some more text\n",<options>
+
+       The  "$template" is the template directive. It tells rsyslog that this line con‐
+       tains a template. The backslash is an escape character. For  example,  \7  rings
+       the bell (this is an ASCII value), \n is a new line. The set in rsyslog is a bit
+       restricted currently.
+
+       All text in the template is used literally, except  for  things  within  percent
+       signs.  These  are properties and allow you access to the contents of the syslog
+       message. Properties are accessed via the property replacer and it can for  exam‐
+       ple  pick  a substring or do date-specific formatting. More on this is the PROP‐
+       ERTY REPLACER section of this manpage.
+
+       To escape:
+          % = \%
+          \ = \\ --> '\' is used to escape (as in C)
+       $template TraditionalFormat,"%timegenerated% %HOSTNAME% %syslogtag%%msg%\n"
+
+       Properties can be accessed by the property replacer (see there for details).
+
+       Please note that templates can also by used to generate selector lines with  dy‐
+       namic  file names.  For example, if you would like to split syslog messages from
+       different hosts to different files (one per host), you can define the  following
+       template:
+
+              $template DynFile,"/var/log/system-%HOSTNAME%.log"
+
+       This  template  can  then be used when defining an output selector line. It will
+       result in something like "/var/log/system-localhost.log"
+
+   Template options
+       The <options> part is optional. It carries options influencing the  template  as
+       whole.  See details below. Be sure NOT to mistake template options with property
+       options - the later ones are processed by the property replacer and apply  to  a
+       SINGLE property, only (and not the whole template).
+
+       Template options are case-insensitive. Currently defined are:
+
+              sql    format  the  string  suitable for a SQL statement in MySQL format.
+                     This will replace single quotes ("'") and the backslash  character
+                     by  their  backslash-escaped counterpart ("´" and "\") inside each
+                     field. Please note  that  in  MySQL  configuration,  the  NO_BACK‐
+                     SLASH_ESCAPES  mode  must  be  turned  off for this format to work
+                     (this is the default).
+
+              stdsql format the string suitable for a SQL statement that is to be  sent
+                     to  a  standards-compliant  sql  server.  This will replace single
+                     quotes ("'") by two single quotes ("''") inside each  field.   You
+                     must  use stdsql together with MySQL if in MySQL configuration the
+                     NO_BACKSLASH_ESCAPES is turned on.
+
+       Either the sql or stdsql option MUST be specified when a template  is  used  for
+       writing  to a database, otherwise injection might occur. Please note that due to
+       the unfortunate fact that several vendors have violated the sql standard and in‐
+       troduced  their own escape methods, it is impossible to have a single option do‐
+       ing all the work.  So you yourself must make sure you are using the  right  for‐
+       mat.  If you choose the wrong one, you are still vulnerable to sql injection.
+
+       Please  note that the database writer *checks* that the sql option is present in
+       the template. If it is not present, the write database action is disabled.  This
+       is to guard you against accidental forgetting it and then becoming vulnerable to
+       SQL injection. The sql option can also be useful with files - especially if  you
+       want  to import them into a database on another machine for performance reasons.
+       However, do NOT use it if you do not have a real need for it - among others,  it
+       takes  some  toll  on the processing time. Not much, but on a really busy system
+       you might notice it ;)
+
+       The default template for the write to database action has the sql option set.
+
+   Template examples
+       Please note that the samples are split across multiple lines.  A  template  MUST
+       NOT actually be split across multiple lines.
+
+       A template that resembles traditional syslogd file output:
+
+              $template TraditionalFormat,"%timegenerated% %HOSTNAME%
+              %syslogtag%%msg:::drop-last-lf%\n"
+
+       A template that tells you a little more about the message:
+
+              $template          precise,"%syslogpriority%,%syslogfacility%,%timegener‐
+              ated%,%HOSTNAME%,
+              %syslogtag%,%msg%\n"
+
+       A template for RFC 3164 format:
+
+              $template RFC3164fmt,"<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%"
+
+       A template for the format traditionally used for user messages:
+
+              $template usermsg," XXXX%syslogtag%%msg%\n\r"
+
+       And a template with the traditional wall-message format:
+
+              $template wallmsg,"\r\n\7Message from syslogd@%HOSTNAME%  at  %timegener‐
+              ated%"
+
+       A  template that can be used for writing to a database (please note the SQL tem‐
+       plate option)
+
+              $template MySQLInsert,"insert iut, message, receivedat values ('%iut%',
+              '%msg:::UPPERCASE%', '%timegenerated:::date-mysql%') into syste‐
+              mevents\r\n", SQL
+
+              NOTE 1: This template is embedded into core application under name Std‐
+              DBFmt , so you don't need to define it.
+
+              NOTE 2: You have to have MySQL module installed to use this template.
+
+OUTPUT CHANNELS
+       Output  Channels are a new concept first introduced in rsyslog 0.9.0. As of this
+       writing, it is most likely that they will be replaced by something different  in
+       the  future.   So  if you use them, be prepared to change you configuration file
+       syntax when you upgrade to a later release.
+
+       Output channels are defined via an $outchannel directive. It's syntax is as fol‐
+       lows:
+
+              $outchannel name,file-name,max-size,action-on-max-size
+
+       name  is  the  name  of the output channel (not the file), file-name is the file
+       name to be written to, max-size the maximum allowed size and  action-on-max-size
+       a command to be issued when the max size is reached. This command always has ex‐
+       actly one parameter. The binary is that part of  action-on-max-size  before  the
+       first space, its parameter is everything behind that space.
+
+       Keep  in  mind  that $outchannel just defines a channel with "name". It does not
+       activate it.  To do so, you must use a selector line (see below). That  selector
+       line  includes  the channel name plus ":omfile:$" in front of it. A sample might
+       be:
+
+              *.* :omfile:$mychannel
+
+PROPERTY REPLACER
+       The property replacer is a core component in rsyslogd's output system. A  syslog
+       message  has a number of well-defined properties (see below). Each of this prop‐
+       erties can be accessed and manipulated by the property replacer. With it, it  is
+       easy  to use only part of a property value or manipulate the value, e.g. by con‐
+       verting all characters to lower case.
+
+   Accessing Properties
+       Syslog message properties are  used  inside  templates.  They  are  accessed  by
+       putting  them  between percent signs. Properties can be modified by the property
+       replacer. The full syntax is as follows:
+
+              %propname:fromChar:toChar:options%
+
+       propname is the name of the property to access.  It is case-sensitive.
+
+   Available Properties
+       msg    the MSG part of the message (aka "the message" ;))
+
+       rawmsg the message exactly as it was received from the socket. Should be  useful
+              for debugging.
+
+       HOSTNAME
+              hostname from the message
+
+       FROMHOST
+              hostname  of  the system the message was received from (in a relay chain,
+              this is the system immediately in front of us  and  not  necessarily  the
+              original sender)
+
+       syslogtag
+              TAG from the message
+
+       programname
+              the  "static"  part  of  the tag, as defined by BSD syslogd. For example,
+              when TAG is "named[12345]", programname is "named".
+
+       PRI    PRI part of the message - undecoded (single value)
+
+       PRI-text
+              the PRI part of the message in a textual form (e.g. "syslog.info")
+
+       IUT    the monitorware InfoUnitType - used when talking to a MonitorWare backend
+              (also for phpLogCon)
+
+       syslogfacility
+              the facility from the message - in numerical form
+
+       syslogfacility-text
+              the facility from the message - in text form
+
+       syslogseverity
+              severity from the message - in numerical form
+
+       syslogseverity-text
+              severity from the message - in text form
+
+       timegenerated
+              timestamp when the message was RECEIVED. Always in high resolution
+
+       timereported
+              timestamp  from  the  message. Resolution depends on what was provided in
+              the message (in most cases, only seconds)
+
+       TIMESTAMP
+              alias for timereported
+
+       PROTOCOL-VERSION
+              The contents of the PROTOCOL-VERSION field from  IETF  draft  draft-ietf-
+              syslog-protocol
+
+       STRUCTURED-DATA
+              The contents of the STRUCTURED-DATA field from IETF draft draft-ietf-sys‐
+              log-protocol
+
+       APP-NAME
+              The contents of the APP-NAME field from IETF draft draft-ietf-syslog-pro‐
+              tocol
+
+       PROCID The contents of the PROCID field from IETF draft draft-ietf-syslog-proto‐
+              col
+
+       MSGID  The contents of the MSGID field from IETF draft  draft-ietf-syslog-proto‐
+              col
+
+       $NOW   The current date stamp in the format YYYY-MM-DD
+
+       $YEAR  The current year (4-digit)
+
+       $MONTH The current month (2-digit)
+
+       $DAY   The current day of the month (2-digit)
+
+       $HOUR  The current hour in military (24 hour) time (2-digit)
+
+       $MINUTE
+              The current minute (2-digit)
+
+       Properties  starting with a $-sign are so-called system properties. These do NOT
+       stem from the message but are rather internally-generated.
+
+   Character Positions
+       FromChar and toChar are used to build substrings. They specify the offset within
+       the string that should be copied. Offset counting starts at 1, so if you need to
+       obtain the first 2 characters of the message text,  you  can  use  this  syntax:
+       "%msg:1:2%".  If you do not wish to specify from and to, but you want to specify
+       options, you still need to include the colons. For example, if you would like to
+       convert  the  full  message  text to lower case, use "%msg:::lowercase%". If you
+       would like to extract from a position until the end of the string, you can place
+       a dollar-sign ("$") in toChar (e.g. %msg:10:$%, which will extract from position
+       10 to the end of the string).
+
+       There is also support for regular expressions.  To use them, you need to place a
+       "R"  into FromChar.  This tells rsyslog that a regular expression instead of po‐
+       sition-based extraction is desired. The actual regular expression must  then  be
+       provided  in  toChar.  The  regular  expression  must  be followed by the string
+       "--end". It denotes the end of the regular expression and will not  become  part
+       of  it.  If you are using regular expressions, the property replacer will return
+       the part of the property text that matches the regular  expression.  An  example
+       for  a  property replacer sequence with a regular expression is: "%msg:R:.*Sev:.
+       \(.*\) \[.*--end%"
+
+       Also, extraction can be done based on so-called "fields". To do so, place a  "F"
+       into  FromChar.  A field in its current definition is anything that is delimited
+       by a delimiter character. The delimiter by default is TAB  (US-ASCII  value  9).
+       However, if can be changed to any other US-ASCII character by specifying a comma
+       and the decimal US-ASCII value of the delimiter immediately after the  "F".  For
+       example,  to  use  comma (",") as a delimiter, use this field specifier: "F,44".
+       If your syslog data is delimited, this is a quicker way to extract than via reg‐
+       ular  expressions  (actually, a *much* quicker way). Field counting starts at 1.
+       Field zero is accepted, but will always lead to a "field not found"  error.  The
+       same  happens if a field number higher than the number of fields in the property
+       is requested. The field number must be placed in the "ToChar" parameter. An  ex‐
+       ample  where the 3rd field (delimited by TAB) from the msg property is extracted
+       is as follows: "%msg:F:3%". The same example  with  semicolon  as  delimiter  is
+       "%msg:F,59:3%".
+
+       Please note that the special characters "F" and "R" are case-sensitive. Only up‐
+       per case works, lower case will return an error. There are no white spaces  per‐
+       mitted  inside  the sequence (that will lead to error messages and will NOT pro‐
+       vide the intended result).
+
+   Property Options
+       Property options are case-insensitive. Currently, the following options are  de‐
+       fined:
+
+       uppercase
+              convert property to lowercase only
+
+       lowercase
+              convert property text to uppercase only
+
+       drop-last-lf
+              The  last  LF  in the message (if any), is dropped. Especially useful for
+              PIX.
+
+       date-mysql
+              format as mysql date
+
+       date-rfc3164
+              format as RFC 3164 date
+
+       date-rfc3339
+              format as RFC 3339 date
+
+       escape-cc
+              replace control characters (ASCII value 127 and values less then 32) with
+              an  escape  sequence.  The  sequence is "#<charval>" where charval is the
+              3-digit decimal value of the control character. For example, a  tabulator
+              would be replaced by "#009".
+
+       space-cc
+              replace control characters by spaces
+
+       drop-cc
+              drop  control characters - the resulting string will neither contain con‐
+              trol characters, escape sequences nor  any  other  replacement  character
+              like space.
+
+QUEUED OPERATIONS
+       Rsyslogd  supports queued operations to handle offline outputs (like remote sys‐
+       logd's or database servers being down). When running in  queued  mode,  rsyslogd
+       buffers  messages  to  memory  and  optionally  to disk (on an as-needed basis).
+       Queues survive rsyslogd restarts.
+
+       It is highly suggested to use remote forwarding and database writing  in  queued
+       mode, only.
+
+       To learn more about queued operations, see the HTML documentation.
 
 FILES
-       /var/log/tac_plus.acct        Default accounting file.
-
-       /var/log/tac_plus.log         Default log file used when the -d option is used.
-
-       /var/run/tac_plus.pid         Pid file.  If the -B option is used, ".bind_address" is appended.  If the -p
-                                     option is used, ".port_number" is appended.
+       /etc/rsyslog.conf
+              Configuration file for rsyslogd
 
 SEE ALSO
-       tac_plus.conf(5), tac_pwd(8)
+       rsyslogd(8), logger(1), syslog(3)
 
-       Also  see  the  tac_plus User Guide (user_guide) that came with the distribution.  The user guide does not
-       cover all the modifications to the original Cisco version.
+       The complete documentation can be found in the doc folder of the rsyslog distri‐
+       bution or online at
 
-HISTORY
-       There are at least 3 versions of the authentication protocol that people commonly refer to as "TACACS".
+              https://www.rsyslog.com/doc/
 
-       The first is ordinary tacacs, which was the first one offered on Cisco boxes and has been in use for  many
-       years.  The second is an extension to the first, commonly called Extended Tacacs or XTACACS, introduced in
-       1990.
+       Please note that the man page reflects only a subset of  the  configuration  op‐
+       tions. Be sure to read the HTML documentation for all features and details. This
+       is especially vital if you plan to set up a more-then-extremely-simple system.
 
-       The third one is TACACS+ (or T+ or tac_plus) which is what is documented here.  TACACS+ is NOT  COMPATIBLE
-       with any previous versions of tacacs.
+AUTHORS
+       rsyslogd is taken from sysklogd sources, which have  been  heavily  modified  by
+       Rainer Gerhards (rgerhards@adiscon.com) and others.
 
-AUTHOR
-       The  tac_plus  (tacacs+)  developer's  kit  is  a  product  of  Cisco Systems, written by Lol Grant.  Made
-       available at no cost and with no warranty of any kind.  See the file COPYING and source  files  that  came
-       with the distribution for specifics.
-
-       Though  heavily  modified from the original Cisco manual pages, much of the modifications are derived from
-       the tacacs IETF draft and the Cisco user guide.
-
-                                                   28 July 2009                                       tac_plus(8)
+Version 7.2.0                       22 October 2012                     RSYSLOG.CONF(5)
 ```
 

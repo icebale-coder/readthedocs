@@ -1,196 +1,226 @@
-# tac_plus
+# rsyslogd
 
 ```
-tac_plus(8)                                  System Manager's Manual                                  tac_plus(8)
+RSYSLOGD(8)                   Linux System Administration                   RSYSLOGD(8)
 
 NAME
-       tac_plus - tacacs plus daemon
+       rsyslogd - reliable and extended syslogd
 
 SYNOPSIS
-       tac_plus -C <configfile> [-GghiLPSstv] [-B <bind_address>] [-d <level>] [-l <logfile>] [-p <tcp_port>] [-u
-       <wtmpfile>] [-w <wholog>]
+       rsyslogd  [ -d ] [ -D ] [ -f config file ] [ -i pid file ] [ -n ] [ -N level ] [
+       -C ] [ -v ]
 
 DESCRIPTION
-       By default, tac_plus listens on tcp port 49 and provides network  devices  (normally  routers  and  access
-       servers) with authentication, authorization and accounting services.
+       Rsyslogd is a system utility providing support for message logging.  Support  of
+       both internet and unix domain sockets enables this utility to support both local
+       and remote logging.
 
-       A configuration file controls the details of authentication, authorization and accounting.
+       Note that this version of rsyslog ships with  extensive  documentation  in  HTML
+       format.   This  is provided in the ./doc subdirectory and probably in a separate
+       package if you installed rsyslog via a packaging system.  To use  rsyslog's  ad‐
+       vanced  features,  you  need  to look at the HTML documentation, because the man
+       pages only covers basic aspects of operation.  For details and configuration ex‐
+       amples,  see  the  rsyslog.conf  (5)  man  page  and the online documentation at
+       https://www.rsyslog.com/doc/
 
-COMMAND-LINE OPTIONS
-       -C <configfile>
+       Rsyslogd(8) is derived from the sysklogd package which in turn is  derived  from
+       the stock BSD sources.
 
-              Specify the configuration file name.  The -C option is required.
+       Rsyslogd provides a kind of logging that many modern programs use.  Every logged
+       message contains at least a time and a hostname field, normally a  program  name
+       field,  too,  but that depends on how trusty the logging program is. The rsyslog
+       package supports free definition of output formats via templates. It  also  sup‐
+       ports  precise timestamps and writing directly to databases. If the database op‐
+       tion is used, tools like phpLogCon can be used to view the log data.
 
-       -B <bind address>
+       While the rsyslogd sources have been heavily modified a couple of notes  are  in
+       order.  First of all there has been a systematic attempt to ensure that rsyslogd
+       follows its default, standard BSD behavior. Of course, some  configuration  file
+       changes are necessary in order to support the template system. However, rsyslogd
+       should be able to use a standard syslog.conf and act like the original  syslogd.
+       However,  an  original  syslogd  will not work correctly with a rsyslog-enhanced
+       configuration file. At best, it will generate funny  looking  file  names.   The
+       second  important  concept  to  note  is that this version of rsyslogd interacts
+       transparently with the version of syslog found in the standard libraries.  If  a
+       binary  linked  to  the standard shared libraries fails to function correctly we
+       would like an example of the anomalous behavior.
 
-              Specify  the  address  on  which  the  daemon  should bind(2).  Successive instances of -B override
-              previous instances.  By default, the daemon listens on all addresses.  Note: this changes the  name
-              of the pid file created by the daemon.
+       The main configuration file /etc/rsyslog.conf or an alternative file, given with
+       the  -f  option,  is  read  at startup.  Any lines that begin with the hash mark
+       (``#'') and empty lines are ignored.  If an error occurs during parsing the  er‐
+       ror element is ignored. It is tried to parse the rest of the line.
 
-       -G     Remain in the foreground, but not single-threaded nor logging to the tty.
+OPTIONS
+       -D     Runs  the  Bison  config parser in debug mode. This may help when hard to
+              find syntax errors are reported. Please note that the output generated is
+              deeply technical and orignally targeted towards developers.
 
-       -d <level>
-              Switch on debugging.  By default the output will appear in the log file and syslog(3).
+       -d     Turns on debug mode. See the DEBUGGING section for more information.
 
-              NOTE: The -g flag will cause these messages to also appear on stdout.  The -t flag will cause these
-              messages to also be written to /dev/console.
+       -f config file
+              Specify  an  alternative configuration file instead of /etc/rsyslog.conf,
+              which is the default.
 
-              The value of level is as described below.  These values represent bits that can be  logically  OR'd
-              together.  The daemon logically ORs successive occurrences of the -d option.
+       -i pid file
+              Specify an alternative pid file instead of the default one.  This  option
+              must be used if multiple instances of rsyslogd should run on a single ma‐
+              chine. To disable writing a pid file, use the reserved name  "NONE"  (all
+              upper case!), so "-iNONE".
 
-              Value   Meaning
-              2       configuration parsing debugging
-              4       fork(1) debugging
-              8       authorization debugging
-              16      authentication debugging
-              32      password file processing debugging
-              64      accounting debugging
-              128     config file parsing & lookup
-              256     packet transmission/reception
-              512     encryption/decryption
-              1024    MD5 hash algorithm debugging
-              2048    very low level encryption/decryption
-              32768   max session debugging
-              65536   lock debugging
+       -n     Avoid  auto-backgrounding.   This is needed especially if the rsyslogd is
+              started and controlled by init(8).
 
-       -g     Single  threaded  mode.   The  daemon  will  only  accept and service a single connection at a time
-              without forking and without closing file descriptors.  All log messages appear on standard output.
+       -N  level
+              Do a config check. Do NOT run in regular mode, just  check  configuration
+              file  correctness.   This  option is meant to verify a config file. To do
+              so, run rsyslogd interactively in foreground, specifying -f <config-file>
+              and -N level.  The level argument modifies behaviour. Currently, 0 is the
+              same as not specifying the -N option at all (so this makes limited sense)
+              and  1  actually  activates the code. Later, higher levels will mean more
+              verbosity (this is a forward-compatibility option).
 
-              This is intended only for debugging and not for normal service.
+       -C     This prevents rsyslogd from changing to the root directory. This  is  al‐
+              most  never  a good idea in production use. This option was introduced in
+              support of the internal testbed.
 
-              This option does not work with single-connection sessions.
-
-       -h     Display help message.
-
-       -i     tac_plus will be run from inetd(8).  In inetd mode, the configuration file  is  parsed  every  time
-              tac_plus starts.
-
-              If  the configuration is large or the frequency of connections is high, this negatively will affect
-              the responsiveness of the daemon.
-
-              If the config file is small, connections are infrequent,  and  authentication  is  being  done  via
-              passwd(5)  files  or  SKEY  (which  are not cached), running in inetd mode should be tolerable, but
-              still is not recommended.
-
-              This option does not work with single-connection sessions.
-
-       -l <logfile>
-              Specify an alternate log file location.  This file is only used when the -d option  is  used.   The
-              logs are still posted to syslog.
-
-       -L     Lookup  DNS PTR (Domain Name System PoinTeR) record of client addresses.  The resulting FQDN (Fully
-              Qualified Domain Name), if it resolves, will  be  used  in  log  messages,  libwrap  (tcp_wrappers)
-              checks, and for matching host clauses of the configuration file.  Also see tac_plus.conf(5).
-
-       -P     Parse  the  configuration  file, echo it to standard output while parsing, and then exit.  tac_plus
-              will exit non-zero when a parser error occurs.
-
-              Useful for debugging configuration file syntax.
-
-       -p <port>
-              Listen on the specified port number instead of the default port 49 for  incoming  tcp  connections.
-              Note: this changes the name of the pid file created by the daemon.
-
-       -S     Enables or allows client single-connection mode, where-by the client will create one connection and
-              interleave queries.
-
-              Note: this is broken in IOS and IOS-XE.
-
-              Note: this is currently only partially supported in the daemon.
-
-       -s     Causes the daemon to always reject authentication requests which contain a minor version number  of
-              zero  (SENDPASS).   This enhances security in the event that someone discovers your encryption key.
-              SENDPASS requests permit requesters to obtain CHAP, PAP and ARAP passwords from the daemon, iff the
-              encryption key is known.
-
-              Note: IOS versions preceding 11.2 will fail.
-
-       -t     Log  all  informational,  debugging  or  error  messages  to /dev/console in addition to logging to
-              syslogd. Useful for debugging.
-
-       -u <wtmpfile>
-              Write wtmp entries to the specified wtmp file.
-
-       -v     Display version information and exit.
-
-       -w <wholog>
-              Specify the location of the max session file.
-
-STARTING
-       tac_plus is normally invoked by root, as follows:
-
-           # tac_plus -C <configfile>
-
-       where <configfile> is a full path to the configuration file.  Tac_plus will background  itself  and  start
-       listening on port 49 for incoming tcp connections.
-
-       Tac_plus  must  be  invoked  as  root  to  obtain  privileged  network socket 49 and to read the protected
-       configuration file, which may contain confidential information  such  as  encryption  keys  and  cleartext
-       passwords.
-
-       After  the  port is acquired and the config file is read, root privileges are no longer required.  You can
-       arrange that tac_plus will change its user and group IDs to a  more  innocuous  user  and  group  via  the
-       configuration file.
-
-       NOTE:  The new user and group still needs permission to read any passwd(5) (and shadow(5)) files and S/KEY
-       database if these are being used.
-
-TCP WRAPPERS
-       If tac_plus was compiled with libwrap (aka. tcp_wrappers) support, upon connection the daemon will consult
-       with  tcp_wrappers on whether the client has permission to connect.  The daemon name used in a daemon list
-       of the access control file is the name of the executable, normally "tac_plus".  See hosts_access(5).
-
-PERMISSIONS
-       The configuration file should be unreadable  and  unwriteable  by  anyone  except  root,  as  it  contains
-       passwords and keys.
+       -v     Print version and exit.
 
 SIGNALS
-       If  the  daemon is receives a SIGHUP or SIGUSR1, it will reinitialize itself and re-read its configuration
-       file.
+       Rsyslogd reacts to a set of signals.  You may easily send a signal  to  rsyslogd
+       using the following:
 
-       Note: if an error is encountered in the configuration file or the file can not be opened for reading, such
-       as  due to insufficient permissions resulting from process ownership and file permissions, the daemon will
-       exit.
+              kill -SIGNAL $(cat /var/run/rsyslogd.pid)
 
-       Likewise, if the daemon is configured to send accounting records to a file and that file can not be opened
-       for  writing,  such  as  due  to  insufficient  permissions  resulting  from  process  ownership  and file
-       permissions, the daemon will exit.
+       Note  that  -SIGNAL  must  be  replaced with the actual signal you are trying to
+       send, e.g. with HUP. So it then becomes:
 
-LOG MESSAGES
-       tac_plus logs error and informational messages to syslog facility LOG_DAEMON.
+              kill -HUP $(cat /var/run/rsyslogd.pid)
+
+       HUP    This lets rsyslogd perform close all open files.
+
+       TERM ,  INT ,  QUIT
+              Rsyslogd will die.
+
+       USR1   Switch debugging on/off.  This option can only be  used  if  rsyslogd  is
+              started with the -d debug option.
+
+       CHLD   Wait for childs if some were born, because of wall'ing messages.
+
+SECURITY THREATS
+       There is the potential for the rsyslogd daemon to be used as a conduit for a de‐
+       nial of service attack.  A rogue program(mer) could very easily flood the  rsys‐
+       logd  daemon  with  syslog messages resulting in the log files consuming all the
+       remaining space on the filesystem.  Activating  logging  over  the  inet  domain
+       sockets will of course expose a system to risks outside of programs or individu‐
+       als on the local machine.
+
+       There are a number of methods of protecting a machine:
+
+       1.     Implement kernel firewalling to limit which hosts or networks have access
+              to the 514/UDP socket.
+
+       2.     Logging  can  be directed to an isolated or non-root filesystem which, if
+              filled, will not impair the machine.
+
+       3.     The ext2 filesystem can be used which can be configured to limit  a  cer‐
+              tain  percentage  of  a filesystem to usage by root only.  NOTE that this
+              will require rsyslogd to be run as a non-root process.   ALSO  NOTE  that
+              this will prevent usage of remote logging on the default port since rsys‐
+              logd will be unable to bind to the 514/UDP socket.
+
+       4.     Disabling inet domain sockets will limit risk to the local machine.
+
+   Message replay and spoofing
+       If remote logging is enabled, messages can easily be spoofed and  replayed.   As
+       the  messages  are transmitted in clear-text, an attacker might use the informa‐
+       tion obtained from the packets for malicious things. Also, an attacker might re‐
+       play  recorded  messages  or  spoof a sender's IP address, which could lead to a
+       wrong perception of system activity. These can be prevented by using GSS-API au‐
+       thentication  and encryption. Be sure to think about syslog network security be‐
+       fore enabling it.
+
+DEBUGGING
+       When debugging is turned on using the -d option, rsyslogd produces debugging in‐
+       formation  according  to  the RSYSLOG_DEBUG environment variable and the signals
+       received. When run in foreground, the information is written to stdout. An addi‐
+       tional output file can be specified using the RSYSLOG_DEBUGLOG environment vari‐
+       able.
 
 FILES
-       /var/log/tac_plus.acct        Default accounting file.
+       /etc/rsyslog.conf
+              Configuration file for rsyslogd.  See rsyslog.conf(5) for exact  informa‐
+              tion.
+       /dev/log
+              The Unix domain socket to from where local syslog messages are read.
+       /var/run/rsyslogd.pid
+              The file containing the process id of rsyslogd.
+       prefix/lib/rsyslog
+              Default  directory  for  rsyslogd modules. The prefix is specified during
+              compilation (e.g. /usr/local).
+ENVIRONMENT
+       RSYSLOG_DEBUG
+              Controls runtime debug support. It contains an  option  string  with  the
+              following options possible (all are case insensitive):
 
-       /var/log/tac_plus.log         Default log file used when the -d option is used.
+              Debug  Turns on debugging and prevents forking. This is processed earlier
+                     in the startup than command line options (i.e. -d) and as such en‐
+                     ables earlier debugging output. Mutually exclusive with DebugOnDe‐
+                     mand.
+              DebugOnDemand
+                     Enables debugging but turns off debug output. The  output  can  be
+                     toggled by sending SIGUSR1. Mutually exclusive with Debug.
+              LogFuncFlow
+                     Print  out  the  logical  flow  of functions (entering and exiting
+                     them)
+              FileTrace
+                     Specifies which files to trace LogFuncFlow. If not  set  (the  de‐
+                     fault),  a  LogFuncFlow  trace  is  provided for all files. Set to
+                     limit it to the files specified.FileTrace may be specified  multi‐
+                     ple  times,  one file each (e.g. export RSYSLOG_DEBUG="LogFuncFlow
+                     FileTrace=vm.c FileTrace=expr.c"
+              PrintFuncDB
+                     Print the content of the debug function  database  whenever  debug
+                     information is printed (e.g. abort case)!
+              PrintAllDebugInfoOnExit
+                     Print  all  debug  information  immediately  before rsyslogd exits
+                     (currently not implemented!)
+              PrintMutexAction
+                     Print mutex action as it happens. Useful for finding deadlocks and
+                     such.
+              NoLogTimeStamp
+                     Do not prefix log lines with a timestamp (default is to do that).
+              NoStdOut
+                     Do  not  emit debug messages to stdout. If RSYSLOG_DEBUGLOG is not
+                     set, this means no messages will be displayed at all.
+              Help   Display a very short list of commands - hopefully a life saver  if
+                     you can't access the documentation...
 
-       /var/run/tac_plus.pid         Pid file.  If the -B option is used, ".bind_address" is appended.  If the -p
-                                     option is used, ".port_number" is appended.
+       RSYSLOG_DEBUGLOG
+              If  set,  writes  (almost) all debug message to the specified log file in
+              addition to stdout.
+       RSYSLOG_MODDIR
+              Provides the default directory in which loadable modules reside.
+
+BUGS
+       Please review the file BUGS for up-to-date information on known bugs and  annoy‐
+       ances.
+
+Further Information
+       Please  visit https://www.rsyslog.com/doc/ for additional information, tutorials
+       and a support forum.
 
 SEE ALSO
-       tac_plus.conf(5), tac_pwd(8)
+       rsyslog.conf(5), logger(1), syslog(2), syslog(3), services(5), savelog(8)
 
-       Also  see  the  tac_plus User Guide (user_guide) that came with the distribution.  The user guide does not
-       cover all the modifications to the original Cisco version.
+COLLABORATORS
+       rsyslogd is derived from sysklogd sources, which in turn was taken from the  BSD
+       sources.  Special  thanks  to Greg Wettstein (greg@wind.enjellic.com) and Martin
+       Schulze (joey@linux.de) for the fine sysklogd package.
 
-HISTORY
-       There are at least 3 versions of the authentication protocol that people commonly refer to as "TACACS".
+       Rainer Gerhards
+       Adiscon GmbH
+       Grossrinderfeld, Germany
+       rgerhards@adiscon.com
 
-       The first is ordinary tacacs, which was the first one offered on Cisco boxes and has been in use for  many
-       years.  The second is an extension to the first, commonly called Extended Tacacs or XTACACS, introduced in
-       1990.
-
-       The third one is TACACS+ (or T+ or tac_plus) which is what is documented here.  TACACS+ is NOT  COMPATIBLE
-       with any previous versions of tacacs.
-
-AUTHOR
-       The  tac_plus  (tacacs+)  developer's  kit  is  a  product  of  Cisco Systems, written by Lol Grant.  Made
-       available at no cost and with no warranty of any kind.  See the file COPYING and source  files  that  came
-       with the distribution for specifics.
-
-       Though  heavily  modified from the original Cisco manual pages, much of the modifications are derived from
-       the tacacs IETF draft and the Cisco user guide.
-
-                                                   28 July 2009                                       tac_plus(8)
+Version 8.6.0                         02 Dec 2014                           RSYSLOGD(8)
 ```
-
