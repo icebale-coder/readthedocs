@@ -59,12 +59,12 @@ include /etc/logrotate.d
 
 ##### man'ы
 
-- [logrotate](/linux/man/logrotate)
+- [logrotate](*/linux/man/logrotate)
 
 ##### Связанные материалы
 
-- [rsyslog](/linux/services/rsyslog)
-- [logwatch](/linux/services/logwatch) - отправка на email
+- [rsyslog](*/linux/services/rsyslog)
+- [logwatch](*/linux/services/logwatch) - отправка на email
 
 ##### Литература
 
