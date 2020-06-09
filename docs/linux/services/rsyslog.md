@@ -1,19 +1,21 @@
 title: rsyslog
 
-# rsyslog
+# **rsyslog**
 
 rsyslogd, как и его предшественник syslogd собирают логи от различных сервисов и направляют их в log файлы или на удалённые log хосты.
 Также возможна реализация отправки логов на удалённые хосты для централизации управления и улучшения практик безопасности.
 
-Его основной конфигурационный файл - `/etc/rsyslog.conf` .
+Его основной конфигурационный файл - `/etc/rsyslog.conf`.
 
-Стандартное расположение лог файлов - `/var/log` .
+Стандартное расположение лог файлов - `/var/log`.
 
 **Некоторые из log-файлов**:
 
 * boot.log - содержит сообщения загрузки сервисов во время их загрузки
 
-* ... **update needed**
+* ...
+
+!!! warning "FIXME"
 
 ### rsyslog.conf
 
@@ -95,7 +97,7 @@ mail.err                        /var/log/mail.err
 
 #### Примеры использования модулей
 
-
+!!! warning "FIXME"
 
 ### Использование удалённого loghost'а с rsyslog
 
@@ -107,7 +109,10 @@ mail.err                        /var/log/mail.err
 
 ``` bash
 authpriv.*                         /var/log/secure
+# UDP is used in that case:
 authpriv.*                         @log.ak.ru
+# TCP is used in that case:
+authpriv.*                         @@log.ak.ru
 ```
 
 В конкретном случае логи данного типа будут сохранятся и на локальной машине, и на удалённом сервере.
@@ -118,16 +123,17 @@ authpriv.*                         @log.ak.ru
 
 * Изменить rsyslog.conf, раскоментировав строки, подгружающие imudp и imtcp модули:
 ``` bash
+# Module UDP
 module(load="imudp")
 input(type="imudp" port="514")
-
+# Module TCP:
 module(load="imtcp")
 input(type="imtcp" port="514")
 ```
 
 * Открыть необходимые порты на вашем системном фаерволе (iptables или firewalld).
 
-* Перезапустить сервис rsyslog (`systemctl restart rsyslog`).
+* Перезапустить сервис rsyslog `systemctl restart rsyslog`.
 
 * Проверить, что сервер слушает на необходимых нам портах:
 ```
@@ -148,12 +154,9 @@ udp    0   0 :::514          :::*                         1264/rsyslogd
 
 ##### Связанные материалы
 
-logrotate logwatch
-
 - [logrotate](/linux/services/logrotate) - ротация логов
 - [logwatch](/linux/services/logwatch) - отправка на email
 
 ##### Литература
 
-linux bible
-
+...
