@@ -1,3 +1,3 @@
-title: TACACS+ (tac_plus)
+title: tac_plus
 
 # **tac_plus**
