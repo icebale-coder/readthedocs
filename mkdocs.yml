@@ -63,6 +63,7 @@ theme:
     features:
       - tabs
       - instant
+      - navigation.expand
     favicon: img/icon.png
     logo: img/icon.png
 #extra_css:
@@ -81,4 +82,4 @@ plugins:
 
 
 # Copyright
-copyright: "Dmitriy Salatkin &copy; 2021"
+copyright: "Dmitriy Salatkin &copy; 2020-2021"

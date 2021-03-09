@@ -1,4 +1,4 @@
-title: mkdocs.yml
+title: Конфигурация MkDocs
 
 # mkdocs.yml
 
