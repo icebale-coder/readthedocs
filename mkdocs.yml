@@ -2,10 +2,10 @@
 
 # Basic info
 site_name: Reactive Deer's networking
-site_description: Everything I know is here (almost)
+site_description: Everything I know so far
 site_author: Dmitriy Salatkin
-repo_name: reactive7deer/knowledge_database
-repo_url: https://github.com/reactive7deer/knowledge_database
+repo_name: reactive-deer/knowledge_database
+repo_url: https://github.com/reactive-deer/knowledge_database
 
 # Extensions to MD
 markdown_extensions:
@@ -44,7 +44,7 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/reactive7deer
+      link: https://github.com/reactive-deer
     - icon: fontawesome/brands/vk
       link: https://vk.com/reactive_deer
     - icon: fontawesome/brands/telegram
@@ -58,8 +58,8 @@ theme:
         primary: black
         accent: amber
     font:
-      text: "Ubuntu"
-      code: "Ubuntu Mono"
+      text: "Roboto"
+      code: "Roboto Mono"
     features:
       - tabs
       - instant
@@ -81,4 +81,4 @@ plugins:
 
 
 # Copyright
-copyright: "Dmitriy Salatkin &copy; 2020"
+copyright: "Dmitriy Salatkin &copy; 2021"
