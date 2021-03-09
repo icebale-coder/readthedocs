@@ -1,10 +1,9 @@
+title: home
 arrange:
-    - index.md
-    - about.md
     - networking
     - linux
+    - programming
+    - readthedocs
     - windows
     - standards
     - references
-    - readthedocs
-    - programming

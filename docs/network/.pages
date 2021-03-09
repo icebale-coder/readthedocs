@@ -1,0 +1,8 @@
+title: networks
+arrange:
+    - index.md
+    - cisco
+    - huawei
+    - juniper
+    - dlink
+    - labs

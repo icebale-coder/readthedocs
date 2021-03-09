@@ -1,6 +1,6 @@
-title: Nexus 9K
+title: Nexus 9000
 
-# Nexus 9K
+# Cisco Nexus 9000
 
 ## FEX
 
