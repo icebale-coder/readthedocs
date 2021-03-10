@@ -2,82 +2,22 @@ title: NetEngine 8000
 
 # Huawei NetEngine 8000
 
-## Описание платформы
-
-### Варианты аппаратного исполнения
-
-Иметь дело довелось со следующими:
-
-* Huawei NetEngine 8000 F1A-8H20Q CR8B0BKP03C0
-
-	Портовая ёмкость:
-
-	* **28** x 1G / 10G
-	* **20** x 1G / 10G / 25G
-	* **8** x 40G / 50G / 100G / breakout 4x10G / breakout 4x25G
-
-	| **Item**                                                     | **Specification**                                            |
-  | ------------------------------------------------------------ | ------------------------------------------------------------ |
-  | Cabinet installation standards                               | IEC 19-inch                                                  |
-  | Dimensions without packaging (H x W x D) [mm(in.)]           | 43.6 mm x 442 mm x 420 mm (1.72 in. x 17.4 in. x 16.54 in.)  |
-  | Dimensions with packaging (H x W x D) [mm(in.)]              | 175 mm x 550 mm x 650 mm (6.89 in. x 21.65 in. x 25.59 in.)  |
-  | Chassis height [U]                                           | 1 U                                                          |
-  | Weight without packaging (base configuration) [kg(lb)]       | 6.3 kg (13.89 lb)                                            |
-  | Weight without packaging (full configuration) [kg(lb)]       | DC: 8.4 kg(18.52 lb)AC: 8.75 kg(19.29 lb)                    |
-  | Weight with packaging (full configuration) [kg(lb)]          | DC: 13.58 kg(29.94 lb)AC: 13.75 kg(30.31 lb)                 |
-  | Typical power consumption [W]                                | 325 W                                                        |
-  | Typical heat dissipation [BTU/hour]                          | 1054.44 BTU/hour                                             |
-  | MTBF [year]                                                  | DC: 25.52AC: 25.65                                           |
-  | MTTR [hour]                                                  | 0.5 hour                                                     |
-  | Availability                                                 | 0.99999                                                      |
-  | CPU                                                          | 20-core 2.0 GHz                                              |
-  | SDRAM                                                        | 16 GB                                                        |
-  | Storage                                                      | 4G NAND FLASH                                                |
-  | Power supply mode                                            | DC,AC/HVDC                                                   |
-  | Rated input voltage [V]                                      | DC: -48 V/-60 VAC: 100 V to 240 V AC, support 240 V HVDC     |
-  | Input voltage range [V]                                      | DC: -40 V to -72 VAC: 90V to 290V                            |
-  | Maximum input current [A]                                    | DC: 30 AAC: 8 A                                              |
-  | Rated output power [W]                                       | DC: 1000 WAC: 600 W                                          |
-  | Maximum input cable diameter [mm²]                           | DC:4mm^2 (1-14 meters), 6mm^2 (15-21 meters), 10mm^2 (22-35 meters)AC:2.5mm^2 |
-  | Front-end circuit breaker/fuse [A]                           | DC:≥32AAC:≥10A                                               |
-  | Heat dissipation                                             | Air cooling                                                  |
-  | Airflow direction                                            | Front to back: port-side intake                              |
-  | Noise at normal temperature (acoustic power) [dB(A)]         | < 72 dB (meeting the ETSI 72 dBA standard)                   |
-  | Number of slots                                              | 7                                                            |
-  | Number of service board slots                                | 1                                                            |
-  | Switching capacity                                           | 2.4Tbit/s                                                    |
-  | Redundant power supply                                       | 1+1                                                          |
-  | Redundant fans                                               | 3+1,Short-term running when a single fan becomes invalid at the ambient temperature of 40°C (104°F) |
-  | Long-term operating temperature [°C(°F)]                     | Port-side Intake:-5°C ~ 45°C(23°F to 113°F)                  |
-  | Restriction on the operating temperature variation rate [°C(°F)] | ≤ 30°C/hour (86°F/hour)                                      |
-  | Storage temperature [°C(°F)]                                 | -40°C ~ 70°C(-40°F to 158°F)                                 |
-  | Long-term operating relative humidity [RH]                   | 5% to 90% RH, non-condensing                                 |
-  | Short-term operating relative humidity [RH]                  | 5% to 95% RH, non-condensing                                 |
-  | Storage relative humidity [RH]                               | 5% to 95% RH, non-condensing                                 |
-  | Long-term operating altitude [m(ft.)]                        | < 4000 m(< 13123.2 ft.)                                      |
-  | Storage altitude [m(ft.)]                                    | < 5000 m(< 16404.2 ft.)                                      |
-  | RTU supported                                                | Yes.<br/>82402000: NetEngine 8000 F1A-8H20Q Fixed Port 100GE Upgrade RTU<br/>82402001: NetEngine 8000 F1A-8H20Q Fixed Port 25GE Upgrade RTU<br/>82402002: NetEngine 8000 F1A-8H20Q Fixed Port 10GE Upgrade RTU<br/>For details about how to use the RTU, see "Installation >License Usage Guide". |
-
-### Версии ПО
-
-#### V800R012C00SPC300
-
-В данной версии проблем обнаружено не было.
-
 ## Конфигурация
 
 ### Базовая
+
+```bash
+clock timezone $NAME add HH:MM:SS # задать временную зону
+set save-configuration interval MM # сохранять current-config раз в MM минут
+```
+
+### Управление конфигурацией
 
 * `display configuration candidate changes` (`di co ca ch`) - показать различия между текущей и candidate(незакоммиченной) конфигурацией
 
 * `refresh configuration candidate` (`re co ca`) - если конфигурация была изменена во время конфигурирования, обновить измененный конфиг
 
 * `clear configuration candidate` (`c c c`) - очистить изменённую, но незакомиченную конфигурацию
-
-```bash
-clock timezone $NAME add HH:MM:SS # задать временную зону
-set save-configuration interval MM # сохранять current-config раз в MM минут
-```
 
 ### Интерфейсы
 
@@ -220,17 +160,17 @@ int $INT
 
 * Paragraph-by-paragraph - неинтерактивное изменение политики как текстового файла во встроенном текстовом редакторе (vim):
 
-  ```bash
-  # Вход в режим конфигурирования Paragraph-by-paragraph
-  <NE8000>edit xpl route-filter RF-NET_NAT
-  
-  # Комбинации в текстовом редакторе:
-  :q # выход при отсуствии изменений
-  :q! # выход без сохранения внесённых изменений
-  :wq # выход с сохранением внесённых изменений
-  i # вход в режим редактирования текста
-  Esc # выход из режима редактирования текста
-  ```
+	```bash
+	# Вход в режим конфигурирования Paragraph-by-paragraph
+	<NE8000>edit xpl route-filter RF-NET_NAT
+	
+	# Комбинации в текстовом редакторе:
+	:q # выход при отсуствии изменений
+	:q! # выход без сохранения внесённых изменений
+	:wq # выход с сохранением внесённых изменений
+	i # вход в режим редактирования текста
+	Esc # выход из режима редактирования текста
+	```
 
 * Line-by-line - интерактивное изменение политики в командной строке
 
@@ -318,7 +258,68 @@ interface $INTERFACE
  # Значения указываются в kbps
 ```
 
-
-
 ## Известные проблемы
 
+## Описание платформы
+
+### Варианты аппаратного исполнения
+
+Иметь дело довелось со следующими:
+
+#### Huawei NetEngine 8000 F1A-8H20Q
+
+Портовая ёмкость:
+
+* **28** x 1G / 10G
+* **20** x 1G / 10G / 25G
+* **8** x 40G / 50G / 100G / breakout 4x10G / breakout 4x25G
+
+Спецификация на CR8B0BKP03C0:
+
+| **Item**                                                     | **Specification**                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Cabinet installation standards                               | IEC 19-inch                                                  |
+| Dimensions without packaging (H x W x D) [mm(in.)]           | 43.6 mm x 442 mm x 420 mm (1.72 in. x 17.4 in. x 16.54 in.)  |
+| Dimensions with packaging (H x W x D) [mm(in.)]              | 175 mm x 550 mm x 650 mm (6.89 in. x 21.65 in. x 25.59 in.)  |
+| Chassis height [U]                                           | 1 U                                                          |
+| Weight without packaging (base configuration) [kg(lb)]       | 6.3 kg (13.89 lb)                                            |
+| Weight without packaging (full configuration) [kg(lb)]       | DC: 8.4 kg(18.52 lb)AC: 8.75 kg(19.29 lb)                    |
+| Weight with packaging (full configuration) [kg(lb)]          | DC: 13.58 kg(29.94 lb)AC: 13.75 kg(30.31 lb)                 |
+| Typical power consumption [W]                                | 325 W                                                        |
+| Typical heat dissipation [BTU/hour]                          | 1054.44 BTU/hour                                             |
+| MTBF [year]                                                  | DC: 25.52AC: 25.65                                           |
+| MTTR [hour]                                                  | 0.5 hour                                                     |
+| Availability                                                 | 0.99999                                                      |
+| CPU                                                          | 20-core 2.0 GHz                                              |
+| SDRAM                                                        | 16 GB                                                        |
+| Storage                                                      | 4G NAND FLASH                                                |
+| Power supply mode                                            | DC,AC/HVDC                                                   |
+| Rated input voltage [V]                                      | DC: -48 V/-60 VAC: 100 V to 240 V AC, support 240 V HVDC     |
+| Input voltage range [V]                                      | DC: -40 V to -72 VAC: 90V to 290V                            |
+| Maximum input current [A]                                    | DC: 30 AAC: 8 A                                              |
+| Rated output power [W]                                       | DC: 1000 WAC: 600 W                                          |
+| Maximum input cable diameter [mm²]                           | DC:4mm^2 (1-14 meters), 6mm^2 (15-21 meters), 10mm^2 (22-35 meters)AC:2.5mm^2 |
+| Front-end circuit breaker/fuse [A]                           | DC:≥32AAC:≥10A                                               |
+| Heat dissipation                                             | Air cooling                                                  |
+| Airflow direction                                            | Front to back: port-side intake                              |
+| Noise at normal temperature (acoustic power) [dB(A)]         | < 72 dB (meeting the ETSI 72 dBA standard)                   |
+| Number of slots                                              | 7                                                            |
+| Number of service board slots                                | 1                                                            |
+| Switching capacity                                           | 2.4Tbit/s                                                    |
+| Redundant power supply                                       | 1+1                                                          |
+| Redundant fans                                               | 3+1,Short-term running when a single fan becomes invalid at the ambient temperature of 40°C (104°F) |
+| Long-term operating temperature [°C(°F)]                     | Port-side Intake:-5°C ~ 45°C(23°F to 113°F)                  |
+| Restriction on the operating temperature variation rate [°C(°F)] | ≤ 30°C/hour (86°F/hour)                                      |
+| Storage temperature [°C(°F)]                                 | -40°C ~ 70°C(-40°F to 158°F)                                 |
+| Long-term operating relative humidity [RH]                   | 5% to 90% RH, non-condensing                                 |
+  | Short-term operating relative humidity [RH]                  | 5% to 95% RH, non-condensing                                 |
+  | Storage relative humidity [RH]                               | 5% to 95% RH, non-condensing                                 |
+  | Long-term operating altitude [m(ft.)]                        | < 4000 m(< 13123.2 ft.)                                      |
+  | Storage altitude [m(ft.)]                                    | < 5000 m(< 16404.2 ft.)                                      |
+  | RTU supported                                                | Yes.<br/>82402000: NetEngine 8000 F1A-8H20Q Fixed Port 100GE Upgrade RTU<br/>82402001: NetEngine 8000 F1A-8H20Q Fixed Port 25GE Upgrade RTU<br/>82402002: NetEngine 8000 F1A-8H20Q Fixed Port 10GE Upgrade RTU<br/>For details about how to use the RTU, see "Installation >License Usage Guide". |
+
+### Версии ПО
+
+#### V800R012C00SPC300
+
+В данной версии проблем обнаружено не было.

@@ -1,4 +1,4 @@
-title: Home
+title: home
 
 # **Hello there!**
 

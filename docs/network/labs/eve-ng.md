@@ -16,48 +16,48 @@ https://www.eve-ng.net/index.php/documentation/howtos/howto-add-cisco-iol-ios-on
 
 2. Исправляем права с помощью
 
-   ```bash
-   /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
-   ```
+	```bash
+	/opt/unetlab/wrappers/unl_wrapper -a fixpermissions
+	```
 
 3. Создать python-скрипт со следующим содержимым и закинуть его в `/opt/unetlab/addons/iol/bin/`:
 
-   ```python
-   #! /usr/bin/python
-   print("*********************************************************************")
-   print("Cisco IOU License Generator - Kal 2011, python port of 2006 C version")
-   print("Modified to work with python3 by c_d 2014")
-   import os
-   import socket
-   import hashlib
-   import struct
-   
-   # get the host id and host name to calculate the hostkey
-   hostid=os.popen("hostid").read().strip()
-   hostname = socket.gethostname()
-   ioukey=int(hostid,16)
-   for x in hostname:
-    ioukey = ioukey + ord(x)
-   print("hostid=" + hostid +", hostname="+ hostname + ", ioukey=" + hex(ioukey)[2:])
-   
-   # create the license using md5sum
-   iouPad1 = b'\x4B\x58\x21\x81\x56\x7B\x0D\xF3\x21\x43\x9B\x7E\xAC\x1D\xE6\x8A'
-   iouPad2 = b'\x80' + 39*b'\0'
-   md5input=iouPad1 + iouPad2 + struct.pack('!i', ioukey) + iouPad1
-   iouLicense=hashlib.md5(md5input).hexdigest()[:16]
-   
-   print("\nAdd the following text to ~/.iourc:")
-   print("[license]\n" + hostname + " = " + iouLicense + ";\n")
-   print("You can disable the phone home feature with something like:")
-   print(" echo '127.0.0.127 xml.cisco.com' >> /etc/hosts\n")
-   ```
+	```python
+	#! /usr/bin/python
+	
+	print("Cisco IOU License Generator - Kal 2011, python port of 2006 C version")
+	print("Modified to work with python3 by c_d 2014")
+	import os
+	import socket
+	import hashlib
+	import struct
+	
+	# get the host id and host name to calculate the hostkey
+	hostid=os.popen("hostid").read().strip()
+	hostname = socket.gethostname()
+	ioukey=int(hostid,16)
+	for x in hostname:
+	 ioukey = ioukey + ord(x)
+	print("hostid=" + hostid +", hostname="+ hostname + ", ioukey=" + hex(ioukey)[2:])
+	
+	# create the license using md5sum
+	iouPad1 = b'\x4B\x58\x21\x81\x56\x7B\x0D\xF3\x21\x43\x9B\x7E\xAC\x1D\xE6\x8A'
+	iouPad2 = b'\x80' + 39*b'\0'
+	md5input=iouPad1 + iouPad2 + struct.pack('!i', ioukey) + iouPad1
+	iouLicense=hashlib.md5(md5input).hexdigest()[:16]
+	
+	print("\nAdd the following text to ~/.iourc:")
+	print("[license]\n" + hostname + " = " + iouLicense + ";\n")
+	print("You can disable the phone home feature with something like:")
+	print(" echo '127.0.0.127 xml.cisco.com' >> /etc/hosts\n")
+	```
 
 4. Запустить этот скрипт `chmod +x iollicense.py && python2 iollicense.py`, его вывод типа
 
-   ```bash
-   [license]
-   unl01 = 0123456789abcdef;
-   ```
+	```bash
+	[license]
+	unl01 = 0123456789abcdef;
+	```
 
 5. закинуть в `/opt/unetlab/addons/iol/bin/`.
 
@@ -122,45 +122,45 @@ https://www.eve-ng.net/index.php/documentation/howtos/howto-add-cisco-nexus-9000
 
 3. Зайти на устройство, отменить POAP - при включении появляется сообщение типа 
 
-   ```bash
-   Abort Power On Auto Provisioning [yes - continue with normal setup, skip - bypass password and basic configuration, no - continue with Power On Auto Provisioning] (yes/skip/no)[no] yes
-   ```
+	```bash
+	Abort Power On Auto Provisioning [yes - continue with normal setup, skip - bypass password and basic configuration, no - continue with Power On Auto Provisioning] (yes/skip/no)[no] yes
+	```
    
-   не захотеть применять политику сложности пароля
+	не захотеть применять политику сложности пароля
    
-   ```bash
-   Do you want to enforce secure password standard (yes/no) [y]: no
-   ```
+	```bash
+	Do you want to enforce secure password standard (yes/no) [y]: no
+	```
    
-   вбить учетные данные для admin, отменить `basic configuration dialog (yes/no): no`
+	вбить учетные данные для admin, отменить `basic configuration dialog (yes/no): no`
 
 4. В памяти найти образ системы:
 
-   ```bash
-   switch# dir bootflash:
-          4096    Jan 09 06:45:40 2021  .rpmstore/
-          4096    Jan 09 06:46:09 2021  .swtam/
-          3490    Jan 09 06:48:08 2021  20210109_064743_poap_31927_init.log
+	```bash
+	switch# dir bootflash:
+	       4096    Jan 09 06:45:40 2021  .rpmstore/
+	       4096    Jan 09 06:46:09 2021  .swtam/
+	       3490    Jan 09 06:48:08 2021  20210109_064743_poap_31927_init.log
                                         # Вот он
-    1339749888    Aug 20 16:21:45 2019  nxos.9.2.4.bin
-             0    Jan 09 06:52:35 2021  platform-sdk.cmd
-          4096    Jan 09 06:47:36 2021  scripts/
-          4096    Jan 09 06:48:47 2021  virt_strg_pool_bf_vdc_1/
-          4096    Jan 09 06:46:55 2021  virtual-instance/
-            59    Jan 09 06:46:46 2021  virtual-instance.conf
-   ```
+	 1339749888    Aug 20 16:21:45 2019  nxos.9.2.4.bin
+	          0    Jan 09 06:52:35 2021  platform-sdk.cmd
+	       4096    Jan 09 06:47:36 2021  scripts/
+	       4096    Jan 09 06:48:47 2021  virt_strg_pool_bf_vdc_1/
+	       4096    Jan 09 06:46:55 2021  virtual-instance/
+	         59    Jan 09 06:46:46 2021  virtual-instance.conf
+	```
 
-   задать путь до этого образа для загрузки при старте:
+	задать путь до этого образа для загрузки при старте:
 
-   ```bash
-   switch# conf t
-   Enter configuration commands, one per line. End with CNTL/Z.
-   switch(config)# boot nxos bootflash:nxos.9.2.4.bin
-   Performing image verification and compatibility check, please wait....
-   switch# copy running-config startup-config
-   ```
+	```bash
+	switch# conf t
+	Enter configuration commands, one per line. End with CNTL/Z.
+	switch(config)# boot nxos bootflash:nxos.9.2.4.bin
+	Performing image verification and compatibility check, please wait....
+	switch# copy running-config startup-config
+	```
 
-   При каждом стирании настроек с устройства необходимо повторять процедуру из этого пункта, иначе устройство не сможет найти свой образ системы.
+	При каждом стирании настроек с устройства необходимо повторять процедуру из этого пункта, иначе устройство не сможет найти свой образ системы.
 
 5. Готово емае
 
@@ -218,18 +218,18 @@ https://www.eve-ng.net/index.php/documentation/howtos/howto-add-cisco-asav/
 
 2. Чтобы присутствовала возможность управлять ASAv через telnet необходимо сделать:
 
-   ```bash
-   cd /opt/unetlab/addons/qemu/asav-9101-100/
-   apt update
-   apt install libguestfs-tools
-   
-   guestfish -a virtioa.qcow2 
-   run # Подождать окончания выполнения, затем
-   mount /dev/sda2 /
-   touch /use_ttyS0
-   umount /
-   exit
-   ```
+	```bash
+	cd /opt/unetlab/addons/qemu/asav-9101-100/
+	apt update
+	apt install libguestfs-tools
+	
+	guestfish -a virtioa.qcow2 
+	run # Подождать окончания выполнения, затем
+	mount /dev/sda2 /
+	touch /use_ttyS0
+	umount /
+	exit
+	```
 
 3. Поправить права `/opt/unetlab/wrappers/unl_wrapper -a fixpermissions`
 
@@ -292,10 +292,10 @@ https://www.eve-ng.net/index.php/documentation/howtos/howto-add-mikrotik-cloud-r
 
 3. Создать папку `/opt/unetlab/addons/qemu/mikrotik-X.X.X/`(в соотв с версией RouterOS). Конвертировать .img диск в .qcow2 формат:
 
-   ```bash
-   cd /opt/unetlab/addons/qemu/mikrotik-6.48/
-   mv chr-6.48.img hda.qcow2
-   ```
+	```bash
+	cd /opt/unetlab/addons/qemu/mikrotik-6.48/
+	mv chr-6.48.img hda.qcow2
+	```
 
 4. Поправить права `/opt/unetlab/wrappers/unl_wrapper -a fixpermissions`
 

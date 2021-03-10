@@ -1,3 +1,3 @@
-title: CloudEngine 6300
+title: CloudEngine S6300
 
-# Huawei CloudEngine 6300
+# Huawei CloudEngine S6300

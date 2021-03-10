@@ -1,7 +1,8 @@
 title: home
 arrange:
+    - index.md
     - network
-    - linux
+    - nix
     - programming
     - readthedocs
     - windows
