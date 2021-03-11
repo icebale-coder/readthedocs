@@ -158,7 +158,272 @@ Rollback (откат) конфигурации выполняется, очев�
 
 ### Подгрузка конфигурации
 
+Подробная дока от Juniper [здесь](https://www.juniper.net/documentation/en_US/junos/topics/topic-map/junos-config-files-loading.html)
 
+Подргрузка конфигурации выполняется в Configuration режиме командой `load`. Подгрузка выполняется в candidate конфигурацию, т.е. после подгрузки необходимо дополнительно произвести commit этой конфигурации. 
+
+Для каждого способа подгрузки конфигурации есть возможность подгружать из файла, указывая `<filename>` после самой команды, или же вводя конфигурацию в сам терминал, добавив `terminal` после самой команды. В таком случае появится поле ввода конфигурации, из которого можно выйти набрав комбинацию Ctrl+D:
+
+```bash
+[edit]
+root@RZN-RR-P1# load merge terminal                      
+[Type ^D at a new line to end input]
+interfaces {
+    lo0 {
+        unit 0 {
+            description "== Lo0.0 ==";
+            family inet {
+                address 1.1.1.1/32;
+            }
+        }
+        unit 1 {                        
+            description "== Lo0.1 ==";
+            family inet {
+                address 2.2.2.2/32;
+            }
+        }
+    }
+}
+load complete
+```
+
+Также можно использовать параметр `relative`, который позволяет подгружать конфигурацию с учётом текущего уровня иерархии:
+
+```bash
+[edit interfaces lo0]
+root@RZN-RR-P1# load merge relative terminal   
+[Type ^D at a new line to end input]
+unit 0 {
+    description "== Lo0.0 ==";
+    family inet {
+        address 1.1.1.1/32;
+    }
+}
+load complete
+```
+
+Существует множество способов подгрузки конфигурации:
+
+* `load factory-default` - сбросить конфигурацию до стандартной, является своеобразным soft-reset. Не удаляет никакие локальные данные на устройстве.
+
+* `load merge` - подгружает конфигурацию в дополнение к существующей candidate конфигурации:
+
+	```bash
+	[edit interfaces lo0 unit 1]
+	root@RZN-RR-P1# show      
+	description "== Lo0.1 ==";
+	family inet {
+	    address 2.2.2.2/32;
+	}
+	
+	[edit interfaces lo0 unit 1]
+	root@RZN-RR-P1# load merge relative terminal 
+	[Type ^D at a new line to end input]
+	family inet {
+	    address 20.20.20.20/32;
+	}
+	load complete
+	
+	[edit interfaces lo0 unit 1]
+	root@RZN-RR-P1# show | compare                  
+	[edit interfaces lo0 unit 1 family inet]
+	     address 2.2.2.2/32 { ... }
+	+    address 20.20.20.20/32;
+	```
+
+* `load update` - подгружает конфигурацию, заменяя только те части конфигурации, которые изменились:
+
+	```bash
+	[edit interfaces lo0 unit 1]
+	root@RZN-RR-P1# show                             
+	description "== Lo0.1 ==";
+	family inet {
+	    address 2.2.2.2/32;
+	}
+	
+	[edit interfaces lo0 unit 1]
+	root@RZN-RR-P1# load update relative terminal    
+	[Type ^D at a new line to end input]
+	family inet {
+	    address 20.20.20.20/32;
+	}
+	load complete
+	
+	[edit interfaces lo0 unit 1]
+	root@RZN-RR-P1# show | compare 
+	[edit interfaces lo0 unit 1]
+	- description "== Lo0.1 ==";
+	[edit interfaces lo0 unit 1 family inet]
+	+    address 20.20.20.20/32;
+	-    address 2.2.2.2/32;
+	```
+
+* `load override` - подгружает конфигурацию, полностью заменяя текущую candidate конфигурацию. Поэтому выполняться может только из под корня иерархии
+
+* `load set` - подгружает конфигурацию в виде операторов set, в остальном логика подгрузки аналогична merge
+
+* `load replace` - логика подгрузки конфигурации такая же, как и у `merge`, но `replace` ищет в подгружаемой конфигурации перед контекстами теги `replace:`, и если таковой флаг находится, то конфигурация данного контекста полностью меняется на подгружаемую.
+
+	Например, у нас существует контекст **interfaces**, и нам захотелось полностью сменить конфигурацию интерфейса lo0, в таком случае делаем:
+
+	```bash
+	[edit]
+	root@RZN-RR-P1# load replace terminal 
+	[Type ^D at a new line to end input]
+	interfaces {
+	    fxp0 {
+	        unit 0 {
+	            family inet {
+	                dhcp {
+	                    vendor-id Juniper-vmx-VM60483EFF22;
+	                }
+	            }
+	        }
+	    }
+	    replace:
+	    lo0 {
+	        unit 0 {
+	            description "== New Lo0.0 ==";
+	            family inet {
+	                address 10.0.0.1/32;
+	            }
+	            family inet6 {
+	                address 2001::1/128;
+	            }
+	        }
+	        unit 10 {                        
+	            description "== New Lo0.10 ==";
+	            family inet {
+	                address 10.10.10.1/32;
+	            }
+	            family inet6 {
+	                address 2001::10/128;
+	            }
+	        }
+	    }
+	}
+	load complete
+	```
+
+	И конфигурация контекста lo0 меняется полностью:
+
+	=== "Начальная"
+		```bash
+		root@RZN-RR-P1# run show configuration interfaces lo0 
+		unit 0 {
+		    description "== LOL ==";
+		    family inet {
+		        address 1.1.1.1/32;
+		    }
+		}
+		unit 1 {
+		    description "== KEK ==";
+		    family inet {
+		        address 2.2.2.2/32;
+		    }
+		}
+		```
+
+	=== "После replace:"
+		```bash
+		[edit interfaces lo0]
+		root@RZN-RR-P1# show    
+		unit 0 {
+		    description "== New Lo0.0 ==";
+		    family inet {
+		        address 10.0.0.1/32;
+		    }
+		    family inet6 {
+		        address 2001::1/128;
+		    }
+		}
+		unit 10 {
+		    description "== New Lo0.10 ==";
+		    family inet {
+		        address 10.10.10.1/32;
+		    }
+		    family inet6 {
+		        address 2001::10/128;
+		    }
+		}
+		```
+
+	=== "show | compare"
+
+		```bash
+		[edit]
+		root@RZN-RR-P1# show | compare    
+		[edit interfaces lo0 unit 0]
+		-    description "== LOL ==";
+		+    description "== New Lo0.0 ==";
+		[edit interfaces lo0 unit 0 family inet]
+		+       address 10.0.0.1/32;
+		-       address 1.1.1.1/32;
+		[edit interfaces lo0 unit 0]
+		+      family inet6 {
+		+          address 2001::1/128;
+		+      }
+		[edit interfaces lo0]
+		-    unit 1 {
+		-        description "== KEK ==";
+		-        family inet {
+		-            address 2.2.2.2/32;
+		-        }
+		-    }
+		+    unit 10 {
+		+        description "== New Lo0.10 ==";
+		+        family inet {
+		+            address 10.10.10.1/32;
+		+        }
+		+        family inet6 {
+		+            address 2001::10/128;      
+		+        }
+		+    }
+		```
+
+* `load patch` - подгружает дифф конфигурации, формируемый командами `show | compare` (по другому - patch file) и применяет все изменения, указанные в диффе. Например, если подгрузить такой патч файл:
+
+	```bash
+	[edit]
+	root@RZN-RR-P1# load patch terminal 
+	[Type ^D at a new line to end input]
+	[edit interfaces lo0]
+	-    unit 1 {
+	-        description "== Lo0.1 ==";
+	-        family inet {
+	-            address 2.2.2.2/32;
+	-        }
+	-    }
+	+    unit 2 {
+	+        description "== Lo0.2 ==";
+	+        family inet {
+	+            address 2.2.2.2/32;
+	+        }
+	+    }
+	load complete
+	```
+
+	То при проверке изменений между текущей и candidate конфигурацией мы увидим такие же изменения:
+
+	```bash
+	[edit]
+	root@RZN-RR-P1# show | compare         
+	[edit interfaces lo0]
+	-    unit 1 {
+	-        description "== Lo0.1 ==";
+	-        family inet {
+	-            address 2.2.2.2/32;
+	-        }
+	-    }
+	+    unit 2 {
+	+        description "== Lo0.2 ==";
+	+        family inet {
+	+            address 2.2.2.2/32;
+	+        }
+	+    }
+	```
+
+	Данный способ подгруза конфигурации очень удобен при подгрузе одинаковой конфигурации на множество устройств, поскольку вам нужно будет лишь подкидывать patch файл, и все изменения будут применятся в соответствии с этим диффом.
 
 ## Комментарии
 
@@ -174,7 +439,7 @@ annotate <context> <comment string>
 
 ```bash
 login {
-    /* keker */
+    /* COMMENT */
     user admin {
         uid 2000;
         class super-user;
