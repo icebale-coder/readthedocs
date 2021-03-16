@@ -1,2 +1,2 @@
 # TechMind
-Selfdocing
+Selfdocsing
