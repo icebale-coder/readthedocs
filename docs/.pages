@@ -2,4 +2,5 @@ title: home
 arrange:
     - index.md
     - network
+    - linux
 
