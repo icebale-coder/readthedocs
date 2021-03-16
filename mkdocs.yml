@@ -1,11 +1,11 @@
 # Main config
 
 # Basic info
-site_name: reactive deer's brain cave
-site_description: Everything I know so far
-site_author: Dmitriy Salatkin
-repo_name: reactive-deer/knowledge_database
-repo_url: https://github.com/reactive-deer/knowledge_database
+site_name: selfdocing
+site_description: Join me and enjoy thr jorney (c) AJ Hoge
+site_author: Alex Bar
+repo_name: icebale/readthedocs
+repo_url: https://github.com/icebale-coder/readthedocs
 
 # Extensions to MD
 markdown_extensions:
@@ -44,11 +44,11 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/reactive-deer
+      link: https://github.com/icebale-coder
     - icon: fontawesome/brands/vk
-      link: https://vk.com/reactive_deer
+      link: https://vk.com/icebale
     - icon: fontawesome/brands/telegram
-      link: https://t.me/reactive_deer
+      link: https://t.me/icebale
 
 # MKDocs theme params
 theme:
@@ -80,6 +80,5 @@ plugins:
       collapse_single_pages: true
       strict: false
 
-
 # Copyright
-copyright: "Dmitriy Salatkin &copy; 2020-2021"
+copyright: "Alex Bar &copy; 2020-2021"
