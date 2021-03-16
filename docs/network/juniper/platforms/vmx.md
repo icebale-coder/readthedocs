@@ -1,3 +1,0 @@
-title: vMX
-
-# Juniper vMX

@@ -1,4 +1,0 @@
-title: RouterOS
-
-# RouterOS MikroTik
-
