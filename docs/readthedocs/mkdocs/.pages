@@ -1,5 +1,0 @@
-title: "MkDocs"
-arrange:
-  - mkdocs-install.md
-  - mkdocs-config.md
-  - mkdocs-web-server.md
