@@ -3,8 +3,5 @@ arrange:
     - index.md
     - network
     - nix
-    - programming
-    - readthedocs
-    - windows
-    - standards
-    - references
+    - python
+
