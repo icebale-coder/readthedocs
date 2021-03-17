@@ -1,3 +1,12 @@
-title: Base
+title: Centos v3
 
-# Базовая настройка
+# Конфигурация Centos
+
+## Настройка zabbix
+
+* ```bash
+[code]
+	set 
+	
+	```
+
