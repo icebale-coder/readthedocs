@@ -1,4 +1,4 @@
-title: Centos1
+title: Centos v1
 
 # Конфигурация Centos
 

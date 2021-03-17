@@ -1,4 +1,4 @@
-title: Centos2
+title: Centos v2
 
 # Конфигурация Centos
 
