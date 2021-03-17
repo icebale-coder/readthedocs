@@ -1,3 +1,3 @@
-title: LAMP 
+title: LAMP
 
 # Apache + Mysql + PHP
