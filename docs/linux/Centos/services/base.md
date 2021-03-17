@@ -1,3 +1,3 @@
-title: Базовая настройка
+title: Base services
 
-# Base services
+# Базовая настройка
