@@ -1,4 +1,4 @@
-title: Centos v3
+title: NNN
 
 # Конфигурация Centos
 
