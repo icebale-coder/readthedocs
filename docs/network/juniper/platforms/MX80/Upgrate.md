@@ -32,9 +32,11 @@ admin@MBR> show version
 </details>
 
 ##  Через scp - копируем пакет обновлений в /var/tmp 
-```bash
-jinstall-ppc-19.4R3.11-signed.tgz
-```
+освободить место
+<details><summary>jinstall-ppc-19.4R3.11-signed.tgz</summary>
+</p>
+</p>
+</details>
 
 ##  Вход в шел freebsd - посмотреть размер свободного места
 <details><summary>start shell</summary>
@@ -81,6 +83,9 @@ admin@MBR> start shell
 
 ##  Очищаем логи - удаляем ненужные файлы, чтобы освободить место
 <details><summary>request system storage cleanup</summary>
+</p>
+</p>
+</details>
 
 ##  Cохраняем состояние системы  до обновления (делаем snapshot системы)
 <details><summary>request system snapshot </summary>
