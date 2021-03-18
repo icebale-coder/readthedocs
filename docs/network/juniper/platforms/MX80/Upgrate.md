@@ -1017,6 +1017,7 @@ request system reboot
 ## 9. Cохраняем состояние системы  после обновления (делаем snapshot системы)
 <details><summary>request system snapshot</summary>
 <p>
+
 ```bash
    request system snapshot 
 	Verifying compatibility of destination media partitions...
@@ -1028,6 +1029,7 @@ request system reboot
 ```
 </p>
 </details>
+
 
 ## 10.  Посмотреть новую версию ПО
 <details><summary>show version </summary>
@@ -1070,3 +1072,4 @@ request system reboot
 ```
 </p>
 </details>
+```
