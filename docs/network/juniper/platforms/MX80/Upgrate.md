@@ -280,35 +280,40 @@ admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tg
 	Saving package file in /var/sw/pkg/jinstall-ppc-19.4R3.11-signed.tgz ...
 	Saving state for rollback ...
 ```
-##  Перезагружаем систему	
+</p>
+</details>
+
+##  Перезагружаем систему
+<details><summary>request system reboot</summary>
+<p>
 ```bash
 request system reboot
    ==================================================================================
 
 		MBR
 	 (ttyu0)
-
+	
 		login:
 		MBR
 	 (ttyu0)
-
+	
 		login:
 		MBR
 	 (ttyu0)
-
+	
 		login: 
 		MBR
 	 (ttyu0)
-
+	
 		logiadmin
 		Password:
-
+	
 		--- JUNOS 15.1R7.8 built 2018-04-27 20:48:29 UTC
 		admin@MBR
 	>                                                                                                                                                                                                                              
 		*** FINAL System shutdown message from admin@MBR
 	 ***
-
+	
 		System going down IMMEDIATELY
 
 
@@ -317,7 +322,7 @@ request system reboot
 		Waiting (max 60 seconds) for system process `bufdaemon' to stop...done
 		Waiting (max 60 seconds) for system process `syncer' to stop...
 		Syncing disks, vnodes remaining...0 0 0 done
-
+	
 		syncing disks... All buffers synced.
 		Uptime: 365d14h47m17s
 		recorded reboot as normal shutdown
@@ -326,7 +331,7 @@ request system reboot
 
 
 		U-Boot 1.1.6 (Feb  3 2010 - 11:57:02)
-
+	
 		CPU:   8572, Version: 2.1, (0x80e00021)
 		Core0:  E500, Version: 3.0, (0x80210030)
 		Clock Configuration:
@@ -344,24 +349,24 @@ request system reboot
 		Now running in RAM - U-Boot at: 0ffa0000
 		Enable CPLD Watchdog
 		POST: U-boot memory location PASSED
-
+	
 		Scaning PCIE bus:
-
+	
 		Scanning PCI Express` Bus .. for bus 0
 		    Found(0.0.0), (0x1957,0x41) Class(0xb20) :MPC8572 PCIE Controller
 		    BAR0 = 0xc0000000
-
+	
 		Scanning PCI Express` Bus .. for bus 1
 		    Found(1.0.0), (0x10b5,0x8112) Class(0x604) :PEX8112 PCIe-to-PCI Bridge
 		    BAR0 = 0xc0100000    BAR1 = 0x0
-
+	
 		Scanning PCI Express` Bus .. for bus 2
 		    Found(2.1.0), (0x1033,0x35) Class(0xc03) :uPD720101/2 USB(OHCI) Controller
 		    BAR0 = 0xc0200000
 		    Found(2.1.1), (0x1033,0xe0) Class(0xc03) :uPD720101/2 USB(EHCI) Controller
 		    BAR0 = 0xc0201000
 		 ----------- PCIE scan complete, last bus = 2 ------------
-
+	
 		FLASH:  8 MB
 		L2 cache 1MB: enabled
 		In:    serial
@@ -389,7 +394,7 @@ request system reboot
 		USB
 		nand-flash0
 		nand-flash1
-
+	
 		FreeBSD/PowerPC U-Boot bootstrap loader, Revision 2.2
 		(vaidyasd@svl-junos-pool69.juniper.net, Wed Feb  3 09:50:07 PST 2010)
 		Memory: 2048MB
@@ -684,7 +689,7 @@ request system reboot
 		Waiting (max 60 seconds) for system process `bufdaemon' to stop...done
 		Waiting (max 60 seconds) for system process `syncer' to stop...
 		Syncing disks, vnodes remaining...0 0 done
-
+	
 		syncing disks... All buffers synced.
 		Uptime: 11m59s
 		Rebooting...
@@ -692,7 +697,7 @@ request system reboot
 
 
 		U-Boot 1.1.6 (Feb  3 2010 - 11:57:02)
-
+	
 		CPU:   8572, Version: 2.1, (0x80e00021)
 		Core0:  E500, Version: 3.0, (0x80210030)
 		Clock Configuration:
@@ -710,24 +715,24 @@ request system reboot
 		Now running in RAM - U-Boot at: 0ffa0000
 		Enable CPLD Watchdog
 		POST: U-boot memory location PASSED
-
+	
 		Scaning PCIE bus:
-
+	
 		Scanning PCI Express` Bus .. for bus 0
 		    Found(0.0.0), (0x1957,0x41) Class(0xb20) :MPC8572 PCIE Controller
 		    BAR0 = 0xc0000000
-
+	
 		Scanning PCI Express` Bus .. for bus 1
 		    Found(1.0.0), (0x10b5,0x8112) Class(0x604) :PEX8112 PCIe-to-PCI Bridge
 		    BAR0 = 0xc0100000    BAR1 = 0x0
-
+	
 		Scanning PCI Express` Bus .. for bus 2
 		    Found(2.1.0), (0x1033,0x35) Class(0xc03) :uPD720101/2 USB(OHCI) Controller
 		    BAR0 = 0xc0200000
 		    Found(2.1.1), (0x1033,0xe0) Class(0xc03) :uPD720101/2 USB(EHCI) Controller
 		    BAR0 = 0xc0201000
 		 ----------- PCIE scan complete, last bus = 2 ------------
-
+	
 		FLASH:  8 MB
 		L2 cache 1MB: enabled
 		In:    serial
@@ -755,7 +760,7 @@ request system reboot
 		USB
 		nand-flash0
 		nand-flash1
-
+	
 		FreeBSD/PowerPC U-Boot bootstrap loader, Revision 2.2
 		(vaidyasd@svl-junos-pool69.juniper.net, Wed Feb  3 09:50:07 PST 2010)
 		Memory: 2048MB
@@ -870,7 +875,7 @@ request system reboot
 		Trying to mount root from ufs:/dev/da0s1a
 		Attaching /packages/jbase via /dev/mdctl...
 		Mounted jbase package on /dev/md0...
-
+	
 		Verified manifest signed by PackageProductionECP256_2020 method ECDSA256+SHA256
 		Verified jboot signed by PackageProductionECP256_2020 method ECDSA256+SHA256
 		Verified jbase-ppc-19.4R3.11 signed by PackageProductionECP256_2020 method ECDSA256+SHA256
@@ -977,32 +982,32 @@ request system reboot
 		Doing additional network setup: ntpdate.
 		Starting final network daemons:.Loading JUNOS chassis module
 		chassis_init_hw_chassis_startup_time: chassis startup time 0.000000
-
+	
 		 chassis.ko loaded setting ldconfig path: /usr/lib /opt/lib
 		starting standard daemons: cron.
 		Initial rc.powerpc initialization:.
-
+	
 		 Lock Manager
 		RDM Embedded 7 [04-Aug-2006] http://www.birdstep.com
 		Copyright (c) 1992-2006 Birdstep Technology, Inc.  All Rights Reserved.
-
+	
 		Unix Domain sockets Lock manager
 		Lock manager 'lockmgr' started successfully.
-
+	
 		Database Initialization Utility
 		RDM Embedded 7 [04-Aug-2006] http://www.birdstep.com
 		Copyright (c) 1992-2006 Birdstep Technology, Inc.  All Rights Reserved.
-
+	
 		Profile database initialized
 		Local package initialization:.
 		kern.securelevel: -1 -> 1
 		starting local daemons:set cores for group access
 		.
 		Tue Feb 16 11:04:40 GMT-7 2021
-
+	
 		MBR
 	 (ttyu0)
-
+	
 		login: Feb 16 11:04:57 init: license-service (PID 2112) sending signal hup: due to "proto-mastership": 0x1
 ```
 </p>
@@ -1012,7 +1017,7 @@ request system reboot
 <details><summary>request system snapshot</summary>
 <p>
 
-```bash
+​```bash
 > request system snapshot 
 	Verifying compatibility of destination media partitions...
 	Running newfs (899MB) on internal media  / partition (da1s1a)...
