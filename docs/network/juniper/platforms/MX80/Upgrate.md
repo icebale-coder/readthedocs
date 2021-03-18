@@ -1014,8 +1014,8 @@ request system reboot
 </p>
 </details>
 
-## 9. Cохраняем состояние системы  после обновления (делаем snapshot системы)
-<details><summary>request system snapshot</summary>
+##  9. Cохраняем состояние системы  после обновления (делаем snapshot системы)
+<details><summary>request system snapshot </summary>
 <p>
 ```bash
 > request system snapshot 
