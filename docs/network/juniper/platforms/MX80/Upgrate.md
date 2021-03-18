@@ -1031,3 +1031,15 @@ request system reboot
 	JUNOS Kernel Software Suite [19.4R3.11]
 	JUNOS Routing Software Suite [19.4R3.11]
 ```
+
+
+## collapsible markdown?
+
+<details><summary>CLICK ME</summary>
+<p>
+
+```python
+print("hello world!")
+```
+</p>
+</details>
