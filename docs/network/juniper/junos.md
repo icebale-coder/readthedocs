@@ -1,12 +1,10 @@
 title: JunOS
 
-# Конфигурация JunOS
+# JunOS
 
-## Настройка netflow v5
+## Общая информация и характристика системы
 
 * ```bash
-[code]
-	set 
-	
+OS FreeBSD
 	```
 
