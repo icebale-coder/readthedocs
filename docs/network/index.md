@@ -1,4 +1,3 @@
-title: WTF
+title: Descrambler
 
-# Network
-Nework is a long way to home...
+Network is a long way to home...
