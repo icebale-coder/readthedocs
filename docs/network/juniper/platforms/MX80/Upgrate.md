@@ -1,6 +1,9 @@
 # Процесс обновление JunOS Juniper MX80  
 
+
 ##  Посмотреть текущую версию ПО
+<details><summary>show version</summary>
+<p>
 
 ```bash
 admin@MBR> show version 
@@ -25,6 +28,9 @@ admin@MBR> show version
 	JUNOS Services IPSec [15.1R7.8]
 	JUNOS Kernel Software Suite [15.1R7.8]
 ```
+</p>
+</details>
+
 ##  Через scp - копируем пакет обновлений в /var/tmp 
 ```bash
 jinstall-ppc-19.4R3.11-signed.tgz
