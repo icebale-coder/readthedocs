@@ -1,7 +1,7 @@
 # Процесс обновление JunOS Juniper MX80  
 
 
-##  Посмотреть текущую версию ПО
+##  1. Посмотреть текущую версию ПО
 <details><summary>show version</summary>
 <p>
 
@@ -31,14 +31,13 @@ admin@MBR> show version
 </p>
 </details>
 
-##  Через scp - копируем пакет обновлений в /var/tmp 
-освободить место
+##  2. Через scp - копируем пакет обновлений в /var/tmp 
 <details><summary>jinstall-ppc-19.4R3.11-signed.tgz</summary>
-</p>
+<p>
 </p>
 </details>
 
-##  Вход в шел freebsd - посмотреть размер свободного места
+##  3. Вход в шел freebsd - посмотреть размер свободного места
 <details><summary>start shell</summary>
 <p>
 
@@ -81,13 +80,13 @@ admin@MBR> start shell
 </p>
 </details>
 
-##  Очищаем логи - удаляем ненужные файлы, чтобы освободить место
+##  4. Очищаем логи - удаляем ненужные файлы, чтобы освободить место
 <details><summary>request system storage cleanup</summary>
-</p>
+<p>
 </p>
 </details>
 
-##  Cохраняем состояние системы  до обновления (делаем snapshot системы)
+##  5. Cохраняем состояние системы  до обновления (делаем snapshot системы)
 <details><summary>request system snapshot </summary>
 <p>
 ```bash
@@ -102,7 +101,7 @@ admin@MBR> start shell
 </p>
 </details>
 
-##  Проверяем инсталляционный пакет
+##  6. Проверяем инсталляционный пакет
 <details><summary>request system software validate /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz</summary>
 <p>
 ```bash
@@ -179,10 +178,9 @@ admin@MBR> request system software validate /var/tmp/jinstall-ppc-19.4R3.11-sign
 </p>
 </details>
 
-##  Устанавливаем новый инсталляционный пакет Junos
+##  7. Устанавливаем новый инсталляционный пакет Junos
 <details><summary>request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz</summary>
 <p>
-
 ```bash
 admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz          
 	NOTICE: Validating configuration against jinstall-ppc-19.4R3.11-signed.tgz.
@@ -266,27 +264,27 @@ admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tg
 	WARNING:     and log files, but this can not be guaranteed.  This is the
 	WARNING:     pre-installation stage and all the software is loaded when
 	WARNING:     you reboot the system.
-
+	
 	Saving the config files ...
 	NOTICE: uncommitted changes have been saved in /var/db/config/juniper.conf.pre-install
 	Installing the bootstrap installer ...
-
+	
 	WARNING:     A REBOOT IS REQUIRED TO LOAD THIS SOFTWARE CORRECTLY. Use the
 	WARNING:     'request system reboot' command when software installation is
 	WARNING:     complete. To abort the installation, do not reboot your system,
 	WARNING:     instead use the 'request system software delete jinstall'
 	WARNING:     command as soon as this operation completes.
-
+	
 	Saving package file in /var/sw/pkg/jinstall-ppc-19.4R3.11-signed.tgz ...
 	Saving state for rollback ...
 ```
 </p>
 </details>
 
-##  Перезагружаем систему
+##  8. Перезагружаем систему
 <details><summary>request system reboot</summary>
 <p>
-```bash
+​```bash
 request system reboot
    ==================================================================================
 
@@ -770,6 +768,8 @@ request system reboot
 		/kernel data=0xeb1000+0x1149d4 syms=[0x4+0xb39a0+0x4+0x1105d3]
 
 
+
+
 		Hit [Enter] to boot immediately, or space bar for command prompt.
 		Booting [/kernel]...
 		Kernel entry at 0xa00000c0 ...
@@ -1010,14 +1010,14 @@ request system reboot
 	
 		login: Feb 16 11:04:57 init: license-service (PID 2112) sending signal hup: due to "proto-mastership": 0x1
 ```
+
 </p>
 </details>
 
-##  Cохраняем состояние системы  после обновления (делаем snapshot системы)
+## 9. Cохраняем состояние системы  после обновления (делаем snapshot системы)
 <details><summary>request system snapshot</summary>
 <p>
-
-​```bash
+```bash
 > request system snapshot 
 	Verifying compatibility of destination media partitions...
 	Running newfs (899MB) on internal media  / partition (da1s1a)...
@@ -1029,7 +1029,7 @@ request system reboot
 </p>
 </details>
 
-##  Посмотреть новую версию ПО
+## 10.  Посмотреть новую версию ПО
 <details><summary>show version </summary>
 <p>
 ```bash
@@ -1070,4 +1070,3 @@ request system reboot
 ```
 </p>
 </details>
-```
