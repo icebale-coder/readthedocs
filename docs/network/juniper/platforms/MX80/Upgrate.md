@@ -35,9 +35,11 @@ admin@MBR> show version
 ```bash
 jinstall-ppc-19.4R3.11-signed.tgz
 ```
+
 ##  Вход в шел freebsd - посмотреть размер свободного места
 <details><summary>start shell</summary>
 <p>
+
 ```bash
 admin@MBR> start shell    
 	% ls -la /var/tmp
