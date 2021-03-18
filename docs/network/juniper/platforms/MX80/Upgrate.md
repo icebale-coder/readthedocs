@@ -36,9 +36,8 @@ admin@MBR> show version
 jinstall-ppc-19.4R3.11-signed.tgz
 ```
 ##  Вход в шел freebsd - посмотреть размер свободного места
-
-##  
-
+<details><summary>start shell</summary>
+<p>
 ```bash
 admin@MBR> start shell    
 	% ls -la /var/tmp
@@ -52,7 +51,6 @@ admin@MBR> start shell
 		-r--r--r--   1 root   field        237 Jan 24  2019 preinstall_boot_loader.conf
 		drwxr-xr-x   2 root   field        512 Feb 15 17:23 rtsdb
 		drwxrwxrwt   2 root   wheel        512 Jan 24  2019 vi.recover
-
 	% df -h
 		Filesystem             Size    Used   Avail Capacity  Mounted on
 		/dev/da0s1a            885M    226M    588M    28%    /
@@ -76,11 +74,15 @@ admin@MBR> start shell
 		devfs                  1.0K    1.0K      0B   100%    /packages/mnt/jweb-ppc-15.1R7.8/jail/dev
 
 ```
+</p>
+</details>
+
 ##  Очищаем логи - удаляем ненужные файлы, чтобы освободить место
-```bash
-request system storage cleanup 
-```
+<details><summary>request system storage cleanup</summary>
+
 ##  Cохраняем состояние системы  до обновления (делаем snapshot системы)
+<details><summary>request system snapshot </summary>
+<p>
 ```bash
 > request system snapshot 
 	Verifying compatibility of destination media partitions...
@@ -90,9 +92,12 @@ request system storage cleanup
 	Copying '/dev/da0s1e' to '/dev/da1s1e' .. (this may take a few minutes)
 	The following filesystems were archived: / /config
 ```
+</p>
+</details>
 
 ##  Проверяем инсталляционный пакет
-
+<details><summary>request system software validate /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz</summary>
+<p>
 ```bash
 admin@MBR> request system software validate /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz
 	Checking compatibility with configurationalidate /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz     
@@ -163,9 +168,14 @@ admin@MBR> request system software validate /var/tmp/jinstall-ppc-19.4R3.11-sign
 	Validating against /config/juniper.conf.gz
 	mgd: commit complete
 	Validation succeeded
- 
 ```
+</p>
+</details>
+
 ##  Устанавливаем новый инсталляционный пакет Junos
+<details><summary>request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz</summary>
+<p>
+
 ```bash
 admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz          
 	NOTICE: Validating configuration against jinstall-ppc-19.4R3.11-signed.tgz.
@@ -987,10 +997,14 @@ request system reboot
 	 (ttyu0)
 
 		login: Feb 16 11:04:57 init: license-service (PID 2112) sending signal hup: due to "proto-mastership": 0x1
-
-
 ```
+</p>
+</details>
+
 ##  Cохраняем состояние системы  после обновления (делаем snapshot системы)
+<details><summary>request system snapshot</summary>
+<p>
+
 ```bash
 > request system snapshot 
 	Verifying compatibility of destination media partitions...
@@ -1000,7 +1014,12 @@ request system reboot
 	Copying '/dev/da0s1e' to '/dev/da1s1e' .. (this may take a few minutes)
 	The following filesystems were archived: / /config
 ```
+</p>
+</details>
+
 ##  Посмотреть новую версию ПО
+<details><summary>show version </summary>
+<p>
 ```bash
 > show version 
 	Hostname: MBR
@@ -1037,15 +1056,6 @@ request system reboot
 	JUNOS Kernel Software Suite [19.4R3.11]
 	JUNOS Routing Software Suite [19.4R3.11]
 ```
-
-
-## collapsible markdown?
-
-<details><summary>CLICK ME</summary>
-<p>
-
-```python
-print("hello world!")
-```
 </p>
 </details>
+```
