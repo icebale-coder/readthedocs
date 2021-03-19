@@ -1,10 +1,12 @@
 # Настройка netflow v5 Juniper MX80
 
 ## Настройка секции forwarding-options
-### 10.10.10.10 - адрес flow коллектора
-### 1.1.1.1 - адрес источника, от которого идет netflow на коллектор (обычно указывается lo0 устройства)
 
-```bash
+!!! note "Заметка"
+	10.10.10.10 - адрес flow коллектора¶
+    1.1.1.1 - адрес источника, от которого идет netflow на коллектор (обычно указывается lo0 устройства)
+
+```
 forwarding-options {
     sampling {
         sample-once;
@@ -23,10 +25,9 @@ forwarding-options {
         }
     }
 }
-```
 
 ### Настройка секции firewall
-```bash
+​```bash
 firewall {
     family inet {
         filter SAMPLE {
