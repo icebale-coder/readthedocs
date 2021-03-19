@@ -2,14 +2,6 @@
 
 ## Настройка секции forwarding-options
 
-!!! note "ip"
-```
-	10.10.10.10 - адрес flow коллектора
-	1.1.1.1 - адрес источника, от которого идет netflow на коллектор 
-	(обычно указывается lo0 устройства)
-```
-
-
 ```
 forwarding-options {
     sampling {
@@ -65,5 +57,13 @@ interfaces {
     }
 }
 ```
+
+!!! note "ip адреса"
+```
+	10.10.10.10 - адрес flow коллектора
+	1.1.1.1 - адрес источника, от которого идет netflow на коллектор 
+	(обычно указывается lo0 устройства)
+```
+
 
 Документация Juniper по настройке [netflow](https://www.juniper.net/documentation/en_US/junos/information-products/pathway-pages/services-interfaces/flow-monitoring.pdf) 
