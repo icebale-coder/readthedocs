@@ -2,7 +2,7 @@
 
 ## Настройка секции forwarding-options
 
-```
+```bash
 forwarding-options {
     sampling {
         sample-once;
@@ -21,9 +21,10 @@ forwarding-options {
         }
     }
 }
+```
 
-### Настройка секции firewall
-​```bash
+## Настройка секции firewall
+```bash
 firewall {
     family inet {
         filter SAMPLE {
@@ -38,8 +39,8 @@ firewall {
     }
 }
 ```
-### Настройка интерфейса, с которого нужно снимать netflow
 
+## Настройка интерфейса, с которого нужно снимать netflow
 ```bash
 interfaces {
 	ae0 {
