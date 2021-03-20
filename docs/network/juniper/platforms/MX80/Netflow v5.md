@@ -3,7 +3,6 @@
 ## Настройка секции forwarding-options
 
 ```bash
-
 forwarding-options {
     sampling {
         sample-once;
