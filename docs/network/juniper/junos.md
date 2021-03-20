@@ -5,7 +5,7 @@ title: JunOS
 # JunOS
 
 ## Общая информация и характристика системы
-<details><summary>show version</summary>
+<details><summary>show version and haiku</summary>
 <p>
 
 ```bash
