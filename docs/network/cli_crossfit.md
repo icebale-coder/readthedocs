@@ -1,8 +1,12 @@
-title МойДжентельменскийНабор JuniperHuaweiCiscoBGPcli
+title: JuniperHuaweiCiscoBGPcli
 
-# Просмотр соседей 
+#JuniperHuaweiCiscoBGPcli 
 
-## Juniper
+МойДжентельменскийНабор 
+
+## Просмотр соседей 
+
+### Juniper
 ```bash
 	#посмотреть общую информацию о списке соседей
 	show bgp summary
@@ -58,7 +62,7 @@ title МойДжентельменскийНабор JuniperHuaweiCiscoBGPcli
 				}			
 ```
 
-## Huawei
+### Huawei
 ```bash
 	# посмотреть общую информацию о списке соседей
 	dis bgp peer
@@ -75,7 +79,7 @@ title МойДжентельменскийНабор JuniperHuaweiCiscoBGPcli
 ```
 
 	
-## Cisco IOS/IOS-XE
+### Cisco IOS/IOS-XE
 ```bash
 	# посмотреть общую информацию о списке соседей
 	  sh bgp summary
@@ -96,7 +100,7 @@ title МойДжентельменскийНабор JuniperHuaweiCiscoBGPcli
 	  sh run | sec  router bgp
 ```
 
-## Cisco IOS-XR
+### Cisco IOS-XR
 
 ```bash
 	# посмотреть общую информацию о списке соседей
