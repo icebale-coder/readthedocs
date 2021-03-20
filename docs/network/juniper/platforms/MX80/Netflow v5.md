@@ -1,6 +1,6 @@
 # Настройка netflow v5 Juniper MX80
 
-## Настройка секции forwarding-options 1
+## Настройка секции forwarding-options 
 
 ```bash
 
