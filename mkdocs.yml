@@ -2,7 +2,7 @@
 
 # Basic info
 site_name: selfdocsing
-site_description: Join me and enjoy thr jorney (c) AJ Hoge
+site_description: Join me and enjoy the jorney (c) AJ Hoge
 site_author: Alex Bar
 repo_name: icebale/readthedocs
 repo_url: https://github.com/icebale-coder/readthedocs
@@ -81,4 +81,4 @@ plugins:
       strict: false
 
 # Copyright
-copyright: "Alex Bar &copy; 2020-2021"
+copyright: "Alex Bar &copy; 2021"

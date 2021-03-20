@@ -2,7 +2,7 @@ title: JuniperHuaweiCiscoBGPcli
 
 #JuniperHuaweiCiscoBGPcli 
 
-МойДжентельменскийНабор 
+Мой джентельменский набор команд по BGP
 
 ## Просмотр соседей 
 
