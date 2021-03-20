@@ -1,6 +1,6 @@
 title: home
 arrange:
     - index.md
-    - Networks
-    - Linux
+    - networks
+    - linux
 
