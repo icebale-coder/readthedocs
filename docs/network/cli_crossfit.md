@@ -92,7 +92,7 @@ title: JuniperHuaweiCiscoBGPcli
 	
 ```bash
 	# посмотреть конфиг для всей секции bgp
-	sh run part router bgp 50427
+	sh run part router bgp 31257
 ```
 	
 ```bash
