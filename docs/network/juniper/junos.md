@@ -9,7 +9,6 @@ title: JunOS
 <p>
 
 ```bash
-admin@MBR> show version 
 	Hostname: MBR
 	Model: mx80
 	Junos: 19.4R3.11
