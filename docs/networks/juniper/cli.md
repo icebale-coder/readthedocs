@@ -46,15 +46,12 @@ chassis {
 ```
 <details><summary>security { </summary>
 <p>
-<details><summary>Пример секции interfaces</summary>
-<p>
 ```bash 
 ```
 </p>
 </details>
-
 }
-<details><summary>Пример секции interfaces</summary>
+<details><summary>interfaces {</summary>
 <p>
 ```bash 
 interfaces {
