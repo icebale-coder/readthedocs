@@ -542,11 +542,11 @@ unit 0 {
 #### 1. load merge/update terminal (relative)
      Загружает конфиг из терминала в нужную секцию
 
-##### 1.1. load merge terminal relative 
+#### 1.1. load merge terminal relative 
       Добавляет конфигурацию путем слияния существущей и новой
       Постим в нужном месте кусок своей конфигурации
 
-##### 1.2. load update terminal relative
+#### 1.2. load update terminal relative
       Добавляет конфигурацию путем удаления существущей и добавлением новой
       Постим в нужном месте кусок своей конфигурации
 
