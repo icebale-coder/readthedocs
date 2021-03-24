@@ -91,7 +91,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>
 }
-
 <details><summary>chassis { </summary>
 <p>
 
@@ -115,7 +114,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>
 }
-
 <details><summary>security { </summary>
 <p>
 
@@ -244,7 +242,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>    
 }    
-
 <details><summary>snmp {</summary>
 <p>
 
@@ -260,7 +257,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>    
 }    
-
 <details><summary>forwarding-options {</summary>
 <p>
 
@@ -285,7 +281,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>    
 }
-
 <details><summary>policy-options {</summary>
 <p>
 
@@ -322,7 +317,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>    
 }
-
 <details><summary>firewall {</summary>
 <p>
 
@@ -398,7 +392,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>    
 }
-
 <details><summary>routing-options {</summary>
 <p>
 
@@ -424,7 +417,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 </p>
 </details>    
 }
-
 <details><summary>protocols {</summary>
 <p>
 
