@@ -53,8 +53,6 @@ chassis {
 }
 <details><summary>interfaces {</summary>
 <p>
-```bash 
-interfaces {
         xe-0/0/0 {
             description "<< Ae0 10GE to N0 1/1 Po2 >>";
             framing {
@@ -135,10 +133,10 @@ interfaces {
             }
         }
     }
-```
 </p>
 </details>
 }
+
 
 ```bash
 snmp {
