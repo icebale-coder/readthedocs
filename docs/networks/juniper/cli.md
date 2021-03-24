@@ -40,9 +40,9 @@ P.S. midnight commander мне туда поставить не удалось )
 
 ```bash
 admin@MBR>start shell
-admin@MNSK-MBR0-new> start shell 
+admin@MBR> start shell 
 % uname -a
-JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC
+JUNOS MBR 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC
 builder@qnc-jre-emake1t.juniper.net:/volume/build/junos/19.4/
 release/19.4R3.11/obj/powerpc/junos/bsd/kernels/JUNIPER-PPC/kernel  powerpc  
 ```
