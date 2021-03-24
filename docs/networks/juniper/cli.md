@@ -112,6 +112,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 }
 <details><summary>security { </summary>
 <p>
+
 ```bash     
     authentication-key-chains {
         key-chain isis-sec {
@@ -125,7 +126,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }
 <details><summary>interfaces {</summary>
 <p>
@@ -235,7 +236,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }    
 <details><summary>snmp {</summary>
 <p>
@@ -250,7 +251,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }    
 <details><summary>forwarding-options {</summary>
 <p>
@@ -274,7 +275,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }
 <details><summary>policy-options {</summary>
 <p>
@@ -310,7 +311,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }    
 ```
 </p>
-</details>    
+</details>
 }
 <details><summary>firewall {</summary>
 <p>
@@ -385,7 +386,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }
 <details><summary>routing-options {</summary>
 <p>
@@ -410,7 +411,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }
 <details><summary>protocols {</summary>
 <p>
@@ -472,7 +473,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     }
 ```
 </p>
-</details>    
+</details>
 }
 
 
@@ -481,96 +482,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 
 !!! note "Заметка"
 	У джуна портчаны называются aggregation ethernet, например ae0
-
-<details><summary>Пример секции interfaces</summary>
-<p>
-
-```bash	
-interfaces {
-        xe-0/0/0 {
-            description "<< Ae0 10GE to N0 1/1 Po2 >>";
-            framing {
-                lan-phy;
-            }
-            gigether-options {
-                802.3ad ae0;
-            }
-        }
-        xe-0/0/1 {
-            description "<< Ae0 10GE to N0 1/2 Po2 >>";
-            framing {
-                lan-phy;
-            }
-            gigether-options {
-                802.3ad ae0;
-            }
-        }
-        xe-0/0/2 {
-            description "<< Ae0 10GE to N1 1/1 Po2 >>";
-            framing {
-                lan-phy;
-            }
-            gigether-options {
-                802.3ad ae0;
-            }
-        }
-        xe-0/0/3 {
-            description "<< Ae0 10GE to N1 1/2 Po2 >>";
-            framing {
-                lan-phy;
-            }
-            gigether-options {
-                802.3ad ae0;
-            }
-        }
-        ae0 {
-            description "<< 4x10GE to N0/1 Po2 >>";
-            flexible-vlan-tagging;
-            mtu 1522;
-            encapsulation flexible-ethernet-services;
-            aggregated-ether-options {
-                lacp {
-                    active;
-                }
-            }
-            unit 16 {
-                description "<< Desc16 >>";
-                vlan-id 16;
-                family inet {
-                    address x.x.x.x/29;
-                }
-            }
-            unit 900 {
-                description "<< Desc900 >>";
-                vlan-id 900;
-                family inet {
-                    address y.y.y.y/30;
-                }
-            }
-        }
-        fxp0 {
-            unit 0 {
-                family inet {
-                    address m.g.m.t/24;
-                }
-            }
-        }
-        lo0 {
-            description BGP;
-            unit 0 {
-                family inet {
-                    filter {
-                        input ACL;
-                    }
-                    address lo.lo.lo.lo/32;
-                }
-            }
-        }
-    }
-
-```
-</p>
-</details>
 
 ### Навигация по конфигу ВСЁ ОЧЕНЬ УДОБНО!!! )
 ```bash
