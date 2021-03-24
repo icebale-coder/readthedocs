@@ -53,6 +53,8 @@ chassis {
 }
 <details><summary>interfaces {</summary>
 <p>
+
+```bash
         xe-0/0/0 {
             description "<< Ae0 10GE to N0 1/1 Po2 >>";
             framing {
@@ -133,6 +135,7 @@ chassis {
             }
         }
     }
+```    
 </p>
 </details>
 }
