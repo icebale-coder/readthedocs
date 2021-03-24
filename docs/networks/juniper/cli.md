@@ -38,10 +38,8 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     
 Как правило конфиг состоит из следующих секций:
 
-===begin=================================================================
 <details><summary>system {</summary>
 <p>
-
 ```bash
     host-name MBR;
     root-authentication {
@@ -86,14 +84,12 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
         server 12.12.12.12;
         source-address lo.lo.lo.lo;
     }
-}
 ```
 </p>
 </details>
 }
 <details><summary>chassis { </summary>
 <p>
-
 ```bash 
     aggregated-devices {
         ethernet {
@@ -116,7 +112,6 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 }
 <details><summary>security { </summary>
 <p>
-
 ```bash     
     authentication-key-chains {
         key-chain isis-sec {
