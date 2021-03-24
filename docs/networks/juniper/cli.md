@@ -8,7 +8,8 @@ title: cli
 
 #### operational mode - операционный режим.
 ```bash
-В нем можно посмотреть текущую конфигурации, текущее состояние протоколо IGP, BGP и пр.
+В нем можно посмотреть текущую конфигурации, 
+текущее состояние протоколо IGP, BGP и пр.
 ```
 
 ```bash
@@ -31,8 +32,9 @@ admin@MBR#
 
 #### shell - режим шелла.
 ```bash
-По сути в нем просто проваливаешься в JunOS, каковая являтся запиленным и протюниным FreeBSD.
-Внем есть набор стандартных доступных команд Unix, тип top, uname и пр...
+По сути в нем просто проваливаешься в JunOS, 
+каковая являтся запиленным и протюниным FreeBSD.
+В нем есть набор стандартных доступных команд Unix, тип top, uname и пр...
 P.S. midnight commander мне туда поставить не удалось )
 ```
 
@@ -40,7 +42,9 @@ P.S. midnight commander мне туда поставить не удалось )
 admin@MBR>start shell
 admin@MNSK-MBR0-new> start shell 
 % uname -a
-JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     builder@qnc-jre-emake1t.juniper.net:/volume/build/junos/19.4/release/19.4R3.11/obj/powerpc/junos/bsd/kernels/JUNIPER-PPC/kernel  powerpc  
+JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC
+builder@qnc-jre-emake1t.juniper.net:/volume/build/junos/19.4/
+release/19.4R3.11/obj/powerpc/junos/bsd/kernels/JUNIPER-PPC/kernel  powerpc  
 ```
 
 ### Общая структура конфига 
@@ -490,7 +494,7 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
 Например в секции "interfaces" как не трудно догадаться из названия перечисляются интерфейсы как физические так и логические. 
 
 !!! note "Заметка"
-	У джуна портчаны называются aggregation ethernet, например ae0
+	У джуна портчаны называются aggregated ethernet, например ae0
 
 ### Навигация по конфигу 
     ВСЁ ОЧЕНЬ УДОБНО!!! )
