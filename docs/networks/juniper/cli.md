@@ -38,23 +38,106 @@ JUNOS MNSK-MBR0-new 19.4R3.11 JUNOS 19.4R3.11 #0: 2020-10-08 21:58:24 UTC     bu
     
 Как правило конфиг состоит из следующих секций:
 
-```bash
-system {
-}
-chassis {
-}
-```
-<details><summary>security { </summary>
+===begin=================================================================
+<details><summary>system {</summary>
 <p>
-```bash 
+
+```bash
+    host-name MBR;
+    root-authentication {
+        encrypted-password /* SECRET-DATA */; ## SECRET-DATA
+    }
+    login {
+        class read-only-local {
+            permissions [ view view-configuration ];
+            allow-commands "ping|traceroute";
+        }
+        user admin {
+            uid 2000;
+            class super-user;
+            authentication {
+                encrypted-password /* SECRET-DATA */; ## SECRET-DATA
+            }
+        }
+    }
+    services {
+        ssh;
+        telnet;
+    }
+    domain-name mydomain.ru;
+    time-zone Asia/Bangkok;
+    no-redirects;
+    name-server {
+        10.10.10.10;
+        10.10.10.11;
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        host 11.11.11.11 {
+            any info;
+            facility-override local7;
+        }
+        source-address lo.lo.lo.lo;
+    }
+    ntp {
+        boot-server 12.12.12.12;
+        server 12.12.12.12;
+        source-address lo.lo.lo.lo;
+    }
+}
 ```
 </p>
 </details>
 }
+
+<details><summary>chassis { </summary>
+<p>
+
+```bash 
+    aggregated-devices {
+        ethernet {
+            device-count 1;
+        }
+    }
+    fpc 0 {
+        pic 0 {
+            framing lan;
+        }
+    }
+    fpc 1 {
+        pic 0 {
+            framing lan;
+        }
+    }
+```
+</p>
+</details>
+}
+
+<details><summary>security { </summary>
+<p>
+
+```bash     
+    authentication-key-chains {
+        key-chain isis-sec {
+            key 1 {
+                secret /* SECRET-DATA */; ## SECRET-DATA
+                start-time "1999-12-31.23:00:00 +0700";
+                algorithm md5;
+                options basic;
+            }
+        }
+    }
+```
+</p>
+</details>    
+}
 <details><summary>interfaces {</summary>
 <p>
 
-```bash
+```bash 
         xe-0/0/0 {
             description "<< Ae0 10GE to N0 1/1 Po2 >>";
             framing {
@@ -105,17 +188,39 @@ chassis {
                 description "<< Desc16 >>";
                 vlan-id 16;
                 family inet {
-                    address x.x.x.x/29;
+                    address 16.16.16.3/30;
+                }
+            }
+            unit 100 {
+                description "<< Desc100 >>";
+                vlan-id 100;
+                family inet {
+                    address 100.100.100.3/30;
+                }
+            }
+            unit 200 {
+                description "<< Desc200 >>";
+                vlan-id 200;
+                family inet {
+                    address 200.200.200.3/30;
+                }
+            }
+            unit 201 {
+               description "<< Desc201 >>";
+                vlan-id 201;
+                family inet {
+                    address 201.201.201.3/30;
                 }
             }
             unit 900 {
                 description "<< Desc900 >>";
                 vlan-id 900;
                 family inet {
-                    address y.y.y.y/30;
+                    address 16.16.16.3/30;
                 }
             }
         }
+
         fxp0 {
             unit 0 {
                 family inet {
@@ -135,26 +240,254 @@ chassis {
             }
         }
     }
-```    
-</p>
-</details>
-}
-
-
-```bash
-snmp {
-}
-forwarding-options {
-}
-policy-options {
-}
-firewall {
-}
-routing-options {
-}
-protocols {
-}
 ```
+</p>
+</details>    
+}    
+
+<details><summary>snmp {</summary>
+<p>
+
+```bash 
+    location DefaultCity;
+    community my_comm {
+        authorization read-only;
+        clients {
+            14.14.14.14/32;
+        }
+    }
+```
+</p>
+</details>    
+}    
+
+<details><summary>forwarding-options {</summary>
+<p>
+
+```bash 
+    sampling {
+        sample-once;
+        input {
+            rate 10;
+            run-length 0;
+        }
+        family inet {
+            output {
+                flow-server 15.15.15.15 {
+                    port 9996;
+                    source-address lo.lo.lo.lo;
+                    version 5;
+                }
+            }
+        }
+    }
+```
+</p>
+</details>    
+}
+
+<details><summary>policy-options {</summary>
+<p>
+
+```bash 
+
+    prefix-list AS11111 {
+        1.0.0.0/23;
+        2.0.0.0/24;
+    }
+    policy-statement BOGONS {
+        term rfc6890 {
+            from {
+                route-filter 10.0.0.0/8 orlonger accept;
+                route-filter 172.16.0.0/12 orlonger accept;
+                route-filter 192.168.0.0/16 orlonger accept;
+            }
+        }
+        term default {
+            then reject;
+        }
+    }
+    policy-statement REJECT_ALL {
+        then reject;
+    }    
+    policy-statement PS-1 {
+        term AS11111 {
+            from {
+                route-filter 111.111.111.0/24 exact;
+            }
+            then accept;
+        }
+    }    
+```
+</p>
+</details>    
+}
+
+<details><summary>firewall {</summary>
+<p>
+
+```bash 
+        filter ACL {
+            term terminal-access {
+                from {
+                    source-address {
+                        /* OoBM network */
+                        20.20.20.0/24;
+                        /* Office GW */
+                        30.30.30.30/32;
+                    }
+                    protocol tcp;
+                    port [ ssh telnet ];
+                }
+                then accept;
+            }
+            term terminal-access-default {
+                from {
+                    protocol tcp;
+                    port [ ssh telnet ];
+                }
+                then {
+                    discard;
+                }
+            }
+            term trusted {
+                from {
+                    source-prefix-list {
+                        TRUSTED_NETWORK;
+                    }
+                }
+                then accept;
+            }
+            term icmp {
+                from {
+                    protocol icmp;
+                }
+                then {
+                    policer ICMP_POLICER;
+                    count ICMP_POLICER;
+                    accept;
+                }
+            }
+            term snmp {
+                from {
+                    source-address {
+                        40.40.40.40/32;
+                    }
+                    protocol udp;
+                    port snmp;
+                }
+                then accept;
+            }
+            term default {
+                then {
+                    discard;
+                }
+            }
+        }
+        filter SAMPLE {
+            interface-specific;
+            term default {
+                then {
+                    sample;
+                    accept;
+                }
+            }
+        }
+    }
+```
+</p>
+</details>    
+}
+
+<details><summary>routing-options {</summary>
+<p>
+
+```bash 
+    static {
+        route 0.0.0.0/0 {
+            qualified-next-hop 50.50.50.50 {
+                preference 100;
+            }
+            qualified-next-hop 60.60.60.60 {
+                preference 90;
+            }
+        }
+        /* <static example */
+        route 50.50.50.0/25 next-hop 11.11.11.11;
+    router-id lo.lo.lo.lo;
+    autonomous-system 11111;
+    aggregate {
+        route 1.0.0.0/19 passive;
+        route 2.2.2.0/26 passive;
+    }
+```
+</p>
+</details>    
+}
+
+<details><summary>protocols {</summary>
+<p>
+
+```bash 
+    ospf {
+        area 0.0.0.0 {
+            interface lo0.0;
+            interface ae0.16;
+            interface ae0.900;
+        }
+    }
+    bgp {
+        group EXTERNAL_PEER {
+            type external;
+            passive;
+            import [ PS-1 PS-2 ];
+            family inet {
+                unicast {
+                    prefix-limit {
+                        maximum 1000000;
+                        teardown 95;
+                    }
+                }
+            }
+            export [ PS-3 REJECT_ALL ];
+            neighbor 100.100.100.1 {
+                description "== EXTERNAL NEIGHBOR 1 ==";
+                local-address 100.100.100.2 ;
+                peer-as 50427;
+        group INTERNAL_PEER {
+            type internal;
+            family inet {
+                unicast {
+                    prefix-limit {
+                        maximum 2000;
+                        teardown 90;
+                    }
+                }
+            }
+            export [ PS-4 PS-5 REJECT_ALL ];
+            neighbor 200.200.200.1 {
+                description "== INTERNAL NEIGHBOR 1 ==";
+                local-address 200.200.200.2;
+                import [ PS-6 REJECT_ALL ];
+            }
+            neighbor 201.201.201.1 {
+                description "== INTERNAL NEIGHBOR 2 ==";
+                local-address 201.201.201.2;
+                import [ PS-7 REJECT_ALL ];
+            }
+        }
+    }
+    lldp {
+        interface xe-0/0/0;
+        interface xe-0/0/1;
+        interface xe-0/0/2;
+        interface xe-0/0/3;
+    }
+```
+</p>
+</details>    
+}
+
 
 Каждая секция несет свой функционал.
 Например в секции "interfaces" как не трудно догадаться из названия перечисляются интерфейсы как физические так и логические. 
