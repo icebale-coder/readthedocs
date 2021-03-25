@@ -70,7 +70,7 @@ neighbor 2.2.2.2 {
         orf route-policy policy-orf
 ```
 
-подробнее см. [документацию](https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html)
+подробнее см. [документацию](https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html#con_1206744)
 
 ##### Huawei
 **NE8000-F1A**
