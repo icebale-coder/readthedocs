@@ -544,10 +544,68 @@ unit 0 {
 #### 1. load merge/update terminal (relative)
      Загружает конфиг из терминала в нужную секцию
 
+
 #### 1.1. load merge terminal relative 
       Добавляет конфигурацию путем слияния существущей и новой
       Постим в нужном месте кусок своей конфигурации
 
+!!! note Пример 1
+    Необходимо создать новый сабинтерфейс 900 в ae0
+
+[] Заходим в configure mode и перемещаемся в секцию interfaces ae0
+
+```bash
+    admin@MBR>edit
+    admin@MBR#edit interface ae0 
+
+    [edit interfaces ae0]
+```
+
+[] Добавляем через терминал недостающую секцию конфига
+Примечание: для того, чтобы завершить ввод в терминале необходимо ввести комбинацию Ctrl-D
+```bash
+admin@MBR# load merge terminal relative 
+[Type ^D at a new line to end input]
+    unit 900 {
+        description "<< Desc900 >>";
+        vlan-id 900;
+        family inet {
+            address 16.16.16.3/30;
+        }
+    }
+load complete
+
+[edit interfaces ae0]
+```
+
+[] Перемещаемся в корень конфига
+```bash
+admin@MBR# top 
+[edit ]
+```
+[] Проверяем что поменяется в конфиге
+```bash
+    admin@MBR# show | compare 
+    [edit interfaces ae0]
++    unit 900 {
++        description "<< Desc900 >>";
++        vlan-id 900;
++        family inet {
++            address 16.16.16.3/30;
++        }
++    }
+```
+[] Применяем изменения и выходим  в operation mode
+```bash
+    admin@MBR# commit
+    commit complete
+
+    [edit]
+    admin@MBR# quit 
+    Exiting configuration mode
+
+    admin@MBR0> 
+```
 #### 1.2. load update terminal relative
       Добавляет конфигурацию путем удаления существущей и добавлением новой
       Постим в нужном месте кусок своей конфигурации
