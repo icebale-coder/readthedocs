@@ -1017,8 +1017,9 @@ request system reboot
 ##  9. Cохраняем состояние системы  после обновления (делаем snapshot системы)
 <details><summary>request system snapshot </summary>
 <p>
+
 ```bash
-> request system snapshot 
+   request system snapshot 
 	Verifying compatibility of destination media partitions...
 	Running newfs (899MB) on internal media  / partition (da1s1a)...
 	Running newfs (100MB) on internal media  /config partition (da1s1e)...
@@ -1026,6 +1027,7 @@ request system reboot
 	Copying '/dev/da0s1e' to '/dev/da1s1e' .. (this may take a few minutes)
 	The following filesystems were archived: / /config
 ```
+
 </p>
 </details>
 
