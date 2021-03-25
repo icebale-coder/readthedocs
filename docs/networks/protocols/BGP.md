@@ -103,6 +103,46 @@ neighbor 2.2.2.2 {
   Крайне нежелательно использовать soft-reconfiguration на оборудовании с недостаточным количеством памяти
 
 #### Реализация на оборудовании
+##### Cisco
+
+**IOS/IOS-XE**
+```bash
+   По умолчанию не включена
+```
+
+Включить можно командой 
+
+```bash
+ router bgp 50022
+  neighbor 1.1.1.1 remote-as 31257
+  neighbor 1.1.1.1 description == NEIGHBOR 1 ==
+  !
+  address-family ipv4
+   neighbor 1.1.1.1 activate
+   neighbor 1.1.1.1 soft-reconfiguration inbound
+```
+
+**IOS-XR**
+```bash
+   По умолчанию не включена
+```
+Включить можно командой 
+
+```bash
+ neighbor 1.1.1.1
+  remote-as 11111
+  timers 60 180
+  description ==== NEIGHBOR 1 ====
+  bmp-activate server 1
+  update-source Bundle-Ether1.205
+  address-family ipv4 unicast
+   send-community-ebgp
+   route-policy POLICY_IN in
+   route-policy POLICY_OUT out
+   soft-reconfiguration inbound always
+```
+подробнее см. [документацию](https://www.cisco.com/c/en/us/td/docs/routers/crs/software/crs_r3-9/routing/command/reference/rr39crs1book_chapter1.html#wp307968196)
+
 ##### Juniper
 **MX80**
 ```bash
