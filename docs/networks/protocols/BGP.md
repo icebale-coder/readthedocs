@@ -134,7 +134,7 @@ neighbor 2.2.2.2 {
   timers 60 180
   description ==== NEIGHBOR 1 ====
   bmp-activate server 1
-  update-source Bundle-Ether1.205
+  update-source Bundle-Ether1.1
   address-family ipv4 unicast
    send-community-ebgp
    route-policy POLICY_IN in
@@ -151,13 +151,12 @@ neighbor 2.2.2.2 {
 ```
 
 Выключить можно командой 
-
 ```bash
-  neighbor 1.1.1.1 {
+ neighbor 1.1.1.1 {
     description "== NEIGHBOR 1 ==";
     local-address 2.2.2.2;
     keep none;
-}
-```
 
+ }
+```
 подробнее см. [документацию](https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/keep-edit-protocols-bgp.html)
