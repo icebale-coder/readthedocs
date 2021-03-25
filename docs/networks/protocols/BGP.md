@@ -96,6 +96,7 @@ neighbor 2.2.2.2 {
 Общая схема работы 
 ![image-bgp-rib](img/bgp-rib.jpg)
 
+подробнее см. [документацию](https://networklessons.com/bgp/bgp-soft-reset-reconfiguration)
 
 
 !!! note "Замечание"
