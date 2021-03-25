@@ -501,7 +501,8 @@ release/19.4R3.11/obj/powerpc/junos/bsd/kernels/JUNIPER-PPC/kernel  powerpc
 
 ```bash
 # из operational mode
-show configuration <секция_в_конфиге подсекция_в_конфиге под_подсекция_в_конфиге и т.д...> 
+show configuration <секция_в_конфиге подсекция_в_конфиге 
+под_подсекция_в_конфиге и т.д...> 
 
 # пример показа lo0
 admin@MBR> show configuration interfaces lo0 
