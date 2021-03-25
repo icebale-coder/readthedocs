@@ -26,4 +26,4 @@ Huawei
      ipv4-family unicast
       peer 1.1.1.1 capability-advertise orf ip-prefix both
 ```
-полдробнее см. [документацию](https://support.huawei.com/enterprise/en/doc/EDOC1100146591/ec511dde/configuring-prefix-based-bgp-orf)
+подробнее см. [документацию](https://support.huawei.com/enterprise/en/doc/EDOC1100146591/ec511dde/configuring-prefix-based-bgp-orf)

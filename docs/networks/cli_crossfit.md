@@ -1,4 +1,4 @@
-title: JuniperHuaweiCiscoBGPcli
+title: cli crossfit BGP
 
 #JuniperHuaweiCiscoBGPcli 
 
@@ -124,7 +124,7 @@ title: JuniperHuaweiCiscoBGPcli
 			 timers 10 30 3                       []
 			 address-family IPv4 Unicast          []
 			  maximum-prefix 950000 95            []
-			  policy X_in in             		  []
+			  policy X_in in                      []
 			  policy X_out out                    []
 			  send-community-ebgp                 []
 ```
