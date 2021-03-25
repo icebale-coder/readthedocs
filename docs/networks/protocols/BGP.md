@@ -16,7 +16,7 @@ title: BGP
 
 #### Реализация на оборудовании
 ##### Juniper
-     - MX
+**MX80**
 
 ```bash
 neighbor 2.2.2.2 {
@@ -38,7 +38,7 @@ neighbor 2.2.2.2 {
 
 
 ##### Cisco
-     -IOS/IOS-XE
+**IOS/IOS-XE**
 
 ```bash
      router bgp 11111
@@ -47,8 +47,8 @@ neighbor 2.2.2.2 {
 ```
 подробнее см. [документацию](http://admindoc.ru/1250/bgp-outbound-route-filtering/)
 
-     -IOS-XR
-      В IOS-XR надо в явном виде указывать prefix-set для ORF
+**IOS-XR**
+В IOS-XR надо в явном виде указывать prefix-set для ORF
 
 ```bash
   prefix-set orf-preset
@@ -75,7 +75,7 @@ neighbor 2.2.2.2 {
 подробнее см. [документацию](https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html)
 
 ##### Huawei
-     -NE8000-F1A
+**NE8000-F1A**
 
 ```bash
     bgp 11111
