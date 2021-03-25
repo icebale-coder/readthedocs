@@ -554,7 +554,7 @@ unit 0 {
 <p>
     
 
-[] Заходим в configure mode и перемещаемся в секцию interfaces ae0
+* Заходим в configure mode и перемещаемся в секцию interfaces ae0
 
 ```bash
     admin@MBR>edit
@@ -563,8 +563,8 @@ unit 0 {
     [edit interfaces ae0]
 ```
 
-[] Добавляем через терминал недостающую секцию конфига
-Примечание: для того, чтобы завершить ввод в терминале необходимо ввести комбинацию Ctrl-D
+* Добавляем через терминал недостающую секцию конфига
+!!! Примечание: для того, чтобы завершить ввод в терминале необходимо ввести комбинацию Ctrl-D
 ```bash
 admin@MBR# load merge terminal relative 
 [Type ^D at a new line to end input]
@@ -580,12 +580,12 @@ load complete
 [edit interfaces ae0]
 ```
 
-[] Перемещаемся в корень конфига
+* Перемещаемся в корень конфига
 ```bash
 admin@MBR# top 
 [edit ]
 ```
-[] Проверяем что поменяется в конфиге
+* Проверяем что поменяется в конфиге
 ```bash
     admin@MBR# show | compare 
     [edit interfaces ae0]
@@ -597,7 +597,7 @@ admin@MBR# top
 +        }
 +    }
 ```
-[] Применяем изменения и выходим  в operation mode
+* Применяем изменения и выходим  в operation mode
 ```bash
     admin@MBR# commit
     commit complete
