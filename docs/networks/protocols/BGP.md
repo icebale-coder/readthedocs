@@ -14,9 +14,58 @@ title: BGP
 ##### Juniper
      - MX
 
+```bash
+neighbor 2.2.2.2 {
+    description "== NEIGHBOR with ORF ==";
+    local-address 1.1.1.1;
+    peer-as 22222;
+    outbound-route-filter {
+        bgp-orf-cisco-mode;
+        prefix-based {
+            accept {
+                inet;
+            }
+        }
+    }
+}
+```
+!!! note "Примечание"
+	С данной настройкой не удалось подружить Джун с Хуавеем
+        Нужно сделать лабу
+
+
 ##### Cisco
      -IOS/IOS-XE
+```bash
+     router bgp 11111
+      address-family ipv4
+        neighbor 1.1.1.1 capability orf prefix-list both
+```
+
      -IOS-XR
+      В IOS-XR надо в явном виде указывать prefix-set для ORF
+```bash
+  prefix-set orf-preset
+    172.16.1.0/24,
+    172.16.5.0/24,
+    172.16.11.0/24
+  end-set
+  
+  route-policy policy-orf
+    if orf prefix in orf-preset then
+      drop
+    endif
+    if orf prefix in (172.16.3.0/24, 172.16.7.0/24, 172.16.13.0/24) then
+      pass
+    endif
+  
+  router bgp 2
+    neighbor 1.1.1.1
+      remote-as 3
+      address-family ipv4 unicast
+        orf route-policy policy-orf
+```
+подробнее см. [документацию] (https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html)
 
 ##### Huawei
      -NE8000-F1A
