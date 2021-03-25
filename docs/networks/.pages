@@ -2,5 +2,5 @@ title: Networks
 arrange:
     - index.md 
     - protocols
-    - cli_crossfit
+    - cli_crossfit.md
     - juniper
