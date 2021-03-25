@@ -565,9 +565,9 @@ unit 0 {
 
 * Добавляем через терминал недостающую секцию конфига
 
-!!! warning "Примечание:" 
+!!! note "Примечание" 
         для того, чтобы завершить ввод в терминале необходимо ввести комбинацию Ctrl-D
-        
+
 ```bash
 admin@MBR# load merge terminal relative 
 [Type ^D at a new line to end input]
