@@ -30,20 +30,22 @@ neighbor 2.2.2.2 {
 }
 ```
 !!! note "Примечание"
-	С данной настройкой не удалось подружить Джун с Хуавеем
-        Нужно сделать лабу
+	С данной настройкой не удалось подружить Джун с Хуавеем. Нужно сделать лабу
 
 
 ##### Cisco
      -IOS/IOS-XE
+
 ```bash
      router bgp 11111
       address-family ipv4
         neighbor 1.1.1.1 capability orf prefix-list both
 ```
+подробнее см. [документацию](http://admindoc.ru/1250/bgp-outbound-route-filtering/)
 
      -IOS-XR
       В IOS-XR надо в явном виде указывать prefix-set для ORF
+
 ```bash
   prefix-set orf-preset
     172.16.1.0/24,
@@ -65,7 +67,8 @@ neighbor 2.2.2.2 {
       address-family ipv4 unicast
         orf route-policy policy-orf
 ```
-подробнее см. [документацию] (https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html)
+
+подробнее см. [документацию](https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html)
 
 ##### Huawei
      -NE8000-F1A
