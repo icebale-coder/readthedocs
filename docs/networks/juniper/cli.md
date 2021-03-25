@@ -549,7 +549,15 @@ unit 0 {
       Добавляет конфигурацию путем слияния существущей и новой
       Постим в нужном месте кусок своей конфигурации
 
-!!! Пример 1
+#### 1.2. load update terminal relative
+      Добавляет конфигурацию путем удаления существущей и добавлением новой
+      Постим в нужном месте кусок своей конфигурации
+
+#### 2. set/delete 
+      Перемещаемся в нужное место конфига, вносим/удаляем новые параметры через команду "set/delete"
+
+
+!!! Пример1
 <details><summary>Необходимо создать новый сабинтерфейс 900 в ae0</summary>
 <p>
     
@@ -602,6 +610,7 @@ admin@MBR# top
 +        }
 +    }
 ```
+
 * Применяем изменения и выходим  в operation mode
 ```bash
     admin@MBR# commit
@@ -616,10 +625,47 @@ admin@MBR# top
 </p>
 </details>
 
-#### 1.2. load update terminal relative
-      Добавляет конфигурацию путем удаления существущей и добавлением новой
-      Постим в нужном месте кусок своей конфигурации
+!!! Пример2
+<details><summary>Необходимо поменять ip адрес в ae0.900</summary>
+<p>
+    
+* Заходим в configure mode и перемещаемся в секцию interfaces ae0
 
-#### 2. set 
-      Перемещаемся в нужное место конфига, вносим новые параметры через команду "set"
+```bash
+    admin@MBR>edit
+    admin@MBR#edit interface ae0 unit900 family inet
 
+```
+
+* Удаляем старый ip адрес 
+```bash
+    admin@MBR#delete address 16.16.16.3/30
+```
+
+* Добавляем новый ip адрес 
+```bash
+    admin@MBR#set address 17.17.17.3/30
+```
+
+* Проверяем что поменяется в конфиге
+```bash
+    admin@MBR# show | compare 
+    [edit interfaces ae0 unit 900 family inet]
+-      address 16.16.16.3/30;
++      address 17.17.17.3/30;
+```
+
+* Применяем изменения и выходим  в operation mode
+```bash
+    admin@MBR# commit
+    commit complete
+
+    [edit]
+    admin@MBR# quit 
+    Exiting configuration mode
+
+    admin@MBR0> 
+```
+
+</p>
+</details>
