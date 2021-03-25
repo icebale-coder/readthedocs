@@ -560,7 +560,8 @@ unit 0 {
 ```bash
 ```
 
-!!! Пример1
+!!! note "Пример использования load merge terminal relative"
+
 <details><summary>Необходимо создать новый сабинтерфейс 900 в ae0</summary>
 <p>
     
@@ -631,7 +632,7 @@ admin@MBR# top
 ```bash
 ```
 
-!!! Пример2
+!!! note "Пример использования set/delete "
 <details><summary>Необходимо поменять ip адрес в ae0.900</summary>
 <p>
     
