@@ -13,28 +13,6 @@ title: BGP
   Удобно в случае, когда идет фильтрация входящих префиксов. При включенном orf с обоих сторон происходит обмен фильтрами на входящие префиксы и сосед заранее при отправке префиксов сделает на своей стороне фильтрацию лишних (не нужных соседу) и отправит только необходимые.
 
 #### Реализация на оборудовании
-##### Juniper
-**MX80**
-
-```bash
-neighbor 2.2.2.2 {
-    description "== NEIGHBOR with ORF ==";
-    local-address 1.1.1.1;
-    peer-as 22222;
-    outbound-route-filter {
-        bgp-orf-cisco-mode;
-        prefix-based {
-            accept {
-                inet;
-            }
-        }
-    }
-}
-```
-
-!!! note "Примечание"
-	С данной настройкой не удалось подружить Джун с Хуавеем. Нужно сделать лабу
-
 
 ##### Cisco
 **IOS/IOS-XE**
@@ -73,6 +51,30 @@ neighbor 2.2.2.2 {
 
 подробнее см. [документацию](https://www.cisco.com/c/en/us/td/docs/routers/xr12000/software/xr12k_r4-0/routing/configuration/guide/rc40xr12k_chapter7.html#con_1206744)
 
+##### Juniper
+**MX80**
+
+```bash
+neighbor 2.2.2.2 {
+    description "== NEIGHBOR with ORF ==";
+    local-address 1.1.1.1;
+    peer-as 22222;
+    outbound-route-filter {
+        bgp-orf-cisco-mode;
+        prefix-based {
+            accept {
+                inet;
+            }
+        }
+    }
+}
+```
+
+!!! note "Примечание"
+	С данной настройкой не удалось подружить Джун с Хуавеем. Нужно сделать лабу
+
+подробнее см. [документацию](https://www.juniper.net/documentation/en_US/junos/topics/topic-map/basic-routing-policies.html#id-example-configuring-bgp-prefix-based-outbound-route-filtering)
+
 ##### Huawei
 **NE8000-F1A**
 
@@ -107,9 +109,9 @@ neighbor 2.2.2.2 {
 ##### Cisco
 
 **IOS/IOS-XE**
-```bash
-   По умолчанию не включена
-```
+
+!!! note "Примечание"
+    По умолчанию не включена
 
 Включить можно командой 
 
@@ -124,9 +126,10 @@ neighbor 2.2.2.2 {
 ```
 
 **IOS-XR**
-```bash
-   По умолчанию не включена
-```
+!!! note "Примечание"
+    По умолчанию не включена
+
+
 Включить можно командой 
 
 ```bash
@@ -146,12 +149,11 @@ neighbor 2.2.2.2 {
 
 ##### Juniper
 **MX80**
-```bash
+!!! note "Примечание"
    По умолчанию (не отображается в конфиге) включен 
    в таком режиме - хранит всю информацию о маршрутах, 
    полученную от BGP, за исключением маршрутов, 
    путь AS которых является зацикленным и цикл которых включает локальную AS.
-```
 
 Выключить можно командой 
 ```bash
@@ -159,7 +161,19 @@ neighbor 2.2.2.2 {
     description "== NEIGHBOR 1 ==";
     local-address 2.2.2.2;
     keep none;
-
  }
 ```
 подробнее см. [документацию](https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/keep-edit-protocols-bgp.html)
+
+##### Huawei
+**NE8000-F1A**
+
+!!! note "Примечание"
+   По умолчанию хранит все маршруты которые прошли через фильтрацию import
+
+```bash
+    bgp 11111
+     ipv4-family unicast
+      peer 1.1.1.1 keep-all-routes
+```
+подробнее см. [документацию](https://support.huawei.com/enterprise/en/doc/EDOC1000174069/78fc123/configuring-bgp-soft-reset)
