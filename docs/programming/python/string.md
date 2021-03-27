@@ -1,4 +1,4 @@
-title: strings
+title: Strings
 # Python работа со строками 
 
 ## Присваивание значения
