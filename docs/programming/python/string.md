@@ -9,7 +9,8 @@ title: strings
 
 	print(a)
 	tes't
-	print(a)
+
+	print(b)
 	tes't
 ```
 
@@ -21,7 +22,8 @@ title: strings
 
 	print(a)
 	tes't
-	print(a)
+
+	print(b)
 	tes't
 
 ```
@@ -33,6 +35,7 @@ title: strings
 
 	print(a)
 	tes"t
+
 	print(b)
 	tes"t
 
