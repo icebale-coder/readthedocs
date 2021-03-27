@@ -304,7 +304,7 @@ In [156]:  a = '\t\tInterface vlan1\n\t'
 In [157]: a.split()
 Out[157]: ['Interface', 'vlan1']
 
-In [158]:  a = '\t\tInterface\tvlan1\n\t'
+In [158]:  a = '\t\tInterface \t vlan1\n\t'
 
 In [159]: a.split()
 Out[159]: ['Interface', 'vlan1']
@@ -323,5 +323,21 @@ In [160]:  a = '1,2,3,4,5'
 #получим список такого вида
 In [161]: a.split(',')
 Out[161]: ['1', '2', '3', '4', '5']
+
+
+#split() - дефолтовый умный  - он удвляет все символы whitespac-ов
+In [169]: a = '\t\tInterface \t vlan1\n\t'
+
+In [170]: print(a)
+                Interface        vlan1
+
+
+In [171]: a.split()
+Out[171]: ['Interface', 'vlan1']
+
+#В отличие от общего
+In [172]: a.split(' ')
+Out[172]: ['\t\tInterface', '\t', 'vlan1\n\t']
+
 
 ```
