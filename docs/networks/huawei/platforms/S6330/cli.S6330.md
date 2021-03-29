@@ -1,13 +1,9 @@
-title: Huawei cli base
+title: Huawei cli base S6330
 
-# Базовые команды cli Huawei
-
-## Просмотр конфига
-
-```bash
-dis cur conf
-```
-
+# Базовые команды cli Huawei S6330
+! note "Важно!"
+    Система commit-а отсутствует на коммутаторах Huawei
+    Т.о. команды при редакировании конфига применяются сразу же
 
 ## Просмотр конфига
 
@@ -77,3 +73,38 @@ Output:  99111904 packets, 9541883968 bytes
 
 </p>
 </details>
+
+
+## Пример редактирования настроек интерфейса 
+
+```bash
+
+# Просмотр настроек итерфейса перед изменением настроек
+<S6330>dis cur int XGigabitEthernet 0/0/24
+interface XGigabitEthernet0/0/24
+ description << test >>
+ port link-type trunk
+ port trunk allow-pass vlan 1108 2100 to 2101
+ dhcp snooping trusted
+
+# Переход в режим конфигурирования
+<S6330>system-view
+Enter system view, return user view with Ctrl+Z.
+[S6330]
+
+# Переход в контекст редактирования настроек интерфейса
+[S6330]interface XGigabitEthernet 0/0/24
+
+# Редактирование настроек интерфейса
+[S6330-XGigabitEthernet0/0/24]undo port trunk allow-pass vlan 2100 to 2101
+Info: This operation may take a few seconds. Please wait a moment.done.
+
+# Просмотр настроек итерфейса перед изменением настроек
+[s6330]dis cur int XGigabitEthernet 0/0/24
+
+interface XGigabitEthernet0/0/24
+ description << test >>
+ port link-type trunk
+ port trunk allow-pass vlan 1108
+ dhcp snooping trusted
+```
