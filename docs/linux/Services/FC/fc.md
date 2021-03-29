@@ -101,7 +101,7 @@ Class = "fc_host"
 <p>
 
 ```bash
-[root@fab0 ~]# systool -c fc_host -v | grep port_state
+[root@server1]# systool -c fc_host -v | grep port_state
     port_state          = "Online"
     port_state          = "Linkdown"
 ```

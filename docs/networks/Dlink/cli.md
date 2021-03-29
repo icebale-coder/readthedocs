@@ -6,25 +6,25 @@ title: Dlink cli base
 ## Просмотр конфига
 
 ```bash
-	show config curr
+show config curr
 ```
 
 ## Проcмотр fdb
 
 ```bash
-	show fdb
+show fdb
 ```
 
 ### Проcмотр fdb по влану 
 
 ```bash
-	show fdb vlan 1
+show fdb vlan 1
 ```
 
 ### Проcмотр fdb по порту 
 
 ```bash
-	show fdb port 1
+show fdb port 1
 ```
 
 ### Проcмотр вланов на порту 
