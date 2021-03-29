@@ -1,4 +1,4 @@
-title: Huawei cli base NE8000-F1A
+title: cli NE8000-F1A
 
 # Базовые команды cli Huawei 
 !!! warning "Важно!"

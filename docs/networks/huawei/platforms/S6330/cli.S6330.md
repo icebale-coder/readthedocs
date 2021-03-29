@@ -1,4 +1,4 @@
-title: Huawei cli base S6330
+title: cli S6330
 
 # Базовые команды cli Huawei S6330
 !!! warning "Важно!"

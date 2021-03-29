@@ -1,4 +1,4 @@
-title: cli
+title: cli JunOS
 
 #Основы Juniper cli
 
