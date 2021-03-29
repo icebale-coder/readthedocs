@@ -354,8 +354,17 @@ In [181]: intf_tmpl ='interface {}'
 In [182]: intf_tmpl.format('g0/1')
 Out[182]: 'interface g0/1'
 
+
 In [183]: intf_tmpl.format('eth1/48')
 Out[183]: 'interface eth1/48'
+
+
+# можно использовать переменную напрямую
+# при работе с format
+In [185]: f = 'gi0/0'
+
+In [186]: intf_tmpl.format(f)
+Out[186]: 'interface gi0/0'
 
 #По сути выполняется вот такая конструкуция
 In [184]: 'interface {}'.format('eth1/48')
