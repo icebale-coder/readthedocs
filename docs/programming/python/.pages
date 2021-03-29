@@ -1,0 +1,5 @@
+title: Python
+arrange:
+    - strings.md
+    - lists.md
+    - modules.md
