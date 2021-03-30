@@ -122,8 +122,11 @@ title: c4900M troubleshooting
 ## Анализ статистики
 ```bash
 Резко возрос SA Miss
-SA Miss = This CPU event, is caused when a new MAC is seen on the port, and it is thus, a copy of such packet is forwarded to CPU for MAC learning.
-SA Miss = Это событие ЦП вызывается, когда на порту виден новый MAC-адрес, и, таким образом, копия такого пакета пересылается в ЦП для изучения MAC.
+SA Miss = This CPU event, is caused when a new MAC is seen on the port, and it is thus, 
+a copy of such packet is forwarded to CPU for MAC learning.
+
+SA Miss = Это событие ЦП вызывается, когда на порту виден новый MAC-адрес, 
+и, таким образом, копия такого пакета пересылается в ЦП для изучения MAC.
 ```
 
 [Описание SA miss](https://community.cisco.com/t5/switching/ws-c4510r-bb1-bb2-high-cpu-issue-through-the-memory-leak/td-p/3957760) 
@@ -131,7 +134,7 @@ SA Miss = Это событие ЦП вызывается, когда на по�
 
 ## Включаем дебаг - в циклический буфер записываются пакеты
 
-<details><summary>C4900M#debug platform packet all buffer<summary>
+<details><summary>C4900M#debug platform packet all buffer</summary>
 <p>
 
 ```bash
@@ -718,7 +721,7 @@ Vlan2123 is up, line protocol is up , Autostate Enabled
 
 ## MAC адрес D0:D0:FD:93:18:FF - является мак адресом самой коробки
 
-<details><summary>C4900M#sh mac address-table add D0:D0:FD:93:18:FF<summary>
+<details><summary>C4900M#sh mac address-table add D0:D0:FD:93:18:FF</summary>
 <p>
 
 ```bash	
