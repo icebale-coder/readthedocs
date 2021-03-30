@@ -122,8 +122,8 @@ title: c4900M troubleshooting
 ## Анализ статистики
 ```bash
 Резко возрос SA Miss
-SA Miss = This CPU event, is caused when a new MAC is seen on the port, and it is thus, 
-a copy of such packet is forwarded to CPU for MAC learning.
+SA Miss = This CPU event, is caused when a new MAC is seen on the port, 
+and it is thus, a copy of such packet is forwarded to CPU for MAC learning.
 
 SA Miss = Это событие ЦП вызывается, когда на порту виден новый MAC-адрес, 
 и, таким образом, копия такого пакета пересылается в ЦП для изучения MAC.
@@ -725,21 +725,22 @@ Vlan2123 is up, line protocol is up , Autostate Enabled
 <p>
 
 ```bash	
-	Unicast Entries
-	 vlan     mac address     type        protocols               port
-	---------+---------------+--------+---------------------+-------------------------
-	   9      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	  10      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	  20      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	  30      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	  40      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	  50      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	  60      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	 110      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	 128      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	 140      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-	 600      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- ```
+Unicast Entries
+ vlan     mac address     type        protocols               port
+---------+---------------+--------+---------------------+-------------------------
+   9      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+  10      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+  20      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+  30      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+  40      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+  50      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+  60      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+ 110      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+ 128      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+ 140      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+ 600      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+ ...
+```
 
 </p>
 </details>
