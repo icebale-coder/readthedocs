@@ -1,11 +1,13 @@
 title: c4900M troubleshooting
 
+Troubleshooting
 # Описание ситуации:
+
 	- Имеется WS-C4900M
 	- Данное оборудование в полке по CPU
 	- Имеется резкое возрастание unicast трафика на двух портах
 
-# Troubleshooting
+
 
 ## Смотрим нагрузку на CPU
 <details><summary>C4900M#show processes cpu sorted 5sec | exclude 0.0</summary>
