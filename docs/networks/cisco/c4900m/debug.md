@@ -725,22 +725,22 @@ Vlan2123 is up, line protocol is up , Autostate Enabled
 <p>
 
 ```bash	
-Unicast Entries
- vlan     mac address     type        protocols               port
----------+---------------+--------+---------------------+-------------------------
-   9      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  10      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  20      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  30      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  40      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  50      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  60      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 110      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 128      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 140      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 600      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- ...
-```
+	Unicast Entries
+	 vlan     mac address     type        protocols               port
+	---------+---------------+--------+---------------------+-------------------------
+	   9      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  10      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  20      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  30      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  40      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  50      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  60      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 110      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 128      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 140      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 600      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+ ```
+
 </p>
 </details>
 
