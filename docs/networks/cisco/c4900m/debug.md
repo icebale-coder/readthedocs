@@ -725,21 +725,20 @@ Vlan2123 is up, line protocol is up , Autostate Enabled
 <p>
 
 ```bash	
-Unicast Entries
- vlan     mac address     type        protocols               port
----------+---------------+--------+---------------------+-------------------------
-   9      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  10      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  20      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  30      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  40      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  50      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
-  60      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 110      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 128      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 140      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- 600      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
- ...
+	Unicast Entries
+	 vlan     mac address     type        protocols               port
+	---------+---------------+--------+---------------------+-------------------------
+	   9      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  10      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  20      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  30      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  40      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  50      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	  60      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 110      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 128      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 140      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
+	 600      d0d0.fd93.18ff    static ip,ipx,assigned,other Switch                     
 ```
 
 </p>
@@ -747,9 +746,9 @@ Unicast Entries
 
 ## Что по итогу:
 ```bash
-1. По диагностики была петля, т.к. по содержимому буфера выдно что летит трафик с mac адресом источника d0d0.fd93.18ff, который является мак адресом самой коробки
-2. При приходе такого кадра происходит изучения мак адреса на порту, т.е. кадр попадает на Control plane и мак "источника" добавляется в мак таблицу коммутатора, 
-   но т.к. данный мак является маком коробки, то идет взаимоперзапись таблица мак адресов и процесс этот идет безустанно... Из за этого соответственно CPU постоянно в полке.
+	1. По диагностики была петля, т.к. по содержимому буфера выдно что летит трафик с mac адресом источника d0d0.fd93.18ff, который является мак адресом самой коробки
+	2. При приходе такого кадра происходит изучения мак адреса на порту, т.е. кадр попадает на Control plane и мак "источника" добавляется в мак таблицу коммутатора, 
+	   но т.к. данный мак является маком коробки, то идет взаимоперзапись таблица мак адресов и процесс этот идет безустанно... Из за этого соответственно CPU постоянно в полке.
 ```
 
 [Общая документация по troubleshooting c4500, c4900M](https://www.cisco.com/c/ru_ru/support/docs/switches/catalyst-4000-series-switches/65591-cat4500-high-cpu.html) 
