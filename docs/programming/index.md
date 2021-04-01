@@ -1,6 +1,6 @@
 title: Descrambler
 
-Awesome is easy...
+Love is...
 
 ```perl
 #!/usr/bin/perl -w
