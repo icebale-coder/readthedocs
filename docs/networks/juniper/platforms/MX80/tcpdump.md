@@ -133,10 +133,9 @@ ftp>        quit
 ```
 
 #### Можно скопировать файл на ftp и в операционном режиме
-admin@MNSK-MBR0> copy file ae0.3850.pcap ftp://cisco:T,fkfqrf2018@80.65.21.2/ae0.111.pcap 
-ftp://myacc,mypass@10.10.10.10/ae0.111 100% of  136  B   97 kBps
+admin@MNSK-MBR0> copy file ae0.1111.pcap ftp://myacc,mypass@10.10.10.10/ae0.1111.pcap 
+ftp://myacc,mypass@10.10.10.10/ae0.1111 100% of  136  B   97 kBps
 
 ### Данный файл можно открыть в wireshark
 
-
-
+Документация Juniper по [monitor traffic](https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/ref/command/monitor-traffic.html#monitor-traffic-command__d38613e1003) 
