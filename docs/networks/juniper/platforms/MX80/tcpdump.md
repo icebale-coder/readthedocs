@@ -3,6 +3,11 @@ title: JunOS monitor traffic
 #JunOS monitor traffic (tcpdump)
 
 В данном примере в ae0.1111 ходит только ospf трафик
+
+## Загрузка tcpdump в файл 
+!!! warning "Не забываем про настойки секции firewall для lo0!!!"
+	Без разрешения для lo0 ip адреса ftp доступа на него не будет!!!
+
 ## Запуск monitor traffic
 <details><summary>monitor traffic interface ae0.1111 detail no-resolve</summary>
 <p>
