@@ -94,12 +94,12 @@ Listening on ae0.3951, capture size 1514 bytes
 
 ### Загрузка tcpdump в файл на Juniper
 ```bash
-monitor traffic interface ae0.3951 detail write-file /var/tmp/ae0.1111.pcap
+monitor traffic interface ae0.1111 detail write-file /var/tmp/ae0.1111.pcap
 ```
 
 ### Копированиепо ftp
 
-####  Кропирование из shell-a
+####  Копирование из shell-a
 Просмотр данного файла в шелле (для этого нужно зайти под рутом системы, в данном случае рут это 'admin') 
 
 ```bash
