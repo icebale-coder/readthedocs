@@ -133,7 +133,7 @@ ftp>        quit
 ```
 
 #### Можно скопировать файл на ftp и в операционном режиме
-admin@MNSK-MBR0> copy file ae0.1111.pcap ftp://myacc,mypass@10.10.10.10/ae0.1111.pcap 
+admin@MBR0> copy file ae0.1111.pcap ftp://myacc,mypass@10.10.10.10/ae0.1111.pcap 
 ftp://myacc,mypass@10.10.10.10/ae0.1111 100% of  136  B   97 kBps
 
 ### Данный файл можно открыть в wireshark
