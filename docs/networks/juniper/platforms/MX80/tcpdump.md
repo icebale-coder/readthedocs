@@ -138,4 +138,4 @@ ftp://myacc,mypass@10.10.10.10/ae0.1111 100% of  136  B   97 kBps
 
 ### Данный файл можно открыть в wireshark
 
-Документация Juniper по [monitor traffic](https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/ref/command/monitor-traffic.html#monitor-traffic-command__d38613e1003) 
+Документация Juniper по [monitor traffic](https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/ref/command/monitor-traffic.html) 
