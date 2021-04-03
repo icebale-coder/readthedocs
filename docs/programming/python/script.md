@@ -117,3 +117,125 @@ switchport mode trunk
 switchport trunk allowed vlan 11,15,22
 spanning-tree bpdufilter enable
 ```
+Вариация на тему - можно импортировать не весь мождуль "sys", а только argv из него
+
+тогда
+```bash
+python@debian: $ cat ./example2.py
+#!/usr/bin/env python3
+
+from sys import argv
+
+print(argv)
+port = ['description << {} >>',
+'switchport mode trunk',
+'switchport trunk allowed vlan {}',
+'spanning-tree bpdufilter enable']
+
+# преобразование элементов списка "port" в строку,
+# разделенную переводом на след.строку '\n', с подстановкой в темплейты значений
+
+print('\n'.join(port).format(argv[1], argv[2]))
+
+```
+По итогу будет тоже самое 
+```bash
+./example2.py p1 2
+['./example2.py', 'p1', '2']
+description << p1 >>
+switchport mode trunk
+switchport trunk allowed vlan 2
+spanning-tree bpdufilter enable
+```
+
+## Распаковка в переменные
+```py
+In [1]: args = ['port1', '100']
+
+In [2]: port, vlan = args
+
+In [3]: port
+Out[3]: 'port1'
+
+In [4]: vlan
+Out[4]: '100'
+```
+Тогда
+```py
+cat ./example2.py
+#!/usr/bin/env python3
+
+from sys import argv
+
+desc, vlan = argv[1:3]
+
+port = ['description << {} >>',
+'switchport mode trunk',
+'switchport trunk allowed vlan {}',
+'spanning-tree bpdufilter enable']
+
+# преобразование элементов списка "port" в строку,
+# разделенную переводом на след.строку '\n', с подстановкой в темплейты значений
+
+print('\n'.join(port).format(desc, vlan))
+
+```
+
+При запуске 
+```bash
+python@debian: $ ./example2.py p1 22
+description << p1 >>
+switchport mode trunk
+switchport trunk allowed vlan 22
+spanning-tree bpdufilter enable
+```
+
+!!! warning "При запуске, если количество аргументов не соответствует, то будет ошибка"
+```bash
+./example2.py p1
+Traceback (most recent call last):
+  File "./example2.py", line 6, in <module>
+    desc, vlan = argv[1:3]
+ValueError: not enough values to unpack (expected 2, got 1)
+```
+
+## Ввод информации от пользователя input() 
+```py
+
+In [7]: user = input('Username: ')
+Username: alex
+
+In [8]: user
+Out[8]: 'alex'
+
+```
+### Создадим скрипт с возможностью интерактивного воода данных от пользователя
+```py
+cat ./example3.py
+#!/usr/bin/env python3
+
+desc= input('Введите описание порта: ')
+vlan= input('Введите номер влана: ')
+
+port = ['description << {} >>',
+'switchport mode trunk',
+'switchport trunk allowed vlan {}',
+'spanning-tree bpdufilter enable']
+
+# преобразование элементов списка "port" в строку,
+# разделенную переводом на след.строку '\n', с подстановкой в темплейты значений
+
+print('\n'.join(port).format(desc, vlan))
+
+```
+### Результат запуска такого скрипта
+```bash
+./example3.py
+Введите описание порта: collocate server
+Введите номер влана: 111
+description << collocate server >>
+switchport mode trunk
+switchport trunk allowed vlan 111
+spanning-tree bpdufilter enable
+
+```
