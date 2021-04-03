@@ -1,6 +1,9 @@
 title: Python
 arrange:
-    - strings.md
-    - lists.md
+    - string.md
+    - list.md
     - dictionary.md
+    - tuple.md
+    - set.md
+    - convertaion.md
     - modules.md
