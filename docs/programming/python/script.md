@@ -69,3 +69,51 @@ print('\n'.join(port).format('Port1', 166))
 	шебанг - это последовательность из двух символов '#!'. Загрузчик программ рассматривает остаток строки после шебанга как имя файла программы-интерпретатора. Загрузчик запускает эту программу и передаёт ей в качестве параметра имя файла скрипта с шебангом.
 
 инфа о [#!](https://ru.wikipedia.org/wiki/%D0%A8%D0%B5%D0%B1%D0%B0%D0%BD%D0%B3_(Unix))
+
+## Передача аргументов скрипту
+
+пример: example1.py 'port1',100
+
+пример: example1.py 'port2',200
+
+```bash
+Чтобы скрипт работал с агрументами для вывода данных нужно
+импортировать модуль sys, в нем есть список argv
+В списке argv хранятся имя файла и параметры(аргуметы),
+указанный в командной строке при запуске
+
+import sys
+print(sys.argv)
+
+Тогда example1.py с аргументами будет возвращать 
+./example1.py port11 23
+['./example1.py', 'port11', '23']
+
+```
+
+Изменяем соответственно скрипт 
+```bash
+#!/usr/bin/env python3
+
+import sys
+
+port = ['description << {} >>',
+'switchport mode trunk',
+'switchport trunk allowed vlan {}',
+'spanning-tree bpdufilter enable']
+
+# преобразование элементов списка "port" в строку,
+# разделенную переводом на след.строку '\n', с подстановкой в темплейты значений
+
+print('\n'.join(port).format(sys.argv[1], sys.argv[2]))
+```
+И тогда будет возвращаться вывод в соответствии с заполненными аргументами
+```bash
+./example1.py 'port 1' '11,15,22'
+
+['./example1.py', 'port 1', '11,15,22']
+description << port 1 >>
+switchport mode trunk
+switchport trunk allowed vlan 11,15,22
+spanning-tree bpdufilter enable
+```
