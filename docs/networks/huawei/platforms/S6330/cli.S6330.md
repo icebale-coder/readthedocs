@@ -202,7 +202,7 @@ VID  Status  Property      MAC-LRN Statistics Description
 </detail>
 
 
-### Просмотреть текущий контекст (в котором находишься)
+## Просмотреть текущий контекст (в котором находишься)
 <details><summary>display this</summary>
 <p>
 
