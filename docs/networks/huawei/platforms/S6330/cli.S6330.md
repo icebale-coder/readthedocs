@@ -107,3 +107,57 @@ interface XGigabitEthernet0/0/24
  port trunk allow-pass vlan 1108
  dhcp snooping trusted
 ```
+
+## Удаление влана из транка на интерфеса
+В контексте интефейса
+
+undo port trunk allow-pass vlan XXXX
+```bash
+#Здача удалить влан 2101 с иньтерфейса XGigabitEthernet 0/0/24
+<DS-S6330>dis cur int XGigabitEthernet 0/0/24
+  interface XGigabitEthernet0/0/24
+   description << TEST >>
+   port link-type trunk
+   port trunk allow-pass vlan 2100 to 2101
+   dhcp snooping trusted
+
+<DS-S6330>system-view
+[DS-S6330]int XGigabitEthernet 0/0/24
+[DS-S6330-XGigabitEthernet0/0/24]undo port trunk allow-pass vlan 2101
+Info: This operation may take a few seconds. Please wait a moment.done.
+
+[DS-S6330]dis cur int XGigabitEthernet 0/0/24
+#
+  interface XGigabitEthernet0/0/24
+   description << TEST >>
+   port link-type trunk
+   port trunk allow-pass vlan 2100
+   dhcp snooping trusted
+```
+
+## Добавление влана в транк на интерфейс
+В контексте интефейса
+
+port trunk allow-pass vlan XXXX
+```bash
+#Здача добавить влан 2101 на интерфейс XGigabitEthernet 0/0/24
+<DS-S6330>dis cur int XGigabitEthernet 0/0/24
+  interface XGigabitEthernet0/0/24
+   description << TEST >>
+   port link-type trunk
+   port trunk allow-pass vlan 2100 
+   dhcp snooping trusted
+
+<DS-S6330>system-view
+[DS-S6330]int XGigabitEthernet 0/0/24
+[DS-S6330-XGigabitEthernet0/0/24]port trunk allow-pass vlan 2101
+Info: This operation may take a few seconds. Please wait a moment.done.
+
+[DS-S6330]dis cur int XGigabitEthernet 0/0/24
+#
+  interface XGigabitEthernet0/0/24
+   description << TEST >>
+   port link-type trunk
+   port trunk allow-pass vlan 2100 to 2101
+   dhcp snooping trusted
+```

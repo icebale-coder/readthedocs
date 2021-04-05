@@ -68,3 +68,18 @@ Member Ports       : 5-6
 Tagged Ports       : 5-6
 Untagged Ports     :
 ```
+
+### Добавить новый влан 
+```bash
+# создание влана 2101 с именем NAME_2101
+create vlan NAME_2101 tag 2101
+```
+
+### Добавить влан на определенный порт
+```bash
+# Добавление влана 2101 на 4ый порт в теге
+config vlan vlanid 2101 add tagged 4
+
+# Добавление влана 2101 на 5ый порт в теге
+config vlan vlanid 2101 add untagged 5
+```
