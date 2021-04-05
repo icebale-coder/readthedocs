@@ -162,9 +162,10 @@ Info: This operation may take a few seconds. Please wait a moment.done.
    dhcp snooping trusted
 ```
 
-## Просмотр информации пло вланам
+## Просмотр информации по вланам
 <details><summary>dis vlan</summary>
 <p>
+
 ```bash  
 <S6330>dis vlan
 The total number of VLANs is: 5
@@ -196,5 +197,28 @@ VID  Status  Property      MAC-LRN Statistics Description
 2100 enable  default       enable  disable    VLAN 2100
 2101 enable  default       enable  disable    VLAN 2101
 ```
+
+</p>
+</detail>
+
+
+### Просмотреть текущий контекст (в котором находишься)
+<details><summary>display this</summary>
+<p>
+
+```bash
+<LAB-DS-S6330>system-view
+Enter system view, return user view with Ctrl+Z.
+[LAB-DS-S6330]int XGigabitEthernet 0/0/3
+[LAB-DS-S6330-XGigabitEthernet0/0/3]display this
+#
+interface XGigabitEthernet0/0/3
+ description -- UNUSED --
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+#
+return
+```
+
 </p>
 </detail>
