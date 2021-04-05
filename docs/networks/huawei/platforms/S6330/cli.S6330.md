@@ -113,7 +113,7 @@ interface XGigabitEthernet0/0/24
 
 undo port trunk allow-pass vlan XXXX
 ```bash
-#Здача удалить влан 2101 с иньтерфейса XGigabitEthernet 0/0/24
+#Задача удалить влан 2101 с интерфейса XGigabitEthernet 0/0/24
 <DS-S6330>dis cur int XGigabitEthernet 0/0/24
   interface XGigabitEthernet0/0/24
    description << TEST >>
@@ -161,3 +161,40 @@ Info: This operation may take a few seconds. Please wait a moment.done.
    port trunk allow-pass vlan 2100 to 2101
    dhcp snooping trusted
 ```
+
+## Просмотр информации пло вланам
+<details><summary>dis vlan</summary>
+<p>
+```bash  
+<S6330>dis vlan
+The total number of VLANs is: 5
+--------------------------------------------------------------------------------
+U: Up;         D: Down;         TG: Tagged;         UT: Untagged;
+MP: Vlan-mapping;               ST: Vlan-stacking;
+#: ProtocolTransparent-vlan;    *: Management-vlan;
+--------------------------------------------------------------------------------
+
+VID  Type    Ports
+--------------------------------------------------------------------------------
+1    common  UT:40GE0/0/1(D)    40GE0/0/2(D)    40GE0/0/3(D)    40GE0/0/4(D)
+                40GE0/0/5(D)    40GE0/0/6(D)    XGE0/0/4(D)     XGE0/0/5(D)
+                XGE0/0/6(D)     XGE0/0/7(D)     XGE0/0/8(D)     XGE0/0/9(D)
+                XGE0/0/10(D)    XGE0/0/11(D)    XGE0/0/12(D)    XGE0/0/13(D)
+                XGE0/0/14(D)    XGE0/0/15(D)    XGE0/0/16(D)    XGE0/0/17(D)
+                XGE0/0/18(D)    XGE0/0/19(D)    XGE0/0/20(D)    XGE0/0/21(D)
+                XGE0/0/22(D)    XGE0/0/23(D)    XGE0/0/24(U)
+10   common  TG:XGE0/0/2(U)
+1108 common  TG:XGE0/0/24(U)
+2100 common  TG:XGE0/0/1(U)
+2101 common  TG:XGE0/0/1(U)
+
+VID  Status  Property      MAC-LRN Statistics Description
+--------------------------------------------------------------------------------
+1    enable  default       enable  disable    VLAN 0001
+10   enable  default       enable  disable    VLAN 0010
+1108 enable  default       enable  disable    VLAN 1108
+2100 enable  default       enable  disable    VLAN 2100
+2101 enable  default       enable  disable    VLAN 2101
+```
+</p>
+</detail>
