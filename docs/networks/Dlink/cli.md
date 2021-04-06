@@ -83,3 +83,9 @@ config vlan vlanid 2101 add tagged 4
 # Добавление влана 2101 на 5ый порт в теге
 config vlan vlanid 2101 add untagged 5
 ```
+
+### Удалить влан на определенном порту
+```bash
+# удалить влан 657 на порту 1
+config vlan 657 delete 1
+```
