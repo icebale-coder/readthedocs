@@ -90,9 +90,6 @@ config vlan vlanid 1000 add tagged 1
 
 # Настройка порта 4, который работает в режиме UNI
 config vlan vlanid 1000 add untagged 4
-config vlan vlanid 2101 add tagged 4
-config vlan vlanid 2102 add tagged 4
-config vlan vlanid 2103 add tagged 4
 config port_vlan 4 pvid 1000
 
 # Включаем QinQ
