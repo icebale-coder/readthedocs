@@ -11,7 +11,6 @@ title: QinQ Dlink
 "Доки QinQ"
 
 [ссылка1](https://www.dlink.ru/ru/faq/62/1641.html)
-
 [ссылка2](ftp://ftp.dlink.ru/pub/Trainings/SwitchWhitePapers/Q-in-Q_Port-Based_and_Selective.pdf)
 
 ### Роли портов UNI, NNI
@@ -52,9 +51,9 @@ title: QinQ Dlink
 SW3/SW4 - обычные коммутаторы - на них самые обычные настройки
 ```bash
 # Создаем клиентские вланы
-create vlan 2100 tag 2101
-create vlan 2100 tag 2102
-create vlan 2100 tag 2103
+create vlan 2101 tag 2101
+create vlan 2102 tag 2102
+create vlan 2103 tag 2103
 
 # Удаляем дефолтовый влан
 config vlan vlanid 1 delete 1-6
@@ -79,9 +78,9 @@ disable qinq
 # Создаем QinQ влан
 create vlan 1000 tag 1000
 # Создаем клиентские вланы
-create vlan 2100 tag 2101
-create vlan 2100 tag 2102
-create vlan 2100 tag 2103
+create vlan 2101 tag 2101
+create vlan 2102 tag 2102
+create vlan 2103 tag 2103
 
 # Удаляем дефолтовый влан
 config vlan vlanid 1 delete 1-6
