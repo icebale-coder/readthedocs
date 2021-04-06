@@ -33,6 +33,9 @@ title: QinQ Dlink
 #### NNI
 	стандартый режим работы порта.
 
+**Вид пакета с двойным тегом**
+![image-QinQ-wireshark](../img/QinQ-wireshark.jpg)
+
 ### Настройка QinQ на примере данной схемы
 ![image-Dlink-QinQ](../img/Dlink-QinQ-schema.jpg)
 
