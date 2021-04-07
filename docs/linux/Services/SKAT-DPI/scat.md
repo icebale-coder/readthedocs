@@ -160,3 +160,16 @@ Result processing ip=172.29.10.2 :
 1/1/0
 ```
 
+## Показать статистику по использованию портов белого адреса
+```bash
+sd0.mnsk.sdn.orionnet.ru:~ # fdpi_ctrl list status --service 11 --profile.name gorod_sd0_nat | grep 111.111.111.10
+                        proto=TCP       nthr=0  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=45     free_port=16083 prcnt_free=99.72%
+                        proto=TCP       nthr=1  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=288    free_port=15840 prcnt_free=98.21%
+                        proto=TCP       nthr=2  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=83     free_port=16045 prcnt_free=99.49%
+                        proto=TCP       nthr=3  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=166    free_port=15962 prcnt_free=98.97%
+                        proto=UDP       nthr=0  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=6      free_port=16122 prcnt_free=99.96%
+                        proto=UDP       nthr=1  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=20     free_port=16108 prcnt_free=99.88%
+                        proto=UDP       nthr=2  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=19     free_port=16109 prcnt_free=99.88%
+                        proto=UDP       nthr=3  ip_mask=0x3     whip=111.111.111.10     num_port=16128  use_port=45     free_port=16083 prcnt_free=99.72%
+
+```
