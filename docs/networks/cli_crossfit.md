@@ -383,13 +383,13 @@ inet.0
 
 ```bash
 # просмотр таблицы RIB
-	dis ip routing-table
+dis ip routing-table
 
 # просмотр таблицы RIB BGP
-	dis bgp routing-table
+dis bgp routing-table
 
 # просмотр таблицы RIB BGP для конкретной сети x.x.x.x (в примере наш DNS - у которого anycast ip)
-bgp routing-table x.x.x.x
+dis bgp routing-table x.x.x.x
 
 # Пример просмотра
 <CR1>dis bgp routing-table 180.64.16.1
