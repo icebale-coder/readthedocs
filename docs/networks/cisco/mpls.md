@@ -27,7 +27,7 @@ Peer LDP Ident: 3.3.3.3:0; Local LDP Ident 1.1.1.1:0
       10.3.4.3        3.3.3.3         10.1.3.3
 ```
 </p>
-</details>details>
+</details>
 
 
 ### Показать таблицу форвардинга меток
@@ -54,7 +54,7 @@ tag    tag or VC   or Tunnel Id      switched   interface
 </p>
 </details>
 
-## Просмотр транспортной метки для FEC
+### Просмотр транспортной метки для FEC
 <details><summary>sh mpls ip binding x.x.x.x yz</summary>
 <p>
 
@@ -70,10 +70,14 @@ sh mpls ip binding 4.4.4.4 32
 </details>
 
 
-## Просмотр инфвы по L3VPN 
+## Просмотр инфы по L3VPN 
 
+### Просмотреть инфу в таблице BGP для определенного VRF и для определееного адреса
+<details><summary>sh ip bgp vpnv4 vrf VRFNAME x.x.x.x</summary>
+<p>
 
-# Просмотреть инфу в таблице BGP для VRF C3PO
+```bash
+# Просмотреть инфу в таблице BGP для VRF C3PO для адреса 192.168.222.0
 sh ip bgp vpnv4 vrf C3PO 192.168.222.0
 	BGP routing table entry for 64500:100:192.168.222.0/24, version 13
 	Paths: (1 available, best #1, table C3PO)
@@ -83,8 +87,15 @@ sh ip bgp vpnv4 vrf C3PO 192.168.222.0
 	      Origin incomplete, metric 0, localpref 100, valid, internal, best
 	      Extended Community: RT:64500:300
 	      mpls labels in/out nolabel/26
+```
+</p>
+</details>
 
+### Просмотр сервисной и транспортной метки в cef 
+<details><summary>sh ip cef vrf VRFNAME x.x.x.x </summary>
+<p>
 
+```bash
 # Просмотр сервисной и транспортной метки в cef для 20.20.20.20
 sh ip cef vrf C3PO 20.20.20.20
 	20.20.20.20/32, version 8, epoch 0, cached adjacency 10.1.3.3
@@ -96,20 +107,17 @@ sh ip cef vrf C3PO 20.20.20.20
 	    next hop 10.1.3.3, FastEthernet0/0 via 6.6.6.6/32
 	    valid cached adjacency
 	    tag rewrite with Fa0/0, 10.1.3.3, tags imposed: {20 26}
+```
+</p>
+</details>
 
+## Просмотр инфвы по L2VPN xConnect
 
-###################################################################
-# Просмотр инфвы по L2VPN xConnect
-###################################################################
+### Просмотр всех xconnect-ов
+<details><summary>show xconnect all</summary></details>
 
+### Просмотр детальной информации о vc в l2vpn
+<details><summary>show mpls l2transport vc detail</summary></details>
 
-# Просмотр всех xconnect-ов
-show xconnect all
-
-# Просмотр детальной информации о vc в l2vpn
-show mpls l2transport vc detail
-
-# Просмотр детальной информации о vc в l2vpn
-# по сути аналог предыдущей команды
-show l2vpn atom vc detail
-
+### Просмотр детальной информации о vc в l2vpn (по сути аналог предыдущей команды)
+<details><summary>show l2vpn atom vc detail</summary></details>
