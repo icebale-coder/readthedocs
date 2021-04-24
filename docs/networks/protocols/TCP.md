@@ -11,7 +11,7 @@ Descrambler:
 
 Нуу, это лирика... )
 
-На самом деле информация и рассказ про tcp настолько огромный ограмный, 
+На самом деле информация и рассказ про tcp настолько огромный, 
 что его нельзя в принципе втиснуть в какую либо одну статью или даже несколько, 
 поскольку принципы и особенности его работы описаны в "тоннах" RFC 
 да еще и разнятся взависимости от реализации различных ОС...
@@ -38,13 +38,27 @@ Descrambler:
 [EN](https://www.cisco.com/c/en/us/support/docs/ip/generic-routing-encapsulation-gre/25885-pmtud-ipfrag.html)
 
 ```bash
-Originally, MSS meant how big a buffer (greater than or equal to 65496 bytes) was allocated on a receiving station to be able to store the TCP data contained within a single IPv4 datagram. MSS was the maximum segment (chunk) of data that the TCP receiver was willing to accept. This TCP segment could be as large as 64K (the maximum IPv4 datagram size) and it could be fragmented at the IPv4 layer in order to be transmitted across the network to the receiving host. The receiving host would reassemble the IPv4 datagram before it handed the complete TCP segment to the TCP layer.
+Originally, MSS meant how big a buffer (greater than or equal to 65496 bytes) 
+was allocated on a receiving station to be able to store the TCP data contained 
+within a single IPv4 datagram. MSS was the maximum segment (chunk) of data 
+that the TCP receiver was willing to accept. This TCP segment could be as large 
+as 64K (the maximum IPv4 datagram size) and it could be fragmented 
+at the IPv4 layer in order to be transmitted across the network 
+to the receiving host. The receiving host would reassemble the IPv4 datagram
+before it handed the complete TCP segment to the TCP layer.
 ```
 [RU](https://www.cisco.com/c/ru_ru/support/docs/ip/generic-routing-encapsulation-gre/25885-pmtud-ipfrag.html)
 ```bash
-Сначала значение MSS указывало размер буфера, выделенного на приемной станции для хранения данных TCP, содержащихся в одной датаграмме IPv4 (больше или равно 65 496 байт). MSS был максимально допустимым сегментом (блоком) данных, которые TCP-получатель был согласен принять. Размер этого сегмента TCP мог достигать 64 000 (максимальный размер датаграммы IPv4). Для передачи по сети приемному хосту этот сегмент мог быть сегментирован на уровне IPv4. Приемный хост выполнял бы повторную сборку датаграммы IPv4 до передачи полного сегмента TCP на уровень TCP.
+Сначала значение MSS указывало размер буфера, выделенного на приемной станции 
+для хранения данных TCP, содержащихся в одной датаграмме IPv4 
+(больше или равно 65 496 байт). MSS был максимально допустимым
+сегментом (блоком) данных, которые TCP-получатель был согласен принять. 
+Размер этого сегмента TCP мог достигать 64 000 
+(максимальный размер датаграммы IPv4). Для передачи по сети приемному хосту 
+этот сегмент мог быть сегментирован на уровне IPv4. 
+Приемный хост выполнял бы повторную сборку датаграммы IPv4 до передачи 
+полного сегмента TCP на уровень TCP.
 ```
-
 
 Но так среда передачи "де-факто" сейчас у нас ethernet, то по дефолту размер MTU в ней составляет 1500 byte. И соостветвенно MSS подгоняли под этот размер, чтобы избежать дефрагментацию.
 
