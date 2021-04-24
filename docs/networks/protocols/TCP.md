@@ -3,8 +3,12 @@ title: TCP
 # Протокол TCP
 Descrambler:
 ```bash
-если позволить себе перефразировать класссика, то взучать это будет приблизительно так:
-"аршином общим не измерить, там в нём особенная стать, в него лишь можно только верить"...
+если позволить себе перефразировать класссика, то взучать это будет 
+приблизительно так:
+"аршином общим не измерить, 
+там в нём особенная стать, 
+в него лишь можно только верить"...
+
 Нуу, это лирика... )
 
 На самом деле информация и рассказ про tcp настолько огромный ограмный, 
@@ -13,7 +17,7 @@ Descrambler:
 да еще и разнятся взависимости от реализации различных ОС...
 ```
 
-**Тут я буду писать коротенькие и не очень коротенькие заметки "на полях", с чем я сталкивался на своей практике...**
+**Тут я буду писать коротенькие и не очень коротенькие заметки "на полях", с чем я сталкивался в своей практике или изучал в теории...**
 
 
 ## Определение/Назначение 
@@ -30,15 +34,17 @@ Descrambler:
 "Фокус" в том, что изначально, насколько я понимаю, под MSS имели ввиду максимальный размер буфера у хоста, который мог работать с сегментами. Но в конечном счете всё уперлоль в среду передачи...
 
 **Цитата с сайта cisco**
+
 [EN](https://www.cisco.com/c/en/us/support/docs/ip/generic-routing-encapsulation-gre/25885-pmtud-ipfrag.html)
 
 ```bash
-"Originally, MSS meant how big a buffer (greater than or equal to 65496 bytes) was allocated on a receiving station to be able to store the TCP data contained within a single IPv4 datagram. MSS was the maximum segment (chunk) of data that the TCP receiver was willing to accept. This TCP segment could be as large as 64K (the maximum IPv4 datagram size) and it could be fragmented at the IPv4 layer in order to be transmitted across the network to the receiving host. The receiving host would reassemble the IPv4 datagram before it handed the complete TCP segment to the TCP layer."
+Originally, MSS meant how big a buffer (greater than or equal to 65496 bytes) was allocated on a receiving station to be able to store the TCP data contained within a single IPv4 datagram. MSS was the maximum segment (chunk) of data that the TCP receiver was willing to accept. This TCP segment could be as large as 64K (the maximum IPv4 datagram size) and it could be fragmented at the IPv4 layer in order to be transmitted across the network to the receiving host. The receiving host would reassemble the IPv4 datagram before it handed the complete TCP segment to the TCP layer.
 ```
 [RU](https://www.cisco.com/c/ru_ru/support/docs/ip/generic-routing-encapsulation-gre/25885-pmtud-ipfrag.html)
 ```bash
-"Сначала значение MSS указывало размер буфера, выделенного на приемной станции для хранения данных TCP, содержащихся в одной датаграмме IPv4 (больше или равно 65 496 байт). MSS был максимально допустимым сегментом (блоком) данных, которые TCP-получатель был согласен принять. Размер этого сегмента TCP мог достигать 64 000 (максимальный размер датаграммы IPv4). Для передачи по сети приемному хосту этот сегмент мог быть сегментирован на уровне IPv4. Приемный хост выполнял бы повторную сборку датаграммы IPv4 до передачи полного сегмента TCP на уровень TCP."
+Сначала значение MSS указывало размер буфера, выделенного на приемной станции для хранения данных TCP, содержащихся в одной датаграмме IPv4 (больше или равно 65 496 байт). MSS был максимально допустимым сегментом (блоком) данных, которые TCP-получатель был согласен принять. Размер этого сегмента TCP мог достигать 64 000 (максимальный размер датаграммы IPv4). Для передачи по сети приемному хосту этот сегмент мог быть сегментирован на уровне IPv4. Приемный хост выполнял бы повторную сборку датаграммы IPv4 до передачи полного сегмента TCP на уровень TCP.
 ```
+
 
 Но так среда передачи "де-факто" сейчас у нас ethernet, то по дефолту размер MTU в ней составляет 1500 byte. И соостветвенно MSS подгоняли под этот размер, чтобы избежать дефрагментацию.
 
@@ -48,14 +54,15 @@ Descrambler:
 Работает PMTUD следующим образом, когда проходит "тройное рукопожатие" ("three way handshake") в TCP, то стороны обмениваются своими параметрами, в том числе и значением MSS и из двух этих значений выбирается минимальное.
 
 Соответвтвенно дальше размер данных в сегменте TCP при передачи не должен превышать договоренного MSS, причем все пакеты отправляютcя с флагом DF (don't fragment) в ip заголовке.
-Размер такого сегмента максимального размера MSS, в нашем случае 
+Размер такого сегмента максимального размера MSS, в нашем случае: 
+
 **MSS = MTU = 1500 - 20 (заголовок ip) - 20 (заголовок tcp) = 1460 byte**
 
 При нахождении на одном из промежуточных маршрутизаторов интерфейса с меньшим MTU, такой пакет с установленным битом DF будет отброшен и тогда с маршрутищзатора, отбросившего пакет будет отправлено сообщение с уведомлением "о невозможности достижимости и указанием того, что нужно дефрагментировать":
 ```java
-ICMP type 3 code 4:
+"ICMP type 3 code 4:
 Type 3 — Destination Unreachable
-Code 4 - Fragmentation Needed and Don't Fragment was Set
+Code 4 - Fragmentation Needed and Don't Fragment was Set"
 ```
 
 Данное сообщение дойдет до отправителя и в ответ отправитель повторно отправит данные, но уже меньшего размера. Размер MTU на интерфейсе "узкого" маршрутизаторв определяется либо в явном виде согласно [RFC 1191](https://www.ietf.org/rfc/rfc1191.txt), когда значение MTU передается внутри сообщения ICMP, либо согласно рекомендаций других RFC по MTU в сооответствующих средах передачи...
