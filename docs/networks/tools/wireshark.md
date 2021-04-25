@@ -4,11 +4,13 @@ title: Wireshark filtering
 Descrambler:
 ```bash
 ...играет Марсельеза...
-"All you need is dump dump is all you need..."
+"All you need is dump, 
+Dump is all you need..."
 ```
 
 Wireshark играет в жизни сетевого инженера весьма немаловажную роль...
-здесь будут приводиться основные фильтра, использующиеся в "routine work"
+
+Здесь будут приводиться основные фильтра, использующиеся в "routine work"
 
 ## ip.src == x.x.x.x
 ```bash
