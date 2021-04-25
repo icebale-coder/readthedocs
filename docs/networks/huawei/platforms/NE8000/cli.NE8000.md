@@ -77,13 +77,13 @@ c c c
 <из операционного режима> rollback configuration last 3
 ```
 
-### посмотреть какие изменения произошли в течении 1 последних коммитов 
+### посмотреть какие изменения произошли в течении последнего коммита 
 (display configuration commit changes last 1)
 ```bash
 di co co ch last 1
 ```
 
-### посмотреть какие изменения произошли в течении 3 последних коммитов 
+### посмотреть какие изменения произошли в течении 3-х последних коммитов 
 можно соответственно
 (display configuration commit changes last 3)
 ```bash
@@ -144,6 +144,7 @@ Destination/Mask    Proto   Pre  Cost        Flags NextHop         Interface
 ```
 ### показать FIB для определенного ip адреса
 *cisco IOS аналог sh ip cef  <ip>*
+
 *cisco NX-OS аналог show forward ip route <ip>*
 
 **dis fib slot 1 <ip>**
@@ -160,7 +161,7 @@ Destination/Mask   Nexthop         Flag TimeStamp     Interface                 
 ```bash
 # Показать префиксы, которые начинаются (рождены) в AS50022 или AS65078
 <NE8000-F1A>display bgp routing-table regular-expression .*(50022|65078)
- BGP Local router ID is 109.226.255.211
+ BGP Local router ID is 10.10.10.10
  Status codes: * - valid, > - best, d - damped, x - best external, a - add path,
                h - history,  i - internal, s - suppressed, S - Stale
                Origin : i - IGP, e - EGP, ? - incomplete
