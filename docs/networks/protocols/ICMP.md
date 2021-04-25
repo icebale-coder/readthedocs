@@ -29,3 +29,4 @@ Code: 0
 
 
 Пример icmp дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/icmp-ping.pcapng)
+
