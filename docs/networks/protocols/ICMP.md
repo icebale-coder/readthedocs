@@ -19,7 +19,7 @@ Descrambler:
 ### Проверка доступности удаленного хоста (команда ping)
 Самый простой пример это использование icmp в команде ping
 
-В этом случае отправляется запрос в сеть протокола ICMP
+В этом случае отправляется пакет ICMP в сеть с запросом 
 типа: 
 ```java
 Type: 8  - Echo ping (request)
@@ -28,4 +28,4 @@ Code: 0
 ![icmp-ping](img/icmp-ping.jpg)
 
 
-Пример icmp дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wiresharrk.collection/icmp-ping.pcap)
+Пример icmp дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/icmp-ping.pcapng)
