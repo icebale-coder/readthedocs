@@ -1,6 +1,9 @@
 title: Frame Ethernet
 
+
 # Анатомия кадра Ethernet
+
+Попробую описать как это выглядет с укзанием уровней OSI
 
 ## 7ми уровневая модель OSI
 ![osi](img/osi.jpg)
@@ -18,7 +21,9 @@ title: Frame Ethernet
 payload - L4 - L7 
 ```
 
-### Заголовок кадра может быть увеличен за счет использования vlan
+### L2
+Заголовок кадра может быть увеличен за счет использования vlan
+
 ![frame-header](img/frame-header.jpg)
 
 ####Стандарт 802.1Q — добавляет 4 байта
@@ -27,12 +32,14 @@ payload - L4 - L7
 
 
 
-### 20 bytes - заголовок пакета (L3)
+### L3
+20 bytes - заголовок пакета (L3)
 
 ![ip-header](img/ip-header.jpg)
 
 	
-### Payload
+### L4-L7
+Payload
 [xxxx] bytes - payload (L4-L7)
 
 
