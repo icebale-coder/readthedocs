@@ -7,7 +7,7 @@ title: Frame Ethernet
 
 
 ## Ethernet II
-
+```bash
 14 bytes = DA(6) + SA(6) + type(2)  - заголовок кадра  (L2)
 +
 20 bytes = - заголовок пакета (L3)
@@ -16,7 +16,7 @@ title: Frame Ethernet
 20 bytes - заголовок сегмента (L4) 
 +
 payload - L4 - L7 
-
+```
 
 Заголовок кадра может быть увеличен за счет использования vlan
 ![frame-header](img/frame-header.jpg)
