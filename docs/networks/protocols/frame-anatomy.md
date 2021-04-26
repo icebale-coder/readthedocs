@@ -8,9 +8,9 @@ title: Frame Ethernet
 
 ## Ethernet II
 ```bash
-14 bytes = DA(6) + SA(6) + type(2)  - заголовок кадра  (L2)
+14 bytes = DMAC(6) + SMAC(6) + type(2)  - заголовок кадра  (L2)
 +
-20 bytes = - заголовок пакета (L3)
+20 bytes = ...+DA+SA+... - заголовок пакета (L3)
 +
 Если у нас tcp,upd,icmp
 20 bytes - заголовок сегмента (L4) 
