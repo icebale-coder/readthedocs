@@ -10,7 +10,7 @@ title: Frame Ethernet
 ```bash
 14 bytes = DMAC(6) + SMAC(6) + type(2)  - заголовок кадра  (L2)
 +
-20 bytes = ...+DA+SA+... - заголовок пакета (L3)
+20 bytes = ...+ SA + DA +... - заголовок пакета (L3)
 +
 Если у нас tcp,upd,icmp
 20 bytes - заголовок сегмента (L4) 
@@ -18,21 +18,21 @@ title: Frame Ethernet
 payload - L4 - L7 
 ```
 
-Заголовок кадра может быть увеличен за счет использования vlan
+### Заголовок кадра может быть увеличен за счет использования vlan
 ![frame-header](img/frame-header.jpg)
 
-Стандарт 802.1Q — добавляет 4 байта
+####Стандарт 802.1Q — добавляет 4 байта
 
 ![frame-header+dot1.q](img/802.1q.jpg)
 
 
 
-20 bytes - заголовок пакета (L3)
+### 20 bytes - заголовок пакета (L3)
 
 ![ip-header](img/ip-header.jpg)
 
 	
-+
+### Payload
 [xxxx] bytes - payload (L4-L7)
 
 
