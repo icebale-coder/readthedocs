@@ -22,12 +22,15 @@ payload - L4 - L7
 ![frame-header](img/frame-header.jpg)
 
 Стандарт 802.1Q — добавляет 4 байта
+
 ![frame-header+dot1.q](img/802.1q.jpg)
+
 
 
 20 bytes - заголовок пакета (L3)
 
 ![ip-header](img/ip-header.jpg)
+
 	
 +
 [xxxx] bytes - payload (L4-L7)
