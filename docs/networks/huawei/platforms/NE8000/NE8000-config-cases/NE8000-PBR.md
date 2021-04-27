@@ -59,7 +59,7 @@ traffic behavior TB-NAT1
 #
 ```
 
-## nqa 
+## 6. nqa 
 nqa - это аналог cisco SLA, который в данном случае отслеживает доступность ip адресов NAT-ов по icmp
 ```bash
 nqa test-instance NATS NQA_NAT1
