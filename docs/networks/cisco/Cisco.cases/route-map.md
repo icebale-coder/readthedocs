@@ -21,6 +21,7 @@ Descrambler:
 Как вариант разбалансить можно принудительным выставлением доп. prepend-a для "more specific" префиксов (больших /23)
 
 **Решить данную задачу можно через route-map**
+
 ```bash
 !Настройка Дистрибуции в локации
 !
@@ -43,6 +44,7 @@ router bgp 1111
 !
 ip prefix-list PL-GE-24 seq 10 permit 0.0.0.0/0 ge 24
 ```
+
 ## Логика работы route-map RM-OUT:
 ```bash
 1. Приходит prefix, соответствующий prefix-list CORE-OUT с маской от 17-24,
@@ -74,6 +76,7 @@ ip prefix-list PL-GE-24 seq 10 permit 0.0.0.0/0 ge 24
        где отбрасывается
   ИТОГО префикс не попал в advertised-route    
 ```
+
 !!! warning "Важно"
 	При использовании "continue" правило по умолчанию у route-map меняется с "implicit deny" на "implicit permit"? п.э. чтобы работало как в нашем случае необходимо в явном виде указывать
 	последним правилом "deny"
