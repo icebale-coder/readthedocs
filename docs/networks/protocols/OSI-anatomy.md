@@ -58,6 +58,7 @@ PDU - сегмент,датаграмма (segment, datagram)
   такие как http, https, ftp, smtp и пр..
 ```
 
+- Пример протокола [icmp](https://icebale.readthedocs.io/en/latest/networks/protocols/ICMP/) в представлении OSI модели
+- Пример протокола [arp](https://icebale.readthedocs.io/en/latest/networks/protocols/ARP/) в представлении OSI модели
 
-Пример протокола [icmp](https://icebale.readthedocs.io/en/latest/networks/protocols/ICMP/) в представлении OSI модели
-Пример протокола [arp](https://icebale.readthedocs.io/en/latest/networks/protocols/ARP/) в представлении OSI модели
+[Статья на тему OSI-model](https://selectel.ru/blog/osi-for-beginners/)
