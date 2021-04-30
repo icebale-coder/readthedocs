@@ -56,6 +56,7 @@ title: ARP
 ![icmp-ping](img/arp-request-l3-l7.jpg)
 
 #### Общий формат ARP протокола
+
 ##### 1. Hardware type 
 **тип протокола канального уровня**
 
@@ -140,57 +141,62 @@ ip адрес получателя
 ![icmp-ping](img/arp-reply-l3-l7.jpg)
 
 ##### 1. Hardware type 
-**тип протокола канального уровня**
+тип протокола канального уровня
 ```bash
 В нашем случае, Hardware type = 1 - это номер, 
 соответствующий протоколу Ethernet.
 ```
+
 ##### 2. Protocol type 
-**тип протокола сетевого уровня**
+тип протокола сетевого уровня
 ```bash
 В нашем случае, 
 Protocol type = 0x0800 - это номер, соответствующий ipv4.
 ```
+
 ##### 3. Hardware size 
-**Размер адреса канального уровня**
+Размер адреса канального уровня
 ```bash
 В нашем случае, Hardware size  - это MAC адрес, 
 соответственно это 6 byte.
 ```
+
 ##### 4. Protocol size 
-**Размер адреса сетевого уровня**
+Размер адреса сетевого уровня
 ```bash
 В нашем случае, Protocol size - это ipv4 адрес, 
 соответственно это 4 byte.
 ```
+
 ##### 5. Opcode 
-**код операции в ARP**
+код операции в ARP
 ```bash
 - 2 - reply
 ```
 
 ##### 6. Sender MAC Address
-**MAC адрес отправителя**
+MAC адрес отправителя
 ```bash
 В данном случае это: 00:00:5e:00:01:01 - 
 это как раз искомый MAC адрес.
 ```
 ##### 7. Sender IP Address
-**ip адрес отправителя**
+ip адрес отправителя
 ```bash
 В данном случае это: 192.168.67.254
 ```
+
 ##### 8. Target MAC Address
-**MAC адрес получателя**
+MAC адрес получателя
 ```bash
 В данном случае это: 60:a4:4c:a9:b4:b0 
 ```
+
 ##### 9. Target IP address
-**ip адрес получателя**
+ip адрес получателя
 ```bash
 В данном случае это: 192.168.65.71
 ```
-
 ##### Padding
 Заполнитель, ув данном случае равен  18 byte - используется для увеличения кадра до минимальной длины 64 byte
 Т.е. размер кадра равен:
@@ -217,7 +223,7 @@ arp -a
 ## Пример arp дампа в wireshark 
 можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/arp.pcapng)
 
-## Неплохая [статья](https://www.practicalnetworking.net/series/arp/traditional-arp/) на эту тему.
+Весьма неплохая [статья](https://www.practicalnetworking.net/series/arp/traditional-arp/) на эту тему
 
 
 
