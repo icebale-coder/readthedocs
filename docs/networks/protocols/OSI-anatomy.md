@@ -1,5 +1,4 @@
-title: OSI
-
+title: OSI model
 
 # Анатомия семиуровневой модели OSI
 
@@ -9,16 +8,12 @@ title: OSI
 ![osi](img/osi.jpg)
 
 
-## Ethernet II кадр состоит(инкапуслирует в себе)
+## Ethernet II кадр в общем случае состоит(инкапуслирует в себе) из следующего:
 ```bash
-14 bytes = DMAC(6) + SMAC(6) + type(2)  - заголовок кадра  (L2)
-+
-20 bytes = ...+ SA + DA +... - заголовок пакета (L3)
-+
-Если у нас tcp,upd,icmp
-20 bytes - заголовок сегмента (L4) 
-+
-payload - L4 - L7 
+- L2    14   bytes = DMAC(6) + SMAC(6) + type(2)  - заголовок кадра  
+- L3    20   bytes = ...+ SA + DA +... - заголовок пакета 
+- L4    20   bytes = заголовок сегмента (L4) Если у нас tcp,upd,icmp
+- L5-L7 xxxx bytes = payload - полезная нагрузка, которую передаю протоколы уровня "приложений", такие как http, https, ftp, smtp и пр..
 ```
 
 ### L2
