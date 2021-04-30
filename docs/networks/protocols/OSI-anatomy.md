@@ -51,11 +51,11 @@ PDU - сегмент,датаграмма (segment, datagram)
 
 ## Ethernet кадр в общем случае состоит(инкапуслирует в себе) из следующего:
 ```bash
-- L2    14 + (4)  bytes = DMAC(6) + SMAC(6) + (802.1Q(4)) + type(2)  - заголовок кадра   
-- L3    20        bytes = ...+ SA(4) + DA(4) +... - заголовок пакета 
-- L4    20        bytes = заголовок сегмента (L4) Если у нас tcp,upd,icmp
-- L5-L7 xxxx      bytes = payload - полезная нагрузка, которую передаю 
-                  протоколы уровня "приложений", такие как http, https, ftp, smtp и пр..
+- L2    14+(4) bytes = DMAC(6) + SMAC(6) + (802.1Q(4)) + type(2) - заголовок кадра   
+- L3    20     bytes = ...+ SA(4) + DA(4) +... - заголовок пакета 
+- L4    20     bytes = заголовок сегмента (L4) Если у нас tcp,upd,icmp
+- L5-L7 xxxx   bytes = payload - полезная нагрузка, которую передают протоколы 
+               уровня "приложений", такие как http, https, ftp, smtp и пр..
 ```
 
 - Пример протокола [icmp](https://icebale.readthedocs.io/en/latest/networks/protocols/ICMP/) в представлении OSI модели
