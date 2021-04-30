@@ -2,7 +2,7 @@ title: NE8000 PBR
 
 # Huawei PBR
 
-Задача настройки PBR подобно настройке [Huawei PBR](https://icebale.readthedocs.io/en/latest/networks/cisco/Cisco.cases/NXOS-PBR/)
+Задача настройки PBR подобно настройке [Cisco PBR](https://icebale.readthedocs.io/en/latest/networks/cisco/Cisco.cases/NXOS-PBR/)
 
 ## 1. На интерфейсе указывается traffic-policy 
 На интерфейс в сторону трафика, для которого надо делать PBR вешается полисер
