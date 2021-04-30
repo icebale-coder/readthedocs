@@ -1,7 +1,7 @@
-title: Frame Ethernet
+title: OSI
 
 
-# Анатомия кадра Ethernet
+# Анатомия семиуровневой модели OSI
 
 Попробую описать как это выглядет с указанием уровней OSI
 
@@ -9,7 +9,7 @@ title: Frame Ethernet
 ![osi](img/osi.jpg)
 
 
-## Ethernet II
+## Ethernet II кадр состоит(инкапуслирует в себе)
 ```bash
 14 bytes = DMAC(6) + SMAC(6) + type(2)  - заголовок кадра  (L2)
 +
