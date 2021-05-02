@@ -1,4 +1,4 @@
-title DNS
+title: DNS
 
 # Протокол DNS
 
