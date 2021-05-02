@@ -131,7 +131,8 @@ RIR-ов сейчас пять:
 объект "domain" имеет следующий вид:
 
 ```bash
-root@krk-ns1:~# whois -r --sources RIPE 128.69.217.in-addr.arpa
+ns# whois -r --sources RIPE 128.69.217.in-addr.arpa
+
 % This is the RIPE Database query service.
 % The objects are in RPSL format.
 %
@@ -176,7 +177,7 @@ mnt-by:         MNT-NETBRIDGE
 
 
 ```bash
-root@krk-ns1:~# dig +trace -x 217.69.139.70
+ns# dig +trace -x 217.69.139.70
 
 ; <<>> DiG 9.11.5-P4-5.1+deb10u3-Debian <<>> +trace -x 217.69.139.70
 ;; global options: +cmd
