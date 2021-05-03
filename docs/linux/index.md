@@ -1,4 +1,4 @@
-title: Descrambler
+title: Disclaimer
 
 # Linux
 ...Nothing else metter...

@@ -1,7 +1,7 @@
 title: Wireshark filtering
 
 # Фильтры wireshark
-Descrambler:
+Disclaimer:
 ```bash
 ...играет Марсельеза...
 "All you need is dump, 
