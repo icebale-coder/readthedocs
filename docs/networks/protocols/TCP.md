@@ -241,13 +241,21 @@ Congestion Window
 
 ## Источники:
 
--[Википедия](https://ru.wikipedia.org/wiki/Transmission_Control_Protocol)
--[статья на habr-e](https://habr.com/ru/company/oleg-bunin/blog/461829/)
--[статья на habr-e](https://habr.com/ru/company/webo/blog/326258/)
--[статья на habr-e](https://habr.com/ru/company/webo/blog/327050/)
--[полный курс Компьютерные сети](https://www.youtube.com/watch?v=H6rMGYRKI2s&list=PLtPJ9lKvJ4oiNMvYbOzCmWy6cRzYAh9B1&index=39)
--[управление потоком - Flow control](https://www.youtube.com/watch?v=YCW4fLqFlME)
--[управление перегрузкой - Conguetion control](https://www.youtube.com/watch?v=lGUPQjvSMeo)
+[Википедия](https://ru.wikipedia.org/wiki/Transmission_Control_Protocol)
+
+[статья на habr-e](https://habr.com/ru/company/oleg-bunin/blog/461829/)
+
+[статья на habr-e](https://habr.com/ru/company/webo/blog/326258/)
+
+[статья на habr-e](https://habr.com/ru/company/webo/blog/327050/)
+
+[полный курс Компьютерные сети](https://www.youtube.com/watch?v=H6rMGYRKI2s&list=PLtPJ9lKvJ4oiNMvYbOzCmWy6cRzYAh9B1&index=39)
+
+[управление потоком - Flow control](https://www.youtube.com/watch?v=YCW4fLqFlME)
+
+[управление перегрузкой - Conguetion control](https://www.youtube.com/watch?v=lGUPQjvSMeo)
+
+Kevin R. Fall, W.Richard Stevens "TCP IP Illustrated Volume 1"
 
 
 ## Настройки
