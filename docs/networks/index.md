@@ -1,3 +1,3 @@
-title: Descrambler
+title: Disclaimer
 
 Network is a long way to home...
