@@ -253,7 +253,7 @@ Congestion Window
 
 [управление потоком - Flow control](https://www.youtube.com/watch?v=YCW4fLqFlME)
 
-[управление перегрузкой - Conguetion control](https://www.youtube.com/watch?v=lGUPQjvSMeo)
+[управление перегрузкой - Congestion control](https://www.youtube.com/watch?v=lGUPQjvSMeo)
 
 Kevin R. Fall, W.Richard Stevens "TCP IP Illustrated Volume 1"
 
