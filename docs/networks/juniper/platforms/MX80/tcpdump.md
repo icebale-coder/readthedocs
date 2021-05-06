@@ -108,7 +108,7 @@ monitor traffic interface ae0.1111 detail write-file /var/tmp/ae0.1111.pcap
 Просмотр данного файла в шелле (для этого нужно зайти под рутом системы, в данном случае рут это 'admin') 
 
 ```bash
-tart shell 
+start shell 
 % su
 Password:
 root@MBR% who
