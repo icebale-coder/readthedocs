@@ -131,4 +131,16 @@ end
 
 ![BFD echo function](img/bfd-control-with-without-echo.jpg)
 
-Подробную статью по работе с протоколом bfd можно посмотреть [здесь](https://community.cisco.com/t5/service-providers-documents/bfd-support-on-cisco-asr9000/ta-p/3153191/page/6).
+Подробную статью работы протокола bfd можно посмотреть [здесь](https://community.cisco.com/t5/service-providers-documents/bfd-support-on-cisco-asr9000/ta-p/3153191/page/6).
+
+
+Дамп инициализации и процесс работы протокола BFD для "Примера 1" можно скачать [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bfd-control-init+echo.pcapng)
+
+![BFD echo function](img/bfd-control-init.jpg)
+
+Как видно из дампа при инциализации протокола он проходит три стадии "Down-Init-Up"
+В течении этих стадий обе стороны обмениваютс язначениями таймеров и номерами дискриминаторов.
+После этого BFD echo пакеты начинают "вкалывать", BFD Control "отдыхать".
+
+
+
