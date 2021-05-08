@@ -18,7 +18,9 @@ BFD (Bidirectinal Forwarding Detection) - протокол, предназнач
 Рассмотрим каждый из них поподробнее.
 
 - Async mode - асинхронный режим работы:
-![BFD Async](img/bfd-async.jpg)
+
+![BFD Async](img/bfd-async.png)
+
 ```bash 
   Узел, на котором запущен BFD в асинхронном режиме, периодически передает пакеты BFD Control. 
   BFD Control инкапсулируются в UDP с портом источника 49152 и портом назначения 3784. 
@@ -35,7 +37,8 @@ BFD (Bidirectinal Forwarding Detection) - протокол, предназнач
 ```
 
 Для каждого из режимов работы (async mode и demand mode) есть дополнительная функция "echo"
-![BFD echo function](img/bfd-echo.jpg)
+
+![BFD echo function](img/bfd-echo.png)
 
 ```bash
 Каждый из узлов отправляет "BFD echo" пакет, сформированный так, 
@@ -65,7 +68,9 @@ bfd-template single-hop BFD
 
 
 **N1** -  интервал генерации BFD Control пакетов (в миллисекундах)
+
 **N2** - минимальный интервал между входящими BFD Control пакетами (в миллисекундах)
+
 **interval-multiplier** - количество пакетов, после пропуска которых BFD сессия переходит в состояние DOWN
 
 Пример:
