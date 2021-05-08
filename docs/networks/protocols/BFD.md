@@ -130,3 +130,5 @@ end
 то во втором случае BFD Control пакеты уже работают по правильными таймерам.
 
 ![BFD echo function](img/bfd-control-with-without-echo.jpg)
+
+Подробную статью по работе с протоколом bfd можно посмотреть [здесь](https://community.cisco.com/t5/service-providers-documents/bfd-support-on-cisco-asr9000/ta-p/3153191/page/6).
