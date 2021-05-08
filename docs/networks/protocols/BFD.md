@@ -186,13 +186,7 @@ router ospf 1
 
 Например, "Классический" дизайн сети такого вида:
 
-iBGP(по лупбекам)[redistribute connected, static] 
-
-^
-|
-|
-|
-v
+iBGP(по лупбекам)[redistribute connected, static] <---> 
 
 IGP(OSPF или ISIS)[только стыковочные ip и loopback-и], 
 
