@@ -187,14 +187,16 @@ router ospf 1
 Например, "Классический" дизайн сети такого вида:
 
 iBGP(по лупбекам)[redistribute connected, static] 
+
 ^
 |
 |
 |
 v
-IGP(OSPF или ISIS)[только стыковочный ip и loopback-и], 
 
-с условием тюнинга таймеров и отработкой BFD на IGP протоколах.
+IGP(OSPF или ISIS)[только стыковочные ip и loopback-и], 
+
+с условием тюнинга таймеров и отработкой BFD для IGP протоколов.
 
 
 Подробную статью работы протокола bfd можно посмотреть [здесь](https://community.cisco.com/t5/service-providers-documents/bfd-support-on-cisco-asr9000/ta-p/3153191/page/6).
