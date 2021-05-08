@@ -138,9 +138,6 @@ end
 
 ![BFD echo function](img/bfd-control-with-without-echo.jpg)
 
-Подробную статью работы протокола bfd можно посмотреть [здесь](https://community.cisco.com/t5/service-providers-documents/bfd-support-on-cisco-asr9000/ta-p/3153191/page/6).
-
-
 Дамп инициализации и процесс работы протокола BFD для "Примера 1" можно скачать [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bfd-control-init+echo.pcapng)
 
 ![BFD echo function](img/bfd-control-init.jpg)
@@ -150,4 +147,54 @@ end
 После этого BFD echo пакеты начинают "вкалывать", а BFD Control пакеты "отдыхать".
 
 
+### Пример настройки протокола BFD для OSPF
+``` bash
+interface GigabitEthernet0/0
+ ip address 10.11.11.1 255.255.255.0
+ bfd interval 50 min_rx 50 multiplier 3
+!
+router ospf 1
+ network 10.11.11.0 0.0.0.255 area 0
+ network 100.100.100.100 0.0.0.0 area 0
+ bfd all-interfaces
+```
+При такой настройке при отвале/инициализации BFD, сразу же будет информироваться OSPF протокол,
+и OSPF будет отключаться/включаться для данного соседа не дожидаясь отработки своих штатных таймеров.
 
+Вот как процесс инициализации BFD с привязкой к OSPF выглядит в дебаге cisco:
+```bash
+*May  8 18:58:39.892: BFD-DEBUG EVENT: bfd_session_destroyed, proc:CEF, handle:1 act
+*May  8 18:58:39.893: %BFD-6-BFD_SESS_DESTROYED: BFD-SYSLOG: bfd_session_destroyed,  ld:1 neigh proc:CEF, handle:1 act
+*May  8 18:58:39.906: BFD-DEBUG Event: decreasing credits by 12 [to 0] (0)
+*May  8 19:00:21.807: %OSPF-5-ADJCHG: Process 1, Nbr 100.100.100.100 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+*May  8 19:00:22.290: BFD-DEBUG EVENT: bfd_session_created, 10.11.11.1 proc:OSPF, idb:GigabitEthernet0/0 handle:1 act
+*May  8 19:00:22.291: %BFD-6-BFD_SESS_CREATED: BFD-SYSLOG: bfd_session_created, neigh 10.11.11.1 proc:OSPF, idb:GigabitEthernet0/0 handle:1 act
+*May  8 19:00:22.321: %OSPFv3-5-ADJCHG: Process 1, Nbr 100.100.100.100 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+*May  8 19:00:22.344: BFD-DEBUG EVENT: bfd_session_created, 10.11.11.1 proc:CEF, idb:GigabitEthernet0/0 handle:1 act
+*May  8 19:00:23.190: %BFDFSM-6-BFD_SESS_UP: BFD-SYSLOG: BFD session ld:1 handle:1 is going UP
+*May  8 19:00:23.194: BFD-DEBUG Packet: Rx IP:10.11.11.1 ld/rd:1/1 diag:0(No Diagnostic) Init  cnt:1 ttl:254 (0)
+*May  8 19:00:23.197: BFD-DEBUG Event: V1 FSM ld:1 handle:1 event:RX INIT state:DOWN (0)
+*May  8 19:00:23.198: BFD-DEBUG Packet: Tx IP:10.11.11.1 ld/rd:1/1 diag:0(No Diagnostic) Up   cnt:2 (0)
+*May  8 19:00:23.199: BFD-DEBUG Packet: Rx IP:10.11.11.1 ld/rd:1/1 diag:0(No Diagnostic) Up  cnt:2 ttl:254 (0)
+*May  8 19:00:23.199: BFD-DEBUG Event: V1 FSM ld:1 handle:1 event:RX UP state:UP (0)
+*May  8 19:00:23.200: BFD-DEBUG Event: notify client(OSPF) IP:10.11.11.1, ld:1, handle:1, event:UP,  (0)
+*May  8 19:00:23.201: BFD-DEBUG Event: notify client(CEF) IP:10.11.11.1, ld:1, handle:1, event:UP,  (0)
+```
+
+Отдельную серию заметок хочу посвятить дизайну сети, где как раз планирую показать варианты тюнинга протоколов
+с условиями условием их собственных таймеров и возможностей BFD.
+
+Например, "Классический" дизайн сети такого вида:
+
+iBGP(по лупбекам)[redistribute connected, static] 
+^
+|
+|
+|
+v
+IGP(OSPF или ISIS)[только стыковочный ip и loopback-и], 
+
+с условием тюнинга таймеров и отработкой BFD на IGP протоколах.
+
+
+Подробную статью работы протокола bfd можно посмотреть [здесь](https://community.cisco.com/t5/service-providers-documents/bfd-support-on-cisco-asr9000/ta-p/3153191/page/6).
