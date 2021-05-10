@@ -83,3 +83,24 @@ eth.src == 60:a4:4c:a9:b4:b0 || eth.dst == 60:a4:4c:a9:b4:b0
 ```
 
 
+## BGP
+### BGP OPEN 
+```bash
+bgp.type == 1 
+```
+
+### BGP UPDATE 
+```bash 
+bgp.type == 2
+```
+
+## BFD
+###  BFD Control packets
+```bash
+bfd
+```
+
+###  BFD echo packets
+```bash
+bfd_echo
+```
