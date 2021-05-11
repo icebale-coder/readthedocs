@@ -35,22 +35,33 @@ title: DHCP
 После этого клиент начинает работать с заданными ip параметрами, 
 а сервер помечает данный ip адрес занятым данным клиентам.
 
-Возможны 
+Возможен вариант когда dhcp сервер может отвергнуть подтверждение DHCP Request.
+тогда он ответит сообщением DHCP NAK  
+
+## Время аренды (lease time)
 
 
 
 ## Режимы работы протокола
 
-### Подключен напрямую
+### Клиент ит сервер подключены напрямую
 
 ![image-dhcp-dora](img/dhcp-dora.jpg)
 
-### Подключен через dhcp relay
+### Клиент и сервер подключены через dhcp relay
 
 ![image-dhcp-relay-dora](img/dhcp-relay-dora.jpg)
 
 
+Образцы дампов:
+
+- [1. Стандартый DHCP DORA](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-dora.pcapng)
+- [2. DHCP DORA Renew](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-dora-renew.pcapng)
+- [3. DHCP Release, Nak, Inform](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-release-nak-inform.pcapng)
+
 Литература:
+
+
 [1. Принципы работы протокола DHCP](https://selectel.ru/blog/dhcp-protocol/#:~:text=DHCP%20%E2%80%94%20%D0%BF%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%20%D0%BF%D1%80%D0%B8%D0%BA%D0%BB%D0%B0%D0%B4%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D1%8F%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8,%D0%B5%D1%81%D1%82%D1%8C%20%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D1%83%20%D0%B2%20%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D1%81%D0%B5%D1%82%D0%B8.)
 
 [2. How a DHCP Server Allocates Network Parameters to New DHCP Clients](https://support.huawei.com/enterprise/en/doc/EDOC1100116724/5cef90ad/how-a-dhcp-server-allocates-network-parameters-to-new-dhcp-clients)
