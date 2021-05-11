@@ -1,0 +1,58 @@
+title: DHCP
+
+# Протокол DHCP
+
+## Назначение
+Протокол DHCP(Dynamic Host Configuration Protocol) - предназначен для автоматического передачи ip настроек по запросу клиента.
+
+## Процесс получения DHCP адреса
+Процесс получения ip адреса по DHCP представляет из себя четыре стадии.
+Его еще называют "DORA" - по первым буквам стадий.
+
+### 1. DHCP Discover 
+Клиент отправляет в сеть широковещательный запрос на поиск DHCP сервера о том, что он хочет получить настройки ip. 
+
+![image-dhcp-discover](img/dhcp-1-discover.jpg)
+
+### 2. DHCP Offer 
+Сервер отправляет юнисастом, клиенту предложение с вариантом настроек ip. 
+При этом сервер выделяет эти адреса временно, п.э. нет точной гарантии, что клиент их получит.
+
+![image-dhcp-offer](img/dhcp-2-offer.jpg)
+
+### 3. DHCP Request 
+Клиент отправляет широковещательный запрос на сервер DHCP, 
+таким образом подтверждая своё согласие принять данные настройки от DHCP сервера.
+
+![image-dhcp-request](img/dhcp-3-request.jpg)
+
+### 4. DHCP Ack
+Сервер принимает DHCP Request от клиента и если данный адрес еще никому не назначился, 
+то отправляет подтверждение в виде DHCP Ack.
+
+![image-dhcp-ack](img/dhcp-4-ack.jpg)
+
+После этого клиент начинает работать с заданными ip параметрами, 
+а сервер помечает данный ip адрес занятым данным клиентам.
+
+Возможны 
+
+
+
+## Режимы работы протокола
+
+### Подключен напрямую
+
+![image-dhcp-dora](img/dhcp-dora.jpg)
+
+### Подключен через dhcp relay
+
+![image-dhcp-relay-dora](img/dhcp-relay-dora.jpg)
+
+
+Литература:
+[1. Принципы работы протокола DHCP](https://selectel.ru/blog/dhcp-protocol/#:~:text=DHCP%20%E2%80%94%20%D0%BF%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%20%D0%BF%D1%80%D0%B8%D0%BA%D0%BB%D0%B0%D0%B4%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D1%8F%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8,%D0%B5%D1%81%D1%82%D1%8C%20%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D1%83%20%D0%B2%20%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D1%81%D0%B5%D1%82%D0%B8.)
+
+[2. How a DHCP Server Allocates Network Parameters to New DHCP Clients](https://support.huawei.com/enterprise/en/doc/EDOC1100116724/5cef90ad/how-a-dhcp-server-allocates-network-parameters-to-new-dhcp-clients)
+
+[3. Principles of DHCPv4 Address Allocation](https://support.huawei.com/enterprise/en/doc/EDOC1100125886/c5ff6555/principles-of-dhcpv4-address-allocation)
