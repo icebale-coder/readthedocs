@@ -48,7 +48,7 @@ title: BGP
         orf route-policy policy-orf
 ```
 
-###### Пример работы OFR на Cisco IOS
+###### Пример работы ORF
 
 Схема:
 
@@ -202,7 +202,9 @@ RPKI validation codes: V valid, I invalid, N Not found
 </p>
 </details>
 
-Сам принимаемый от соседа ORF можно посмотреть командой **sh ip bgp nei 100.100.100.100 received prefix-filter**
+Сам принимаемый от соседа ORF можно посмотреть командой 
+
+**sh ip bgp nei 100.100.100.100 received prefix-filter**
 
 ```bash
 R0#sh ip bgp nei 100.100.100.100 received prefix-filter
