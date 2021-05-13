@@ -93,6 +93,7 @@ ip prefix-list PL-R1-IN seq 5 deny 22.22.22.22/32
 ip prefix-list PL-R1-IN seq 10 permit 0.0.0.0/0 ge 32
 
 ```
+
 </p>
 
 <details><summary>настройка R1</summary>
@@ -199,6 +200,7 @@ RPKI validation codes: V valid, I invalid, N Not found
  r>i 2.2.2.2/32       2.2.2.2                  0    100      0 ?
  *>i 11.11.11.11/32   1.1.1.1                  0    100      0 ?
 ```
+
 </p>
 
 Сам принимаемый от соседа ORF можно посмотреть командой **sh ip bgp nei 100.100.100.100 received prefix-filter**
