@@ -26,8 +26,8 @@ title: BGP
 Позволяет произвести фильтрацию префиксов 
 
 ```bash
-ip prefix-list PL-EXAMPLE seq 5 permit 192.168.0.0/23 ge 24
-ip prefix-list PL-EXAMPLE seq 10 permit 192.168.10.0/24
+ip prefix-list PL-CUSTOMER-IN seq 5 permit 192.168.0.0/23 ge 24
+ip prefix-list PL-CUSTOMER-IN seq 10 permit 192.168.10.0/24
 !
 ip prefix-list PL-DEFAULT-ONLY seq 5 permit 0.0.0.0/0
 !
@@ -36,8 +36,8 @@ router bgp 31257
  neighbor 80.65.27.1 description == Customer ==
  !
  address-family ipv4
-  neighbor 192.168.1.1 prefix-list in
-  neighbor 192.168.1.1 prefix-list out
+  neighbor 192.168.1.1 prefix-list PL-CUSTOMER-IN in
+  neighbor 192.168.1.1 prefix-list PL-DEFAULT-ONLY out
 ```
 
 **Логика работы:**
