@@ -10,6 +10,51 @@ title: BGP
 
 
 ## Настройки
+
+### Базовая фильтрация + установка атрибутов
+
+!!! warning "Важно"
+    Для Cisco prefix-list, route-map - работают по дефолту по принципу "implicit-deny" и этот момент забывать нельзя!
+    Хотя есть [ньюансы](https://icebale.readthedocs.io/en/latest/networks/cisco/Cisco.cases/route-map/#_5)
+
+!!! warning "Важно"
+    Для Juniper policy-statement (аналог route-map)  - работают по дефолту по принципу "implicit-accept" и этот момент забывать нельзя тоже! )
+
+Приведу базовые настройки на примере оборудовании Cisco
+
+### prefix-list
+
+```bash
+ip prefix-list PL-EXAMPLE seq 5 permit 192.168.0.0/23 ge 24
+ip prefix-list PL-EXAMPLE seq 10 permit 192.168.10.0/24
+!
+ip prefix-list PL-DEFAULT-ONLY seq 5 permit 0.0.0.0/0
+!
+router bgp 31257
+ neighbor 80.65.27.1 remote-as 65000
+ neighbor 80.65.27.1 description == Customer ==
+ !
+ address-family ipv4
+  neighbor 192.168.1.1 prefix-list in
+  neighbor 192.168.1.1 prefix-list out
+```
+
+**Логика работы:**
+- Принимаем от клиента возможные префиксы 
+
+  - 192.168.0.0/23
+  - 192.168.0.0/24
+  - 192.168.1.0/24
+  - 192.168.10.0/24
+
+- Отдаем только дефолт
+
+### route-map
+
+Позволяет произвести фильтрацию префиксов и назначить/изменить им атрибуты
+
+### set
+
 ### ORF  
 ORF - Output Route Filters
   Механизм, который позволяет посылать соседу информацию о тех префиксах, которые хочет принимать вторая сторона.
