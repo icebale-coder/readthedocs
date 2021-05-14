@@ -35,11 +35,12 @@ route-map RM-OUT permit 20
  match ip address prefix-list CORE-OUT
 route-map RM-OUT deny 30
 !
-router bgp 1111
- address-family ipv4
-  neighbor 2.2.2.2 route-map RM-OUT out
-  neighbor 3.3.3.3 route-map RM-OUT out
-!
+router bgp 11111
+  neighbor 2.2.2.2 remote-as 22222
+  !
+  address-family ipv4
+   neighbor 2.2.2.2 route-map RM-OUT out
+ 
 ip prefix-list PL-GE-24 seq 10 permit 0.0.0.0/0 ge 24
 ```
 
