@@ -14,15 +14,16 @@ title: BGP
 ### Базовая фильтрация + установка атрибутов
 
 !!! warning "Важно"
-    Для Cisco prefix-list, route-map - работают по дефолту по принципу "implicit-deny" и этот момент забывать нельзя!
+    Для Cisco prefix-list, route-map - работают по дефолту по принципу **implicit-deny** и этот момент забывать нельзя!
     Хотя есть [ньюансы](https://icebale.readthedocs.io/en/latest/networks/cisco/Cisco.cases/route-map/#_5)
 
 !!! warning "Важно"
-    Для Juniper policy-statement (аналог route-map)  - работают по дефолту по принципу "implicit-accept" и этот момент забывать нельзя тоже! )
+    Для Juniper policy-statement (аналог route-map)  - работают по дефолту по принципу **implicit-accept** и этот момент забывать нельзя тоже! )
 
 Приведу базовые настройки на примере оборудовании Cisco
 
 ### prefix-list
+Позволяет произвести фильтрацию префиксов 
 
 ```bash
 ip prefix-list PL-EXAMPLE seq 5 permit 192.168.0.0/23 ge 24
@@ -40,13 +41,14 @@ router bgp 31257
 ```
 
 **Логика работы:**
-- Принимаем от клиента возможные префиксы 
 
+- Принимаем от клиента возможные префиксы 
+```bash
   - 192.168.0.0/23
   - 192.168.0.0/24
   - 192.168.1.0/24
   - 192.168.10.0/24
-
+```
 - Отдаем только дефолт
 
 ### route-map
