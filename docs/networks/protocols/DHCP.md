@@ -24,7 +24,7 @@ title: DHCP
 |flags		  | Поле для флагов — специальных параметров протокола DHCP | 2 bytes |
 |ciaddr		  | ip-адрес клиента. Заполняется только в том случае, если клиент уже имеет собственный ip-адрес (это возможно, если клиент выполняет процедуру обновления адреса по истечении срока аренды).	| 4 bytes |
 |yiaddr	      | Новый ip-адрес клиента, предложенный сервером.	   | 4 bytes |
-|siaddr		  | ip-адрес сервера. Возвращается в DHCP Offer.   	   | 4 bytes |
+|siaddr		  |  Значение присваивается клиентом DHCP, если клиент хочет связаться с конкретным сервером DHCP. ip-адрес сервера DHCP может быть получен при помощи сообщений DHCPOFER и DHCPACK, ранее возвращенных сервером. Сервер может вернуть адрес следующего сервера, с которым следует связаться в процессе загрузки, - например, адрес сервера, на котором хранится загрузочный образ операционной системы   	   | 4 bytes |
 |giaddr	      | ip-адрес агента ретрансляции, если таковой был.	   | 4 bytes |
 |chaddr	      | Аппаратный адрес (обычно MAC-адрес) клиента. В случае Ethernet первые 6 байт это MAC адрес, а остальные 10-ть заполняются нулями (Client hardware address padding)| 16 bytes|
 |sname        |	Необязательное имя сервера.|	64 bytes|
@@ -118,15 +118,25 @@ title: DHCP
 
 ![image-dhcp-relay-dora](img/dhcp-relay-dora.jpg)
 
+При работе через DHCP-relay логика работы несколько меняется:
+
+- формат DHCP DORA, отправляемые и принимаемые клиентом остаются прежними.
+- между DHCP-relay и DHCP-сервером формат DHCP запросов видоизменяется.
+
+DHCP-Relay отправляет на DHCP сервер уже измененные запросы с указанием себя в качестве источника и DHCP сервера в качестве получателя, также добавляется поле giaddr
+
+DHCP-сервер также отправляет на DHCP-relay unicast ответы 
+DHCP-Relay транслирует обратно клиенту ответы (Offer и Ack) от DHCP сервера уже в обычном виде.
+
 
 Образцы дампов:
 
 - [1. Стандартый DHCP DORA](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-dora.pcapng)
-- [2. DHCP DORA Renew](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-dora-renew.pcapng)
-- [3. DHCP Release, Nak, Inform](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-release-nak-inform.pcapng)
+- [2. DHCP DORA Relay](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-relay.pcapng)
+- [3. DHCP DORA Renew](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-dora-renew.pcapng)
+- [4. DHCP Release, Nak, Inform](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-release-nak-inform.pcapng)
 
 Литература:
-
 
 [1. Принципы работы протокола DHCP](https://selectel.ru/blog/dhcp-protocol/)
 
