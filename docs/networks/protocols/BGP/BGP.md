@@ -27,7 +27,7 @@ Hold Time — Интервал времени в секундах, по исте
 
 ## Формат протокола
 
-Всё бессовестно содрано [отсюда](http://admindoc.ru/category/settings_cisco/bgp-cisco_books/) и [отсюда](http://xgu.ru/wiki/BGP) - но лаконичнее этого сказать сложно!!! )))
+Всё бессовестно содрано [отсюда](http://admindoc.ru/category/settings_cisco/bgp-cisco_books/) и [отсюда](http://xgu.ru/wiki/BGP) с небольшими собственными дополнениями - но лаконичнее этого сказать сложно!!! )))
 
 
 ## Типы сообщений в BGP
@@ -48,18 +48,21 @@ Hold Time — Интервал времени в секундах, по исте
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-Marker — поле, которое включено в заголовок для совместимости. Размер поля — 16 байт, все байты должны быть 1.
-Length — длина всего сообщения в октетах, включая заголовок. Поле может принимать значения от 19 до 4096.
+- Marker — поле, которое включено в заголовок для совместимости. Размер поля — 16 байт, все байты должны быть 1.
+- Length — длина всего сообщения в октетах, включая заголовок. Поле может принимать значения от 19 до 4096.
 
-Type — тип передаваемого сообщения:
+- Type — тип передаваемого сообщения:
 
-- 1 OPEN - используется для установки отношений соседства и обмена базовыми параметрами. Отправляется сразу после установки TCP-соединения.
+- 1 OPEN - используется для установки отношений соседства и обмена базовыми параметрами. 
+    Отправляется сразу после установки TCP-соединения.
 - 2 UPDATE - используется для обмена информацией о префиксах.
 - 3 NOTIFICATION - используется когда возникают ошибки BGP. После отправки сообщения сессия с соседом разрывается.
 - 4 KEEPALIVE - используется для проверки доступности соседа.
+- 5 ROUTE-REFRESH - используется для передачи префиксов ORF. 
 
 
 ### OPEN - формат сообщения
+OPEN(type=1) - используется для установки отношений соседства и обмена базовыми параметрами. 
 
 ```bash
 |<-------------------------- 32 бита --------------------------->|
@@ -80,9 +83,87 @@ Type — тип передаваемого сообщения:
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-- 2 - UPDATE
-- 3 - NOTIFICATION
-- 4 - KEEPALIVE
+- Version — версия протокола BGP
+- My Autonomous System — номер AS отправителя
+- Hold Time — максимальное время в секундах, которое может пройти между получением Keepalive и сообщением Update
+- BGP Identifier — RID (Router )
+- Optional Parameters Length — длина опциональных параметров
+- Optional Parameters - это Capability, т.е возможности передачи всяческих параметров.
+
+Пример OPEN:
+
+![bgp-update](../../img/bgp-open.jpg)
+
+### UPDATE
+UPDATE(type = 3) — используется для обмена информацией маршрутизации.
+
+Формат сообщения Update:
+```bash
++-----------------------------------------------------+
+|   Unfeasible Routes Length (2 octets)               |
++-----------------------------------------------------+
+|  Withdrawn Routes (variable)                        |
++-----------------------------------------------------+
+|   Total Path Attribute Length (2 octets)            |
++-----------------------------------------------------+
+|    Path Attributes (variable)                       |
++-----------------------------------------------------+
+|   Network Layer Reachability Information (variable) |
++-----------------------------------------------------+
+```
+
+- Unfeasible Routes Length - длина невыполнимых маршрутов?
+- Withdrawn Routes  - маршруты, которые нужно убрать из RIB BGP
+- Total Path Attribute Length - общая длина атрибутов
+- Path Attributes - атрибуты
+- Network Layer Reachability Information (NLRI) - информация о самих префиксах
+
+#### Примеры UPDATE:
+
+##### Пример добавления префиксов 
+
+![bgp-update](../../img/bgp-update-1.jpg)
+
+
+##### Пример изъятия префиксов (withdraw)
+
+![bgp-update](../../img/bgp-update-withdraw.jpg)
+
+### NOTIFICATION
+NOTIFICATION (type=3) - используется когда возникают ошибки BGP. После отправки сообщения сессия с соседом разрывается.
+
+```bash
+|<-------------------------- 32 бита --------------------------->|
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Error code    | Error subcode |           Data                |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+```
+
+Error Code — тип оповещения:
+```bash
+1 — Message Header Error
+2 — OPEN Message Error
+3 — UPDATE Message Error
+4 — Hold Timer Expired
+5 — Finite State Machine Error
+6 — Cease
+```
+### KEEPALIVE
+KEEPALIVE(type = 4) - используется для проверки доступности соседа.
+
+передается просто заголовок сообщения, где тип равен 4
+
+![bgp-keepalive](../../img/bgp-keepalive.jpg)
+
+
+### ROUTE-REFRESH 
+ROUTE-REFRESH(type = 5) - используется для передачи префиксов ORF.
+
+![bgp-route-refresh](../../bgp-route-refresh-1.jpg)
+
 
 ## Состояния связи с соседями
 
@@ -99,6 +180,10 @@ Type — тип передаваемого сообщения:
             если оно пришло, все ок, мы переходим к следующей стадии. 
 - Established - означает, что соединение установлено, таймеры согласованы и  начинается обмен маршрутами.
 
+Дамп установления BGP и обмен префиксами + ORF можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp+orf.pcapng)
+
+Дамп c withdraw можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp+withdraw.pcapng)
+
 ## Настройки
 
 - [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
@@ -107,6 +192,7 @@ Type — тип передаваемого сообщения:
 - [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
 - [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Fall-over)
 - [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/BGP-PIC)
+
 
 
 
