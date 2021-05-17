@@ -7,7 +7,7 @@ Soft-reconfiguration -  Механизм, который позволяет хр
   Недостаток: необходима доп. память, чтобы храннить таблицу префиксов
 
 Общая схема работы 
-![image-bgp-rib](../img/bgp-rib.jpg)
+![image-bgp-rib](../../img/bgp-rib.jpg)
 
 подробнее см. [документацию](https://networklessons.com/bgp/bgp-soft-reset-reconfiguration)
 

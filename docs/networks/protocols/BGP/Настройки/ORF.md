@@ -47,7 +47,7 @@ ORF - Output Route Filters
 
 Схема:
 
-![bgp-topo1](../img/bgp-topo1.jpg)
+![bgp-topo1](../../img/bgp-topo1.jpg)
 
 <details><summary>настройка R0</summary>
 <p>
@@ -148,16 +148,16 @@ R0 и R1 устанавливают BGP соседство по лупбекам
 
 Тогда при установлении соединения в состоянии "Open" передается в параметрах соединение способность работать с ORF
 
-![bgp-open-orf](../img/bgp-open-orf.jpg)
+![bgp-open-orf](../../img/bgp-open-orf.jpg)
 
 В сообщении "ROUTE-REFRESH" соседу передается сам префикс лист.
 
-![bgp-route-refresh-orf](../img/bgp-route-refresh-orf.jpg)
+![bgp-route-refresh-orf](../../img/bgp-route-refresh-orf.jpg)
 
 По данному префикс листу сосед производит фильтрацию префиксов на своей стороне еще до отправки их в сообщении "UPDATE".
 Как видно из данного рисунка префика 22.22.22.22/32 отсутствует в сообщении BGP UPDATE.
 
-![bgp-route-refresh-orf](../img/bgp-update.jpg)
+![bgp-route-refresh-orf](../../img/bgp-update.jpg)
 
 Как видно в таблице принимаемых префиксов (received-routes) изначально нет маршрута отфильтрованного по OFR
 
