@@ -1,4 +1,8 @@
 title: Settings
 arrange:
     - Based.md 
-
+    - ORF.md
+    - Soft-reconfiguration.md
+    - PMTUD.md
+    - Fall-over.md
+	- BGP-PIC.md
