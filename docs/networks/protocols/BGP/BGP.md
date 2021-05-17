@@ -21,7 +21,7 @@ EGP (External Gateway Protocol) протоколом маршутизации.
 - [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/ORF) 
 - [Soft-reconfiguration](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Soft-reconfiguration)
 - [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
-- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Fall-Over)
+- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Fall-over)
 - [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/BGP-PIC)
 
 
