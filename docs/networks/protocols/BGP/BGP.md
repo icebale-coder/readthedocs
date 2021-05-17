@@ -17,12 +17,12 @@ EGP (External Gateway Protocol) протоколом маршутизации.
 
 ## Настройки
 
-- Базовая фильтрация + установка атрибутов
-- ORF 
-- Soft-reconfiguration  
-- PMTUD
-- Fall-over
-- BGP PIC
+- [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
+- [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/ORF) 
+- [Soft-reconfiguration](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Soft-reconfiguration)
+- [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
+- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Fall-Over)
+- [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/BGP-PIC)
 
 
 
