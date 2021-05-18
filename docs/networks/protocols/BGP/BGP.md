@@ -197,6 +197,27 @@ ROUTE-REFRESH (type = 5) - используется для передачи пр
 ![bgp-route-refresh](../../img/bgp-best-path-selection-cisco.jpg)
 
 
+[Для RR имеются особенности при работе Best Path Selection](http://xgu.ru/wiki/BGP_route_reflector)
+см. пункт 4. [атрибут Originator ID создает RR](https://sites.google.com/site/amitsciscozone/home/bgp/bgp-route-reflectors)
+
+```bash
+В тех случаях, когда маршрутизаторы могут получить один и тот же маршрут от RR 
+и от обычного маршрутизатора, правила выбора лучшего маршрута BGP немного изменяются:
+
+1. Первые шаги, в которых учитываются атрибуты weight, 
+   local preference, origin и MED — остаются без изменений,
+2. Если все предыдущие параметры одинаковы, 
+   то маршруты полученные от eBGP-соседей предпочтительней, 
+   чем маршруты полученные от iBGP-соседей.
+3. Выбрать путь через ближайшего IGP-соседа
+4. Выбрать путь через соседа с наименьшим BGP router ID. 
+   Если у префикса есть атрибут Originator ID, 
+   то вместо router ID сравнивается Originator ID.
+5. Reflected-маршруты с более коротким cluster-list предпочтительнее 
+   (длина cluster-list равна нулю, если маршрут без атрибута cluster-list),
+6. Выбрать путь через соседа с наименьшим IP-адресом
+```
+
 общая схема работы BGP
 
 ![общая схема работы BGP](https://icebale.readthedocs.io/en/latest/networks/protocols/img/bgp-rib.jpg)
@@ -247,3 +268,4 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 
 - [1. BGP: Установление сессии между пирами](http://admindoc.ru/1153/session-peers/)
 - [2. BGP](http://xgu.ru/wiki/BGP)
+- [3. BGP route reflector](http://xgu.ru/wiki/BGP_route_reflector)
