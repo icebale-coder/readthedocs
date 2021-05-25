@@ -39,13 +39,6 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.emoji
-  - admonition
-  - meta
-  - codehilite:
-      guess_lang: false
-  - toc:
-      permalink: true
-
 
 # Social network links
 extra:
@@ -59,35 +52,20 @@ extra:
 
 # MKDocs theme params
 theme:
-  logo: img/icon.png
-  favicon: img/icon.png
-  features:
-    - navigation.tabs
-    - navigation.instant
-    - navigation.tracking
-    - navigation.top
-    - toc.integrate
-  font:
-    code: "Fira Code"
-    text: "Exo 2"
-  language: ru
-  name: material
-  palette:
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: black
-      accent: yellow
-      toggle:
-        icon: material/lightbulb
-        name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: black
-      accent: yellow
-      toggle:
-        icon: material/lightbulb-outline
-        name: Switch to dark mode
-
+    name: material
+    language: ru
+    palette:
+        primary: black
+        accent: amber
+    font:
+      text: "Roboto"
+      code: "Roboto Mono"
+    features:
+      - tabs
+      - instant
+      - navigation.expand
+    favicon: img/icon.png
+    logo: img/icon.png
 #extra_css:
 #  - stylesheets/extra.css
 
@@ -101,8 +79,6 @@ plugins:
   - awesome-pages:
       collapse_single_pages: true
       strict: false
-  - git-revision-date-localized
-  - awesome-pages
 
 # Copyright
 copyright: "Alex Bar &copy; 2021"
