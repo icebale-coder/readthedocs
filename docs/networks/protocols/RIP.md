@@ -98,7 +98,8 @@ router rip
 
 Особенности синтаксиса: в конфигурации rip v2 указываются только сети без масок, но по факту при обращении к интерфейсу берутся правильные маски в rip database.
 
-Литература:
+## Литература
+
 - [1. RIP](http://xgu.ru/wiki/RIP)
 - [2. RIP V1 vs V2](https://ipwithease.com/rip-v1-vs-rip-v2/)
 - [3. RIP General Operation, Messaging and Timers](http://www.tcpipguide.com/free/t_RIPGeneralOperationMessagingandTimers-2.htm)
