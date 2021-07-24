@@ -105,4 +105,4 @@ router rip
 - [3. RIP General Operation, Messaging and Timers](http://www.tcpipguide.com/free/t_RIPGeneralOperationMessagingandTimers-2.htm)
 - [4. cisco forum](https://learningnetwork.cisco.com/s/question/0D53i00000Kt6cX/rip-timers)
 
-Пример дампа rip в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/rip.pcapng)
+Пример дампа rip в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/rip2.pcapng)
