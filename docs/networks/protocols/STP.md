@@ -1,4 +1,4 @@
-title: STP и все,все, все...
+title: STP
 
 # STP - Spining Tree Protocol
 ## Определение/Назначение
