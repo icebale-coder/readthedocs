@@ -3,9 +3,9 @@ arrange:
     - OSI-anatomy.md 
     - TCP.md
     - UDP.md
-    - ARP.md 
     - BGP
-    - BDF.md
+    - ARP.md 
+    - BFD.md
     - DHCP.md
     - DNS.md
     - ICMP.md
