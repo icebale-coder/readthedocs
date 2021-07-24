@@ -6,7 +6,8 @@ Descrambler:
 ```bash
 RIP is RIP...
 Это чисто академические выкладки для закрытия собственного гельштата...
-Пройтись по костям этого древнего мамонта, когда то браздившего просторы наших локальных сетей во времена коаксиализации и токин рингов...
+Пройтись по костям этого древнего мамонта, когда то браздившего просторы наших локальных сетей 
+во времена коаксиализации и токин рингов...
 ```
 
 
@@ -27,9 +28,10 @@ RIP is RIP...
 Существует 2 версии протокола RIP: версия 1 и версия 2
 
 Одинаковость и разность этих версии приведена ниже: 
-![1sim2](img/rip/ripv1sim2.jpg)
 
-![1vs2](img/rip/ripv1vs2.jpg)
+![1sim2](img/rip/rip1sim2.jpg)
+
+![1vs2](img/rip/rip1vs2.jpg)
 
 
 Основная разница, что v1 не умеет передавать маршруты бесклассовых сетей (CIDR), а также не умеет предавать не стандарную маску сети (VLSM).
@@ -49,8 +51,8 @@ RIP is RIP...
 ```java
 update timer - after that broadcast sent 30sec (период отправки сообщений типа "Response")
 invalid timer - after expire route declare as a invalid 180sec 
-               (Когда маршрут находится в таблице маршрутизации в состоянии possibly down, это значит, что Invalid timer истек, 
-               	а Flush timer еще нет)
+               (Когда маршрут находится в таблице маршрутизации в состоянии possibly down, 
+               	это значит, что Invalid timer истек, а Flush timer еще нет)
 hold down - after hold down timer expire 180sec
 Flush timer - after expire route entry deleted form routing table 240sec
 ```
@@ -58,21 +60,31 @@ Flush timer - after expire route entry deleted form routing table 240sec
 ```java
 Кароче, теперь па-Русски! )
 Что происходит по таймингу:
-1. Если в течении 30 секунд не приходит очередной Update от соседа, то маршруты от него метятся в RIB как "possibly down".
-2. Если в течении 240 секунд не приходит очередной Update от соседа, то маршруты от него удаляются из RIB.
+1. Если в течении 30 секунд не приходит очередной Update от соседа, 
+   то маршруты от него метятся в RIB как "possibly down".
+2. Если в течении 240 секунд не приходит очередной Update от соседа, 
+   то маршруты от него удаляются из RIB.
 ```
 
-Пример "possibly down" в RIB
+
+### Пример "possibly down" в RIB
 ![Request](img/rip/rip-possibly-down.jpg)
 
-Общая схема работы таймера:
+### Общая схема работы таймера:
 ![ip-header](img/rip/timers.jpg)
 
-!!!note "Важный факт" 
-Из особенностей работы: по факту при "протухании" маршрутов по RIP на маршрутизаторе не напрямую соединенном с другим.
-Непосредственно соединенный маршрутизатор посылает сообщении "Response" (оно же "Update") с всеми актуальными маршрутами, но уже без тех, которые "протухли"... А не например как в BGP с помощью "withdraw", в котором указываются только отменненые маршруты...
+Структура протокола очень простая:
+```bash
+- Command
+- Version
+- Информация об ip адресах.
+```
 
-## Конфигурация RIP наоборудовании cisco
+!!!note "Важный факт" 
+		Из особенностей работы: по факту при "протухании" маршрутов по RIP на маршрутизаторе не напрямую соединенном с другим.
+		Непосредственно соединенный маршрутизатор посылает сообщении "Response" (оно же "Update") с всеми актуальными маршрутами, но уже без тех, которые "протухли"... А не например как в BGP с помощью "withdraw", в котором указываются только отменненые маршруты...
+
+## Конфигурация RIP на оборудовании cisco
 
 ```bash
 router rip
@@ -87,8 +99,9 @@ router rip
 Особенности синтаксиса: в конфигурации rip v2 указываются только сети без масок, но по факту при обращении к интерфейсу берутся правильные маски в rip database.
 
 Литература:
-1. [RIP](http://xgu.ru/wiki/RIP)
-2. [RIP V1 vs V2](https://ipwithease.com/rip-v1-vs-rip-v2/)
-3. [RIP General Operation, Messaging and Timers](http://www.tcpipguide.com/free/t_RIPGeneralOperationMessagingandTimers-2.htm)
-4. https://learningnetwork.cisco.com/s/question/0D53i00000Kt6cX/rip-timers
-Пример icmp дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/icmp-ping.pcapng)
+- [1. RIP](http://xgu.ru/wiki/RIP)
+- [2. RIP V1 vs V2](https://ipwithease.com/rip-v1-vs-rip-v2/)
+- [3. RIP General Operation, Messaging and Timers](http://www.tcpipguide.com/free/t_RIPGeneralOperationMessagingandTimers-2.htm)
+- [4. cisco forum](https://learningnetwork.cisco.com/s/question/0D53i00000Kt6cX/rip-timers)
+
+Пример дампа rip в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/rip.pcapng)
