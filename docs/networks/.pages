@@ -3,4 +3,8 @@ arrange:
     - index.md 
     - cli_crossfit.md
     - protocols
+    - cisco
     - juniper
+    - huawei
+    - dlink
+    - design
