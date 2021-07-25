@@ -134,13 +134,17 @@ Bridge ID = 32768/1/5000.0002.0000 (priority/vlan/mac)
 В моем случае "alternate port" стал порт на Sw2 - Gi0/2 (состояние у него Blocked).
 
 Состояние портов по коммутаторам:
+
 Sw1
+
 ![my-lab-stp](img/stp/my-lab-stp-sw1.jpg)
 
 Sw2
+
 ![my-lab-stp](img/stp/my-lab-stp-sw2.jpg)
 
 Sw3
+
 ![my-lab-stp](img/stp/my-lab-stp-sw3.jpg)
 
 
