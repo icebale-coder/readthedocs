@@ -10,6 +10,7 @@ arrange:
     - DNS.md
     - ICMP.md
     - IS-IS.md
+    - LAG.md
     - OSPF.md
     - RIP.md
     - STP.md
