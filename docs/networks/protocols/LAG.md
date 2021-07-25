@@ -81,6 +81,30 @@ Sw2:
 ![sw2-sh-eth-po-degrad](img/lag/sw2-sh-eth-po-degrad.jpg)
 
 
+При необходимости можно подобрать более оптимальную балансировку из вариантов:
+```bash
+Sw1(config)#port-channel load-balance ?
+  dst-ip       Dst IP Addr
+  dst-mac      Dst Mac Addr
+  src-dst-ip   Src XOR Dst IP Addr
+  src-dst-mac  Src XOR Dst Mac Addr
+  src-ip       Src IP Addr
+  src-mac      Src Mac Addr
+  ```
+Посмотреть текущий тип балансировки:
+```
+
+Sw1#sh etherchannel load-balance
+EtherChannel Load-Balancing Configuration:
+        "src-dst-ip"
+
+EtherChannel Load-Balancing Addresses Used Per-Protocol:
+Non-IP: Source XOR Destination MAC address
+  IPv4: Source XOR Destination IP address
+  IPv6: Source XOR Destination IP address
+```
+
+
 ## Литература
 
 - [1. Агрегирование каналов](http://xgu.ru/iki/%D0%90%D0%B3%D1%80%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2)
