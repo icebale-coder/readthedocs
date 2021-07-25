@@ -90,7 +90,8 @@ Sw1(config)#port-channel load-balance ?
   src-dst-mac  Src XOR Dst Mac Addr
   src-ip       Src IP Addr
   src-mac      Src Mac Addr
-  ```
+```
+
 Посмотреть текущий тип балансировки:
 
 ```bash
