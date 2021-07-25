@@ -92,8 +92,8 @@ Sw1(config)#port-channel load-balance ?
   src-mac      Src Mac Addr
   ```
 Посмотреть текущий тип балансировки:
-```
 
+```bash
 Sw1#sh etherchannel load-balance
 EtherChannel Load-Balancing Configuration:
         "src-dst-ip"
