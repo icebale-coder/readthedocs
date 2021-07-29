@@ -293,6 +293,7 @@ ASBR - (AS Boundary Router) - маршрутизаторы, являющиеся
 ## OSPF Loop prevention
  
   https://www.networkworld.com/article/2348778/my-favorite-interview-question.html
+ 
  Весьма неплохое объяснение общей концепции работы протокола 
  + объяснение каверзного вопроса, который очень любят задавать на собесе: 
  "Как в OSPF протоколе осуществляется защита от петель?"
@@ -316,7 +317,7 @@ ASBR - (AS Boundary Router) - маршрутизаторы, являющиеся
 - [5. Руководство по проектированию OSPF](https://www.cisco.com/c/ru_ru/support/docs/ip/open-shortest-path-first-ospf/7039-1.html)
 - [6. My Favorite Interview Question](https://www.networkworld.com/article/2348778/my-favorite-interview-question.html)
 - [7. Inter-Area Loop Prevention in OSPF Petr Lapukhov 4xCCIE/CCDE](https://cdn2.hubspot.net/hubfs/3985396/Blog/Loop-Prevention-in-OSPF.pdf)
-- [8. CHEAT SHEETS](http://xgu.ru/wiki/OSPF)https://drive.google.com/file/d/0B-5kZl7ixcSKcHNyR0czaVhxczA/edit?resourcekey=0-3LITQw_S6wSJIxcnrR6ZJg)
+- [8. CHEAT SHEETS](https://drive.google.com/file/d/0B-5kZl7ixcSKcHNyR0czaVhxczA/edit?resourcekey=0-3LITQw_S6wSJIxcnrR6ZJg)
 
 
 Пример дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/ospf.pcapng)
