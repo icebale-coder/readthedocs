@@ -2,11 +2,19 @@ title: OSPF
 
 # Протокол OSPF
 
+
+![dijkstra](img/ospf/pentakle.jpg)
+
 Disclaimer:
 
-![ospf-ip-89](img/ospf/dijkstra.jpg)
+```bash
+произвольная трактовка алгоритма Дейкстры...
 
-
+...Бесконечного спектакля
+Быть свидетелем немым
+И узорами пентакля
+Очарованным... (ц) Пикник
+```
 
 Протокол OSPF (Open Short Path First) - link-state протокол динамической маршрутизации.
 
@@ -500,6 +508,8 @@ OSPF LSDB
 - [9. Конфигурирование и проверка работы продвинутых функций протокола OSPF](https://wiki.shibaev.info/index.php?title=%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B8_%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B_%D0%BF%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%83%D1%82%D1%8B%D1%85_%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0_OSPF)
 - [10. Принципы работы OSPF для нескольких зон](http://ciscotips.ru/multiarea-ospf)
 - [11. ФИЛЬТРАЦИЯ МАРШРУТОВ В OSPF](https://wiki.merionet.ru/seti/28/filtraciya-marshrutov-v-ospf/)
+- [12. Алгоритм Дейксты](https://prog-cpp.ru/deikstra/)
+
 
 
 Пример дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/ospf.pcapng)
