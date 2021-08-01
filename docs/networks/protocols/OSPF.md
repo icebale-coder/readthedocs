@@ -362,6 +362,17 @@ router ospf 100
 
 #### Пример фильтрации между областями OSPF:
 
+```bash
+Для примера рассмотрим два маршрутизатора (R1 и R5) из моей лабы:
+
+R1 - это ABR маршрутизатор, находящийся в двух областях бекбон области (Area 0) 
+     и смежной с ней областью Area 5
+R5 - марпшрутизатор польностью находящийся в Area 5
+```
+
+![ospf-lsa3-filter-before](img/ospf/ospf-lsa3-filter-before.jpg)
+
+
 До фильтрации имеется наличие LSA type 3 в LSDB
 
 ![ospf-lsa3-filter-before](img/ospf/ospf-lsa3-filter-before.jpg)
