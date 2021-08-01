@@ -518,4 +518,5 @@ OSPF LSDB
 
 Пример дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/ospf.pcapng)
 
+Пример дампа в wireshark в лабе R1 f0/0 можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/ospf-laba-r1-int-f0-0.pcapng)
 
