@@ -257,6 +257,14 @@ IP internal reachability и IP external reachability.
 Эта TLV используется для распространения информации о локальном Hostname маршрутизатора. 
 ```
 
+### Пример LSP
+
+![isis-lsp-example](img/isis/isis-lsp-example.jpg)
+
+Внутри LSP находятся как "кубики" TLV.
+
+
+
 После формирования LSDB IS-IS каждый маршрутизатор по алгоритму Дейкстры строит свою оптимальную таблицу маршрутизации.
 
 
@@ -268,3 +276,6 @@ IP internal reachability и IP external reachability.
 - [3. IS-IS для тех, кто понимает OSPF (Часть 1)](https://community.cisco.com/t5/%D0%BC%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%B8-%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B1%D0%BB%D0%BE%D0%B3%D0%B8/is-is-%D0%B4%D0%BB%D1%8F-%D1%82%D0%B5%D1%85-%D0%BA%D1%82%D0%BE-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D0%B5%D1%82-ospf-%D1%87%D0%B0%D1%81%D1%82%D1%8C-1/ba-p/3103119)
 - [4. IS-IS для тех, кто понимает OSPF (часть 2)](https://community.cisco.com/t5/%D0%BC%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%B8-%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B1%D0%BB%D0%BE%D0%B3%D0%B8/is-is-%D0%B4%D0%BB%D1%8F-%D1%82%D0%B5%D1%85-%D0%BA%D1%82%D0%BE-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D0%B5%D1%82-ospf-%D1%87%D0%B0%D1%81%D1%82%D1%8C-2/ba-p/3103435)
 - [4. IS-IS для тех, кто понимает OSPF (часть 3)](https://community.cisco.com/t5/%D0%BC%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%B8-%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B1%D0%BB%D0%BE%D0%B3%D0%B8/is-is-%D0%B4%D0%BB%D1%8F-%D1%82%D0%B5%D1%85-%D0%BA%D1%82%D0%BE-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D0%B5%D1%82-ospf-%D1%87%D0%B0%D1%81%D1%82%D1%8C-3/ba-p/3104734)
+
+
+Пример дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/isis.pcapng)
