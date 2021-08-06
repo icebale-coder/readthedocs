@@ -7,8 +7,6 @@ MPLS и не только.
 
 
 ## Нарратив:
-- [1. Введение в VxLAN]((https://habr.com/ru/post/344326/)
-
 - [1. Базовые представления о сети MPLS](https://linkmeup.ru/blog/154.html)
 	- 1.1. Принцип работы
 	- 1.2. Протокол LDP
@@ -16,17 +14,17 @@ MPLS и не только.
 - [2. L3VPN](https://linkmeup.ru/blog/204.html)
 	- [2.1. MPLS L3VPN и доступ в Интернет](https://linkmeup.ru/blog/248.html)
 - [3. L2VPN](https://linkmeup.ru/blog/261.html)
-	- [3.1. xconnect (точка-точка)]
-	- [3.2. VPLS (точка-многоточка)]
-    - [3.3. Мартини драфт]
-	- [3.4.	Компелла драфт]
+	- 3.1. xconnect (точка-точка)
+	- 3.2. VPLS (точка-многоточка)
+    - 3.3. Мартини драфт
+	- 3.4.	Компелла драфт
 - [4.1. EVPN](https://linkmeup.ru/blog/264.html)
 - [4.2. EVPN Multihoming](https://linkmeup.ru/blog/301.html)  
 - [5. Inter-AS](https://habr.com/ru/post/302600)
-- [6. MPLS TE] https://linkmeup.ru/blog/302.html
-	- [6.1. Использование протоколов Link State (ISIS, OSPF) для передачи информации о TE.]
-- [7. MPLS SR]
-	- [7.1. Использование протоколов Link State (ISIS, OSPF) как замена сигнальных протоколов LDP/RSVP-TE]
+- [6. MPLS TE](https://linkmeup.ru/blog/302.html)
+	- 6.1. Использование протоколов Link State (ISIS, OSPF) для передачи информации о TE.
+- 7. MPLS SR
+	- 7.1. Использование протоколов Link State (ISIS, OSPF) как замена сигнальных протоколов LDP/RSVP-TE
 
 Disclaimer 1:
 ```bash
