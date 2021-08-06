@@ -289,3 +289,752 @@ Keepalive – по TCP установленными соседями. Инфор
 Такие как: характеристиками линий, интерфейсов и т.д.
 
 
+## L3VPN
+
+```bash
+"L3VPN" – функционал на базе сети MPLS, обеспечивающий прозрачную маршрутизацию для клиента, 
+между его филиалами через сеть вышестоящего провайдера.
+```
+
+Рассмотрим такую схему (прости Марат)…
+
+
+![l3vpn](img/mpls/l3vpn.jpg)
+
+### Постановка задачи:
+
+Имеется две точки присутствия клиента в сети провайдера задача провайдера организовать маршрутизацию между этими точками с условием изоляции данного трафика от остальных сетей. 
+
+Для решение данной задачи используется технология L3VPN
+
+Общий принцип такой:
+```bash
+1.	Клиент передает данные о своих сетях провайдеру 
+через один из протоколов маршрутизации ISIS, OSPF, BGP
+2.	Провайдер изолирует и передает данные на другую точку присутствия клиента.
+```
+
+Для решения данной задачи используется сеть MPLS, отдельные VRF для точек присутствия клиента и через интеграцию посредством протокола MBGP например в секции «vpnv4 unicast» (AFI=1/SAFI=128) передаются от PE точки входа в PE точки выхода (от Ingress PE до Engress PE).
+
+На входе от клиента в сеть провайдера пакету добавляется дополнительная метка - сервисная, которая будет идентифицировать пакет при выходе из сети MPLS – куда данный пакет в какой VRF форвардить. 
+
+Верхняя метка добавляется как обычно транспортная, которая «пушится» (push) на входящем «PE», «свапается» (swap) на «P» маршрутизаторах сети MPLS и «попается» на выходном «PE».
+
+
+#### "Живой" пример L3VPN: 
+
+
+
+![l3vpn-example](img/mpls/l3vpn-example.jpg)
+
+Описание схемы:
+
+```bash
+R1,R2,R3,R4,R5,R6 – маршрутизаторы сети провайдера
+Имеются 3 клиента: C3PO, DARKSIDE, R2D2
+C3PO1(CE) – подключен в R1(PE)
+C3PO2(CE) – подключен в R6(PE)
+
+DARKSIDE1(CE) – подключен в R1(PE)
+DARKSIDE2 (CE) – подключен в R6(PE)
+
+R2D2 (CE) – подключен в R4(PE)
+
+C3PO и DARKSIDE – не имеют доступа друг к другу
+R2D2 и DARKSIDE – не имеют доступа друг к другу
+C3PO и R2D2 –имеют связность друг с другом (маршруты ликаются чз взаимный DT import)
+
+C3PO передает маршруты провайдеру по OSPF 
+DARKSIDE и R2D2 передает маршруты провайдеру по BGP 
+В сети провайдера IGP - ISIS, MPLS - LDP
+BGP vpnv4 настроен на R1,R4,R6.
+
+Соответственно для C3PO мы редистрибъютим маршруты между OSPF клиента и BGP провайдера
+```
+
+Теперь поподробнее как всё это работает...
+
+На PE создаются VRF, на которых определятся:
+```bash
+1.	"RD – Router Destignisher" – поле, определяющее уникальность префикса 
+    в секции vpnv4 и не более того, чтобы не спутать с другими префиксами таких же сетей,
+    например:
+      64222:300 192.168.222.0 (формат для примера ASN:XXXX)
+        Передается в пакете BGP UPDATE Message  
+
+RD передается: в атрибуте «MP_REACH_NLRI» в секции «NLRI», в разделе «BGP Prefix»
+```
+
+![l3vpn-rd](img/mpls/l3vpn-rd.jpg)
+
+
+```bash
+2.	"RT – Router Target" – это по сути BGP community для данного префикса, 
+на основании которого идет фильтрация на конечном PE 
+(т.е. - в какую VRF данный префикс импортировать). 
+
+формат, такой же как и у RD – ASN:XXXX
+Передается в пакете «BGP UPDATE Message»
+В атрибуте «EXTENDED_COMMUNITIES»
+```
+
+![l3vpn-rt](img/mpls/l3vpn-rt.jpg)
+
+!!!warning "Принципиальный момент:"
+			 вместе с префиксом в NLRI передается сервисная метка для данного VRF «Label Stack: 28», 
+			 таким образом пакет, отправленный для сети 192.168.222.0 из соответствующего VRF 
+			 сразу маркируется сервисной меткой. 
+			 И с CEF данного VRF-а сразу вешаются 2 метки (17 и 28). 
+			 Tag 28 – это сервисная метка, переданная по BGP, 
+			 а 17 – назначенная R6 по LDP.  
+			 Примечание: сервисная метка, тоже назначается LDP, только на источнике, т.е. на R4.
+
+
+![l3vpn-cef-r6](img/mpls/l3vpn-cef-r6.jpg)
+
+
+
+В качестве nexthop выступает 4.4.4.4 
+
+![l3vpn-nh](img/mpls/l3vpn-nh.jpg)
+
+
+
+До 4.4.4.4 у R6 стоит метка "17"
+
+![l3vpn-lfib-r6](img/mpls/l3vpn-lfib-r6.jpg)
+
+
+**Всё совпадает и сходится… )**
+
+Получается что в CEF VRF C3PO до 192.168.222.0/24 сразу падает две метки одна сервисная «28», которая передается через BGP 
+
+и транспортная метка «17», которая берется из общей LFIB как метка для FEC 4.4.4.4…
+
+Еще немаловажный момент: для VRF можно указать несколько RT на импорт, тогда при совпадении RT префиксы будут «ликаться» из соседних VRF.
+
+В нашем примере на R4 создан VRF для R2D2, который имеет связность с R3PO
+
+```bash
+R4#
+ip vrf  R2D2
+  rd 64222:300
+  route-target export 64500:300
+  route-target import 64500:300 – "это RT «родное» для R2D2"
+  route-target import 64500:100 – "это RT C3PO"
+```
+
+соответствующим образом настраивается протокол BGP, в частности туда вводится секция vpnv4 – это как раз 
+L3VPN(AFI=1 – ipv4,  SAFI=128 – Labeled VPN unicast)
+данные параметры можно увидеть в скринах из wireshark – обведены зеленым цветом.
+
+Вот собственно и вся «магия» в L3VPN
+
+### Подведем итоги по L3VPN 
+
+Что надо, чтобы работал  L3VPN:
+```bash
+1.	Должна быть сеть MPLS (LDP или RSVP-TE – без разницы)
+2.	Клиент должен передавать анонсы своих сетей через один из протоколов (ISIS, OSPF, BGP) – 
+ответочка поднимается на стороне PE.
+Если клиентский протокол не BGP, то в него и из него нужно редистрибьютить сети клиента.
+3.	На PE с обоих сторон настраивается:
+- VRF для данного клиента, туда заносятся RD и RT
+- В BGP добавляется секция vpnv4, а также  ipv4 для VRF
+```
+Конфиги прилагаются… )
+
+<details><summary>R1</summary>
+<p>
+
+```bash
+R1!
+!
+hostname R1
+!
+ip vrf C3PO
+ rd 64500:100
+ route-target export 64500:100
+ route-target import 64500:100
+ route-target import 64500:300
+!
+ip vrf DARKSIDE
+ rd 64501:100
+ route-target export 64501:100
+ route-target export 64500:200
+ route-target import 64501:100
+ route-target import 64500:200
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+ ip router isis
+!
+interface FastEthernet0/0
+ ip address 10.1.3.1 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet0/1
+ ip address 10.1.2.1 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet1/0
+ ip vrf forwarding C3PO
+ ip address 192.168.1.2 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet2/0
+ ip vrf forwarding DARKSIDE
+ ip address 192.168.1.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+router ospf 2 vrf C3PO
+ router-id 1.1.1.1
+ log-adjacency-changes
+ redistribute bgp 64500 subnets
+ network 192.168.0.0 0.0.255.255 area 0
+!
+router isis
+ net 10.0000.0000.0001.00
+!
+router bgp 64500
+ no synchronization
+ bgp router-id 1.1.1.1
+ bgp log-neighbor-changes
+ neighbor 4.4.4.4 remote-as 64500
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 6.6.6.6 remote-as 64500
+ neighbor 6.6.6.6 update-source Loopback0
+ no auto-summary
+ !
+ address-family vpnv4
+  neighbor 4.4.4.4 activate
+  neighbor 4.4.4.4 send-community both
+  neighbor 6.6.6.6 activate
+  neighbor 6.6.6.6 send-community both
+ exit-address-family
+ !
+ address-family ipv4 vrf DARKSIDE
+  neighbor 192.168.1.1 remote-as 64501
+  neighbor 192.168.1.1 activate
+  no synchronization
+ exit-address-family
+ !
+ address-family ipv4 vrf C3PO
+  redistribute ospf 2 vrf C3PO
+  no synchronization
+ exit-address-family
+!
+mpls ldp router-id Loopback0 force
+!
+```
+</p>
+</details>
+
+<details><summary>R2</summary>
+<p>
+
+```bash
+
+!R2#
+!
+hostname R2
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+ ip router isis
+!
+interface FastEthernet0/0
+ ip address 10.2.5.2 255.255.255.0
+ ip router isis
+ shutdown
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet0/1
+ ip address 10.1.2.2 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+router isis
+ net 10.0000.0000.0002.00
+!
+ip forward-protocol nd
+!
+!
+ip http server
+no ip http secure-server
+!
+no cdp run
+!
+!
+!
+!
+mpls ldp router-id Loopback0 force
+!
+```
+</p>
+</details>
+
+<details><summary>R3</summary>
+<p>
+
+```bash
+
+!R3#
+!
+hostname R3
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ ip router isis
+!
+interface FastEthernet0/0
+ ip address 10.3.4.3 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet0/1
+ ip address 10.1.3.3 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+router isis
+ net 10.0000.0000.0003.00
+!
+ip forward-protocol nd
+!
+!
+ip http server
+no ip http secure-server
+!
+no cdp run
+!
+!
+!
+!
+mpls ldp router-id Loopback0 force
+!
+```
+</p>
+</details>
+
+<details><summary>R4</summary>
+<p>
+
+```bash
+
+!R4#
+!
+hostname R4
+!
+ip vrf R2D2
+ rd 64222:300
+ route-target export 64500:300
+ route-target import 64500:300
+ route-target import 64500:100
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+ ip router isis
+!
+interface FastEthernet0/0
+ ip address 10.3.4.4 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet0/1
+ ip address 10.4.5.4 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet1/0
+ ip vrf forwarding R2D2
+ ip address 192.168.222.2 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+router isis
+ net 10.0000.0000.0004.00
+!
+router bgp 64500
+ bgp router-id 4.4.4.4
+ bgp log-neighbor-changes
+ neighbor 1.1.1.1 remote-as 64500
+ neighbor 1.1.1.1 update-source Loopback0
+ neighbor 6.6.6.6 remote-as 64500
+ neighbor 6.6.6.6 update-source Loopback0
+ !
+ address-family ipv4
+  neighbor 1.1.1.1 activate
+  neighbor 6.6.6.6 activate
+  no auto-summary
+  no synchronization
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 1.1.1.1 activate
+  neighbor 1.1.1.1 send-community both
+  neighbor 6.6.6.6 activate
+  neighbor 6.6.6.6 send-community both
+ exit-address-family
+ !
+ address-family ipv4 vrf R2D2
+  neighbor 192.168.222.1 remote-as 64222
+  neighbor 192.168.222.1 activate
+  no synchronization
+ exit-address-family
+!
+mpls ldp router-id Loopback0 force
+!
+```
+</p>
+</details>
+
+<details><summary>R5</summary>
+<p>
+
+```bash
+
+!R5#
+!
+hostname R5
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip router isis
+!
+interface FastEthernet0/0
+ ip address 10.2.5.5 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet0/1
+ ip address 10.4.5.5 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet1/0
+ ip address 10.5.6.5 255.255.255.0
+ ip router isis
+ speed auto
+ full-duplex
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router isis
+ net 10.0000.0000.0005.00
+!
+mpls ldp router-id Loopback0 force
+!
+```
+</p>
+</details>
+
+
+<details><summary>R6</summary>
+<p>
+
+```bash
+
+!R6#
+!
+hostname R6
+!
+ip vrf C3PO
+ rd 64500:100
+ route-target export 64500:100
+ route-target import 64500:100
+ route-target import 64500:300
+!
+ip vrf DARKSIDE
+ rd 64502:200
+ route-target export 64502:200
+ route-target export 64500:200
+ route-target import 64502:200
+ route-target import 64500:200
+!
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+ ip router isis
+!
+interface FastEthernet0/0
+ ip address 10.5.6.6 255.255.255.0
+ ip router isis
+ duplex auto
+ speed auto
+ mpls ip
+ no cdp enable
+!
+interface FastEthernet0/1
+ ip vrf forwarding C3PO
+ ip address 192.168.2.2 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet2/0
+ ip vrf forwarding DARKSIDE
+ ip address 192.168.2.2 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+router ospf 2 vrf C3PO
+ router-id 6.6.6.6
+ log-adjacency-changes
+ redistribute bgp 64500 subnets
+ network 192.168.0.0 0.0.255.255 area 0
+!
+router isis
+ net 10.0000.0000.0006.00
+!
+router bgp 64500
+ no synchronization
+ bgp router-id 6.6.6.6
+ bgp log-neighbor-changes
+ neighbor 1.1.1.1 remote-as 64500
+ neighbor 1.1.1.1 update-source Loopback0
+ neighbor 4.4.4.4 remote-as 64500
+ neighbor 4.4.4.4 update-source Loopback0
+ no auto-summary
+ !
+ address-family vpnv4
+  neighbor 1.1.1.1 activate
+  neighbor 1.1.1.1 send-community both
+  neighbor 4.4.4.4 activate
+  neighbor 4.4.4.4 send-community both
+ exit-address-family
+ !
+ address-family ipv4 vrf DARKSIDE
+  neighbor 192.168.2.1 remote-as 64502
+  neighbor 192.168.2.1 activate
+  no synchronization
+ exit-address-family
+ !
+ address-family ipv4 vrf C3PO
+  redistribute ospf 2 vrf C3PO
+  no synchronization
+ exit-address-family
+!
+mpls ldp router-id Loopback0 force
+!
+```
+</p>
+</details>
+
+<details><summary>C3PO1</summary>
+<p>
+
+```bash
+
+!C3PO1#
+!
+hostname C3PO1
+!
+interface Loopback0
+ ip address 10.10.10.10 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router ospf 1
+ router-id 10.10.10.10
+ log-adjacency-changes
+ network 10.10.10.10 0.0.0.0 area 0
+ network 192.168.0.0 0.0.255.255 area 0
+!
+
+!C3PO2#
+!
+hostname C3PO2
+!
+interface Loopback0
+ ip address 20.20.20.20 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 192.168.2.1 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router ospf 1
+ log-adjacency-changes
+ network 20.20.20.20 0.0.0.0 area 0
+ network 192.168.0.0 0.0.255.255 area 0
+!
+```
+</p>
+</details>
+
+<details><summary>DARKSIDE1</summary>
+<p>
+
+```bash
+
+!DARKSIDE1#
+!
+hostname DARKSIDE1
+!
+interface Loopback0
+ ip address 11.11.11.11 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router bgp 64501
+ bgp log-neighbor-changes
+ neighbor 192.168.1.2 remote-as 64500
+ !
+ address-family ipv4
+  redistribute connected
+  neighbor 192.168.1.2 activate
+  no auto-summary
+  no synchronization
+ exit-address-family
+!
+
+!DARKSIDE2#
+!
+hostname DARKSIDE2
+!
+interface Loopback0
+ ip address 22.22.22.22 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 192.168.2.1 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router bgp 64502
+ bgp log-neighbor-changes
+ neighbor 192.168.2.2 remote-as 64500
+ !
+ address-family ipv4
+  redistribute connected
+  neighbor 192.168.2.2 activate
+  no auto-summary
+  no synchronization
+ exit-address-family
+!
+```
+</p>
+</details>
+
+<details><summary>R2D2</summary>
+<p>
+
+```bash
+
+!R2D2#
+!
+hostname R2D2
+!
+!
+interface Loopback0
+ ip address 222.222.222.222 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 192.168.222.1 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+router bgp 64222
+ bgp router-id 222.222.222.222
+ bgp log-neighbor-changes
+ neighbor 192.168.222.2 remote-as 64500
+ !
+ address-family ipv4
+  redistribute connected
+  neighbor 192.168.222.2 activate
+  no auto-summary
+  no synchronization
+ exit-address-family
+!
+```
+</p>
+</details>
+
+
+
+
+
