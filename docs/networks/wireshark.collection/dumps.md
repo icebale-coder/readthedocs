@@ -19,5 +19,7 @@ title: Wireshark collection
 - [OSPF пример 2](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/ospf-laba-r1-int-f0-0.pcapng)
 - [RIP](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/rip2.pcapng)
 - [STP](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/stp.pcapng)
+- [VxLAN arp icmp](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/vxlan-arp-icmp.pcapng)
+
 
 - [Огромная коллекция дампов на packetlife.net](https://packetlife.net/captures/)

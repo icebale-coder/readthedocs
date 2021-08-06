@@ -147,3 +147,5 @@ VxLAN в рамках модели OSI можно представить в ви
 ## Литература
 
 - [1. Введение в VxLAN]((https://habr.com/ru/post/344326/)
+
+Пример дампа в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/vxlan-arp-icmp.pcapng)
