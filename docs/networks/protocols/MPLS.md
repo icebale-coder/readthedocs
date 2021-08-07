@@ -1029,6 +1029,9 @@ router ospf 1
  network 10.10.10.10 0.0.0.0 area 0
  network 192.168.0.0 0.0.255.255 area 0
 !
+```
+</p>
+</details>
 
 <details><summary>C3PO2</summary>
 <p>
