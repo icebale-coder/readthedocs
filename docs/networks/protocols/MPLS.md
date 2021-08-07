@@ -696,7 +696,6 @@ interface Loopback0
 interface FastEthernet0/0
  ip address 10.2.5.2 255.255.255.0
  ip router isis
- shutdown
  duplex auto
  speed auto
  mpls ip
@@ -1031,6 +1030,11 @@ router ospf 1
  network 192.168.0.0 0.0.255.255 area 0
 !
 
+<details><summary>C3PO2</summary>
+<p>
+
+```bash
+
 !C3PO2#
 !
 hostname C3PO2
@@ -1094,6 +1098,14 @@ router bgp 64501
   no synchronization
  exit-address-family
 !
+```
+</p>
+</details>
+
+<details><summary>DARKSIDE2</summary>
+<p>
+
+```bash
 
 !DARKSIDE2#
 !
