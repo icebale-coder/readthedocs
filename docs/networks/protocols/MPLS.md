@@ -28,7 +28,7 @@ MPLS и не только.
 
 Disclaimer 1:
 ```bash
-Для усвоение вышеперечисленного материала планирую записывать сюда вольный пересказ этих статей 
+Для усвоения вышеперечисленного материала планирую записывать сюда вольный пересказ этих статей 
 с дальнейшим описанием реализации данного функционала на практике… 
 
 Хочу сказать огромное спасибо Маратам за цикл статей СДСМ!!! )
@@ -332,17 +332,35 @@ Keepalive – по TCP установленными соседями. Инфор
 ```bash
 R1,R2,R3,R4,R5,R6 – маршрутизаторы сети провайдера
 Имеются 3 клиента: C3PO, DARKSIDE, R2D2
-C3PO1(CE) – подключен в R1(PE)
-C3PO2(CE) – подключен в R6(PE)
+"C3PO1(CE)" – подключен в R1(PE)
+  ip plan:
+  - lo0      - 10.10.10.10/32
+  - int f0/0 - 192.168.1.1/24
 
-DARKSIDE1(CE) – подключен в R1(PE)
-DARKSIDE2 (CE) – подключен в R6(PE)
+"C3PO2(CE)" – подключен в R6(PE)
+  ip plan:
+  - lo0      - 20.20.20.20/32
+  - int f0/0 - 192.168.2.1/24
 
-R2D2 (CE) – подключен в R4(PE)
+"DARKSIDE1(CE)" – подключен в R1(PE)
+ ip plan:
+  - lo0      - 11.11.11.11/32
+  - int f0/0 - 192.168.1.1/24
+
+"DARKSIDE2 (CE)" – подключен в R6(PE)
+ ip plan:
+  - lo0      - 22.22.22.22/32
+  - int f0/0 - 192.168.2.1/24
+
+
+"R2D2 (CE)" – подключен в R4(PE)
+ ip plan:
+  - lo0      - 222.222.222.222/32
+  - int f0/0 - 192.168.222.1/24
 
 C3PO и DARKSIDE – не имеют доступа друг к другу
 R2D2 и DARKSIDE – не имеют доступа друг к другу
-C3PO и R2D2 –имеют связность друг с другом (маршруты ликаются чз взаимный DT import)
+C3PO и R2D2 –имеют связность друг с другом (маршруты ликаются чз взаимный RT import)
 
 C3PO передает маршруты провайдеру по OSPF 
 DARKSIDE и R2D2 передает маршруты провайдеру по BGP 
@@ -353,6 +371,131 @@ BGP vpnv4 настроен на R1,R4,R6.
 ```
 
 Теперь поподробнее как всё это работает...
+
+Рассмотрим взаимодействия между C3PO1 - R2D2 
+
+```bash
+1. Взаимодействие внутри/между VRF 
+  - С3PO - работает по OSPF
+  - R2D2 - по BGP
+
+Для организации взаимодействия между разными VRF необходимо "ликать" их маршруты между собой,
+для этого используется механизм импорта в VRF
+```
+
+```bash
+На PE R1, к которому подключен CE C3PO1:
+
+R1#
+!
+ip vrf C3PO
+ rd 64500:100
+ route-target export 64500:100
+ route-target import 64500:100
+ route-target import 64500:300
+
+Комментарии:
+ - rd 64500:100 - Это Router Destignisher, который используется как уникальный идентификатор, 
+                  при передачи префиксов в BGP Update сообющениях.
+ 
+ - route-target 64500:100 - это "родной" Route Target VRF C3P0
+ - route-target 64500:300 - это  Route Target VRF R2D2
+ 
+ Соответственно:
+ - для импорта добавляются оба-два эти RT - чтобы принимать префиксы от VRF, 
+   принадлежащих VRF C3P0 и R2D2
+ - для экспорта добавляется RT своего VRF (C3PO)
+```
+
+```bash
+Аналогичным способом "ликаются" и маршруты и на R4 (PE), к которому подключен R2D2
+
+R4#
+!
+ip vrf R2D2
+ rd 64222:300
+ route-target export 64500:300
+ route-target import 64500:300
+ route-target import 64500:100
+
+Особо обращу тут внимание на то, что rd и rt - это совершенно независимые друг от друга вещи.
+В данном случае, RD - вообще мог бы быть произвольным, достаточно, чтобы он был просто уникальным.
+А вот RT должен быть именно такой каким его будут импортировть к себе другие VRF-ы. 
+```
+
+```bash
+Теперь, когда на обоих PE настроено взаимодействие между VRF надо настроить связность между самими PE.
+
+Для этого используется как раз протокол BGP секция vpnv4 (AFI=1/SAFI=128), оно же "L3VPN unicast"
+
+R1#
+!
+router bgp 64500
+ no synchronization
+ bgp router-id 1.1.1.1
+ bgp log-neighbor-changes
+ neighbor 4.4.4.4 remote-as 64500
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 6.6.6.6 remote-as 64500
+ neighbor 6.6.6.6 update-source Loopback0
+ no auto-summary
+ !
+ address-family vpnv4
+  neighbor 4.4.4.4 activate
+  neighbor 4.4.4.4 send-community both
+  neighbor 6.6.6.6 activate
+  neighbor 6.6.6.6 send-community both
+ exit-address-family
+ !
+ address-family ipv4 vrf DARKSIDE
+  neighbor 192.168.1.1 remote-as 64501
+  neighbor 192.168.1.1 activate
+  no synchronization
+ exit-address-family
+ !
+ address-family ipv4 vrf C3PO
+  redistribute ospf 2 vrf C3PO
+  no synchronization
+ exit-address-family
+
+ Комментарии:
+ - в секция "address-family vpnv4" - перечисляются соседи по BGP для L3VPN, т.е. PE (R4 и К6)
+ - Для взаимодействия с клиентами L3VPN по BGP должны передаваться и приниматься маршруты 
+   для "родных" протоколов маршрутизации самих клиентов.
+   Для C3PO - Это OSPF
+   Для DARKSIDE - Это BGP
+   Соответственно должен происходить и редистрибьюция маршрутов с клиенского IGP VRF в BGP (PE) и наоборот.
+   За этот функционал в нашем, рассматриваемом случае, отвечает секция "address-family ipv4 vrf C3PO"
+
+   "address-family ipv4 vrf C3PO
+  	redistribute ospf 2 vrf C3PO"
+
+   При чем, обращаю особое внимание, что тип IGP протокола "клиента" L3VPN настраиется и на самом PE маршрутизаторе.
+	
+	"router ospf 2 vrf C3PO
+	 router-id 1.1.1.1
+	 log-adjacency-changes
+	 redistribute bgp 64500 subnets
+	 network 192.168.0.0 0.0.255.255 area 0"
+
+   При этом в OSPF 2 RIB естественно хранятся маршруты известные с C3PO
+
+	"R1#sh ip ospf 2 rib
+
+	OSPF local RIB for Process 2
+	Codes: * - Best, > - Installed in global RIB
+
+	*>  10.10.10.10/32, Intra, cost 2, area 0
+	      via 192.168.1.1, FastEthernet1/0
+	*   192.168.1.0/24, Intra, cost 1, area 0, Connected
+	      via 192.168.1.2, FastEthernet1/0"
+
+
+```
+
+
+и C3P01 - C3P02
+
 
 На PE создаются VRF, на которых определятся:
 ```bash
@@ -442,6 +585,9 @@ L3VPN(AFI=1 – ipv4,  SAFI=128 – Labeled VPN unicast)
 - VRF для данного клиента, туда заносятся RD и RT
 - В BGP добавляется секция vpnv4, а также  ipv4 для VRF
 ```
+
+### Конфиги L3VPN лабы
+
 Конфиги прилагаются… )
 
 <details><summary>R1</summary>
@@ -460,10 +606,8 @@ ip vrf C3PO
 !
 ip vrf DARKSIDE
  rd 64501:100
- route-target export 64501:100
  route-target export 64500:200
- route-target import 64501:100
- route-target import 64500:200
+  route-target import 64500:200
 !
 !
 interface Loopback0
@@ -790,9 +934,7 @@ ip vrf C3PO
 !
 ip vrf DARKSIDE
  rd 64502:200
- route-target export 64502:200
  route-target export 64500:200
- route-target import 64502:200
  route-target import 64500:200
 !
 interface Loopback0
