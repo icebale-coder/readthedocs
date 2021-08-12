@@ -2,10 +2,18 @@ title: Base commands
 
 # Полезные команды
 
+
+
+
 ```bash
 #Просмотр инфы по таблице натирования для ip адреса x.x.x.x
 
 conntrack -L | grep x.x.x.x 
+```
+
+```bash
+# посмотреть сетку без долбаного "dark blue" color
+ ipcalc -n 109.226.192.0/18
 ```
 
 whois
@@ -59,7 +67,6 @@ route:          94.73.251.0/24
 route:          94.73.252.0/24
 
 ```
-
 
 # Linux terminal hot key
 ```bash
