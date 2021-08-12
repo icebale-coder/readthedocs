@@ -167,7 +167,7 @@ whois -t object_type
 
 Пример просмотра шаблона объекта "route"
 
-<details><summary>whois -t route1</summary>
+<details><summary>whois -t route</summary>
 <p>
 
 ```bash
@@ -218,12 +218,12 @@ whois -M subnet
 
 Пример: узнать, на какие более мелкие подсети поделена подсеть 109.226.192.0/18
 
-<details><summary>whois -t route1</summary>
+<details><summary>whois -M 109.226.192.0/18 | grep route</summary>
 <p>
 
 ```bash
 
-whois -M 109.226.192.0/18 | grep route
+
 route:          109.226.192.0/19
 route:          109.226.224.0/19
 route:          109.226.247.0/24
@@ -240,12 +240,10 @@ whois -L subnet
 
 Пример:  узнать, из какой более крупной подсети образована подсеть 109.226.192.0/19
 
-<details><summary>whois -t route1</summary>
+<details><summary>whois -L 109.226.192.0/19 | grep route</summary>
 <p>
 
 ```bash
-
-whois -L 109.226.192.0/19 | grep route
 route:          109.226.192.0/18
 route:          109.226.192.0/19
 ```
