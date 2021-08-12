@@ -6,6 +6,7 @@ title: Base commands
 # полезная программа для генерации префиксов которые есть в AS, согласно БД RIR
 bgpq4 
 ```
+Как "готовить" bgpq4 смотрите [здесь](https://icebale.readthedocs.io/en/latest/linux/Debian/services/make-program/)
 
 Примеры использования - построения префиксов из БД RIPE Орион-Телекома AS31257
 
