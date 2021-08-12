@@ -15,9 +15,8 @@ conntrack -L | grep x.x.x.x
 
 whois
 ```bash
-
-#Просмотр объектов типа "route", принадлежащих AS31257
-whois -T route -i origin AS31257 
+#узнать все маршруты, которые происходят из автономной системы.
+whois -T route -i origin ASxxxxx 
 
 
 #Пример: список сетей закрепленных в RIPE за AS31257
@@ -63,6 +62,26 @@ route:          94.73.250.0/24
 route:          94.73.251.0/24
 route:          94.73.252.0/24
 
+```
+
+```bash
+#посмотреть шаблон объекта.
+whois -t object_type 
+```
+
+```bash
+#узнать все объекты, которые защищены объектом «maintainer_name».
+whois -i mnt-by maintainer_name
+```
+
+```bash
+#узнать, на какие более мелкие подсети поделена подсеть «subnet».
+whois -M subnet 
+```
+
+```bash
+#узнать, из какой более крупной подсети образована подсеть «subnet».
+whois -L subnet
 ```
 
 ## Linux terminal hot key
