@@ -163,11 +163,15 @@ route:          94.73.252.0/24
 ```bash
 # посмотреть шаблон объекта.
 whois -t object_type 
+```
 
+Пример просмотра шаблона объекта "route"
 
-# Пример просмотра шаблона объекта "route"
+<details><summary>whois -t route1</summary>
+<p>
 
-whois -t route
+```bash
+
 % This is the RIPE Database query service.
 % The objects are in RPSL format.
 %
@@ -199,6 +203,8 @@ source:         [mandatory]  [single]     [ ]
 % This query was served by the RIPE Database Query Service version 1.101 (WAGYU)
 
 ```
+</p>
+</details>
 
 ```bash
 #узнать все объекты, которые защищены объектом «maintainer_name».
@@ -208,26 +214,43 @@ whois -i mnt-by maintainer_name
 ```bash
 #узнать, на какие более мелкие подсети поделена подсеть «subnet».
 whois -M subnet 
+```
 
-#Пример: узнать, на какие более мелкие подсети поделена подсеть 109.226.192.0/18
+Пример: узнать, на какие более мелкие подсети поделена подсеть 109.226.192.0/18
+
+<details><summary>whois -t route1</summary>
+<p>
+
+```bash
+
 whois -M 109.226.192.0/18 | grep route
 route:          109.226.192.0/19
 route:          109.226.224.0/19
 route:          109.226.247.0/24
 route:          109.226.248.0/24
-
 ```
+</p>
+</details>
+
 
 ```bash
 #узнать, из какой более крупной подсети образована подсеть «subnet».
 whois -L subnet
+```
 
-# Пример:  узнать, из какой более крупной подсети образована подсеть 109.226.192.0/19
+Пример:  узнать, из какой более крупной подсети образована подсеть 109.226.192.0/19
+
+<details><summary>whois -t route1</summary>
+<p>
+
+```bash
+
 whois -L 109.226.192.0/19 | grep route
 route:          109.226.192.0/18
 route:          109.226.192.0/19
-
 ```
+</p>
+</details>
 
 ## Linux terminal hot key
 ```bash
