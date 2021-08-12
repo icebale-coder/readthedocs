@@ -3,6 +3,241 @@ title: Base commands
 ## Полезные команды/программы
 
 ```bash
+# полезная программа для генерации префиксов которые есть в AS, согласно БД RIR
+bgpq4 
+```
+
+Примеры использования - построения префиксов из БД RIPE Орион-Телекома AS31257
+
+Cisco IOS/ IOS XE
+
+<details><summary>bgpq4 -l PL-ORION AS31257</summary>
+<p>
+
+```bash
+no ip prefix-list PL-ORION
+ip prefix-list PL-ORION permit 80.65.16.0/20
+ip prefix-list PL-ORION permit 80.65.16.0/21
+ip prefix-list PL-ORION permit 80.65.16.0/24
+ip prefix-list PL-ORION permit 80.65.20.0/24
+ip prefix-list PL-ORION permit 80.65.24.0/21
+ip prefix-list PL-ORION permit 81.25.76.0/22
+ip prefix-list PL-ORION permit 81.25.76.0/23
+ip prefix-list PL-ORION permit 81.25.76.0/24
+ip prefix-list PL-ORION permit 81.25.77.0/24
+ip prefix-list PL-ORION permit 81.25.78.0/23
+ip prefix-list PL-ORION permit 81.25.78.0/24
+ip prefix-list PL-ORION permit 81.25.79.0/24
+ip prefix-list PL-ORION permit 86.62.6.0/24
+ip prefix-list PL-ORION permit 94.73.192.0/18
+ip prefix-list PL-ORION permit 94.73.192.0/19
+ip prefix-list PL-ORION permit 94.73.202.0/24
+ip prefix-list PL-ORION permit 94.73.224.0/19
+ip prefix-list PL-ORION permit 94.73.240.0/20
+ip prefix-list PL-ORION permit 94.73.240.0/24
+ip prefix-list PL-ORION permit 94.73.241.0/24
+ip prefix-list PL-ORION permit 94.73.242.0/24
+ip prefix-list PL-ORION permit 94.73.243.0/24
+ip prefix-list PL-ORION permit 94.73.244.0/24
+ip prefix-list PL-ORION permit 94.73.245.0/24
+ip prefix-list PL-ORION permit 94.73.246.0/24
+ip prefix-list PL-ORION permit 94.73.247.0/24
+ip prefix-list PL-ORION permit 94.73.248.0/24
+ip prefix-list PL-ORION permit 94.73.249.0/24
+ip prefix-list PL-ORION permit 94.73.250.0/24
+ip prefix-list PL-ORION permit 94.73.251.0/24
+ip prefix-list PL-ORION permit 94.73.252.0/24
+ip prefix-list PL-ORION permit 109.226.192.0/18
+ip prefix-list PL-ORION permit 109.226.192.0/19
+ip prefix-list PL-ORION permit 109.226.224.0/19
+ip prefix-list PL-ORION permit 134.19.128.0/21
+ip prefix-list PL-ORION permit 171.33.248.0/21
+ip prefix-list PL-ORION permit 171.33.250.0/23
+ip prefix-list PL-ORION permit 171.33.252.0/23
+ip prefix-list PL-ORION permit 176.116.160.0/20
+ip prefix-list PL-ORION permit 176.116.160.0/21
+ip prefix-list PL-ORION permit 176.116.168.0/21
+ip prefix-list PL-ORION permit 185.84.172.0/23
+ip prefix-list PL-ORION permit 185.84.172.0/24
+ip prefix-list PL-ORION permit 185.84.173.0/24
+```
+</p>
+</details>
+
+Cisco XR
+
+<details><summary>bgpq4 -X -l PL-ORION AS31257</summary>
+<p>
+
+```bash
+no prefix-set PL-ORION
+prefix-set PL-ORION
+ 80.65.16.0/20,
+ 80.65.16.0/21,
+ 80.65.16.0/24,
+ 80.65.20.0/24,
+ 80.65.24.0/21,
+ 81.25.76.0/22,
+ 81.25.76.0/23,
+ 81.25.76.0/24,
+ 81.25.77.0/24,
+ 81.25.78.0/23,
+ 81.25.78.0/24,
+ 81.25.79.0/24,
+ 86.62.6.0/24,
+ 94.73.192.0/18,
+ 94.73.192.0/19,
+ 94.73.202.0/24,
+ 94.73.224.0/19,
+ 94.73.240.0/20,
+ 94.73.240.0/24,
+ 94.73.241.0/24,
+ 94.73.242.0/24,
+ 94.73.243.0/24,
+ 94.73.244.0/24,
+ 94.73.245.0/24,
+ 94.73.246.0/24,
+ 94.73.247.0/24,
+ 94.73.248.0/24,
+ 94.73.249.0/24,
+ 94.73.250.0/24,
+ 94.73.251.0/24,
+ 94.73.252.0/24,
+ 109.226.192.0/18,
+ 109.226.192.0/19,
+ 109.226.224.0/19,
+ 134.19.128.0/21,
+ 171.33.248.0/21,
+ 171.33.250.0/23,
+ 171.33.252.0/23,
+ 176.116.160.0/20,
+ 176.116.160.0/21,
+ 176.116.168.0/21,
+ 185.84.172.0/23,
+ 185.84.172.0/24,
+ 185.84.173.0/24
+end-set
+```
+</p>
+</details>
+
+Juniper
+
+<details><summary>bgpq4 -J -l PL-ORION AS31257</summary>
+<p>
+
+```bash
+
+policy-options {
+replace:
+ prefix-list PL-ORION {
+    80.65.16.0/20;
+    80.65.16.0/21;
+    80.65.16.0/24;
+    80.65.20.0/24;
+    80.65.24.0/21;
+    81.25.76.0/22;
+    81.25.76.0/23;
+    81.25.76.0/24;
+    81.25.77.0/24;
+    81.25.78.0/23;
+    81.25.78.0/24;
+    81.25.79.0/24;
+    86.62.6.0/24;
+    94.73.192.0/18;
+    94.73.192.0/19;
+    94.73.202.0/24;
+    94.73.224.0/19;
+    94.73.240.0/20;
+    94.73.240.0/24;
+    94.73.241.0/24;
+    94.73.242.0/24;
+    94.73.243.0/24;
+    94.73.244.0/24;
+    94.73.245.0/24;
+    94.73.246.0/24;
+    94.73.247.0/24;
+    94.73.248.0/24;
+    94.73.249.0/24;
+    94.73.250.0/24;
+    94.73.251.0/24;
+    94.73.252.0/24;
+    109.226.192.0/18;
+    109.226.192.0/19;
+    109.226.224.0/19;
+    134.19.128.0/21;
+    171.33.248.0/21;
+    171.33.250.0/23;
+    171.33.252.0/23;
+    176.116.160.0/20;
+    176.116.160.0/21;
+    176.116.168.0/21;
+    185.84.172.0/23;
+    185.84.172.0/24;
+    185.84.173.0/24;
+ }
+}
+```
+</p>
+</details>
+
+Huawei
+
+<details><summary>bgpq4 -U -l PL-ORION AS31257</summary>
+<p>
+
+```bash
+undo ip ip-prefix PL-ORION
+ip ip-prefix PL-ORION permit 80.65.16.0 20
+ip ip-prefix PL-ORION permit 80.65.16.0 21
+ip ip-prefix PL-ORION permit 80.65.16.0 24
+ip ip-prefix PL-ORION permit 80.65.20.0 24
+ip ip-prefix PL-ORION permit 80.65.24.0 21
+ip ip-prefix PL-ORION permit 81.25.76.0 22
+ip ip-prefix PL-ORION permit 81.25.76.0 23
+ip ip-prefix PL-ORION permit 81.25.76.0 24
+ip ip-prefix PL-ORION permit 81.25.77.0 24
+ip ip-prefix PL-ORION permit 81.25.78.0 23
+ip ip-prefix PL-ORION permit 81.25.78.0 24
+ip ip-prefix PL-ORION permit 81.25.79.0 24
+ip ip-prefix PL-ORION permit 86.62.6.0 24
+ip ip-prefix PL-ORION permit 94.73.192.0 18
+ip ip-prefix PL-ORION permit 94.73.192.0 19
+ip ip-prefix PL-ORION permit 94.73.202.0 24
+ip ip-prefix PL-ORION permit 94.73.224.0 19
+ip ip-prefix PL-ORION permit 94.73.240.0 20
+ip ip-prefix PL-ORION permit 94.73.240.0 24
+ip ip-prefix PL-ORION permit 94.73.241.0 24
+ip ip-prefix PL-ORION permit 94.73.242.0 24
+ip ip-prefix PL-ORION permit 94.73.243.0 24
+ip ip-prefix PL-ORION permit 94.73.244.0 24
+ip ip-prefix PL-ORION permit 94.73.245.0 24
+ip ip-prefix PL-ORION permit 94.73.246.0 24
+ip ip-prefix PL-ORION permit 94.73.247.0 24
+ip ip-prefix PL-ORION permit 94.73.248.0 24
+ip ip-prefix PL-ORION permit 94.73.249.0 24
+ip ip-prefix PL-ORION permit 94.73.250.0 24
+ip ip-prefix PL-ORION permit 94.73.251.0 24
+ip ip-prefix PL-ORION permit 94.73.252.0 24
+ip ip-prefix PL-ORION permit 109.226.192.0 18
+ip ip-prefix PL-ORION permit 109.226.192.0 19
+ip ip-prefix PL-ORION permit 109.226.224.0 19
+ip ip-prefix PL-ORION permit 134.19.128.0 21
+ip ip-prefix PL-ORION permit 171.33.248.0 21
+ip ip-prefix PL-ORION permit 171.33.250.0 23
+ip ip-prefix PL-ORION permit 171.33.252.0 23
+ip ip-prefix PL-ORION permit 176.116.160.0 20
+ip ip-prefix PL-ORION permit 176.116.160.0 21
+ip ip-prefix PL-ORION permit 176.116.168.0 21
+ip ip-prefix PL-ORION permit 185.84.172.0 23
+ip ip-prefix PL-ORION permit 185.84.172.0 24
+ip ip-prefix PL-ORION permit 185.84.173.0 24
+```
+</p>
+</details>
+
+
+```bash
 # Просмотр инфы по таблице натирования для ip адреса x.x.x.x
 
 conntrack -L | grep x.x.x.x 
