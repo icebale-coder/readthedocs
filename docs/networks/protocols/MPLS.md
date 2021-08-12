@@ -1424,7 +1424,17 @@ bridge-domain 255
 
 ###### 3.2.2 Kompella draft
 
-За основу взят L3VPN, т.е на Control Plane происходит изучения участников VPLS домена при помощи протокола MP-BGP в отдельном address-family L2VPN (AFI (25), VPLS SAFI (65))
+За основу взят L3VPN, т.е на Control Plane происходит изучения участников VPLS домена при помощи протокола MP-BGP в отдельном address-family L2VPN (AFI (25), VPLS SAFI (65)), но изучение mac адресов остается по прежнему на "Data Plane"
+
+!!!warning "Принципиальный момент!"
+			Важно понимать, что несмотря на изучение меток соседей по VDLS домену 
+			посредством BGP на "Control Plane",
+			по прежнему всё изучение mac адресов происходит на "Data Plane"!!!
+			Этот важный момент принципиально отличает L2VPN Kompella mode от EVPN,
+			где mac адреса помимо изучения на "Data Plane" еще и изучаются 
+			на "Control Plane" в BGP.
+
+
 
 - по RD  - также идет исключение смешивания внутри BGP Update-ов
 
@@ -1550,3 +1560,5 @@ router bgp 64500
 Тем более, в недалеком будушем, в 2007 году вышел RFC 4762, в котором задача обнаружения соседей происходит через Radius или BGP(autodiscovery LDP signaling BGP). VPLS LDP-signaling with BGP-Autodiscovery. Для BGP командой autodiscovery LDP signaling BGP в секции l2vpn vfi.
 
 ### 4. EVPN (Ethernet VPN)
+
+
