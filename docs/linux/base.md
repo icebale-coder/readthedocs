@@ -1,9 +1,6 @@
 title: Base commands
 
-# Полезные команды
-
-
-
+## Полезные команды/программы
 
 ```bash
 #Просмотр инфы по таблице натирования для ip адреса x.x.x.x
@@ -68,7 +65,7 @@ route:          94.73.252.0/24
 
 ```
 
-# Linux terminal hot key
+## Linux terminal hot key
 ```bash
 clear - Ctrl-L
 ```
