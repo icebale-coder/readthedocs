@@ -39,7 +39,9 @@ Sticky-bit - этот бит тоже используется для созда
 ```bash
 ls -la /usr/bin/su
 -rwsr-xr-x 1 root root 63568 Jan 10  2019 /usr/bin/su
+```
 
+```bash
 Возможные варианты прав файла/директории
 Права состоят из 3 части - пользователь, группа, другие
 и в каждой части по три значения,
@@ -86,8 +88,11 @@ setfacl - установить права
 getfacl - посмотреть права
 ```
 
-Пример использования facl
+<details><summary>Пример использования facl</summary>
+<p>
+
 ```bash
+
 [root@server ftp]# mkdir uploads
 
 [root@server ftp]# ls -la
@@ -173,7 +178,8 @@ default:group:advanced-users:rwx
 default:mask::rwx
 default:other::r-x
 ```
-
+</p>
+</details>
 
 !!!warning "Важно"
 			Расширенные права перекрывают набор стандартных прав.
