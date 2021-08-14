@@ -628,11 +628,6 @@ route:          109.226.192.0/19
 </p>
 </details>
 
-## Linux terminal hot key
-```bash
-clear - Ctrl-L
-```
-
 Мониторинг трафика интерфейсов
 ```bash
 jnettop
@@ -746,11 +741,16 @@ service - deprecated
 
 
 ### Работа с репозиториями
-
 #### apt
 #### atp-get
 #### dpkg
 
 
+### Работа с "экранами"
+#### screen
+#### tmux
 
-
+## Linux terminal hot key
+```bash
+clear - Ctrl-L
+```
