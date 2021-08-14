@@ -562,6 +562,8 @@ firewalld
 
 ## 7. Базовый набор команд
 
+Базовый набор команд смотрите [здесь](https://icebale.readthedocs.io/en/latest/linux/commands/)
+
 ## 8. Cистема репозитариев/работа с ними
 
 На примере Debian
