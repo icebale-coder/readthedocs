@@ -1,6 +1,8 @@
 title: Linux
 arrange:
     - index.md
+    - base.md
+    - commands.md
     - GIT
     - Centos
     - Debian
