@@ -615,3 +615,83 @@ fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --fi
 fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fiotest --filename=testfio --bs=4k --iodepth=64 --size=8G --readwrite=randread
 
 ```
+
+### Мониторинг трафика
+#### iftop
+```bash
+"iftop -i eth0"
+```
+
+#### jnettop
+```bash
+"jnettop -i eth0"
+```
+
+### Общие показатели системы
+#### top
+#### htop
+#### atop
+
+
+### Инвентаризация железа
+https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
+
+#### fdisk
+#### lshw
+#### lspci
+#### dmidecode
+
+### Навигация в Linux
+#### cd 
+#### ls
+#### ll
+#### mkdik
+#### touch fileXXX
+#### rm
+#### df
+```bash
+"df -h"
+```
+#### du
+```bash
+# Размер папок текущей директории
+"du -h"
+
+# Суммарный размер текущей директории
+"du -sh"
+```
+#### pwd
+#### whereis
+#### find
+#### diff
+#### sort
+#### grep
+#### egrep
+#### more
+#### less
+
+### Пользователи/Права
+
+Работа с пользователи/правами
+
+#### adduser
+#### useradd
+#### addgroup
+#### groupadd
+#### chmod
+#### chown
+#### passwd
+
+#### Расширенные права
+##### fascl
+
+
+### Работа с репозиториями
+
+#### apt
+#### atp-get
+#### dpkg
+
+
+
+
