@@ -26,17 +26,7 @@ title: Linux bases
 
 ### 5.1. Настройка ssh
 
-#### Настройка входа по ключу
-
-https://losst.ru/avtorizatsiya-po-klyuchu-ssh
-
-Для входа под root-ом по ключу ssh необходимо добавить свой публичный ключ 
-в директорию:
-
-/root/.ssh/authorized_keys
-
 #### Ограничение входа под root по ssh
-
 
 С версии OpenSSH 7.0 поменялись дефолтовые параметры входа для пользователя root по ssh.
 
@@ -48,11 +38,32 @@ https://losst.ru/avtorizatsiya-po-klyuchu-ssh
 /etc/ssh/sshd_config
 	PermitRootLogin yes
 ```
+#### Настройка входа по ключу под root-ом
 
+https://losst.ru/avtorizatsiya-po-klyuchu-ssh
 
-#### Ограничение входа - вход только по ключу
+Для входа под root-ом по ключу ssh необходимо добавить  публичный ключ пользователя
+в директорию /root/.ssh/authorized_keys 
 
-#### Ограничение входа - вход по ключу под обычной учеткой
+Изначально директории /root/.ssh нет, п.э. её надо создать
+
+```bash
+cd /root
+mkdir ./ssh
+echo 'PUBLIC_USER_KEY' > /root/.ssh/authorized_keys
+```
+P.S. Чтобы пользоваться входом по ключу со стороны клиента ssh надо указать свой приватный ключ для этого соединения.
+
+#### Настройка входа по ключу под обычной учеткой
+Для входа под учеткой USERNAME по ключу ssh необходимо добавить свой публичный ключ 
+в директорию пользователя /home/USERNAME/.ssh/authorized_keys.
+
+```bash
+cd /home/USERNAME
+mkdir ./ssh
+echo 'PUBLIC_USER_KEY' > /home/USERNAME/.ssh/authorized_keys
+```
+P.S. Чтобы пользоваться входом по ключу со стороны клиента ssh надо указать свой приватный ключ для этого соединения.
 
 
 ### 5.2. Повышение привелегий через "sudo su -"
@@ -68,10 +79,21 @@ https://losst.ru/avtorizatsiya-po-klyuchu-ssh
 2. Авторизуемся через программу su под root пользователем.
 ```
 
-"sudo"
+#### sudo 
+"sudo" - Программа 
 
+```bash
+# Allow members of group sudo to execute any command
+%sudo<->ALL=(ALL:ALL) NOPASSWD:ALL
+```
 
-su, sudo, ssh, вход по ключу
+sudo su - полностью выполняется логин от имени рута.
+
+sudo -i логин эмулируется.
+
+#### Ограничение входа - вход только по ключу
+
+===============su, sudo, ssh, вход по ключу
 
 ## 6. Файерволл
 
