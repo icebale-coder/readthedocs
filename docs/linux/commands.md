@@ -1,11 +1,21 @@
 title: Commands
 
-Disclaimer:
+Disclaimer 1:
 ```bash
 There are a lot of them here...
 Enjoy!!! )
 ```
 
+Disclaimer 2:
+```bash
+"Староверы" vs "Провосланые" в Linux
+"Oldschool" vs "Newage"
+"Oldfag" vs "Newfag"
+"Хиппи" vs "Хипстеры"
+(...кто как хочет - так и %рочит...)
+
+сорры фор май инглыш...
+```
 
 ## Базовый набор команд/утилит
 
@@ -61,25 +71,16 @@ Enjoy!!! )
 
 ### ip
 
-Disclaimer:
-```bash
-"Староверы" vs "Провосланые" в Linux
-"Oldschool" vs "Newage"
-"Oldfag" vs "Newfag"
-"Хиппи" vs "Хипстеры"
-(...кто как хочет - так и %рочит...)
-
-сорры фор май инглыш...
-```
-
-Универсальная программа, которая пришла на смену ifconfig, netstat, arp, route
+Универсальная программа, которая пришла на смену ifconfig, arp, route
 
 Программа "ip" из пакета "iproute2".
 
 Пакет iproute2 позволяет в том числе  настраивать маршрутизацию от источника.
 
 ```bash
-"ip"
+"ip add"
+"ip n"
+"ip route"
 ```
 
 ### Фильтрация 
