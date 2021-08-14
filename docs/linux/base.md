@@ -490,3 +490,106 @@ route:          109.226.192.0/19
 ```bash
 clear - Ctrl-L
 ```
+
+Мониторинг трафика интерфейсов
+```bash
+jnettop
+iftop
+```
+
+Мониторинг системы
+```bash
+top
+htop
+```
+
+
+Просмотр
+
+[Прожиг железа strees-ng](https://redos.red-soft.ru/base/manual/redos-manual/utilites/hardware-stress-test/stress-ng/)
+
+```bash
+#Тестирование процессора
+"stress-ng --cpu 16 --cpu-method matrixprod --metrics --timeout 60"
+
+#Тестирование дисковой подсистемы
+"stress-ng --sequential 0 --class io --timeout 60s --metrics-brief"
+
+#Тестирование памяти
+"stress-ng --sequential 0 --class memory --timeout 60s --metrics-brief"
+
+# Комплексное тестирование
+Эта команда запустит тест для CPU в 8 потоков, тест виртуальной памяти 
+с размещением в ней одного гигабайта данных, 
+а также 4 стрессора для тестирования операций ввода/вывода.
+
+"stress-ng --cpu 4 --io 4 --vm 1 --vm-bytes 1G --timeout 60s --metrics-brief"
+
+#Чтобы запустить тестирование всего «железа», используется команда
+Эта команда запустит все тесты. После выполнения результат будет выведен в консоль. 
+Во время выполнения команды лучше компьютер не трогать
+
+"stress-ng --sequential 0 --timeout 60s --metrics-brief"
+```
+
+[ Анализ обмена данных на HDD iostat](https://itproffi.ru/komanda-iostat-analiz-obmena-dannymi-s-diskami/)
+```bash
+iostat
+
+```
+
+[fio](https://winitpro.ru/index.php/2020/04/30/test-iops-diskov-v-linux/)
+```bash
+#Тест случайных операций на чтение/запись 
+fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randwrite
+
+#Тест случайных операций на чтение
+fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fiotest --filename=testfio --bs=4k --iodepth=64 --size=8G --readwrite=randread
+
+```
+
+## Базовый набор команд/понятий
+
+```bash
+"ps -ef"
+
+"netstat -anp | grep EST"
+"ss"
+
+"ifconfig"
+"ip"
+
+# Фильтрация 
+| - pipe
+grep
+awk
+
+```
+
+Потоки данных 
+```bash
+input
+output
+stderr
+
+2>&1
+
+```
+http://citforum.ru/programming/unix/signals/
+Типы сигналов POSIX
+```bash
+KILL
+SIHGUP
+```
+
+Перенапраление ввода-вывода
+```bash
+|
+>
+<
+```
+
+## Просмотр инфы по таблице натирования для ip адреса x.x.x.x
+```bash
+"conntrack -L | grep x.x.x.x "
+```
