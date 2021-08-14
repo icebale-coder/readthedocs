@@ -690,6 +690,10 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 #### ll
 #### mkdik
 #### cat
+#### tail
+```bash
+"tail -f"
+```
 #### touch fileXXX
 #### rm
 #### df
@@ -722,8 +726,6 @@ Environment variables are set when we open a new shell session.
 <p>
 
 ```bash
-
-
 root@server# export
 declare -x HOME="/root"
 declare -x LANG="en_US.UTF-8"
