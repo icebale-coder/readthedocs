@@ -79,11 +79,101 @@ ls -la /usr/bin/sudo
 ```
 
 ### 3.2. Расширенные права facl
+
 Можно задавать расширенный набор прав: назначать права для конкретных пользователей и групп.
 ```bash
 setfacl - установить права
 getfacl - посмотреть права
 ```
+
+Пример использования facl
+```bash
+[root@server ftp]# mkdir uploads
+
+[root@server ftp]# ls -la
+итого 44
+drwxr-xr-x   6 ftp  ftp  4096 Янв 26 15:51 .
+drwxr-xr-x  20 root root 4096 Янв 22 14:00 ..
+drwxrwxrwx+  7 ftp  ftp  4096 Янв 25 10:01 incoming
+drwxr-xr-x   2 root root 4096 Янв 22 15:35 private
+drwxr-xr-x   2 ftp  ftp  4096 Янв 22 13:23 pub
+drwxr-xr-x   2 root root 4096 Янв 26 15:51 uploads
+
+[root@server ftp]# setfacl -m default:user::rwx -m default:group::rx -m default:other::rx  uploads
+
+[root@server ftp]# ls -la
+итого 44
+drwxr-xr-x   6 ftp  ftp  4096 Янв 26 15:51 .
+drwxr-xr-x  20 root root 4096 Янв 22 14:00 ..
+drwxrwxrwx+  7 ftp  ftp  4096 Янв 25 10:01 incoming
+drwxr-xr-x   2 root root 4096 Янв 22 15:35 private
+drwxr-xr-x   2 ftp  ftp  4096 Янв 22 13:23 pub
+drwxr-xr-x+  2 root root 4096 Янв 26 15:51 uploads
+
+[root@server ftp]# getfacl uploads
+# file: uploads
+# owner: root
+# group: root
+user::rwx
+group::r-x
+other::r-x
+default:user::rwx
+default:group::r-x
+default:other::r-x
+
+[root@server ftp]# chmod 777 uploads
+[root@server ftp]# getfacl uploads
+# file: uploads
+# owner: root
+# group: root
+user::rwx
+group::rwx
+other::rwx
+default:user::rwx
+default:group::r-x
+default:other::r-x
+
+[root@server ftp]# setfacl -m default:group:advanced-users:rwx uploads
+[root@server ftp]# setfacl -m default:group:adm-group:rwx uploads
+[root@server ftp]# getfacl uploads
+# file: uploads
+# owner: root
+# group: root
+user::rwx
+group::rwx
+other::rwx
+default:user::rwx
+default:group::r-x
+default:group:adm-group:rwx
+default:group:advanced-users:rwx
+default:mask::rwx
+default:other::r-x
+
+[root@server ftp]#
+[root@server ftp]# cd uploads/
+[root@isp8 uploads]# ls -la
+итого 20
+drwxrwxrwx+ 3 root  root  4096 Янв 26 16:01 .
+drwxr-xr-x  6 ftp   ftp   4096 Янв 26 15:51 ..
+drwxrwxr-x+ 4 fedia users 4096 Янв 26 16:01 fedia
+[root@isp8 uploads]# getfacl fedia/
+# file: fedia
+# owner: fedia
+# group: users
+user::rwx
+group::r-x
+group:adm-group:rwx
+group:advanced-users:rwx
+mask::rwx
+other::r-x
+default:user::rwx
+default:group::r-x
+default:group:adm-group:rwx
+default:group:advanced-users:rwx
+default:mask::rwx
+default:other::r-x
+```
+
 
 !!!warning "Важно"
 			Расширенные права перекрывают набор стандартных прав.
