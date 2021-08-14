@@ -9,7 +9,6 @@ Enjoy!!! )
 
 ## Базовый набор команд/утилит
 
-
 ### ps
 ```bash
 "ps -ef"
@@ -17,20 +16,68 @@ Enjoy!!! )
 
 ### netstat
 ```bash
+#Показывает список соединений
+
+"netstat" - depricated 
+Заменяем на "ss"
+
+Примеры использования
 "netstat -anp | grep EST"
 ```
 
 ### ss
 ```bash
+#Показывает список соединений
 "ss"
 ```
 
 ### ifconfig
 ```bash
+"ifconfig" - depricated 
+Заменяем на "ip add"
+
+Примеры использования
 "ifconfig"
 ```
 
+### arp
+```bash
+"arp" - depricated 
+Заменяем на "ip n"
+
+Примеры использования
+"arp"
+```
+
+### route
+```bash
+"route" - depricated 
+Заменяем на "ip route"
+
+Примеры использования
+"route -n"
+```
+
+
 ### ip
+
+Disclaimer:
+```bash
+"Староверы" vs "Провосланые" в Linux
+"Oldschool" vs "Newage"
+"Oldfag" vs "Newfag"
+"Хиппи" vs "Хипстеры"
+(...кто как хочет - так и %рочит...)
+
+сорры фор май инглыш...
+```
+
+Универсальная программа, которая пришла на смену "ifconfig", "netstat", "arp", "route"
+
+Программа "ip" из пакета "iproute2".
+
+Пакет iproute2 позволяет в том числе  настраивать маршрутизацию от источника.
+
 ```bash
 "ip"
 ```
@@ -670,6 +717,13 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 #### more
 #### less
 
+### Работа с сервисами
+
+#### service
+service - depricated
+#### systemctl
+
+
 ### Пользователи/Права
 
 Работа с пользователи/правами
@@ -683,6 +737,8 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 #### passwd
 #### su 
 #### sudo
+#### who
+#### id
 
 #### Расширенные права
 ##### fascl
