@@ -19,7 +19,7 @@ title: Linux bases
 #### Основные права доступа к файлам
 В Unix системах для файлов и директорий есть права на чтение/запись/выполнение
 ```bash
-Read/Write/eXecute (r/w/x)
+Read/Write/eXecute (r/w/x) (4/2/1) 
 ```
 
 Для файлов и директорий есть понятие: Группа/Пользователь/Прочие
@@ -79,6 +79,63 @@ ls -la /usr/bin/su
 ls -la /usr/bin/sudo
 -rwsr-xr-x 1 root root 157192 Jan 20  2021 /usr/bin/sudo
 ```
+
+#### Команды для работы с правами
+
+##### Назначить права  - chmod
+```bash
+chmod
+Права записываются в виде цифр
+(r/w/x) (4/2/1) 
+read    - 4
+write   - 2
+execute - 1
+
+#Означает назначить права rwx(user) rwx(group) rwx(other) для файла FILE_NAME
+chmod 777 FILE_NAME
+
+#Как правило "стандартный" файл имеет права 644
+#Означает назначить права rw(user) r(group) r(other) для файла FILE_NAME
+chmod 644 FILE_NAME
+```
+###### Сменить пользователя/группу
+
+```bash
+# для файла MY_FILE назначить нового пользователя и новую группу
+chown NEW_USER:NEW_GROUP ./MY_FILE
+
+# для директории и файлов в ней рекурсивно назначить нового пользователя и новую группу
+chown -R NEW_USER:NEW_GROUP ./MY_DIR
+```
+
+<details><summary>Пример для директории test</summary>
+<p>
+
+```bash
+ls -la | grep test
+drwxr-xr-x 2 root    root    4096 Aug 14 06:50 test
+
+ls -la ./test
+total 16
+drwxr-xr-x 2 root    root    4096 Aug 14 06:50 .
+drwxr-xr-x 8 manowar manowar 4096 Aug 14 06:50 ..
+-rw-r--r-- 1 root    root       1 Aug 14 06:50 1
+-rw-r--r-- 1 root    root       1 Aug 14 06:50 2
+
+chown -R manowar:manowar ./test
+
+ls -la | grep test
+drwxr-xr-x 2 manowar manowar 4096 Aug 14 06:50 test
+
+ls -la ./test
+total 16
+drwxr-xr-x 2 manowar manowar 4096 Aug 14 06:50 .
+drwxr-xr-x 8 manowar manowar 4096 Aug 14 06:50 ..
+-rw-r--r-- 1 manowar manowar    1 Aug 14 06:50 1
+-rw-r--r-- 1 manowar manowar    1 Aug 14 06:50 2
+```
+</p>
+</details>
 
 ### 3.2. Расширенные права facl
 
