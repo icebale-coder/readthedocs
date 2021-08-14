@@ -13,8 +13,8 @@ title: Linux bases
 ## 3. Файловая система
 
 ### 3.1.Права доступа 
-[Losst ПРАВА ДОСТУПА К ФАЙЛАМ В LINUX](https://losst.ru/prava-dostupa-k-fajlam-v-linux)
-[Про SIUD бит]https://habr.com/ru/company/jetinfosystems/blog/506750/
+- [Losst ПРАВА ДОСТУПА К ФАЙЛАМ В LINUX](https://losst.ru/prava-dostupa-k-fajlam-v-linux)
+- [Про SIUD бит]https://habr.com/ru/company/jetinfosystems/blog/506750/
 
 #### Основные права доступа к файлам
 В Unix системах для файлов и директорий есть права на чтение/запись/выполнение
