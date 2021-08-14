@@ -18,7 +18,7 @@ Enjoy!!! )
 ```bash
 #Показывает список соединений
 
-"netstat" - depricated 
+"netstat" - deprecated 
 Заменяем на "ss"
 
 Примеры использования
@@ -33,7 +33,7 @@ Enjoy!!! )
 
 ### ifconfig
 ```bash
-"ifconfig" - depricated 
+"ifconfig" - deprecated 
 Заменяем на "ip add"
 
 Примеры использования
@@ -42,7 +42,7 @@ Enjoy!!! )
 
 ### arp
 ```bash
-"arp" - depricated 
+"arp" - deprecated 
 Заменяем на "ip n"
 
 Примеры использования
@@ -51,7 +51,7 @@ Enjoy!!! )
 
 ### route
 ```bash
-"route" - depricated 
+"route" - deprecated 
 Заменяем на "ip route"
 
 Примеры использования
@@ -72,7 +72,7 @@ Disclaimer:
 сорры фор май инглыш...
 ```
 
-Универсальная программа, которая пришла на смену "ifconfig", "netstat", "arp", "route"
+Универсальная программа, которая пришла на смену ifconfig, netstat, arp, route
 
 Программа "ip" из пакета "iproute2".
 
@@ -720,7 +720,7 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 ### Работа с сервисами
 
 #### service
-service - depricated
+service - deprecated
 #### systemctl
 
 
