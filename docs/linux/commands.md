@@ -721,7 +721,25 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 #### export
 Environment variables are set when we open a new shell session.
 #### file 
-Посмотреть тип файла
+```bash
+"file" - посмотреть тип файла
+
+Пример использоания:
+
+# бинарный файл
+file /bin/tar
+/bin/tar: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=6664753ff93e3b42aa8681d7fe0f7f9e5259c54f, stripped
+
+# текстовый файл
+file /etc/fstab
+/etc/fstab: ASCII text
+
+# блочный файл
+file /dev/sda
+/dev/sda: block special (8/0)
+
+```
+
 #### man 
 manual of program
 
@@ -754,9 +772,10 @@ declare -x USER="root"
 ### Работа с сервисами
 
 #### service
-service - deprecated
+```bash
+"service" - deprecated, заменен на новых версиях на "systemclt" 
+```
 #### systemctl
-
 
 ### Пользователи/Права
 
@@ -774,9 +793,15 @@ service - deprecated
 #### who
 #### id
 
-#### Расширенные права
-##### fascl
-
+#### Расширенные права facl
+##### setfacl
+```bash
+"setfacl" - установить права
+```
+##### getfacl
+```bash
+"getfacl" - посмотреть права
+```
 
 ### Работа с репозиториями
 #### apt
@@ -787,6 +812,15 @@ service - deprecated
 ### Работа с "экранами"
 #### screen
 #### tmux
+
+### Редакторы
+#### vi
+#### vim
+#### nano
+#### mcedit
+
+
+
 
 ## Linux terminal hot key
 ```bash

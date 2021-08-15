@@ -4,9 +4,263 @@ title: Linux bases
 
 ## 1. Последовательность запуска системы.
 
-### 1.2. Последовательность загрузки/загрузчик grub
+https://losst.ru/protsess-zagruzki-linux
+http://www.quizful.net/post/linux-boot-sequence
+http://www.opennet.ru/base/sys/initrd_intro.txt.html
 
-### 1.3 Системы скриптов init.d/systemctl
+Статей на эту тему много попробую разложить эту тему для себя по "полочкам"...
+Итак...
+
+Последовательность загрузки Linux:
+```bash
+"1 этап: Включение компьютера"
+"2 этап: Загрузчик"
+"3 этап: Ядро"
+"4 этап: Запуск сервисов"
+```
+
+```bash
+"1. BIOS"
+Фаза загрузчика
+"2. MBR"
+"3. Загрузчик операционной системы"
+Фаза ядра
+"4. Ядро"
+"5. init"
+```
+
+### 1 этап: Включение компьютера
+```bash
+Призапуске компьютера управаление передается BIOS
+"BIOS"  (Basic Input-Output System) - по сути первоначальная стадия загрузки компьютера.
+Для нас интересен факт того, что в BIOS происходит выбор устройства, с которого производится дальнейшая загрузка системы.
+
+Далее BIOS обращается к загрузочному устройству (чаще всего) HDD, на котором обращается на MBR.
+"MBR" - (Master Boot Record) - первый сектор загружаемого устройства хранения данных. 
+И загружает и исполняет загрузчик операционной системы (boot loader), находящийся в MBR, передавая ему управление.
+```
+
+### 2 этап: Загрузчик
+```bash
+сейчас загрузчиком системы Linux является "GRUB2" (GRand Unified Bootloader).
+Вот про него тут и пойдет речь...
+
+Как правило загрузчик сам по себе сложен и не вмещается целиком в MBR, 
+п.э. в MBR находится загрузчик "stage1" (boot.img), который загружает программу второго этапа загрузки "stage2".
+
+В некоторых случаях "stage1" загрузчика GRUB производит загрузку stage1.5, 
+код которого находится в первых тридцати килобайтах устройства хранения данных следующих сразу за MBR, 
+и уже stage1.5 производит загрузку stage2(boot.img).
+
+![grub2-stages](img/grub2-stages.jpg)
+
+boot.img - имеет точный размер 446 байт и записывается в MBR (сектор 0). 
+core.img - записывается в пустые сектора между MBR и первым разделом, если он доступен. 
+Каталог /boot/grub - может находиться в отдельном разделе или в корневом разделе.
+
+Когда stage2 получает управление, на экран выводится (псевдо)графическое меню для выбора пользователем ОС для загрузки. 
+
+![grub2-menu](img/grub2-menu.jpg)
+
+Как только параметры загрузки были выбраны, GRUB загружает выбранное ядро в память и передаёт управление ядру, 
+которое уже само продолжает загрузку системы.
+```
+
+### 3 этап: Ядро
+```bash
+Ядро лежит в папке /boot под названием vmlinuz. «vm» в начале говорит о том, 
+что ядро будет размещено в виртуальной памяти. 
+
+Запускается ядро, которое запускает initrd  (Initial RAM disk).
+initrd - это начальный RAM диск для загрузки Linux, который содержит минимальный "джентельменский" набор драйверов, 
+который необходим уже для полноценной загрузки ОС.
+initrd представляет собой сжатый tar файл, который распаковывается в RAM и монтируется ядром как первоначальная корневая система.
+С него загружаются необходимые драйвера, например контроллера или RAID контроллера, сетевых карт и пр. драйверов, 
+без которых невозможна дальнейшая загрузка системы.
+
+В Linux Kernel HOWTO (руководстве о сборке ядра) пишут, что initrd призван решить проблему курицы и яйца для модульного ядра: 
+для монтирования файловой системы необходим модуль для работы с диском и файловой системой, 
+а для чтения модуля необходима файловая система, с которой этот модуль читается...
+
+После загрузки минимального набора необходимых драйверов образ initrd размонтируется и освобождается из памяти. 
+После чего ядро, имея необхолдимые загруженные драйвера монтирует уже настоящую корневую файловую систему.
+после этого ядро запускает процесс init (его pid в системе всегда равен "1") и передает ему управление.
+init - по сути является системой инициализации и управления сервисами(службами).
+```
+
+### 4 этап: Запуск сервисов
+
+Рассмотрим системой инициализации и управления сервисами(службами)
+
+#### "System V" vs "Systemd"
+https://losst.ru/sistemy-initsializatsii-linux
+
+##### System V
+
+```bash
+"System V", она же SysV, она же init.d - init
+
+Основные возможности SysV:
+- Написание файлов запуска служб на bash;
+- Последовательный запуск служб;
+- Сортировка порядка запуска с помощью номеров в именах файлов;
+- Команды для запуска, остановки и проверки состояния служб.
+- Никакой параллельной загрузки, системы зависимостей, 
+  запуска по требованию и автоматического запуска здесь не было и в помине.
+
+Уровни запуска (runlevel)
+Linux системах существует семь возможных значений для уровня запуска от 0 до 6 включительно:
+
+0 Останов системы
+1 Однопользовательский режим
+2 Определяется пользователем, как правило это многопользовательский режим без поддержки сети и графической оболочки
+3 Многопользовательский режим без графической оболочки
+4 Определяется пользователем, как правило, не используется
+5 Многопользовательский режим с графической оболочкой
+6 Перезагрузка 
+
+Основываясь на текущем уровне запуска, init запускает скрипты находящиеся в поддиректориях 
+/etc/rc.d/, для каждого уровня запуска существует своя поддиректория, 
+от /etc/rc.d/rc0.d до /etc/rc.d/rc6.d.
+
+Run level 0 – /etc/rc.d/rc0.d/
+Run level 1 – /etc/rc.d/rc1.d/
+Run level 2 – /etc/rc.d/rc2.d/
+Run level 3 – /etc/rc.d/rc3.d/
+Run level 4 – /etc/rc.d/rc4.d/
+Run level 5 – /etc/rc.d/rc5.d/
+Run level 6 – /etc/rc.d/rc6.d/
+
+
+Внутри /etc/rc.d/rc*.d/ директорий, можно увидеть программы начинающиеся на "S" и "K".
+Программы начинающиеся на "S" стартуют во время загрузки уровня.
+Программы начинающиеся на "K" отключаются при выходе из уровня.
+Последовательность загрузки и останова происходят последовательно согласно номерам, следующим за "S" и "K".
+
+В действительности же запуск скриптов каждого уровня запуска выполняется скриптом /etc/rc,
+который вызывается на каждом уровне запуска с параметром равным текущему уровню. 
+Вызов же /etc/rc параметром прописан в /etc/inittab, для каждого из возможных уровней запуска.
+
+Уровень запуска по умолчанию определяется записью в /etc/inittab:
+  id:3:initdefault:
+
+Означает уровень запуска /etc/rc.d/rc3.d
+``` 
+
+<details><summary>Пример директории /etc/rc.d/rc3.d</summary>
+<p>
+
+```bash
+ls -la /etc/rc.d/rc3.d
+total 320
+drwxr-xr-x  2 root root 4096 Apr  4  2017 .
+drwxr-xr-x 10 root root 4096 Feb  3  2017 ..
+lrwxrwxrwx  1 root root   17 Dec 10  2009 K01dnsmasq -> ../init.d/dnsmasq
+lrwxrwxrwx  1 root root   24 Dec 10  2009 K02avahi-dnsconfd -> ../init.d/avahi-dnsconfd
+lrwxrwxrwx  1 root root   24 Dec 10  2009 K02NetworkManager -> ../init.d/NetworkManager
+lrwxrwxrwx  1 root root   17 Dec 10  2009 K02oddjobd -> ../init.d/oddjobd
+lrwxrwxrwx  1 root root   16 Dec 10  2009 K05conman -> ../init.d/conman
+lrwxrwxrwx  1 root root   14 Dec 10  2009 K05innd -> ../init.d/innd
+lrwxrwxrwx  1 root root   19 Dec 10  2009 K10dc_server -> ../init.d/dc_server
+lrwxrwxrwx  1 root root   16 Dec 10  2009 K10psacct -> ../init.d/psacct
+lrwxrwxrwx  1 root root   14 Dec 10  2009 K10tcsd -> ../init.d/tcsd
+lrwxrwxrwx  1 root root   19 Dec 10  2009 K12dc_client -> ../init.d/dc_client
+lrwxrwxrwx  1 root root   22 Sep 26  2014 K14zabbix-agent -> ../init.d/zabbix-agent
+lrwxrwxrwx  1 root root   15 Dec 11  2009 K15pptpd -> ../init.d/pptpd
+lrwxrwxrwx  1 root root   18 Feb  6  2017 K15svnserve -> ../init.d/svnserve
+lrwxrwxrwx  1 root root   13 Dec 10  2009 K20nfs -> ../init.d/nfs
+lrwxrwxrwx  1 root root   15 Dec 10  2009 K20rwhod -> ../init.d/rwhod
+lrwxrwxrwx  1 root root   14 Dec 10  2009 K24irda -> ../init.d/irda
+lrwxrwxrwx  1 root root   17 Sep 16  2014 K30postfix -> ../init.d/postfix
+lrwxrwxrwx  1 root root   17 Jun 25  2012 K30proftpd -> ../init.d/proftpd
+lrwxrwxrwx  1 root root   18 Dec 10  2009 K30sendmail -> ../init.d/sendmail
+lrwxrwxrwx  1 root root   21 Sep 16  2014 K35cyrus-imapd -> ../init.d/cyrus-imapd
+lrwxrwxrwx  1 root root   15 Jan 16  2017 K35dhcpd -> ../init.d/dhcpd
+lrwxrwxrwx  1 root root   18 Oct 22  2015 K35dhcrelay -> ../init.d/dhcrelay
+lrwxrwxrwx  1 root root   13 Dec 10  2009 K35smb -> ../init.d/smb
+lrwxrwxrwx  1 root root   17 Dec 10  2009 K35winbind -> ../init.d/winbind
+lrwxrwxrwx  1 root root   16 Dec 10  2009 K50ibmasm -> ../init.d/ibmasm
+lrwxrwxrwx  1 root root   20 Dec 10  2009 K50netconsole -> ../init.d/netconsole
+lrwxrwxrwx  1 root root   15 Dec 10  2009 K50snmpd -> ../init.d/snmpd
+lrwxrwxrwx  1 root root   19 Dec 10  2009 K50snmptrapd -> ../init.d/snmptrapd
+lrwxrwxrwx  1 root root   13 Dec 10  2009 K50tux -> ../init.d/tux
+lrwxrwxrwx  1 root root   16 Dec 10  2009 K50vsftpd -> ../init.d/vsftpd
+lrwxrwxrwx  1 root root   20 Dec 10  2009 K69rpcsvcgssd -> ../init.d/rpcsvcgssd
+lrwxrwxrwx  1 root root   16 Dec 10  2009 K73ypbind -> ../init.d/ypbind
+lrwxrwxrwx  1 root root   14 Apr  4  2017 K74ipmi -> ../init.d/ipmi
+lrwxrwxrwx  1 root root   14 Dec 10  2009 K74nscd -> ../init.d/nscd
+lrwxrwxrwx  1 root root   15 Dec 10  2009 K85mdmpd -> ../init.d/mdmpd
+lrwxrwxrwx  1 root root   20 Dec 10  2009 K87multipathd -> ../init.d/multipathd
+lrwxrwxrwx  1 root root   15 Dec 10  2009 K87named -> ../init.d/named
+lrwxrwxrwx  1 root root   24 Dec 10  2009 K88wpa_supplicant -> ../init.d/wpa_supplicant
+lrwxrwxrwx  1 root root   14 Dec 10  2009 K89dund -> ../init.d/dund
+lrwxrwxrwx  1 root root   18 Dec 10  2009 K89netplugd -> ../init.d/netplugd
+lrwxrwxrwx  1 root root   14 Dec 10  2009 K89pand -> ../init.d/pand
+lrwxrwxrwx  1 root root   15 Dec 10  2009 K89rdisc -> ../init.d/rdisc
+lrwxrwxrwx  1 root root   19 Dec 10  2009 K90bluetooth -> ../init.d/bluetooth
+lrwxrwxrwx  1 root root   19 Dec 10  2009 K92ip6tables -> ../init.d/ip6tables
+lrwxrwxrwx  1 root root   25 Dec 10  2009 K99readahead_later -> ../init.d/readahead_later
+lrwxrwxrwx  1 root root   23 Dec 10  2009 S00microcode_ctl -> ../init.d/microcode_ctl
+lrwxrwxrwx  1 root root   22 Dec 10  2009 S02lvm2-monitor -> ../init.d/lvm2-monitor
+lrwxrwxrwx  1 root root   25 Dec 10  2009 S04readahead_early -> ../init.d/readahead_early
+lrwxrwxrwx  1 root root   15 Dec 10  2009 S05kudzu -> ../init.d/kudzu
+lrwxrwxrwx  1 root root   18 Dec 10  2009 S06cpuspeed -> ../init.d/cpuspeed
+lrwxrwxrwx  1 root root   18 Mar 16  2015 S08iptables -> ../init.d/iptables
+lrwxrwxrwx  1 root root   18 Dec 10  2009 S08mcstrans -> ../init.d/mcstrans
+lrwxrwxrwx  1 root root   17 Feb  3  2017 S10network -> ../init.d/network
+lrwxrwxrwx  1 root root   16 Dec 10  2009 S11auditd -> ../init.d/auditd
+lrwxrwxrwx  1 root root   21 Dec 10  2009 S12restorecond -> ../init.d/restorecond
+lrwxrwxrwx  1 root root   16 Dec 10  2009 S12syslog -> ../init.d/syslog
+lrwxrwxrwx  1 root root   20 Dec 10  2009 S13irqbalance -> ../init.d/irqbalance
+lrwxrwxrwx  1 root root   17 Dec 10  2009 S13portmap -> ../init.d/portmap
+lrwxrwxrwx  1 root root   17 Dec 10  2009 S14nfslock -> ../init.d/nfslock
+lrwxrwxrwx  1 root root   19 Dec 10  2009 S15mdmonitor -> ../init.d/mdmonitor
+lrwxrwxrwx  1 root root   19 Dec 10  2009 S18rpcidmapd -> ../init.d/rpcidmapd
+lrwxrwxrwx  1 root root   17 Dec 10  2009 S19rpcgssd -> ../init.d/rpcgssd
+lrwxrwxrwx  1 root root   20 Dec 10  2009 S22messagebus -> ../init.d/messagebus
+lrwxrwxrwx  1 root root   15 Feb  3  2017 S25netfs -> ../init.d/netfs
+lrwxrwxrwx  1 root root   15 Dec 10  2009 S25pcscd -> ../init.d/pcscd
+lrwxrwxrwx  1 root root   15 Dec 10  2009 S26acpid -> ../init.d/acpid
+lrwxrwxrwx  1 root root   14 Dec 10  2009 S26apmd -> ../init.d/apmd
+lrwxrwxrwx  1 root root   19 Dec 10  2009 S26haldaemon -> ../init.d/haldaemon
+lrwxrwxrwx  1 root root   14 Dec 10  2009 S26hidd -> ../init.d/hidd
+lrwxrwxrwx  1 root root   20 Dec 10  2009 S26lm_sensors -> ../init.d/lm_sensors
+lrwxrwxrwx  1 root root   16 Dec 10  2009 S28autofs -> ../init.d/autofs
+lrwxrwxrwx  1 root root   14 Dec 10  2009 S55sshd -> ../init.d/sshd
+lrwxrwxrwx  1 root root   14 Dec 10  2009 S56cups -> ../init.d/cups
+lrwxrwxrwx  1 root root   20 Dec 10  2009 S56rawdevices -> ../init.d/rawdevices
+lrwxrwxrwx  1 root root   16 Dec 10  2009 S56xinetd -> ../init.d/xinetd
+lrwxrwxrwx  1 root root   14 Sep 16  2014 S58ntpd -> ../init.d/ntpd
+lrwxrwxrwx  1 root root   16 Dec 10  2009 S64mysqld -> ../init.d/mysqld
+lrwxrwxrwx  1 root root   20 Mar  4  2015 S65stargazerd -> ../init.d/stargazerd
+lrwxrwxrwx  1 root root   27 Feb  1  2017 S66stg_auth_watchdog -> ../init.d/stg_auth_watchdog
+lrwxrwxrwx  1 root root   14 Feb  7  2017 S85atop -> ../init.d/atop
+lrwxrwxrwx  1 root root   13 Dec 10  2009 S85gpm -> ../init.d/gpm
+lrwxrwxrwx  1 root root   15 Dec 10  2009 S85httpd -> ../init.d/httpd
+lrwxrwxrwx  1 root root   23 Sep 26  2014 S85zabbix-server -> ../init.d/zabbix-server
+lrwxrwxrwx  1 root root   17 Dec 10  2009 S88radiusd -> ../init.d/radiusd
+lrwxrwxrwx  1 root root   15 Dec 10  2009 S90crond -> ../init.d/crond
+lrwxrwxrwx  1 root root   15 Apr  4  2017 S90squid -> ../init.d/squid
+lrwxrwxrwx  1 root root   13 Dec 10  2009 S90xfs -> ../init.d/xfs
+lrwxrwxrwx  1 root root   17 Dec 10  2009 S95anacron -> ../init.d/anacron
+lrwxrwxrwx  1 root root   13 Dec 10  2009 S95atd -> ../init.d/atd
+lrwxrwxrwx  1 root root   19 Dec 10  2009 S95saslauthd -> ../init.d/saslauthd
+lrwxrwxrwx  1 root root   22 Dec 10  2009 S97yum-updatesd -> ../init.d/yum-updatesd
+lrwxrwxrwx  1 root root   22 Dec 10  2009 S98avahi-daemon -> ../init.d/avahi-daemon
+lrwxrwxrwx  1 root root   19 Dec 10  2009 S99firstboot -> ../init.d/firstboot
+lrwxrwxrwx  1 root root   11 Feb  3  2017 S99local -> ../rc.local
+lrwxrwxrwx  1 root root   16 Dec 10  2009 S99smartd -> ../init.d/smartd
+```
+</p>
+</details>
+
+
+##### Systemd
+
+```bash
+"Systemd" (System Management Daemon)
+```
+
 
 ## 2. Сигналы POSIX
 
@@ -45,7 +299,7 @@ title: Linux bases
 "SIGCHLD (номер 17)" посылается процессу в том случае, если его дочерний процесс завершился или был приостановлен. 
 Родительский процесс также получит этот сигнал, если он установил режим отслеживания сигналов дочернего процесса 
 и дочерний процесс получил какой-либо сигнал. 
-По умолчанию сигнал SIGCHLD игнорируется.
+о умолчанию сигнал SIGCHLD игнорируется.
 
 "SIGCONT (номер 18)" возобновляет выполнение процесса, остановленного сигналом SIGSTOP.
 
