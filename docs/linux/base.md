@@ -9,7 +9,8 @@ title: Linux bases
 ### 1.3 Системы скриптов init.d/systemctl
 
 ## 2. Сигналы POSIX
-[ Citforum Программирование для Linux", журнал Linux Format](http://citforum.ru/programming/unix/signals/)
+
+- [Citforum Программирование для Linux", журнал Linux Format](http://citforum.ru/programming/unix/signals/)
 
 Сигналы в Linux - это одно средство взаимодействия между процессами.
 Главное отличие от других средств взаимодействия между процессами заключается в том, что их обработка программой происходит сразу же после их поступления.
@@ -65,7 +66,8 @@ title: Linux bases
 kill -s <signal> pid
 kill -<signal> pid
 ```
-[apache Останов и перезапуск](https://uneex.ru/static/Apache_2.0_Doc/stopping.html)
+- [apache Останов и перезапуск](https://uneex.ru/static/Apache_2.0_Doc/stopping.html)
+
 <details><summary>Пример для httpd</summary>
 <p>
 
@@ -163,7 +165,7 @@ root     16896 12296  0 00:29 pts/1    00:00:00 grep http
 
 ### 3.1.  Типы файлов
 
-https://otus.ru/nest/post/1285/
+- [Виды файлов в Linux: «всё есть файл»](https://otus.ru/nest/post/1285/)
 
 !!!warning "Важно"
 			Один из основных Unix консептов - что "всё есть файл"...
@@ -376,10 +378,6 @@ Read/Write/eXecute (r/w/x) (4/2/1)
 ```bash
 user/group/other (u/g/o)
 ```
-
-
-
-
 
 #### Специальные права доступа (suid, suig, sticky-bit)
 
@@ -691,7 +689,7 @@ cat /var/log/messages | grep error
 ```
 #### Настройка входа по ключу под root-ом
 
-https://losst.ru/avtorizatsiya-po-klyuchu-ssh
+- [LOSST Авторизация по ключу ssh](https://losst.ru/avtorizatsiya-po-klyuchu-ssh)
 
 Для входа под root-ом по ключу ssh необходимо добавить  публичный ключ пользователя
 в директорию /root/.ssh/authorized_keys 
@@ -779,12 +777,13 @@ firewalld
 
 Базовый набор команд смотрите [здесь](https://icebale.readthedocs.io/en/latest/linux/commands/)
 
-## 8. 
+## 8. Программы для работы с репозитарием пакетов 
 
 На примере Debian
-https://losst.ru/apt-vs-apt-get-v-chem-raznitsa
-https://wiki.debian.org/ru/Apt
-https://www.kobzarev.com/linux/apt-get-and-apt-cache/
+
+- [LOSST APT VS APT-GET](https://losst.ru/apt-vs-apt-get-v-chem-raznitsa)
+- [wiki.debian.org apt](https://wiki.debian.org/ru/Apt)
+- [Базовые команды apt-get и apt-cache](https://www.kobzarev.com/linux/apt-get-and-apt-cache/)
 
 
 ### apt vs apt-get & apt-cache
@@ -792,7 +791,7 @@ https://www.kobzarev.com/linux/apt-get-and-apt-cache/
 ```bash
 "apt (advanced packet tools)" - менеджер управления пакетов в Debian.
 
-"apt" - пришел на замену пакетов apt-get и apt-cache и объединил в себе функционал их обоих.
+"apt" - пришел на замену пакетов "apt-get" и "apt-cache" и объединил в себе функционал их обоих.
 apt решает проблемы с зависимостями, получает запрошенные пакеты (из репозитория) 
 и работает с "dpkg", другой утилитой, которая непосредственно устанавливает и удаляет пакеты в ОС. 
 
