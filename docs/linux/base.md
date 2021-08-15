@@ -161,7 +161,208 @@ root     16896 12296  0 00:29 pts/1    00:00:00 grep http
 
 ## 3. Файловая система
 
-### 3.1.Права доступа 
+### 3.1.  Типы файлов
+
+https://otus.ru/nest/post/1285/
+
+!!!warning "Важно"
+			Один из основных Unix консептов - что "всё есть файл"...
+
+Основываясь на этом универсальном консепте рассмотрю основные виды файлов в Unix.
+Преимущество такой концепции заключается в том, что отпадает необходимость в реализации отдельного набора API для каждого устройства, 
+в результате чего с ним способны работать все стандартные программы.
+
+```bash
+Основные типы файлов Unix:
+1. "обыкновенные" (для хранения информации)
+2. "специальные" (для туннелей и устройств)
+3. "директории"
+```
+
+#### 3.1.1 "обыкновенные" (для хранения информации)
+```bash
+1. "обыкновенные" (для хранения информации):
+- "текстовые файлы"
+- "файлы изображений, архивов, библиотек"
+- "исполняемые"
+
+Обыкновенные файлы в ls начинаются с "-" - в REG-EXP это соответственно "^-" 
+Пример обыкновенных файлов:
+ls -la /var/log | grep "^-"
+-rw-r--r--  1 root root      280 Aug 13 06:25 alternatives.log
+-rw-r--r--  1 root root     3771 Aug 12 03:26 alternatives.log.1
+-rw-r--r--  1 root root      154 Jul  2 00:01 alternatives.log.2.gz
+-rw-r--r--  1 root root     1759 Feb 23 06:56 alternatives.log.3.gz
+-rw-r-----  1 root adm    377256 Aug 15 03:17 auth.log
+-rw-r-----  1 root adm   5298283 Aug 15 00:00 auth.log.1
+-rw-r-----  1 root adm   1501004 Aug  8 00:00 auth.log.2.gz
+-rw-r-----  1 root adm   1377849 Aug  1 00:00 auth.log.3.gz
+-rw-r-----  1 root adm   1568911 Jul 25 00:00 auth.log.4.gz
+---cut---
+
+Пример типа обыкновенного файла.
+file /var/log/alternatives.log
+/var/log/alternatives.log: ASCII text
+
+Однако для исполняиемых и пр. будет другим: 
+file /usr/lib/libdiscover.so.2.0.1
+/usr/lib/libdiscover.so.2.0.1: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV),
+dynamically linked, BuildID[sha1]=dc4cfc96cd4585890abc0d6014eb40550149a0ee, stripped
+
+```
+
+#### 3.1.2. "специальные" (для туннелей и устройств)
+
+```bash
+Файлы этого типа обеспечивают обмен информацией с ядром, 
+работу с устройствами либо общение между утилитами. 
+
+С учётом своего назначения они делятся на несколько видов:
+```
+
+##### Блочные
+```bash
+"блочные" - файлы устройств, обеспечивающие буферный доступ к аппаратным компонентам. 
+В процессе записи информации на жёсткий диск либо съёмный носитель 
+данные не записываются сразу — это нерационально с точки зрения расходования ресурсов. 
+Поэтому данные сначала собираются в буфере, для чего и используются блочные файлы. 
+Они способны передавать большие блоки информации за один раз, 
+и с их помощью файловая система и прочие утилиты получают 
+возможность взаимодействовать с драйверами аппаратных устройств. 
+
+Блочные файлы в ls начинаются с "b" - в REG-EXP это соответственно "^b" 
+Пример блочных файлов:
+ls -la /dev | grep "^b"
+brw-rw----  1 root disk    254,   0 Jul 30 10:03 dm-0
+brw-rw----  1 root disk    254,   1 Jul 30 10:03 dm-1
+brw-rw----  1 root disk      8,   0 Jul 30 10:03 sda
+brw-rw----  1 root disk      8,   1 Jul 30 10:03 sda1
+brw-rw----  1 root disk      8,   2 Jul 30 10:03 sda2
+brw-rw----  1 root disk      8,   5 Jul 30 10:03 sda5
+---cut---
+
+Пример типа блочного файла:
+file /dev/sda
+/dev/sda: block special (8/0)
+```
+
+##### Символьные
+```bash
+"Символьные" - c их помощью обеспечивается небуферизованный доступ к ядру и аппаратным компонентам. 
+Это значит, что они могут передавать за раз лишь один символ. В остальном, это те же файлы устройств.
+
+Блочные файлы в ls начинаются с "c" - в REG-EXP это соответственно "^c" 
+Пример символьных файлов:
+root@icebale-home:/var/run/dbus# ls -la /dev | grep "^c"
+crw-r--r--  1 root root     10, 235 Jul 30 10:03 autofs
+crw-------  1 root root     10, 234 Jul 30 10:03 btrfs-control
+crw-------  1 root root      5,   1 Jul 30 10:03 console
+crw-------  1 root root     10,  62 Jul 30 10:03 cpu_dma_latency
+crw-------  1 root root     10, 203 Jul 30 10:03 cuse
+crw-rw-rw-  1 root root      1,   7 Jul 30 10:03 full
+crw-rw-rw-  1 root root     10, 229 Jul 30 10:03 fuse
+crw-------  1 root root     10, 228 Jul 30 10:03 hpet
+crw-------  1 root root     10, 183 Jul 30 10:03 hwrng
+---cut---
+
+Пример типа символьного файла:
+file /dev/autofs
+/dev/autofs: character special (10/235)
+```
+
+##### Символические ссылки
+```bash
+"Символические ссылки" - указывают на другие файлы по их имени, способны указывать и на обыкновенные файлы, 
+и на каталоги, и на другие файловые типы. Обозначаются буквой l (link)
+
+Файлы символических ссылок в ls начинаются с "l" - в REG-EXP это соответственно "^l" 
+Пример символических ссылок:
+ls -la /dev | grep "^l"
+lrwxrwxrwx  1 root root          11 Jul 30 10:03 core -> /proc/kcore
+lrwxrwxrwx  1 root root          13 Jul 30 10:03 fd -> /proc/self/fd
+lrwxrwxrwx  1 root root          12 Jul 30 10:03 initctl -> /run/initctl
+lrwxrwxrwx  1 root root          28 Jul 30 10:03 log -> /run/systemd/journal/dev-log
+lrwxrwxrwx  1 root root           4 Jul 30 10:03 rtc -> rtc0
+lrwxrwxrwx  1 root root          15 Jul 30 10:03 stderr -> /proc/self/fd/2
+lrwxrwxrwx  1 root root          15 Jul 30 10:03 stdin -> /proc/self/fd/0
+lrwxrwxrwx  1 root root          15 Jul 30 10:03 stdout -> /proc/self/fd/1
+
+Пример типа файла символических ссылок:
+file /dev/core
+/dev/core: symbolic link to /proc/kcore
+```
+
+##### Туннели/именованные туннели
+```bash
+"Туннели/именованные туннели" - обеспечивают настройку связи между 2-мя процессами в системе, 
+перенаправляя вывод одного на вход другого. 
+Туннели именованного типа тоже применяются для связи между 2-мя процессами и функционируют, 
+как и обыкновенные туннели.
+
+Файлы туннелей в ls начинаются с "p" - в REG-EXP это соответственно "^p" 
+Пример туннеля:
+ls -la  | grep "^p"
+prw-r--r--  1 root    root       0 Aug 15 04:21 pipe1
+
+Пример типа файла туннеля:
+file ./pipe1
+./pipe1: fifo (named pipe)
+```
+##### Сокеты
+```bash
+"Cокеты" - создают прямую связь между процессами в системе. 
+Передают данные между процессами, которые запущены в различных средах либо даже на различных машинах. 
+Посредством сокетов программы могут осуществлять обмен информацией даже по сети. 
+Работа сокета похожа на работу туннеля, но в обе стороны. 
+
+Файлы сокетов в ls начинаются с "s" - в REG-EXP это соответственно "^s"
+Пример сокета:
+ls -la /var/run/dbus/ | grep "^s"
+srw-rw-rw-  1 root root   0 Jul 30 10:03 system_bus_socket
+
+Пример типа файла сокета:
+file /var/run/dbus/system_bus_socket
+/var/run/dbus/system_bus_socket: socket
+```
+
+#### 3.1.3 Директории
+
+```bash
+"Директории" - объединяют файлы (а также другие директории) в группы, чтобы упростить навигацию и поиск. 
+В системах Unix файлы организовываются в директории, начиная от корня (/).
+
+Директории, а точнее, "файлы директории" (звучит странно, не правда ли...) 
+в ls начинаются с "d" - в REG-EXP это соответственно "^d"
+
+Пример директорий:
+ls -la /dev | grep "^d"
+drwxr-xr-x 19 root root        3160 Aug 14 00:37 .
+drwxr-xr-x 18 root root        4096 Jun 23 03:01 ..
+drwxr-xr-x  2 root root         160 Jul 30 10:03 block
+drwxr-xr-x  2 root root          60 Jul 30 10:03 bsg
+drwxr-xr-x  3 root root          60 Jul 30 10:03 bus
+drwxr-xr-x  2 root root        3080 Jul 30 10:03 char
+drwxr-xr-x  2 root root          60 Jul 30 10:03 cpu
+drwxr-xr-x  6 root root         120 Jul 30 10:03 disk
+drwxr-xr-x  3 root root         100 Jul 30 10:03 dri
+drwxr-xr-x  2 root root           0 Jul 30 10:03 hugepages
+drwxr-xr-x  2 root root          80 Jul 30 10:03 icebale-vg
+drwxr-xr-x  3 root root         320 Jul 30 10:03 input
+drwxr-xr-x  2 root root         100 Jul 30 10:03 mapper
+drwxrwxrwt  2 root root          40 Jul 30 10:03 mqueue
+drwxr-xr-x  2 root root          60 Jul 30 10:03 net
+drwxr-xr-x  2 root root           0 Jul 30 10:03 pts
+drwxrwxrwt  2 root root          40 Jul 30 10:03 shm
+drwxr-xr-x  3 root root         380 Jul 30 10:03 snd
+drwxr-xr-x  2 root root          60 Jul 30 10:03 vfio
+
+Пример типа файла директория:
+file /dev/block
+/dev/block: directory
+```
+
+
+### 3.2.Права доступа 
 - [Losst ПРАВА ДОСТУПА К ФАЙЛАМ В LINUX](https://losst.ru/prava-dostupa-k-fajlam-v-linux)
 - [Про SIUD бит](https://habr.com/ru/company/jetinfosystems/blog/506750/)
 
@@ -175,6 +376,10 @@ Read/Write/eXecute (r/w/x) (4/2/1)
 ```bash
 user/group/other (u/g/o)
 ```
+
+
+
+
 
 #### Специальные права доступа (suid, suig, sticky-bit)
 
@@ -574,7 +779,7 @@ firewalld
 
 Базовый набор команд смотрите [здесь](https://icebale.readthedocs.io/en/latest/linux/commands/)
 
-## 8. Работа с репозитарием и пакетами deb
+## 8. 
 
 На примере Debian
 https://losst.ru/apt-vs-apt-get-v-chem-raznitsa

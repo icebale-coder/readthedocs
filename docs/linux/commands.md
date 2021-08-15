@@ -91,6 +91,7 @@ awk
 ```
 
 ### Потоки/перенаправление ввода-вывода
+
 ```bash
 "stdin"  = 0
 "stdout" = 1
@@ -681,7 +682,8 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 #### lspci
 #### dmidecode
 
-### Навигация в Linux
+### Навигация в Linux & etc...
+
 #### cd 
 #### ls
 #### ll
@@ -718,6 +720,10 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 #### &&
 #### export
 Environment variables are set when we open a new shell session.
+#### file 
+Посмотреть тип файла
+#### man 
+manual of program
 
 <details><summary>export</summary>
 <p>
