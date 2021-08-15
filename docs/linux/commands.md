@@ -819,7 +819,24 @@ declare -x USER="root"
 #### nano
 #### mcedit
 
+### Управления сервисами
+#### service
+Подробности работы смотрите [здесь](https://icebale.readthedocs.io/en/latest/linux/base/#system_v)
+```bash
+"service" - программа, для управление "системой управления сервисами" - "System V"  
 
+пример:
+"service httpd status" - проверить статус сервиса httpd(apache2)
+```
+
+#### systemctl
+Подробности работы смотрите [здесь](https://icebale.readthedocs.io/en/latest/linux/base/#systemd)
+```bash
+"systemctl" - программа, для управление "системой управления сервисами" - "Systemd"  
+
+пример:
+"systemctl status httpd" - проверить статус сервиса httpd(apache2)
+```
 
 
 ## Linux terminal hot key
