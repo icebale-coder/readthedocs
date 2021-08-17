@@ -263,7 +263,7 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ```bash
 "eBGP (external BGP)" - BGP соединение между разными AS.
-"iBGP (external BGP)" - BGP соединение между разными AS.
+"iBGP (external BGP)" - BGP соединение между одинаковыми AS.
 
 
 eBGP vs iBGP характерны следующие особенности поведения:
