@@ -263,10 +263,10 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ```bash
 "eBGP (external BGP)" - BGP соединение между разными AS.
-"iBGP (external BGP)" - BGP соединение между одинаковыми AS.
+"iBGP (internal BGP)" - BGP соединение между одинаковыми AS.
 
 
-eBGP vs iBGP характерны следующие особенности поведения:
+"eBGP vs iBGP характерны следующие особенности поведения:"
 1. При передачи префиксов в eBGP анонсе меняется "next hop" (mandatory атрибут) 
    на ip адрес стыковочного интерфейса. Для iBGP "next hop" не меняется, 
    хотя можно указать это вручную с помощью команды "туче рщз ыуда" (next hop self) 
@@ -311,7 +311,7 @@ eBGP vs iBGP характерны следующие особенности по
      - при передачи BGP анонсов чз RR добавляется дополнительный атрибут Originator_ID,
        по сути это Router_ID того маршрутизатора, кто породил данный анонс, 
        если вдруг такой анонс долетит до того маршрутизатора, который его породил,
-       то такой анонс отбросит маршрутизатор.
+       то маршрутизатор такой анонс отбросит.
 ```
 
 ![ibgp-rr-loop-prevent-originator-id](../../img/ibgp-rr-loop-prevent-originator-id.jpg)
