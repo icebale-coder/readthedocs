@@ -317,22 +317,6 @@ eBGP vs iBGP характерны следующие особенности по
 ![ibgp-rr-loop-prevent-originator-id](../../img/ibgp-rr-loop-prevent-originator-id.jpg)
 
 
-## BGP loop prevention
-
-Механизм защиты от петель разный для iBGP и для eBGP 
-
-### iBGP loop prevention
-  - split horizion - не анонсирует префиксы назад в порт, на котором они приняты
-  - не анонсирует префиксы полученные по iBGP другим iBGP соседям - это поведение по дефолту.
-
-    P.S. Вместо Full mesh при iBGP может использоваться механизм Route Reflector, тогда поведение для iBGP/eBGP соседей меняется.
-
-
-### eBGP loop prevention 
-  - split horizion - не анонсирует префиксы назад в порт, на котором они приняты
-  - если в AS-PATH встречает свою AS, то такой префикс отбрасывается.
-
-
 ## Настройки
 
 - [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
