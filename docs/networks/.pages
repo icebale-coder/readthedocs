@@ -2,7 +2,7 @@ title: Networks
 arrange:
     - index.md 
     - cli_crossfit.md
-    - protocols
+    - protocols-tech
     - cisco
     - juniper
     - huawei
