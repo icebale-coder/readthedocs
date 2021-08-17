@@ -1,4 +1,4 @@
-title: Protocols
+title: Protocols & Tech
 arrange:
     - OSI-anatomy.md 
     - TCP.md
@@ -8,10 +8,14 @@ arrange:
     - BFD.md
     - DHCP.md
     - DNS.md
+    - HTTP.md
     - ICMP.md
     - IP.md
     - IS-IS.md
     - LAG.md
+    - MPLS.md
+    - NAT.md
     - OSPF.md
     - RIP.md
     - STP.md
+    - VxLAN.md
