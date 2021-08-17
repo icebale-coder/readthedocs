@@ -225,7 +225,7 @@ ROUTE-REFRESH (type = 5) - используется для передачи пр
 
 общая схема работы BGP
 
-![общая схема работы BGP](https://icebale.readthedocs.io/en/latest/networks/protocols/img/bgp-rib.jpg)
+![общая схема работы BGP](../../img/bgp-rib.jpg)
 
 
 ## MP-BGP
@@ -238,7 +238,7 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 
 Вот пример, какие семейства AFI/SAFI есть в BGP (их больше сейчас уже на самом деле)
 
-![bgp-route-refresh](../../img/bgp-afi-safi.jpg)
+![bgp-afi-safi](../../img/afi-safi.jpg)
 
 
 ## MP-REACH-NLRI vs NLRI
