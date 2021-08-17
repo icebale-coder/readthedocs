@@ -1435,7 +1435,6 @@ bridge-domain 255
 			на "Control Plane" в BGP.
 
 
-
 - по RD  - также идет исключение смешивания внутри BGP Update-ов
 
 - по RT идет идентификация соответствующего VPLS
@@ -1559,6 +1558,10 @@ router bgp 64500
 
 Тем более, в недалеком будушем, в 2007 году вышел RFC 4762, в котором задача обнаружения соседей происходит через Radius или BGP(autodiscovery LDP signaling BGP). VPLS LDP-signaling with BGP-Autodiscovery. Для BGP командой autodiscovery LDP signaling BGP в секции l2vpn vfi.
 
+
+#### L2VPN выводы
+
+ 
 ### 4. EVPN (Ethernet VPN)
 
 

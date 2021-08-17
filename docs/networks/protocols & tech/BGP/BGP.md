@@ -240,14 +240,29 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 
 ## MP-REACH-NLRI vs NLRI
 
-Следует обратить внимание, что для **AFI/SAFI = 1/1** - ipv4 unicast 
-раздел NLRI в структуре сообщения находится на одном уровне с "Path Attributes",
-а для других AFI/SAFI появляется специальный Path Attribute - MP_REACH_NLRI - в котором уже описан NLRI.
-Все эти моменты описаны в [RFC-4760](https://datatracker.ietf.org/doc/html/rfc4760)
+!!!warning "Важно"
+          Следует обратить внимание, что для **AFI/SAFI = 1/1** - ipv4 unicast 
+          раздел NLRI в структуре сообщения находится на одном уровне с "Path Attributes",
+          а для других AFI/SAFI появляется специальный Path Attribute - MP_REACH_NLRI,
+          в котором уже описан NLRI. 
+          Все эти моменты описаны в [RFC-4760](https://datatracker.ietf.org/doc/html/rfc4760)
 
 Разницу в структуре можно посмотреть тут:
 
 ![bgp-route-refresh](../../img/bgp-mpbgp-vs-bgp.jpg)
+
+
+## eBGP vs iBGP
+
+### eBGP
+
+### iBGP
+
+#### RR
+
+#### BGP confederation
+
+BGP confederation конфедерации
 
 
 ## BGP loop prevention
