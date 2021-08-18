@@ -356,7 +356,7 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
       Конфедерации общаются между собой по eBGP, так номера sub-AS разные. 
       В точке выхода во внешнюю AS из AS-PATH снимаются sub-AS-ки и отпавляет только реальные.
 ```
-Проиллюстрировать конфедерацции можно как-то так...
+Проиллюстрировать конфедерации можно как-то так...
 
 ![bgp-confederation](../../img/bgp-confederation.jpg)
 
@@ -387,7 +387,7 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 Общая таблица сравнения различных режимов работы RR:
 ```
 
-![ibgp-rr](../../img/ibgp-rr.jpg)
+![ibgp-rr](../../img/bgp-rr.jpg)
 
 ## Настройки
 
