@@ -263,13 +263,6 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 ```bash
 
 
-Type Code  value  Attribute Name  Attribute Type
-11  DPA Designation Point Attribute
-12  Advertiser  BGP/IDRP Route Server
-13  RCID_PATH/CLUSTER_ID  BGP/IDRP Route Server
-16  Extended communities  
-256 Reserved for future development 
-
 "Well known BGP attribute types (Типы well-known атрибутов)":
   - "Well-known mandatory": обязательный атрибут - все маршрутизаторы, 
     работающие по протоколу BGP, должны распознавать эти атрибуты. 
@@ -282,10 +275,10 @@ Type Code  value  Attribute Name  Attribute Type
   - "Well-known discretionary": необязательный атрибут - все маршрутизаторы, 
     работающие по протоколу BGP, должны распознавать эти атрибуты. 
     Могут присутствовать в BGP update, но их присутствие не обязательно:
-    -"5 LOCAL_PREF"  Well-known discretionary - атрибут определяет 
+    -"5 LOCAL_PREF" - атрибут определяет 
       предпочтение для данного префикса в виде целого числа, value <0-4294967295>  
       по умолчанию LP = 100  
-    -"6 ATOMIC_AGGREGATE"  - Назначение атрибута - предупредить узлы BGP на пути о том, 
+    -"6 ATOMIC_AGGREGATE" - Назначение атрибута - предупредить узлы BGP на пути о том, 
     что некоторая информация была потеряна из-за процесса агрегации маршрутов 
     и что совокупный путь может быть не лучшим путем к месту назначения. 
 
@@ -302,12 +295,12 @@ Type Code  value  Attribute Name  Attribute Type
      Когда сосед получает префикс, он проверяет значение community и предпринимает определенные им действия
      (например, фильтрует или изменяет атрибуты, для префикса с данным community).
      BGP community задаются в формате ASN:VALUE - (AS NUMBER: VALUE), от [1:0 до 65534:65535]
-     BGP community бывают:
+     "BGP community бывают":
        - BGP well-known community
-          - Internet: анонсировать всем маршрутизаторам.
-          - Local-as: разрешено рассылать анонсы только внутри AS, за пределы своей AS рассылка запрещена.
-          - No-Advertise: никому не анонсировать префиксы с таким cоmmunity
-          - No-Export: не анонсировать префиксы с таким community внешним AS.
+          - "Internet": анонсировать всем маршрутизаторам.
+          - "Local-as": разрешено рассылать анонсы только внутри AS, за пределы своей AS рассылка запрещена.
+          - "No-Advertise": никому не анонсировать префиксы с таким cоmmunity
+          - "No-Export": не анонсировать префиксы с таким community внешним AS.
        
        - прочие BGP - тут уже политика поведения задаётся самим сетевым инженером, в зависимости от задач.
 
@@ -358,7 +351,8 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
    каждый маршрутизатор устанавливает iBGP сессию с каждым.
    Альтернативный вариант организации связности между участниками iBGP - это связь чз RR (Route Reflector)
    Также возможно создание BGP конфедераций:
-    - внутри конфедерации своя собственная Sub-AS (из приватного диапазона AS) внутри конфедерации получается iBGP.
+    - внутри конфедерации своя собственная Sub-AS (из приватного диапазона AS)
+      внутри конфедерации получается iBGP.
       Конфедерации общаются между собой по eBGP, так номера sub-AS разные. 
       В точке выхода во внешнюю AS из AS-PATH снимаются sub-AS-ки и отпавляет только реальные.
 ```
