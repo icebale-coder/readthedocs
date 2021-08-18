@@ -254,6 +254,78 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 
 ![bgp-route-refresh](../../img/bgp-mpbgp-vs-bgp.jpg)
 
+## BGP Типы атрибутов
+
+- [1. BGP Attributes List](https://www.networkers-online.com/blog/2012/05/bgp-attributes/)
+
+- [2. Атрибуты BGP](http://xgu.ru/wiki/%D0%90%D1%82%D1%80%D0%B8%D0%B1%D1%83%D1%82%D1%8B_BGP)
+
+```bash
+
+
+Type Code  value  Attribute Name  Attribute Type
+11  DPA Designation Point Attribute
+12  Advertiser  BGP/IDRP Route Server
+13  RCID_PATH/CLUSTER_ID  BGP/IDRP Route Server
+16  Extended communities  
+256 Reserved for future development 
+
+"Well known BGP attribute types (Типы well-known атрибутов)":
+  - "Well-known mandatory": обязательный атрибут - все маршрутизаторы, 
+    работающие по протоколу BGP, должны распознавать эти атрибуты. 
+    Данные атрибуты должны присутствовать во всех BGP Update:
+    -"1 ORIGIN"  Well-known mandatory - по сути RID маршрутизатора, 
+      который породил префикс.
+    -"2 AS_PATH"  - список AS, чз которые прошел префикс
+    -"3 NEXT_HOP" - ip адрес next-hop-a для достижения префикса
+
+  - "Well-known discretionary": необязательный атрибут - все маршрутизаторы, 
+    работающие по протоколу BGP, должны распознавать эти атрибуты. 
+    Могут присутствовать в BGP update, но их присутствие не обязательно:
+    -"5 LOCAL_PREF"  Well-known discretionary - атрибут определяет 
+      предпочтение для данного префикса в виде целого числа, value <0-4294967295>  
+      по умолчанию LP = 100  
+    -"6 ATOMIC_AGGREGATE"  - Назначение атрибута - предупредить узлы BGP на пути о том, 
+    что некоторая информация была потеряна из-за процесса агрегации маршрутов 
+    и что совокупный путь может быть не лучшим путем к месту назначения. 
+
+"Optional BGP attribute types (Типы опциональных атрибутов)":
+  - "Optional transitive (транзитивный атрибут)": необязательный атрибут, 
+    может не распознаваться всеми реализациями BGP. 
+    Если маршрутизатор не распознал атрибут, 
+    он помечает обновление как частичное (partial) 
+    и отправляет его дальше соседям, сохраняя не распознанный атрибут:
+    -"7 AGGREGATOR"  - устанавливается равным RID маршрутизатора, 
+      который выполнил агрегирование (ATOMIC_AGGREGATE).
+    -"8 COMMUNITY" - атрибут, который несет в себе информацию для политик фильтрации соседей
+     это числовое значение, которое может быть присвоено определенному префиксу и объявлено другим соседям. 
+     Когда сосед получает префикс, он проверяет значение community и предпринимает определенные им действия
+     (например, фильтрует или изменяет атрибуты, для префикса с данным community).
+     BGP community задаются в формате ASN:VALUE - (AS NUMBER: VALUE), от [1:0 до 65534:65535]
+     BGP community бывают:
+       - BGP well-known community
+          - Internet: анонсировать всем маршрутизаторам.
+          - Local-as: разрешено рассылать анонсы только внутри AS, за пределы своей AS рассылка запрещена.
+          - No-Advertise: никому не анонсировать префиксы с таким cоmmunity
+          - No-Export: не анонсировать префиксы с таким community внешним AS.
+       
+       - прочие BGP - тут уже политика поведения задаётся самим сетевым инженером, в зависимости от задач.
+
+
+   - "Optional non-transitive (нетранзитивный атрибут)": необязательный атрибут, 
+     могут не распознаваться всеми реализациями BGP. 
+     Если маршрутизатор не распознал атрибут, то атрибут игнорируется 
+     и не передается соседям:
+     -"4 MULTI_EXIT_DISC (MED)" Optional non-transitive
+     -"9 ORIGINATOR_ID" -  
+     -"10  Cluster List"  Optional non-transitive 
+     -"14  Multiprotocol Reachable NLRI"  Optional non-transitive
+     -"15  Multiprotocol Unreachable NLRI"  Optional non-transitive
+
+```
+
+![bgp-attribute-types](../../img/bgp-attribute-types.jpg)
+
 
 ## eBGP vs iBGP
 
@@ -307,6 +379,7 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ![ibgp-rr-loop-prevent-cluster-id](../../img/ibgp-rr-loop-prevent-cluster-id.jpg)
 
+
 ```bash
      - при передачи BGP анонсов чз RR добавляется дополнительный атрибут Originator_ID,
        по сути это Router_ID того маршрутизатора, кто породил данный анонс, 
@@ -316,6 +389,11 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ![ibgp-rr-loop-prevent-originator-id](../../img/ibgp-rr-loop-prevent-originator-id.jpg)
 
+```bash
+Общая таблица сравнения различных режимов работы RR:
+```
+
+![ibgp-rr](../../img/ibgp-rr.jpg)
 
 ## Настройки
 
