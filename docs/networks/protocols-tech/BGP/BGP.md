@@ -260,15 +260,18 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 
 - [2. Атрибуты BGP](http://xgu.ru/wiki/%D0%90%D1%82%D1%80%D0%B8%D0%B1%D1%83%D1%82%D1%8B_BGP)
 
+- [3. BGP origin](http://xgu.ru/wiki/BGP_origin)
+
 ```bash
-
-
 "Well known BGP attribute types (Типы well-known атрибутов)":
   - "Well-known mandatory": обязательный атрибут - все маршрутизаторы, 
     работающие по протоколу BGP, должны распознавать эти атрибуты. 
     Данные атрибуты должны присутствовать во всех BGP Update:
-    -"1 ORIGIN"  Well-known mandatory - по сути RID маршрутизатора, 
-      который породил префикс.
+    -"1 ORIGIN" - указывает на то, каким образом был получен маршрут в обновлении.
+
+![bgp-attribute-origin](../../img/bgp-attribute-origin.jpg)
+
+```bash    
     -"2 AS_PATH"  - список AS, чз которые прошел префикс
     -"3 NEXT_HOP" - ip адрес next-hop-a для достижения префикса
 
@@ -318,6 +321,8 @@ MP-BGP (MultiProtocol-BGP) - расширение протокола BGP, при
 ```
 
 ![bgp-attribute-types](../../img/bgp-attribute-types.jpg)
+
+![bgp-attribute-type-schema](../../img/bgp-attribute-type-schema.jpg)
 
 
 ## eBGP vs iBGP
