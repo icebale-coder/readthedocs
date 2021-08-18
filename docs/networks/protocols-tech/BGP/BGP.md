@@ -389,6 +389,25 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ![ibgp-rr](../../img/bgp-rr.jpg)
 
+
+## Internet eXchange (IX) площадки
+```bash
+
+В Internet eXchange (IX) площадках используется терминология "Route Client" и "Route Server".
+
+Особенностями работы Internet eXchange площадок, является их отличие 
+от стандартного поведения iBGP, eBGP и RR.
+ 
+  "Route Server" - работает таким образом, что при передаче BGP-анонса:
+      - атрибут "next-hop" не меняется и содержит ip адрес того маршрутизатора, 
+        от которого данный анонс были получен RS, хотя соединение между "Route Client" 
+        и "Route Server" является eBGP. 
+      - атрибут "AS-PATH" передается без изменений. 
+        Таким образом, обмен трафиком участников происходит напрямую, минуя RS. 
+
+В таком случае для связности всех клиентов помещают в один L2 броадкаст домен, например в сеть /24.
+```
+
 ## Настройки
 
 - [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
