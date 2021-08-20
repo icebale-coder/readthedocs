@@ -6,7 +6,7 @@ title: SKAT-DPI
 ##  Посмотреть состояние пользователя по логину
    fdpi_ctrl list --policing --login <username>
 ```bash
-   sd0.sdn.orionnet.ru:~ # fdpi_ctrl list --policing --login exhale
+    fdpi_ctrl list --policing --login exhale
    Autodetected fastdpi params : dev='lo', port=29000
    connecting 127.0.0.1:29000 ...
   
@@ -37,16 +37,33 @@ title: SKAT-DPI
 ```
 
 ##  Посмотреть состояние пользователя по ip
-    multibinding - объединение в одну полосу множество ip адресов
 
+fdpi_ctrl list --policing --ip x.x.x.x
+
+```bash
+fdpi_ctrl list --policing --ip 172.29.10.3
+Autodetected fastdpi params : dev='lo', port=29000
+connecting 127.0.0.1:29000 ...
+
+================================
+172.29.10.3     HTB     dnlnk_rate=0.00mbit     dnlnk_ceil=0.00mbit rrate=43125000(345.00mbit)  rburst=21562500(172.50mbit)     rceil=43125000(345.00mbit)      rcburst=21562500(172.50mbit)    rate0=172.00mbit        ceil0=345.00mbit    rate1=172.00mbit ceil1=345.00mbit        rate2=0.00mbit  ceil2=345.00mbit        rate3=0.00mbit  ceil3=345.00mbit        rate4=0.00mbit  ceil4=345.00mbit        rate5=0.00mbit  ceil5=353.28mbit        rate6=1000.00mbit static            rate7=0.00mbit   ceil7=1.02mbit  HTB_INBOUND     rrate=43125000(345.00mbit)      rburst=21562500(172.50mbit)     rceil=43125000(345.00mbit)      rcburst=21562500(172.50mbit)    rate0=172.00mbit        ceil0=345.00mbit        rate1=172.00mbit     ceil1=345.00mbit        rate2=0.00mbit  ceil2=345.00mbit        rate3=0.00mbit  ceil3=345.00mbit        rate4=0.00mbit  ceil4=345.00mbit        rate5=0.00mbit  ceil5=353.28mbit        rate6=1000.00mbit static                rate7=0.00mbit       ceil7=1.02mbit  rate_300.0m
+---------------------------------
+Result processing ip=172.29.10.3 :
+------------------
+1/1/0
+```
+
+
+## multibinding - объединение в одну полосу множество ip адресов
+```
    fdpi_ctrl list --bind_multi --ip 172.29.10.3
-
+```
 
 ## Посмотреть список ip адресов пользователя
    fdpi_ctrl list --bind_multi --login <username>
 
 ```bash
-sd0.sdn.orionnet.ru:~ # fdpi_ctrl list --bind_multi --login exhale
+ fdpi_ctrl list --bind_multi --login exhale
 Autodetected fastdpi params : dev='lo', port=29000
 connecting 127.0.0.1:29000 ...
 
