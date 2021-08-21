@@ -853,7 +853,12 @@ declare -x USER="root"
 пример:
 "systemctl status httpd" - проверить статус сервиса httpd(apache2)
 ```
-
+#### logrotare
+[баг unable to log rotate centos 7.4.1708 (Core)](https://forums.centos.org/viewtopic.php?t=69728)
+```bash
+#дебаг logrotate
+/usr/sbin/logrotate -d /etc/logrotate.d/syslog
+```
 
 ## Linux terminal hot key
 ```bash
