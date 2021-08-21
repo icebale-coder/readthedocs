@@ -693,6 +693,7 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 ```bash
 "tail -f"
 ```
+#### multitail
 #### wc
 ```bash
 "cat <file> | wc -l" - показать количество строк в файле
@@ -710,17 +711,25 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 
 # Суммарный размер текущей директории
 "du -sh"
+
+#
+"du -hd1"
+
 ```
 #### pwd
 #### whereis
 #### find
+#### locate
+##### updatedb
 #### diff
 #### sort
 #### grep
 #### egrep
 #### more
 #### less
+#### head
 #### echo
+#### &
 #### &&
 #### export
 Environment variables are set when we open a new shell session.
@@ -789,12 +798,15 @@ declare -x USER="root"
 #### useradd
 #### addgroup
 #### groupadd
+#### groupmod
 #### chmod
 #### chown
 #### passwd
+#### chage
 #### su 
 #### sudo
 #### who
+#### last
 #### id
 
 #### Расширенные права facl
