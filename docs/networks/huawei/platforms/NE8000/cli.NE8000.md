@@ -53,38 +53,40 @@ return
 ## Commit/Rollback
 
 ### Commit
-#### Просмотр изменений до комитта
-(display configuration candidate changes)
 
-[из режима конфигурирования]
+!!! note "Важно!"
+    Commit [из режима конфигурирования]
+
+
+#### Просмотр изменений до коммита
 ```bash
+"display configuration candidate changes"
+
 di co ca ch
 ```
 
 #### Применить изменения 
-
-[из режима конфигурирования]
-
-Прример: закоммитить изменения с описанием "add xpl route-filter RP-TEST1" удобно указывать комментарий, 
-чтобы потом понимать, что в данном commit-е происходило.
 ```bash
+Пример: закоммитить изменения с описанием 
+"add xpl route-filter RP-TEST1" удобно указывать комментарий, 
+чтобы потом понимать, что в данном commit-е происходило.
+
 commit description add xpl route-filter RP-TEST1
 ```
 
 #### Отменить непремененные изменения 
-(clear configuration candidate)
-
-[из режима конфигурирования]
 ```bash
+"clear configuration candidate"
+
 c c c
 ```
 
 ### Просмотр изменений
 
 #### Посмотреть список изменений с комментариями к ним 
-(display configuration commit changes last ?)
-
 ```bash
+"display configuration commit changes last ?"
+
 di co co changes last ?
   1   CommitId 1000000232 created by admin at 2021-08-21 14:38:52+07:00
       (Description: xpl route-filter RP-TEST1)
@@ -92,16 +94,16 @@ di co co changes last ?
 ```
 
 #### Посмотреть какие изменения произошли в последнем коммита 
-(display configuration commit changes last 1)
-
 ```bash
+"display configuration commit changes last 1"
+
 di co co ch last 1
 ```
 
 #### Посмотреть какие изменения произошли в 3-ем коммите 
-(display configuration commit changes last 3)
-
 ```bash
+"display configuration commit changes last 3"
+
 di co co ch last 3
 ```
 
@@ -119,16 +121,16 @@ di co co ch last 3
     - что важно для сохранения консистентности конфигурации.
 
 #### Откат к последней конфигурации
-(rollback configuration last 1)
-
 ```bash
+"rollback configuration last 1"
+
 ro co la 1
 ```
 
 #### Откат на 3 коммита назад
-rollback configuration last 3
-
 ```bash
+"rollback configuration last 3"
+
 ro co la 3
 ```
 
