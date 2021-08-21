@@ -693,6 +693,10 @@ https://webnote.satin-pl.com/2018/04/20/mon_hard_inventory_part3/
 ```bash
 "tail -f"
 ```
+#### wc
+```bash
+"cat <file> | wc -l" - показать количество строк в файле
+```
 #### touch fileXXX
 #### rm
 #### df
