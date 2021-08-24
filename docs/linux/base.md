@@ -1183,7 +1183,42 @@ Server refused public-key signature despite accepting key!
 
 iptables
 
-firewalld
+[КАК СОХРАНИТЬ ПРАВИЛА IPTABLES](https://losst.ru/kak-sohranit-pravila-iptables#%D0%9A%D0%B0%D0%BA_%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B8%D1%82%D1%8C_%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_iptables)
+
+### iptables-persistent
+
+Описание 
+boot-time loader for netfilter rules, iptables plugin
+
+Установить:
+```bash
+apt-get install iptables-persistent
+```
+
+/etc/iptables/rules.v4 для набора правил протокола IPv4;
+/etc/iptables/rules.v6 для набора правил протокола IPv6.
+
+Как видно из файлов пакета iptables-persistent - это плагин, по сути набор скриптов к netfilter, который запускается автоматически при старте netfilter.
+
+```bash
+dpkg -L iptables-persistent
+/.
+/etc
+/etc/iptables
+/usr
+/usr/share
+/usr/share/doc
+/usr/share/doc/iptables-persistent
+/usr/share/doc/iptables-persistent/README
+/usr/share/doc/iptables-persistent/changelog.gz
+/usr/share/doc/iptables-persistent/copyright
+/usr/share/netfilter-persistent
+/usr/share/netfilter-persistent/plugins.d
+/usr/share/netfilter-persistent/plugins.d/15-ip4tables
+/usr/share/netfilter-persistent/plugins.d/25-ip6tables
+```
+
+### firewalld
 
 ## 7. Базовый набор команд
 
@@ -1199,6 +1234,7 @@ firewalld
 
 
 ### apt vs apt-get & apt-cache
+
 
 ```bash
 "apt (advanced packet tools)" - менеджер управления пакетов в Debian.
