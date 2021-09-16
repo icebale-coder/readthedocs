@@ -8,10 +8,10 @@ title: Strings
 	b = "text1"
 
 	print(a)
-	text1
+	tes't
 
 	print(b)
-	text1
+	tes't
 ```
 
 ## Ввод длинных строк 
