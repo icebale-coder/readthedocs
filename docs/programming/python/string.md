@@ -4,14 +4,14 @@ title: Strings
 ## Присваивание значения
 
 ```py
-	a = 'text1'
-	b = "text2"
+	a = 'text11'
+	b = "text22"
 
 	print(a)
-	text1
+	text11
 
 	print(b)
-	text2
+	text22
 ```
 
 ## Ввод длинных строк 
