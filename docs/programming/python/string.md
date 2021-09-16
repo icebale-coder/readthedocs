@@ -5,13 +5,13 @@ title: Strings
 
 ```py
 	a = 'text1'
-	b = "text1"
+	b = "text2"
 
 	print(a)
-	tes't
+	text1
 
 	print(b)
-	tes't
+	text2
 ```
 
 ## Ввод длинных строк 
