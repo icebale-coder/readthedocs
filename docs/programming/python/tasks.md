@@ -28,6 +28,5 @@ for element in list_spec:
 
 ```bash
 list_spec = ['\t\n1','\t\n2']
-list_spec = ['\t\n1','\t\n2']
 list1 = list(map(lambda x: x.strip(),list_spec)) 
 ```
