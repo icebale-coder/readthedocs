@@ -1,6 +1,7 @@
 title: BGP flowspec
 
 # BGP flowspec
+[RFC5575](https://datatracker.ietf.org/doc/html/rfc5575)
 
 Disclaimer:
 По BGP можно даже играть в [морской бой](https://habr.com/ru/post/415689/)...
