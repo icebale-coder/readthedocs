@@ -62,7 +62,7 @@ Hold Time — Интервал времени в секундах, по исте
     - "4" - "KEEPALIVE" - используется для проверки доступности соседа.
     - "5" - "ROUTE-REFRESH" - используется для передачи префиксов 
 ```
-      [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/ORF/), а также для запросов о повторной передачи всех префиксов известных соседу при работе механизма [Route refresh](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Route-Refresh/).
+      [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/ORF/), а также для запросов о повторной передачи всех префиксов известных соседу при работе механизма [Route refresh](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/Route-Refresh/).
 
 ### OPEN - формат сообщения
 OPEN (type = 1) - используется для установки отношений соседства и обмена базовыми параметрами. 
@@ -420,12 +420,12 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ## Настройки
 
-- [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
-- [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/ORF) 
-- [Soft-reconfiguration](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Soft-reconfiguration)
-- [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
-- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Fall-over)
-- [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/BGP-PIC)
+- [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/PMTUD)
+- [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/ORF) 
+- [Soft-reconfiguration](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/Soft-reconfiguration)
+- [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/PMTUD)
+- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/Fall-over)
+- [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/BGP-PIC)
 
 
 
