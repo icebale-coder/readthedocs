@@ -9,7 +9,7 @@ title: Tasks
 - навроде табулятотов, перевода строки и пр...
 Необходимо убрать данные спец символы с элементов списка. 
 
-list_spec = ['\t\n1','\t\n2']
+list1 = ['\t\n1','\t\n2']
 ```
 
 #### Варианты решения: 
@@ -18,15 +18,24 @@ list_spec = ['\t\n1','\t\n2']
 в цикле "for" прогнать каждый элемент и присовоить его новому элементу списка.
 
 ```bash
-list_spec = ['\t\n1','\t\n2']
-for element in list_spec: 
-    list1.append(element.strip())
+list1 = ['\t\n1','\t\n2']
+list_temp = []
+
+for element in list1: 
+    list_temp.append(element.strip())
+
+list1 = list_temp
 ```
 #### 2. чз map + lambda
 
 При помощи конструкции "map + lambda" переделать значение первоначального списка и присвоить результат в новый список 
 
 ```bash
-list_spec = ['\t\n1','\t\n2']
-list1 = list(map(lambda x: x.strip(),list_spec)) 
+list1 = ['\t\n1','\t\n2']
+list1 = list(map(lambda x: x.strip(),list1)) 
 ```
+
+list1 = ['\t\n1','\t\n2']
+def func_strip(x): return x.strip()
+list1 = list(map(func_strip(x),list1)) 
+

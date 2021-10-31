@@ -1,32 +1,37 @@
-title: Network Automation
-# Модель Автомаизации сети с помощью Python  
+title: Useful modules
+# Python MUST HAVE modules
 
-![image-devnet-python](../img/devnet-python.png)
-
-## Connection Managment:
-
+## Список модулей MUST HAVE
 ```bash
-	-Paramico
-	-Netmico
-	-Scrapli
-```
+    
+    Штатная обвязка
+    "argparse"
+    "logging"
 
-## Templates:
-```bash
-	-Jinja2 
-```
+    Поиск по регуляркам:
+    "re"
+    "textfsm"
 
-## Parsing:
+    Работа с процессами
+    "subprocess"
+    
+    Шаблонизаторы:
+    "jinja2"
 
-```bash
-	-TextFSM
-	-NTC templates
-	-PyATS & Genie
-```
+    PrintIT!
+    "tabulate"
 
-## Configuration:
-```bash
-	-NAPALM (python library)
-	-Ansible (comprehensive automation framework)
-	-Nornir (automation framework)
+    Форматирование
+    "csv"
+    "json"
+    "yaml"
+
+    Работа с оборудкой
+    "pexpect"
+    "netmiko"
+    "scrapli"
+    
+    Работа с netbox
+    "pynetbox"
+
 ```
