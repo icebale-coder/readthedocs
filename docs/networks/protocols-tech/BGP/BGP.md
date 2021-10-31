@@ -48,19 +48,21 @@ Hold Time — Интервал времени в секундах, по исте
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
+```bash
 - Marker — поле, которое включено в заголовок для совместимости. Размер поля — 16 байт, все байты должны быть 1.
 - Length — длина всего сообщения в октетах, включая заголовок. Поле может принимать значения от 19 до 4096.
 
 - Type — тип передаваемого сообщения:
 
-- 1 OPEN - используется для установки отношений соседства и обмена базовыми параметрами. 
-    Отправляется сразу после установки TCP-соединения.
-- 2 UPDATE - используется для обмена информацией о префиксах.
-- 3 NOTIFICATION - используется когда возникают ошибки BGP. После отправки сообщения сессия с соседом разрывается.
-- 4 KEEPALIVE - используется для проверки доступности соседа.
-- 5 ROUTE-REFRESH - используется для передачи префиксов [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/ORF/), а также для запросов о повторной передачи всех префиксов 
-    известных соседу при работе механизма [Route refresh](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Route-Refresh/).
-
+    - "1" - "OPEN" - используется для установки отношений соседства и обмена базовыми параметрами. 
+             Отправляется сразу после установки TCP-соединения.
+    - "2" -  "UPDATE" - используется для обмена информацией о префиксах.
+    - "3" - "NOTIFICATION" - используется когда возникают ошибки BGP. 
+             После отправки сообщения сессия с соседом разрывается.
+    - "4" - "KEEPALIVE" - используется для проверки доступности соседа.
+    - "5" - "ROUTE-REFRESH" - используется для передачи префиксов 
+```
+      [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/ORF/), а также для запросов о повторной передачи всех префиксов известных соседу при работе механизма [Route refresh](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/Route-Refresh/).
 
 ### OPEN - формат сообщения
 OPEN (type = 1) - используется для установки отношений соседства и обмена базовыми параметрами. 
@@ -89,7 +91,8 @@ OPEN (type = 1) - используется для установки отнош�
 - Hold Time — максимальное время в секундах, которое может пройти между получением Keepalive и сообщением Update
 - BGP Identifier — RID (Router )
 - Optional Parameters Length — длина опциональных параметров
-- Optional Parameters - это Capability, т.е возможности передачи всяческих параметров.
+- Optional Parameters - это Capability, т.е возможности передачи всяческих параметров. 
+  Список "Capability Codes" со ссылками на их RFC можно посмотреть [тут](https://www.iana.org/assignments/capability-codes/capability-codes.xhtml) 
 
 Пример OPEN:
 
@@ -417,12 +420,12 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ## Настройки
 
-- [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
-- [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/ORF) 
-- [Soft-reconfiguration](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Soft-reconfiguration)
-- [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/PMTUD)
-- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/Fall-over)
-- [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols/BGP/Settings/BGP-PIC)
+- [Базовая фильтрация + установка атрибутов](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/PMTUD)
+- [ORF](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/ORF) 
+- [Soft-reconfiguration](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/Soft-reconfiguration)
+- [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/PMTUD)
+- [Fall-over](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/Fall-over)
+- [BGP PIC](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/BGP/Settings/BGP-PIC)
 
 
 

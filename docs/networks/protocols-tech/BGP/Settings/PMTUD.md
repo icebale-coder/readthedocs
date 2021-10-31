@@ -3,7 +3,7 @@ title: PMTUD
 # PMTUD
 PMTUD - Path MTU Discovery позволяет увеличить скорость принятия анонсов по BGP, например при приеме или отправки FullView
 
-Для увеличения скорости, а по сути в данном контексте под скоростью подразумевается размер MTU и в конечном счете значение MSS в tcp сессии используется механизм [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols/TCP/#path_mtu_discovery_pmtud)
+Для увеличения скорости, а по сути в данном контексте под скоростью подразумевается размер MTU и в конечном счете значение MSS в tcp сессии используется механизм [PMTUD](https://icebale.readthedocs.io/en/latest/networks/protocols-tech/TCP/#path_mtu_discovery_pmtud)
 
 Для этого нужно:
 1. Максимально увеличить MTU на интерфейсе в сторону соседа
