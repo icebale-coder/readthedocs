@@ -399,6 +399,13 @@ https://forum.huawei.com/enterprise/en/understanding-of-loop-protection-for-the-
 
 ![ibgp-rr](../../img/bgp-rr.jpg)
 
+![ibgp-rr](../../img/bgp-update-from-RR.jpg)
+Как видно префиксы "рожденные" на непосредственном соседом приходят без доп атрибутов "Originator-ID" и "Cluster-List"
+а маршруты отраженные от соседа уже имеют доп атрибутов "Originator-ID" и "Cluster-List". 
+Дампы прилагаются:
+- [bgp without RR client](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp-with-out-RRclient.pcapng)
+- [bgp with RR client](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp-with-RRclient.pcapng)
+
 
 ## Internet eXchange (IX) площадки
 ```bash

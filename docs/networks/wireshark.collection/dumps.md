@@ -4,6 +4,8 @@ title: Wireshark collection
 
 - [ARP](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/arp.pcapng)
 - [BFD](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bfd-control-init+echo.pcapng)
+- [BGP without RR](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp-with-out-RRclient.pcapng)
+- [BGP with RR](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp-with-RRclient.pcapng)
 - [BGP+ORF](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp+orf.pcapng)
 - [BGP withdraw](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/bgp+withdraw.pcapng)
 - [DHCP DORA](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/dhcp-dora.pcapng)
