@@ -15,7 +15,7 @@ NX-OS - это вообще весьма большая тема для разг
 
 Настройка vpc - базовый момент при парной работе Nexus.
 Я отдельно освещу данную тему... когда найдется время...
-Disign: Site-to-Site, Back-to-Back, Peer-Link, keep-alive link...
+Disign: Peer-Link, Keep-Alive link, Single-Side, Double-Side, Back-to-Back.
 
 Вот дельная статья по дизайну и принципу работы vpc: [Nexus vpc guide](https://www.firewall.cx/cisco-technical-knowledgebase/cisco-data-center/1208-nexus-vpc-configuration-design-operation-troubleshooting.html)
 
@@ -74,8 +74,9 @@ Disclaimer:
 ```
 
 Если в двух словах, "conf sync" -  это возможность автоматической синхронизации.
-То сути есть global conf - в котором хранятся индивидуальные настройки коммутатора и 
+По сути есть "conf t" - в котором хранятся индивидуальные настройки коммутатора и 
 есть кусочек конфигурации, который синкается и соответственно будет одинаковым.
+Можно сказать, что "conf t" + "conf sync" составляют "global conf".
 
 !!!warning "Важное замечание"
 					  Нужно четко определиться с тем, что у вас будет храниться именно в "sync"
