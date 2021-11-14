@@ -1,5 +1,6 @@
 title: NX-OS cli
 
+# NX-OS cli
 
 Disclaimer:
 
@@ -10,7 +11,8 @@ NX-OS - это вообще весьма большая тема для разг
 Здесь я постараюсь описать свои рабочии моменты при работе с данной ОС,
 в частности "vpc", "conf sync"
 
-# vpc
+## vpc
+
 Настройка vpc - базовый момент при парной работе Nexus.
 Я отдельно освещу данную тему... когда найдется время...
 Disign: Site-to-Site, Back-to-Back, Peer-Link, keep-alive link...
@@ -18,13 +20,14 @@ Disign: Site-to-Site, Back-to-Back, Peer-Link, keep-alive link...
 Вот дельная статья по дизайну и принципу работы vpc: [Nexus vpc guide](https://www.firewall.cx/cisco-technical-knowledgebase/cisco-data-center/1208-nexus-vpc-configuration-design-operation-troubleshooting.html)
 
 
-##  sh vpc consistency-parameters global
+###  sh vpc consistency-parameters global
+
 ``` bash
 "sh vpc consistency-parameters global" - Посмотреть состояние общее по vpc
 ```
 
 
-## sh vpc consistency-parameters vpc 50
+### sh vpc consistency-parameters vpc 50
 
 ``` bash
 "sh vpc consistency-parameters vpc 50" - Посмотреть состояние определенного vpc 
@@ -59,7 +62,8 @@ Allowed VLANs               -     14,54-55,57,62,66-70,7 14,54-55,57,62,66-70,7
 Local suspended VLANs       -     906   
 ```
 
-# conf sync
+## conf sync
+
 Disclaimer:
 ```bash
 "conf sync" в Nexus - это как занятие сексом:
@@ -95,23 +99,27 @@ Disclaimer:
 
 - [траблшутинг "conf sync"](https://nexp.com.ua/technologies/nx-os/troubleshooting-nx-os-config-sync/)
 
-## Команды для работы с "conf sync":
+### Команды для работы с "conf sync":
 
-### sh run switch-profile
+#### sh run switch-profile
+
 ```bash
 "sh run switch-profile" - показать содержимое конфигурации, находящейся в "conf sync"
 ```
-### conf sync
+#### conf sync
+
 ```bash
 "conf sync" - перейти в режим конфигурации "conf sync"
 ```
-### switch-profile N0-N2
+#### switch-profile N0-N2
+
 ```bash
 "switch-profile N0-N2" - перейти в режим  редактирования конфигурации, 
                           где N0-N2 - название профиля
 ```
 
-### show switch-profile status
+#### show switch-profile status
+
 ```bash
 "show switch-profile status" - можно посмотреть состояние switch-profile
                               всё ли с ним в порядке.
@@ -129,7 +137,8 @@ vlan 222
 Данные команды перед их применением на конфигурации попадают в буфер, где хранятся  до их применения на оборудовании.
 С этим буфером можно произвести определенные манипуляции:
 
-### show switch-profile buffer
+#### show switch-profile buffer
+
 ```bash
 "show switch-profile buffer" - просмотр буфера
 1. vlan 111
@@ -140,14 +149,15 @@ vlan 222
 
 Можно удалить либо весь буфер либо определенную команду из него.
 
-### buffer-delete
+#### buffer-delete
+
 ```bash
 "buffer-delete" - удалить весь буфер.
 ```
 
-### commit
+#### commit
+
 ```bash
 "commit" - записать(применить) содержимое буфера в конфигурацию "conf sync".
            При данном действии как раз и происходит синхронизация конфигурации со вторым пиром.
 ```
-
