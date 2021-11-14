@@ -1,6 +1,8 @@
 title: NX-OS cli
 
+
 Disclaimer:
+
 ```bash
 еже еси на vpc... (c) Ваня Т.
 ```
@@ -11,7 +13,7 @@ NX-OS - это вообще весьма большая тема для разг
 # vpc
 Настройка vpc - базовый момент при парной работе Nexus.
 Я отдельно освещу данную тему... когда найдется время...
-Disign: Site-to-Site, Back-to-Back...
+Disign: Site-to-Site, Back-to-Back, Peer-Link, keep-alive link...
 
 Вот дельная статья по дизайну и принципу работы vpc: [Nexus vpc guide](https://www.firewall.cx/cisco-technical-knowledgebase/cisco-data-center/1208-nexus-vpc-configuration-design-operation-troubleshooting.html)
 
@@ -22,7 +24,7 @@ Disign: Site-to-Site, Back-to-Back...
 ```
 
 
-#
+## sh vpc consistency-parameters vpc 50
 
 ``` bash
 "sh vpc consistency-parameters vpc 50" - Посмотреть состояние определенного vpc 
@@ -80,7 +82,7 @@ Disclaimer:
 
 !!!warning "Важно знать"
 						Для работы "conf sync" использует multicast. 
-            По этому необходимо если у вас менеджмент между участниками vpc домена подключен не напрямую,
+            По этому необходимо если у вас keep-alive между участниками vpc домена подключен не напрямую,
             а например через промежуточные коммутаторы, то на этих промежуточных коммутаторах должен быть разрешен
             multicast - знаю, наступал на эти "грабли"
 
