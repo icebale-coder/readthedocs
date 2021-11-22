@@ -111,4 +111,4 @@ Non-IP: Source XOR Destination MAC address
 - [1. Агрегирование каналов](http://xgu.ru/iki/%D0%90%D0%B3%D1%80%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2)
 - [2. Протокол агрегирования каналов: Etherchannel](https://habr.com/ru/post/334778/)
 
-Пример дампа rip в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/lacp1.pcapng)
+Пример дампа lacp в wireshark можно посмотреть [здесь](https://icebale.readthedocs.io/en/latest/networks/wireshark.collection/lacp1.pcapng)
