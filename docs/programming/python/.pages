@@ -6,5 +6,6 @@ arrange:
     - tuple.md
     - set.md
     - convertaion.md
+    - print.md
     - script.md
     - modules.md
