@@ -127,17 +127,18 @@ In [174]: print("{:<015} {:<015} {:<08b}".format(ip, mac, vlan))
 
 In [121]: items = ["Prefix", "AD/Metric", "Next-Hop", "Last update", "Outbound Interface"]                       
 In [122]: values = ['10.0.24.0/24', '110/41', 'via', '10.0.13.3', '3d18h', 'FastEthernet0/0']                    
+
 In [114]: template = "{:25} {}\n" * 5                                                                            
 
 In [115]: template                                                                                               
 Out[115]: '{:25} {}\n{:25} {}\n{:25} {}\n{:25} {}\n{:25} {}\n'
 
 In [124]: print(template.format( 
-     ...:         item[0],value[0], 
-     ...:         item[1],value[1], 
-     ...:         item[2],value[2], 
-     ...:         item[3],value[3], 
-     ...:         item[4],value[4], 
+     ...:         items[0],values[0], 
+     ...:         items[1],values[1], 
+     ...:         items[2],values[2], 
+     ...:         items[3],values[3], 
+     ...:         items[4],values[4], 
      ...: ),end="")            
 
 Prefix                    10.0.24.0/24
@@ -149,5 +150,5 @@ Outbound Interface        3d18h
 
 ## Литература
 
-- [Python для сетевых инженеров: Форматирование строк](https://pyneng.readthedocs.io/ru/latest/book/04_data_structures/string_format.html?highlight=format#format)
+- [Python для сетевых инженеров: Форматирование строк ](https://pyneng.readthedocs.io/ru/latest/book/04_data_structures/string_format.html?highlight=format#format)
 
