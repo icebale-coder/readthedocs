@@ -149,5 +149,5 @@ Outbound Interface        3d18h
 
 ## Литература
 
-- [Python для сетевых инженеров: Форматирование строк с оператором ](https://pyneng.readthedocs.io/ru/latest/book/additional_info/old_str_formatting.html?highlight=print#id1)
+- [Python для сетевых инженеров: Форматирование строк с оператором ](https://pyneng.readthedocs.io/ru/latest/book/04_data_structures/string_format.html?highlight=format#format)
 
