@@ -146,3 +146,8 @@ Next-Hop                  via
 Last update               10.0.13.3
 Outbound Interface        3d18h
 ```
+
+## Литература
+
+- [Python для сетевых инженеров: Форматирование строк с оператором ](https://pyneng.readthedocs.io/ru/latest/book/additional_info/old_str_formatting.html?highlight=print#id1)
+
