@@ -725,4 +725,41 @@ commit check
 commit
 ```
 
+#### Просмотр существующих коммиттов
+```bash
+show system commit 
+```
+
+#### Просмотр существующих коммиттов
+```bash
+show system commit 
+    0   2022-02-16 21:55:12 +03 by user1 via cli commit synchronize
+    1   2022-02-16 18:47:49 +03 by user2 via cli commit synchronize
+    2   2022-02-16 18:34:24 +03 by user3 via cli commit synchronize
+    3   2022-02-16 18:32:14 +03 by user4 via cli commit synchronize
+```
+
+#### Просмотр диффа между коммиттами
+##### Пример 1
+Например, если последним действием поменяли local-preference с 200 на 250,
+то для просмотра, что именно поменялось можно использовать конструкция такого типа: "show system rollback compare 1 0"
+
+```bash
+"show system rollback compare 1 0"
+[edit policy-options policy-statement policy1 term local-preference then]
+-      local-preference 200;
++      local-preference 250;
+```
+
+##### Пример 2
+Соответственно, чтобы посмотреть что было изменено во 2ом коммите, 
+то можно использовать конструкция такого типа: "show system rollback compare 2 1"
+Например в таком случае во втором коммитте был добавлен только полисер на 500Mbit,
+больше ничего не изменялось.
+```bash
+"show system rollback compare 2 1"
+    [edit interfaces ae0 unit 1111 family ccc policer]
+    +       input 500Mbit;
+```
+
 
