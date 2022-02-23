@@ -682,16 +682,18 @@ admin@MBR# top
 
 ### Commit/Rollback
 
-#### Просмотр изменений до комитта **show | compare**
+#### show | compare 
 ```bash 
+# Просмотр изменений до комитта 
     admin@MBR# show | compare 
     [edit interfaces ae0 unit 900 family inet]
 -      address 16.16.16.3/30;
 +      address 17.17.17.3/30;
 ```
 
-#### Посмотреть незакоммиченные данные на одну итерацию до текущего коммита
+#### show | compare rollback 1
 ```bash
+# Посмотреть незакоммиченные данные на одну итерацию до текущего коммита
 show | compare rollback 1
 ```
 #### Отмена незакоммченных изменений 
