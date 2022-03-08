@@ -35,7 +35,9 @@ In [62]: vlans_str = []
     ...: for v in vlans: 
     ...:     vlans_str.append(str(v)) 
 
-In [63]: vlans_str                                                                                                                                                                                    Out[63]: ['10', '20', '40', '50', '60']
+In [63]: vlans_str                                                                                                                                                                                    
+
+Out[63]: ['10', '20', '40', '50', '60']
 
 ```
 
