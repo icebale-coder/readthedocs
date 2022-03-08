@@ -1,4 +1,4 @@
-title: Useful (comprehentions, zip, map, lyamda)
+title: Useful (comprehentions, zip, map, lambda)
 
 # Полезные функции и пр.
 
@@ -121,4 +121,12 @@ Out[9]: ['10', '20', '40', '50', '60']
 
 In [10]: set(map(str,vlans))                      
 Out[10]: {'10', '20', '40', '50', '60'}
+```
+
+## lambda
+специальная анонимная функция, которая сразу возвращает значение.
+
+```bash
+"Пример функции lambda"
+
 ```
