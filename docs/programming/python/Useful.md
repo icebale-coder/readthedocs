@@ -56,8 +56,36 @@ In [26]: list1 = [
 
 In [27]: header = ["interface", "ip", "physic", "status"]                                                                                                                                                                                     
 
-In [28]: dict_intf = [dict(zip(header,l)) for l in list1]                                                                                                                                                                                     
+"zip - яляется "ленивым" генераторим, т.е. подстваляет данные только тогда, когда точно определен тип"
+In [14]: [zip(header,l) for l in list1] 
+Out[14]: [<zip at 0x7f2fb0271100>, <zip at 0x7f2fb0271740>, <zip at 0x7f2fb02aef40>]
 
+In [15]: [dict(zip(header,l)) for l in list1] 
+Out[15]: 
+[{'interface': 'gi0/1', 'ip': '10.0.1.1', 'physic': 'duplex', 'status': 'up'},
+ {'interface': 'gi0/2', 'ip': '10.0.1.2', 'physic': 'auto', 'status': 'up'},
+ {'interface': 'gi0/3',
+  'ip': '10.0.1.3',
+  'physic': 'duplex',
+  'status': 'down'}]
+
+In [16]: [list(zip(header,l)) for l in list1] 
+Out[16]: 
+[[('interface', 'gi0/1'),
+  ('ip', '10.0.1.1'),
+  ('physic', 'duplex'),
+  ('status', 'up')],
+ [('interface', 'gi0/2'),
+  ('ip', '10.0.1.2'),
+  ('physic', 'auto'),
+  ('status', 'up')],
+ [('interface', 'gi0/3'),
+  ('ip', '10.0.1.3'),
+  ('physic', 'duplex'),
+  ('status', 'down')]]
+
+
+In [28]: dict_intf = [dict(zip(header,l)) for l in list1] 
 In [29]: dict_intf                                                                                                                                                                                                                            
 Out[29]: 
 [{'interface': 'gi0/1', 'ip': '10.0.1.1', 'physic': 'duplex', 'status': 'up'},
@@ -77,4 +105,18 @@ In [30]: for intf in dict_intf:
 
 ```
 
+## map
+map - тоже "ленивый" генератор - не подставит данные, пока не отпределится точно их тип
 
+```bash
+In [7]: vlans = [10, 20, 40, 50, 60]                 
+
+In [8]: map(str,vlans)                                 
+Out[8]: <map at 0x7f2fb0290520>
+
+In [9]: list(map(str,vlans))                      
+Out[9]: ['10', '20', '40', '50', '60']
+
+In [10]: set(map(str,vlans))                      
+Out[10]: {'10', '20', '40', '50', '60'}
+```
