@@ -7,6 +7,8 @@ lookatme - маленькая утилита для отображения markd
 
 [Сайт проекта lookatme](https://lookatme.readthedocs.io/en/v2.3.2/)
 
+![slideshow](https://lookatme.readthedocs.io/en/v2.3.2/_images/lookatme_tour.gif)
+
 ## Установка
 
 ```bash
