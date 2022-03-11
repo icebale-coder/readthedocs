@@ -10,7 +10,7 @@
 # 1. Создаем пользователя на github-e
 
 # 2. Создаем ключ ssh
-  ssh-keygen -t rsa -b 4096 -C "email@for_instance"
+  ssh-keygen -t rsa -b 4096 -C "username.user@example.com"
 
   в директории /home/ИМЯ_ПОЛЬЗОВАТЕЛЯ/.ssh
   создаются файлы:
@@ -57,7 +57,7 @@ Hi icebale-coder! You've successfully authenticated, but GitHub does not provide
 ```
 
 #### Клонирование существующего репозитария:
-Если на githunb уже есть репозитарий, то можно склонировать его.
+Если на github уже есть репозитарий, то можно склонировать его.
 
 ```bash
   git clone git@github.com:icebale-coder/readthedocs.git
