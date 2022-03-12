@@ -304,26 +304,190 @@ set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 mtu 1500
 set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 pseudowire-status-tlv
 ```
 
-#### vpls Martini mode
-"Схема и настройка vlls Kompella mode на примере 3-х сайтов"
+#### vpls Kompella mode
 
-![local-l2circuit](img/vpls-kompella-mode.jpg)
+"Схема и настройка vpls Kompella mode на примере 3-х сайтов"
+
+```bash
+"Описание схемы и принципа работы."
+Имеется 3 сайта присутствия услуги (PE1, PE2, PE3).
+В каждый сайт включено несколько интерфейсов.
+Все они в конечном счете объединяются в один броадкаст домен. 
+
+На PE1 изначально один из интерфейсов находится в другом влане.
+Для того, чтобы была связность между вcеми интерфейсами vpls домена используется нормализация вланов,
+"Достигается это за счет:"
+"input-vlan-map pop AND output-vlan-map push"
+т.е. при выходе с интерфейса тег влана снимается и далее внутри vpls передается без тега,
+а при попадании на исходящий интерфейс в кадр добавляется тег нужного влана.
+Таким образом, получается L2 связность между всеми интерфейсами, 
+даже несмотря на то, что они находятся в различных вланах.
+
+vrf-target target:1111:123 - RT - определяет принадлежность сайтов vpls к одному домену.
+```
+
+![vpls-kompella-mode](img/vpls-kompella-mode.jpg)
 
 ```bash
 "PE-1"
+
+"Настройка интерфейсов, входящих в vpls домен"
+set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
+set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
+set interfaces xe-1/1/1 unit 333 vlan-id 333
+set interfaces xe-1/1/1 unit 333 input-vlan-map pop
+set interfaces xe-1/1/1 unit 333 output-vlan-map push
+set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
+
+set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
+set interfaces ae2 unit 333 encapsulation vlan-vpls
+set interfaces ae2 unit 333 vlan-id 333
+set interfaces ae2 unit 333 input-vlan-map pop
+set interfaces ae2 unit 333 output-vlan-map push
+set interfaces ae2 unit 333 family vpls policer input 200Mbit
+
+"Настройка Route instance типа - instance-type vpls"
+set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+set routing-instances VPLS_Kompella instance-type vpls
+
+set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+
+"Идентификатор сайта - должен быть для участников vpls домена"
+set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
+
+set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
+set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
+set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
+
+"Перечисление интерфейсов, входящих в vpls домен"
+set routing-instances VPLS_Kompella interface xe-1/1/1.333
+set routing-instances VPLS_Kompella interface ae2.333
+set routing-instances VPLS_Kompella interface ae4.3224
+
+"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+set routing-instances VPLS_Kompella vrf-target target:1111:123
 ```
 
 ```bash
 "PE-2"
+
+"Настройка интерфейсов, входящих в vpls домен"
+set interfaces ae2 unit 333 description "VPLS Kompella mode"
+set interfaces ae2 unit 333 encapsulation vlan-vpls
+set interfaces ae2 unit 333 vlan-id 333
+set interfaces ae2 unit 333 input-vlan-map pop
+set interfaces ae2 unit 333 output-vlan-map push
+set interfaces ae2 unit 333 family vpls policer input 100Mbit
+
+"Настройка Route instance типа - instance-type vpls"
+set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+set routing-instances VPLS_Kompella instance-type vpls
+
+set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+
+"Идентификатор сайта - должен быть для участников vpls домена"
+set routing-instances VPLS_Kompella protocols vpls site PE2 site-identifier 2
+set routing-instances VPLS_Kompella protocols vpls site PE2 interface ae2.333
+
+"Перечисление интерфейсов, входящих в vpls домен"
+set routing-instances VPLS_Kompella interface ae2.333
+
+"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+set routing-instances VPLS_Kompella vrf-target target:1111:123
 ```
 
 ```bash
 "PE-3"
+"Настройка интерфейсов, входящих в vpls домен"
+set interfaces xe-3/1/1 unit 333 description "VPLS VPLS_Kompella int xe-3/1/1.333"
+set interfaces xe-3/1/1 unit 333 encapsulation vlan-vpls
+set interfaces xe-3/1/1 unit 333 vlan-id 333
+set interfaces xe-3/1/1 unit 333 input-vlan-map pop
+set interfaces xe-3/1/1 unit 333 output-vlan-map push
+set interfaces xe-3/1/1 unit 333 family vpls policer input 200Mbit
+
+set interfaces ae3 unit 333 description "VPLS Kompella mode int ae3.333"
+set interfaces ae3 unit 333 encapsulation vlan-vpls
+set interfaces ae3 unit 333 vlan-id 333
+set interfaces ae3 unit 333 input-vlan-map pop
+set interfaces ae3 unit 333 output-vlan-map push
+set interfaces ae3 unit 333 family vpls policer input 200Mbit
+
+"Настройка Route instance типа - instance-type vpls"
+set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+set routing-instances VPLS_Kompella instance-type vpls
+
+set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+
+"Идентификатор сайта - должен быть для участников vpls домена"
+set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 3
+set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-3/1/1.333
+set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae3.333
+
+"Перечисление интерфейсов, входящих в vpls домен"
+set routing-instances VPLS_Kompella interface xe-3/1/1.333
+set routing-instances VPLS_Kompella interface ae3.333
+
+"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+set routing-instances VPLS_Kompella vrf-target target:1111:123
+```
+
+!!!warning "Важно"
+          Для нормальной работы, необходимо также предварительно настроить протоколы LDP и/или RSVP-TE
+          взависимости от реализуемого дизайна сети, а также протоколы IGP (OSPF или  IS-IS) 
+          Также необходимо, чтобы в протоколе bgp была настроена соответствующая "address family"
+
+```bash
+"PE-1"
+"Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
+set protocols ldp interface ae11.11
+set protocols mpls interface ae11.11
+
+"Настройка аddress family в протоколе BGP"
+set protocols bgp group Core type internal
+set protocols bgp group Core local-address 1.1.1.1
+set protocols bgp group Core family l2vpn signaling
+"Указание соседей по BGP"
+set protocols bgp group Core neighbor 2.2.2.2 description PE-2
+set protocols bgp group Core neighbor 3.3.3.3 description PE-3
+```
+
+```bash
+"PE-2"
+"Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
+set protocols ldp interface ae22.22
+set protocols mpls interface ae22.22
+
+"Настройка аddress family в протоколе BGP"
+set protocols bgp group Core type internal
+set protocols bgp group Core local-address 2.2.2.2
+set protocols bgp group Core family l2vpn signaling
+"Указание соседей по BGP"
+set protocols bgp group Core neighbor 1.1.1.1 description PE-1
+set protocols bgp group Core neighbor 3.3.3.3 description PE-3
+```
+
+```bash
+"PE-2"
+"Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
+set protocols ldp interface ae22.22
+set protocols mpls interface ae22.22
+
+"Настройка аddress family в протоколе BGP"
+set protocols bgp group Core type internal
+set protocols bgp group Core local-address 3.3.3.3
+set protocols bgp group Core family l2vpn signaling
+"Указание соседей по BGP"
+set protocols bgp group Core neighbor 1.1.1.1 description PE-1
+set protocols bgp group Core neighbor 2.2.2.2 description PE-2
 ```
 
 
+#### vpls Martini mode
 
-#### vpls Kompella mode
 #### vpls Kompella mode + mesh group
 
 ### EVPN
