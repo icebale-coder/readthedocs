@@ -14,7 +14,7 @@ policer vs shared-bandwidth-policer
           https://kb.juniper.net/InfoCenter/index?page=content&id=KB31589&cat=VMX&actp=LIST
 
   
-  ```bash
+```bash
   "Терминология Juniper (JNCIA-Junos Study Guide):"
   - RE -  Route Engine - Control Plane
   - PFE - Packet Forward Engine - Data Plane
