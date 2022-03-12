@@ -268,7 +268,7 @@ set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 mtu 1500
 set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 pseudowire-status-tlv
 
 "Время перестроения обратно на основной канал, если основной канал заработал"
-"В данном случае основной кнала это PE1 - PE2"
+"В данном случае основной канал это PE1 - PE2"
 "[задается в секундах - в данном случае время перестроения на основной канал задано разным - 5 мин]"
 set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 revert-time 300
 
@@ -530,11 +530,11 @@ set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
 "участник которого по сути mesh группа - [PE11_mesh],"
 "в которой находится xconnect(l2circuit)"
 "-----------------------------------------------------------------------"
-set routing-instances iCotton protocols vpls site PE11 site-identifier 11
-set routing-instances iCotton protocols vpls site PE11 mesh-group PE11_mesh
+set routing-instances VPLS_Kompella protocols vpls site PE11 site-identifier 11
+set routing-instances VPLS_Kompella protocols vpls site PE11 mesh-group PE11_mesh
 
-set routing-instances iCotton protocols vpls mesh-group PE11_mesh vpls-id 333
-set routing-instances iCotton protocols vpls mesh-group PE11_mesh neighbor 11.11.11.11 encapsulation-type ethernet-vlan
+set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh vpls-id 333
+set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh neighbor 11.11.11.11 encapsulation-type ethernet-vlan
 "-----------------------------------------------------------------------"
 
 "Перечисление интерфейсов, входящих в vpls домен"
@@ -562,6 +562,105 @@ interface GigabitEthernet0/0.333
   service-policy output 50Mbit
 
 ```
+##### Diagnostic
+
+<details><summary>show vpls connections instance VPLS_Kompella</summary>
+<p>
+
+```bash
+Показать состояние инстанса и соседей
+"show vpls connections instance VPLS_Kompella"
+  Layer-2 VPN connections:
+
+  Legend for connection status (St)   
+  EI -- encapsulation invalid      NC -- interface encapsulation not CCC/TCC/VPLS
+  EM -- encapsulation mismatch     WE -- interface and instance encaps not same
+  VC-Dn -- Virtual circuit down    NP -- interface hardware not present 
+  CM -- control-word mismatch      -> -- only outbound connection is up
+  CN -- circuit not provisioned    <- -- only inbound connection is up
+  OR -- out of range               Up -- operational
+  OL -- no outgoing label          Dn -- down                      
+  LD -- local site signaled down   CF -- call admission control failure      
+  RD -- remote site signaled down  SC -- local and remote site ID collision
+  LN -- local site not designated  LM -- local site ID not minimum designated
+  RN -- remote site not designated RM -- remote site ID not minimum designated
+  XX -- unknown connection status  IL -- no incoming label
+  MM -- MTU mismatch               MI -- Mesh-Group ID not available
+  BK -- Backup connection	         ST -- Standby connection
+  PF -- Profile parse failure      PB -- Profile busy
+  RS -- remote site standby	 SN -- Static Neighbor
+  LB -- Local site not best-site   RB -- Remote site not best-site
+  VM -- VLAN ID mismatch           HS -- Hot-standby Connection
+
+  Legend for interface status 
+  Up -- operational           
+  Dn -- down
+
+Instance: VPLS_Kompella
+Edge protection: Not-Primary
+  BGP-VPLS State
+  Local site: PE1 (1)
+    connection-site           Type  St     Time last up          # Up trans
+    2                         rmt   Up     Feb 24 16:20:10 2022           1
+      Remote PE: 2.2.2.2, Negotiated control-word: No
+      Incoming label: 6744, Outgoing label: 223
+      Local interface: lsi.1048002, Status: Up, Encapsulation: VPLS
+        Description: Intf - vpls VPLS_Kompella local site 1 remote site 2
+      Flow Label Transmit: No, Flow Label Receive: No
+
+      Remote PE: 3.3.3.3, Negotiated control-word: No
+      Incoming label: 6744, Outgoing label: 223
+      Local interface: lsi.1048003, Status: Up, Encapsulation: VPLS
+        Description: Intf - vpls VPLS_Kompella local site 1 remote site 3
+      Flow Label Transmit: No, Flow Label Receive: No
+  BGP-VPLS State
+  Local site: PE11 (11)
+    connection-site           Type  St     Time last up          # Up trans
+    2                         rmt   LM   
+
+  LDP-VPLS State
+  Mesh-group connections: PE11_mesh
+    Neighbor                  Type  St     Time last up          # Up trans
+    11.11.11.11(vpls-id 333) rmt  Up     Mar  9 07:43:53 2022           1
+      Remote PE: 11.11.11.11, Negotiated control-word: No
+      Incoming label: 6767, Outgoing label: 573
+      Negotiated PW status TLV: No
+      Local interface: lsi.1048011, Status: Up, Encapsulation: VLAN
+        Description: Intf - vpls VPLS_Kompella neighbor 11.11.11.11 vpls-id 333
+      Flow Label Transmit: No, Flow Label Receive: No
+```
+</p>
+</details>
+
+
+<details><summary>show vpls mac-table instance VPLS_Kompella</summary>
+<p>
+
+```bash
+Показать mac таблицу vpls 
+"show vpls mac-table instance VPLS_Kompella"        
+
+MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+    O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+Routing instance : VPLS_Kompella
+ Bridging domain : __VPLS_Kompella__, VLAN : NA
+   MAC                 MAC      Logical          NH     MAC         active
+   address             flags    interface        Index  property    source
+   11:1d:a1:be:ef:00   D        ae2.333        
+   00:00:02:01:de:ad   D        lsi.1048002     
+   00:00:c4:a1:55:ff   D        ae2.333        
+   00:a2:ee:a2:1a:84   D        ae2.333        
+   00:00:03:01:de:ad   D        lsi.1048003     
+   48:46:fb:8c:c3:7c   D        ae2.333        
+   4c:4e:35:ae:4a:81   D        ae2.333        
+   c4:0a:cb:21:06:42   D        ae4.444        
+   c4:72:95:a3:0d:97   D        lsi.1048011     
+   c4:72:95:a3:0d:c2   D        lsi.1048011    
+
+```
+</p>
+</details>
 
 #### vpls Martini mode
 
