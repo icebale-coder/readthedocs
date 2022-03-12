@@ -186,9 +186,9 @@ set protocols l2circuit neighbor 2.2.2.2 interface xe-1/1/1.333 mtu 1600
 
 Принцип работы такой схемы заключается в том, 
 
-что при падении из одной стороне связности l2circuit перестраивается на backup соседа.  
+что при падении на одной стороне связности l2circuit перестраивается на backup соседа.  
 
-![local-l2circuit](img/l2circuit_backup.jpg)
+![local-l2circuit](img/l2circuit+backup.jpg)
 
 ```bash
 "PE-1"
