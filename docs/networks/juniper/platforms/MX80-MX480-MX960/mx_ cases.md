@@ -154,9 +154,33 @@ set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
 set firewall policer 150Mbit_shared then discard
 ```
 
-
-
 #### l2circuit
+"Настройка l2circuit"
+
+Для организации L2 связности между двумя интерфейсами на двух маршрутизаторах l2circuit
+
+![local-l2circuit](img/l2circuit.jpg)
+
+```bash
+"Пример настройки l2circuit между [PE1 xe-1/1/1.333] и [PE2 xe-2/1/1.333"]
+
+"PE1"
+set interfaces xe-1/1/1 unit 333 description "L2VPN l2circuit"
+set interfaces xe-1/1/1 unit 333 encapsulation vlan-ccc
+set interfaces xe-1/1/1 unit 333 vlan-id 333
+
+set protocols l2circuit neighbor 1.1.1.1 interface xe-1/1/1.333 virtual-circuit-id 333
+set protocols l2circuit neighbor 1.1.1.1 interface xe-1/1/1.333 mtu 1600
+
+"PE-2"
+set interfaces xe-2/1/1 unit 333 description "L2VPN l2circuit"
+set interfaces xe-2/1/1 unit 333 encapsulation vlan-ccc
+set interfaces xe-2/1/1 unit 333 vlan-id 333
+
+set protocols l2circuit neighbor 2.2.2.2 interface xe-1/1/1.333 virtual-circuit-id 333
+set protocols l2circuit neighbor 2.2.2.2 interface xe-1/1/1.333 mtu 1600
+```
+
 #### l2circuit + backup
 
 #### vpls Martini mode
