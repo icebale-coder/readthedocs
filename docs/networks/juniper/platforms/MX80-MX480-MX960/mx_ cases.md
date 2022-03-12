@@ -274,7 +274,7 @@ Dn -- down
 
 ```bash
 
-show l2circuit connections interface ae2.333                
+"show l2circuit connections interface ae2.333"                
 Layer-2 Circuit Connections:
 
 Legend for connection status (St)   
@@ -331,6 +331,47 @@ set interfaces xe-2/1/1 unit 333 vlan-id 333
 set protocols l2circuit neighbor 2.2.2.2 interface xe-1/1/1.333 virtual-circuit-id 333
 set protocols l2circuit neighbor 2.2.2.2 interface xe-1/1/1.333 mtu 1600
 ```
+
+##### Diagnostic
+
+<details><summary>show l2circuit connections interface xe-1/1/1.333</summary>
+<p>
+
+```bash
+"На PE1"
+"show l2circuit connections interface xe-1/1/1.333"
+Layer-2 Circuit Connections:
+
+Legend for connection status (St)   
+EI -- encapsulation invalid      NP -- interface h/w not present   
+MM -- mtu mismatch               Dn -- down                       
+EM -- encapsulation mismatch     VC-Dn -- Virtual circuit Down    
+CM -- control-word mismatch      Up -- operational                
+VM -- vlan id mismatch		 CF -- Call admission control failure
+OL -- no outgoing label          IB -- TDM incompatible bitrate 
+NC -- intf encaps not CCC/TCC    TM -- TDM misconfiguration 
+BK -- Backup Connection          ST -- Standby Connection
+CB -- rcvd cell-bundle size bad  SP -- Static Pseudowire
+LD -- local site signaled down   RS -- remote site standby
+RD -- remote site signaled down  HS -- Hot-standby Connection
+XX -- unknown
+
+Legend for interface status  
+Up -- operational            
+Dn -- down                   
+Neighbor: 2.2.2.2 
+    Interface                 Type  St     Time last up          # Up trans
+    xe-1/1/1.333(vc 333)         rmt   Up     Feb 17 22:58:25 2022           2
+      Remote PE: 2.2.2.2, Negotiated control-word: Yes (Null)
+      Incoming label: 202, Outgoing label: 383
+      Negotiated PW status TLV: Yes
+      local PW status code: 0x00000000, Neighbor PW status code: 0x00000000
+      Local interface: xe-1/1/1.333, Status: Up, Encapsulation: VLAN
+      Flow Label Transmit: No, Flow Label Receive: No
+```
+</p>
+</details>
+
 
 #### l2circuit + backup
 "Схема и настройка l2circuit с возможностью резерва"
@@ -390,6 +431,51 @@ set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 description "L2V
 set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 mtu 1500
 set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 pseudowire-status-tlv
 ```
+
+##### Diagnostic
+<details><summary>show l2circuit connections interface xe-1/1/1.333</summary>
+<p>
+
+```bash
+"PE1"
+"show l2circuit connections interface ae4.510"
+Layer-2 Circuit Connections:
+
+Legend for connection status (St)   
+EI -- encapsulation invalid      NP -- interface h/w not present   
+MM -- mtu mismatch               Dn -- down                       
+EM -- encapsulation mismatch     VC-Dn -- Virtual circuit Down    
+CM -- control-word mismatch      Up -- operational                
+VM -- vlan id mismatch		 CF -- Call admission control failure
+OL -- no outgoing label          IB -- TDM incompatible bitrate 
+NC -- intf encaps not CCC/TCC    TM -- TDM misconfiguration 
+BK -- Backup Connection          ST -- Standby Connection
+CB -- rcvd cell-bundle size bad  SP -- Static Pseudowire
+LD -- local site signaled down   RS -- remote site standby
+RD -- remote site signaled down  HS -- Hot-standby Connection
+XX -- unknown
+
+Legend for interface status  
+Up -- operational            
+Dn -- down                   
+Neighbor: 2.2.2.2 
+    Interface                 Type  St     Time last up          # Up trans
+    ae2.333(vc 333)          rmt   Up     Jun  2 15:44:30 2021           1
+      Remote PE: 2.2.2.2, Negotiated control-word: Yes (Null)
+      Incoming label: 1417, Outgoing label: 359280
+      Negotiated PW status TLV: Yes
+      local PW status code: 0x00000000, Neighbor PW status code: 0x00000000
+      Local interface: ae2.333, Status: Up, Encapsulation: VLAN
+        Description: L2VPN l2circuit+backup
+      Flow Label Transmit: No, Flow Label Receive: No
+"Неактивный - backup neighbor"
+Neighbor: 3.3.3.3 
+    ae2.333(vc 333)          rmt   ST   
+      local PW status code: 0x00000000, Neighbor PW status code: 0x00000000
+```
+</p>
+</details>
+
 
 #### vpls Kompella mode
 
