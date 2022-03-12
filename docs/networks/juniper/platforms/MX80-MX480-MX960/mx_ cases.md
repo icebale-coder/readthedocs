@@ -439,6 +439,7 @@ set routing-instances VPLS_Kompella vrf-target target:1111:123
           Для нормальной работы, необходимо также предварительно настроить протоколы LDP и/или RSVP-TE
           взависимости от реализуемого дизайна сети, а также протоколы IGP (OSPF или  IS-IS) 
           Также необходимо, чтобы в протоколе bgp была настроена соответствующая "address family"
+          в данном случае: "family l2vpn signaling"
 
 ```bash
 "PE-1"
