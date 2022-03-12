@@ -1,4 +1,4 @@
-title: MX cases
+title: cases MX
 
 # Кейсы по MX80/MX480/MX960
 
