@@ -2,6 +2,70 @@ title: MX cases
 
 # Кейсы по MX80/MX480/MX960
 
+## Настройка LAG
+
+```bash
+"Создание интерфейса ethernet aggregate (ae0)"
+
+set interfaces ae0 description "L2 LAG-60G"
+set interfaces ae0 flexible-vlan-tagging
+set interfaces ae0 mtu 9192
+set interfaces ae0 encapsulation flexible-ethernet-services
+set interfaces ae0 aggregated-ether-options link-speed 10g
+set interfaces ae0 aggregated-ether-options lacp active
+```
+
+```bash
+"Настройка физических интерфейсов, входящих в LAG ae0"
+
+set interfaces xe-2/0/0 description "ae0 member"
+set interfaces xe-2/0/0 gigether-options 802.3ad ae0
+
+set interfaces xe-2/0/1 description "ae0 member"
+set interfaces xe-2/0/1 gigether-options 802.3ad ae0
+
+set interfaces xe-2/1/0 description "ae0 member"
+set interfaces xe-2/1/0 gigether-options 802.3ad ae0
+
+set interfaces xe-2/1/1 description "ae0 member"
+set interfaces xe-2/1/1 gigether-options 802.3ad ae0
+
+set interfaces xe-3/1/0 description "ae0 member"
+set interfaces xe-3/1/0 gigether-options 802.3ad ae0
+
+set interfaces xe-3/1/1 description "ae0 member"
+set interfaces xe-3/1/1 gigether-options 802.3ad ae0
+```
+
+```bash
+"Диагностика"
+
+"show lacp interfaces ae0"
+Aggregated interface: ae0
+    LACP state:       Role   Exp   Def  Dist  Col  Syn  Aggr  Timeout  Activity
+      xe-2/1/0       Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/1/0     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/1/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/1/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/0/0       Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/0/0     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/0/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-2/0/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-3/1/0       Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-3/1/0     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-3/1/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      xe-3/1/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+
+    LACP protocol:        Receive State  Transmit State          Mux State 
+      xe-2/1/0                  Current   Fast periodic Collecting distributing
+      xe-2/1/1                  Current   Fast periodic Collecting distributing
+      xe-2/0/0                  Current   Fast periodic Collecting distributing
+      xe-2/0/1                  Current   Fast periodic Collecting distributing
+      xe-3/1/0                  Current   Fast periodic Collecting distributing
+      xe-3/1/1                  Current   Fast periodic Collecting distributing
+```
+
+
 ## policer 
 policer vs shared-bandwidth-policer
 
@@ -240,8 +304,25 @@ set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 mtu 1500
 set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 pseudowire-status-tlv
 ```
 
-
 #### vpls Martini mode
+"Схема и настройка vlls Kompella mode на примере 3-х сайтов"
+
+![local-l2circuit](img/vpls-kompella-mode.jpg)
+
+```bash
+"PE-1"
+```
+
+```bash
+"PE-2"
+```
+
+```bash
+"PE-3"
+```
+
+
+
 #### vpls Kompella mode
 #### vpls Kompella mode + mesh group
 
