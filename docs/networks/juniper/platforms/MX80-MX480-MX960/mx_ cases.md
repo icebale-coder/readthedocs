@@ -746,8 +746,6 @@ Routing instance : VPLS_Kompella
 </details>
 
 
-
-
 #### vpls Kompella mode + mesh group
 
 !!!warning "Важно"
@@ -756,6 +754,7 @@ Routing instance : VPLS_Kompella
         В таком случае используется функционал juniper, так называемые "mesh-group", 
         с помощью которых можно включать l2circuit как интерфейсы в vpls домен, работающий в режиме Kompella mode.
  
+
 ![vpls-kompella-mode+mesh group](img/vpls-kompella-mode+mesh-group.jpg)
 
 C учетом всего сказанного конфигурация на PE1 будет следующей:
