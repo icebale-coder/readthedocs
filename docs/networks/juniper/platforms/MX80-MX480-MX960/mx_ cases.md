@@ -485,11 +485,17 @@ set protocols bgp group Core family l2vpn signaling
 set protocols bgp group Core neighbor 1.1.1.1 description PE-1
 set protocols bgp group Core neighbor 2.2.2.2 description PE-2
 ```
-
-
+#### vpls Kompella mode + mesh group
+!!!warning "Важно"
+        Если какое то оборудование, которое должно участвовать в vpls Kompella mode, но данный функционал не поддерживает,
+        а например умеет только l2curcuit, точнее xconnect - речь идет про модельный ряд оборудования cisco...
+        В таком случае используется функционал juniper, так называемые "mesh-group", 
+        с помощью которых можно включать l2circuit как интерфейсы в vpls домен, работающий в режиме Kompella mode.
+ 
+![vpls-kompella-mode+mesh group](img/vpls-kompella-mod+-mesh-group.jpg)
+ 
 #### vpls Martini mode
 
-#### vpls Kompella mode + mesh group
 
 ### EVPN
 
