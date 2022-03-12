@@ -37,6 +37,9 @@ set interfaces xe-3/1/1 description "ae0 member"
 set interfaces xe-3/1/1 gigether-options 802.3ad ae0
 ```
 
+<details><summary>"Диагностика"</summary>
+<p>
+
 ```bash
 "Диагностика"
 
@@ -64,6 +67,8 @@ Aggregated interface: ae0
       xe-3/1/0                  Current   Fast periodic Collecting distributing
       xe-3/1/1                  Current   Fast periodic Collecting distributing
 ```
+</p>
+</details>
 
 
 ## policer 
@@ -77,7 +82,10 @@ policer vs shared-bandwidth-policer
           Описание проблемы:
           https://kb.juniper.net/InfoCenter/index?page=content&id=KB31589&cat=VMX&actp=LIST
 
-  
+
+<details><summary>Пример LAGа 4x10G</summary>
+<p>
+
 ```bash
   "Терминология Juniper (JNCIA-Junos Study Guide):"
   - RE -  Route Engine - Control Plane
@@ -157,6 +165,9 @@ policer vs shared-bandwidth-policer
           Xcvr 3                
       ---cut---  
 ```
+</p>
+</details>
+
 
 ```bash
 "Для корректной работы взависимости от типа интерфейса,"
