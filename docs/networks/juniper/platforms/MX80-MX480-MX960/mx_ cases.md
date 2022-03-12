@@ -188,6 +188,7 @@ set firewall policer 150Mbit_shared then discard
 ## MPLS
 
 ### L2VPN
+
 #### local-l2circuit
 Настройка local-switch l2circuit
 
@@ -228,6 +229,81 @@ set firewall policer 150Mbit_shared if-exceeding bandwidth-limit 150m
 set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
 set firewall policer 150Mbit_shared then discard
 ```
+
+
+##### Diagnostic
+<details><summary>show l2circuit connections interface xe-1/1/1.333</summary>
+<p>
+
+```bash
+
+show l2circuit connections interface xe-1/1/1.333                
+Layer-2 Circuit Connections:
+
+Legend for connection status (St)   
+EI -- encapsulation invalid      NP -- interface h/w not present   
+MM -- mtu mismatch               Dn -- down                       
+EM -- encapsulation mismatch     VC-Dn -- Virtual circuit Down    
+CM -- control-word mismatch      Up -- operational                
+VM -- vlan id mismatch		 CF -- Call admission control failure
+OL -- no outgoing label          IB -- TDM incompatible bitrate 
+NC -- intf encaps not CCC/TCC    TM -- TDM misconfiguration 
+BK -- Backup Connection          ST -- Standby Connection
+CB -- rcvd cell-bundle size bad  SP -- Static Pseudowire
+LD -- local site signaled down   RS -- remote site standby
+RD -- remote site signaled down  HS -- Hot-standby Connection
+XX -- unknown
+
+Legend for interface status  
+Up -- operational            
+Dn -- down                   
+ Local Switch xe-1/1/1.333 
+    Interface                 Type  St     Time last up          # Up trans
+    xe-1/1/1.333(vc 0)             loc   Up     Jan 20 11:36:53 2022           1
+      Local interface: xe-1/1/1.333, Status: Up, Encapsulation: VLAN
+        Description: L2VPN; local-switch l2circuit
+      Local interface: ae2.333, Status: Up, Encapsulation: VLAN
+```
+</p>
+</details>
+
+
+Обратное тоже равно...
+<details><summary>show l2circuit connections interface ae2.333</summary>
+<p>
+
+```bash
+
+show l2circuit connections interface ae2.333                
+Layer-2 Circuit Connections:
+
+Legend for connection status (St)   
+EI -- encapsulation invalid      NP -- interface h/w not present   
+MM -- mtu mismatch               Dn -- down                       
+EM -- encapsulation mismatch     VC-Dn -- Virtual circuit Down    
+CM -- control-word mismatch      Up -- operational                
+VM -- vlan id mismatch		 CF -- Call admission control failure
+OL -- no outgoing label          IB -- TDM incompatible bitrate 
+NC -- intf encaps not CCC/TCC    TM -- TDM misconfiguration 
+BK -- Backup Connection          ST -- Standby Connection
+CB -- rcvd cell-bundle size bad  SP -- Static Pseudowire
+LD -- local site signaled down   RS -- remote site standby
+RD -- remote site signaled down  HS -- Hot-standby Connection
+XX -- unknown
+
+Legend for interface status  
+Up -- operational            
+Dn -- down                   
+ Local Switch ae2.333 
+    Interface                 Type  St     Time last up          # Up trans
+    ae2.333(vc 0)             loc   Up     Jan 20 11:36:53 2022           1
+      Local interface: ae2.333, Status: Up, Encapsulation: VLAN
+        Description: L2VPN; local-switch l2circuit
+      Local interface: xe-1/1/1.333, Status: Up, Encapsulation: VLAN
+```
+</p>
+</details>
+
 
 #### l2circuit
 "Настройка l2circuit"
