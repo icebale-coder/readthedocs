@@ -658,7 +658,98 @@ set protocols bgp group Core family l2vpn signaling
 set protocols bgp group Core neighbor 1.1.1.1 description PE-1
 set protocols bgp group Core neighbor 2.2.2.2 description PE-2
 ```
+##### Diagnostic
+
+<details><summary>show vpls connections instance VPLS_Kompella</summary>
+<p>
+
+```bash
+Показать состояние инстанса и соседей
+"show vpls connections instance VPLS_Kompella"
+  Layer-2 VPN connections:
+
+  Legend for connection status (St)   
+  EI -- encapsulation invalid      NC -- interface encapsulation not CCC/TCC/VPLS
+  EM -- encapsulation mismatch     WE -- interface and instance encaps not same
+  VC-Dn -- Virtual circuit down    NP -- interface hardware not present 
+  CM -- control-word mismatch      -> -- only outbound connection is up
+  CN -- circuit not provisioned    <- -- only inbound connection is up
+  OR -- out of range               Up -- operational
+  OL -- no outgoing label          Dn -- down                      
+  LD -- local site signaled down   CF -- call admission control failure      
+  RD -- remote site signaled down  SC -- local and remote site ID collision
+  LN -- local site not designated  LM -- local site ID not minimum designated
+  RN -- remote site not designated RM -- remote site ID not minimum designated
+  XX -- unknown connection status  IL -- no incoming label
+  MM -- MTU mismatch               MI -- Mesh-Group ID not available
+  BK -- Backup connection	         ST -- Standby connection
+  PF -- Profile parse failure      PB -- Profile busy
+  RS -- remote site standby	 SN -- Static Neighbor
+  LB -- Local site not best-site   RB -- Remote site not best-site
+  VM -- VLAN ID mismatch           HS -- Hot-standby Connection
+
+  Legend for interface status 
+  Up -- operational           
+  Dn -- down
+
+Instance: VPLS_Kompella
+Edge protection: Not-Primary
+  BGP-VPLS State
+  Local site: PE1 (1)
+    connection-site           Type  St     Time last up          # Up trans
+    2                         rmt   Up     Feb 24 16:20:10 2022           1
+      Remote PE: 2.2.2.2, Negotiated control-word: No
+      Incoming label: 6744, Outgoing label: 223
+      Local interface: lsi.1048002, Status: Up, Encapsulation: VPLS
+        Description: Intf - vpls VPLS_Kompella local site 1 remote site 2
+      Flow Label Transmit: No, Flow Label Receive: No
+
+      Remote PE: 3.3.3.3, Negotiated control-word: No
+      Incoming label: 6744, Outgoing label: 223
+      Local interface: lsi.1048003, Status: Up, Encapsulation: VPLS
+        Description: Intf - vpls VPLS_Kompella local site 1 remote site 3
+      Flow Label Transmit: No, Flow Label Receive: No
+  BGP-VPLS State
+  Local site: PE11 (11)
+    connection-site           Type  St     Time last up          # Up trans
+    2                         rmt   LM   
+```
+</p>
+</details>
+
+
+<details><summary>show vpls mac-table instance VPLS_Kompella</summary>
+<p>
+
+```bash
+Показать mac таблицу vpls 
+"show vpls mac-table instance VPLS_Kompella"        
+
+MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+    O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+Routing instance : VPLS_Kompella
+ Bridging domain : __VPLS_Kompella__, VLAN : NA
+   MAC                 MAC      Logical          NH     MAC         active
+   address             flags    interface        Index  property    source
+   11:1d:a1:be:ef:00   D        ae2.333        
+   00:00:02:01:de:ad   D        lsi.1048002     
+   00:00:c4:a1:55:ff   D        ae2.333        
+   00:a2:ee:a2:1a:84   D        ae2.333        
+   00:00:03:01:de:ad   D        lsi.1048003     
+   48:46:fb:8c:c3:7c   D        ae2.333        
+   4c:4e:35:ae:4a:81   D        ae2.333        
+   c4:0a:cb:21:06:42   D        ae4.444        
+
+```
+</p>
+</details>
+
+
+
+
 #### vpls Kompella mode + mesh group
+
 !!!warning "Важно"
         Если какое то оборудование, которое должно участвовать в vpls Kompella mode, но данный функционал не поддерживает,
         а например умеет только l2curcuit, точнее xconnect - речь идет про модельный ряд оборудования cisco...
@@ -735,6 +826,7 @@ interface GigabitEthernet0/0.333
   service-policy output 50Mbit
 
 ```
+
 ##### Diagnostic
 
 <details><summary>show vpls connections instance VPLS_Kompella</summary>
