@@ -492,7 +492,7 @@ set protocols bgp group Core neighbor 2.2.2.2 description PE-2
         В таком случае используется функционал juniper, так называемые "mesh-group", 
         с помощью которых можно включать l2circuit как интерфейсы в vpls домен, работающий в режиме Kompella mode.
  
-![vpls-kompella-mode+mesh group](img/vpls-kompella-modе+mesh-group.jpg)
+![vpls-kompella-mode+mesh group](img/vpls-kompella-mode+mesh-group.jpg)
  
 #### vpls Martini mode
 
