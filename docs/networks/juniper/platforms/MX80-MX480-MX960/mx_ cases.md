@@ -308,7 +308,7 @@ Dn -- down
 ##### Альтернативный вариант - это bridge-domain
 Альтернативный вариант на основе bridge-domain без применения local-switch, приемущество данного варианта заключается в том, что данный вариант является решением для добавления L3 связности между участниками L2 домена путем добавления irb интерфейса.
 
-![bridge-domain](img/bg.jpg)
+![bridge-domain](img/bd.jpg)
 ```bash
 set interfaces xe-4/0/2 unit 0 family bridge vlan-id 333
 set interfaces xe-5/1/0 unit 0 family bridge vlan-id 333
