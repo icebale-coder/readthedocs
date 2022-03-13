@@ -310,8 +310,10 @@ Dn -- down
 
 ![bridge-domain](img/bd.jpg)
 ```bash
-set interfaces xe-4/0/2 unit 0 family bridge vlan-id 333
-set interfaces xe-5/1/0 unit 0 family bridge vlan-id 333
+
+set interfaces xe-1/1/1 unit 0 family bridge vlan-id 333
+set interfaces xe-2/2/2 unit 0 family bridge vlan-id 333
+
 set interfaces irb unit 333 family inet address 192.168.1.254/24
 
 set bridge-domains BD-333 domain-type bridge
