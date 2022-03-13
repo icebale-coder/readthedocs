@@ -1,4 +1,4 @@
-title: cases MX
+title:  MX cases
 
 # Кейсы по MX80/MX480/MX960
 
@@ -300,6 +300,42 @@ Dn -- down
       Local interface: ae2.333, Status: Up, Encapsulation: VLAN
         Description: L2VPN; local-switch l2circuit
       Local interface: xe-1/1/1.333, Status: Up, Encapsulation: VLAN
+```
+</p>
+</details>
+
+
+##### Альтернативный вариант - это bridge-domain
+Альтернативный вариант на основе bridge-domain без применения local-switch, приемущество данного варианта заключается в том, что данный вариант является решением для добавления L3 связности между участниками L2 домена путем добавления irb интерфейса.
+
+![bridge-domain](img/bg.jpg)
+```bash
+set interfaces xe-4/0/2 unit 0 family bridge vlan-id 333
+set interfaces xe-5/1/0 unit 0 family bridge vlan-id 333
+set interfaces irb unit 333 family inet address 192.168.1.254/24
+
+set bridge-domains BD-333 domain-type bridge
+set bridge-domains BD-333 vlan-id 333
+set bridge-domains BD-333 routing-interface irb.333
+```
+
+##### Diagnostic
+<details><summary>show bridge mac-table bridge-domain BD-333 </summary>
+<p>
+
+```bash
+"show bridge mac-table bridge-domain BD-333"
+  MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+      O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+  Routing instance : default-switch
+  Bridging domain : BD-333, VLAN : 333
+    MAC                 MAC      Logical          NH     MAC         active
+    address             flags    interface        Index  property    source
+    de:ad:be:ef:1a:7b   D        xe-1/1/1.0      
+    de:ad:be:ef:1f:71   D        xe-1/1/0.0      
+    de:ad:be:ef:5e:97   D        xe-2/2/2.0      
+    de:ad:be:ef:5e:98   D        xe-2/2/2.0      
 ```
 </p>
 </details>
