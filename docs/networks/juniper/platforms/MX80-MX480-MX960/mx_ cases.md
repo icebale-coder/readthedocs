@@ -5,7 +5,7 @@ title:  MX cases
 ## Настройка LAG
 
 ```bash
-"Создание интерфейса ethernet aggregate (ae0)"
+"Создание интерфейса aggregate ethernet (ae0)"
 
 set interfaces ae0 description "L2 LAG-60G"
 set interfaces ae0 flexible-vlan-tagging
