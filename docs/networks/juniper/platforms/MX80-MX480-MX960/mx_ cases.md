@@ -269,6 +269,7 @@ set firewall policer 150Mbit_shared then discard
     Logical interface ae1.1000 (Index 981) (SNMP ifIndex 1605)
       Description: test normalization
       !Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.1000 ]  Encapsulation: VLAN-Bridge
+        "для кадров, пришедших в бридж домен с тегом 1000 ничего не меняеся"
       Tenant Name: (null)
       Statistics        Packets        pps         Bytes          bps
       Bundle:
@@ -352,6 +353,7 @@ set firewall policer 150Mbit_shared then discard
     Logical interface ae2.2000 (Index 982) (SNMP ifIndex 1604)
       Description: test normalization
       "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.2000 ]  Encapsulation: VLAN-Bridge"
+        "для кадров, пришедших в бридж домен с тегом 2000 ничего не меняеся"
       Tenant Name: (null)
       Statistics        Packets        pps         Bytes          bps
       Bundle:
