@@ -120,45 +120,45 @@ policer vs shared-bandwidth-policer
     "show chassis hardware"                 
       Hardware inventory:
       ---cut---
-      FPC 1            
+      "FPC 1"            
         CPU            
-        PIC 0                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+          
+        "PIC 0"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+          
           Xcvr 0               
           Xcvr 1               
           Xcvr 2       
           Xcvr 3       
-        PIC 1                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+          
+        "PIC 1"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+          
           Xcvr 0       
           Xcvr 1       
           Xcvr 2       
           Xcvr 3       
-        PIC 2                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+          
+        "PIC 2"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+          
           Xcvr 0       
           Xcvr 1       
           Xcvr 2       
           Xcvr 3       
-        PIC 3                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+
+        "PIC 3"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+
           Xcvr 0       
           Xcvr 1       
           Xcvr 2       
           Xcvr 3       
-      FPC 2                                                    
+      "FPC 2"                                                    
         CPU           
         PIC 0                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+
           Xcvr 0      
           Xcvr 1      
           Xcvr 2      
-        PIC 1                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+         
+        "PIC 1"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+         
           Xcvr 0      
           Xcvr 1      
           Xcvr 2      
           Xcvr 3      
-        PIC 2                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+         
+        "PIC 2"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+         
           Xcvr 0      
           Xcvr 1      
           Xcvr 2      
           Xcvr 3      
-        PIC 3                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+
+        "PIC 3"                   BUILTIN      BUILTIN           4x 10GE(LAN) SFP+
           Xcvr 0       
           Xcvr 1                
           Xcvr 2                
@@ -184,6 +184,263 @@ set firewall policer 150Mbit_shared if-exceeding bandwidth-limit 150m
 set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
 set firewall policer 150Mbit_shared then discard      
 ```
+## Bridge Domain
+### Нормализация вланов внутри Bridge Domain
+Как обычно изобретаю свой "велосипед"
+
+Пересказ статьи бормаглота из своей практики:
+[Оригинал статьи](https://habr.com/ru/post/322560/) 
+
+Имееется канал у которого в силу технических обстоятельств со стороны клиента разные вланы. 
+
+В таком случае можно объединить данную схему в один Bridge Domain с нормализацией вланов.
+
+Данная схема позволяет осуществлять связность даже если вланы с обоих сторон разные
+
+```bash
+  "Настройки":
+    "ip" 172.16.243.80/30
+    "sw1" - vlan 1000 - ip 172.16.243.81
+    "sw2" - vlan 2000 - ip 172.16.243.82
+```
+#### Топология сети:
+![local-l2circuit](img/bd-norm.jpg)
+
+#### Конфигурация - нормализуем по влану 1000
+```bash
+"PE1"
+    set interfaces ae1 unit 1000 description "test normalization"
+    set interfaces ae1 unit 1000 encapsulation vlan-bridge
+    set interfaces ae1 unit 1000 vlan-id 1000
+    set interfaces ae1 unit 1000 family bridge policer input 150Mbit
+
+    set interfaces ae2 unit 2000 description "test normalization"
+    set interfaces ae2 unit 2000 encapsulation vlan-bridge
+    set interfaces ae2 unit 2000 vlan-id 2000
+    set interfaces ae2 unit 2000 family bridge policer input 150Mbit
+
+    set routing-instances Local bridge-domains BD-NORM description "test normalization"
+    set routing-instances Local bridge-domains BD-NORM interface ae1.1000
+    set routing-instances Local bridge-domains BD-NORM interface ae2.2000
+    set routing-instances Local bridge-domains BD-NORM vlan-id 1000
+```
+
+```bash
+"sw1 - ae6 vlan 1000"
+  set interfaces ae6 unit 0 family ethernet-switching vlan members VL1000
+  set vlans VL1000 description "test normalization"
+  set vlans VL1000 vlan-id 1000
+
+  set interfaces vlan unit 1000 family inet address 172.16.243.81/30
+  set vlans VL1000 l3-interface vlan.1000
+```
+
+```bash
+"sw2 - ae5 vlan 2000"
+  set interfaces ae5 unit 0 family ethernet-switching vlan members BD-NORM
+  set vlans BD-NORM description "test normalization"
+  set vlans BD-NORM vlan-id 2000
+
+  set interfaces vlan unit 2000 family inet address 172.16.243.82/30
+  set vlans BD-NORM l3-interface vlan.2000
+```
+
+##### Диагностика
+
+<details><summary>Diagnostic</summary>
+<p>
+
+```bash
+"PE3"
+"Диагностика - все пингуется 172.16.243.81 и 172.16.243.82"
+
+  "PE1> show bridge mac-table instance Local bridge-domain BD-NORM"
+    MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+        O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+    Routing instance : Local
+    Bridging domain : BD-NORM, VLAN : 1000
+      MAC                 MAC      Logical          NH     MAC         active
+      address             flags    interface        Index  property    source
+      00:00:00:00:00:81   D        ae1.1000        
+      00:00:00:00:00:82   D        ae2.2000        
+
+  "PE1> show interfaces ae1.1000"                                     
+    Logical interface ae1.1000 (Index 981) (SNMP ifIndex 1605)
+      Description: test normalization
+      !Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.1000 ]  Encapsulation: VLAN-Bridge
+      Tenant Name: (null)
+      Statistics        Packets        pps         Bytes          bps
+      Bundle:
+          Input :             1          0           102            0
+          Output:             1          0           102            0
+      Adaptive Statistics:
+          Adaptive Adjusts:          0
+          Adaptive Scans  :          0
+          Adaptive Updates:          0
+      Protocol bridge, MTU: 9192
+
+  "PE1> show interfaces ae2.2000"                                     
+    Logical interface ae2.2000 (Index 980) (SNMP ifIndex 1604)
+      Description: test normalization
+      !!!Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.2000 ] In(swap .1000) Out(swap .2000) 
+        "кадры пришедшие в бридж домен с тега 2000 свапаются на тег 1000"
+        "кадры выходящие из бридж домена с тега 1000 свапаются на тег 2000"
+        "соответственно внутри бридж домена ходят кадры с тегом 1000" 
+
+      Encapsulation: VLAN-Bridge
+      Tenant Name: (null)
+      Statistics        Packets        pps         Bytes          bps
+      Bundle:
+          Input :             1          0           102            0
+          Output:             1          0           102            0
+      Adaptive Statistics:
+          Adaptive Adjusts:          0
+          Adaptive Scans  :          0
+          Adaptive Updates:          0
+      Protocol bridge, MTU: 9192
+```
+</p>
+</details>
+
+#### Конфигурация - нормализуем по влану 2000
+
+```bash
+"set routing-instances Local bridge-domains BD-NORM vlan-id 2000"
+```
+
+##### Диагностика
+
+<details><summary>Diagnostic</summary>
+<p>
+
+```bash
+"Поменяем влан нормализации внутри бридж домена  - тогда меняется перетеггирование"
+тогда...
+  "PE1> show bridge mac-table instance Local bridge-domain BD-NORM"
+      MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+          O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+      Routing instance : Local
+      Bridging domain : BD-NORM, VLAN : 2000
+        MAC                 MAC      Logical          NH     MAC         active
+        address             flags    interface        Index  property    source
+        00:00:00:00:00:81   D        ae1.1000        
+        00:00:00:00:00:82   D        ae2.2000        
+
+  "PE1> show interfaces ae1.1000"
+    Logical interface ae1.1000 (Index 983) (SNMP ifIndex 1605)
+      Description: test normalization
+      "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.1000 ] In(swap .2000) Out(swap .1000)"
+        "кадры пришедшие в бридж домен с тега 1000 свапаются на тег 2000"
+        "кадры выходящие из бридж домена с тега 2000 свапаются на тег 1000"
+        "соответственно внутри бридж домена ходят кадры с тегом 2000" 
+      Encapsulation: VLAN-Bridge
+      Tenant Name: (null)
+      Statistics        Packets        pps         Bytes          bps
+      Bundle:
+          Input :            15          0           946            0
+          Output:            15          0           986            0
+      Adaptive Statistics:
+          Adaptive Adjusts:          0
+          Adaptive Scans  :          0
+          Adaptive Updates:          0
+      Protocol bridge, MTU: 9192
+
+  "PE1> show interfaces ae2.2000"                                     
+    Logical interface ae2.2000 (Index 982) (SNMP ifIndex 1604)
+      Description: test normalization
+      "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.2000 ]  Encapsulation: VLAN-Bridge"
+      Tenant Name: (null)
+      Statistics        Packets        pps         Bytes          bps
+      Bundle:
+          Input :            15          0           986            0
+          Output:            15          0           946            0
+      Adaptive Statistics:
+          Adaptive Adjusts:          0
+          Adaptive Scans  :          0
+          Adaptive Updates:          0
+      Protocol bridge, MTU: 9192
+
+  "sw1> show arp"
+    MAC Address       Address         Name                      Interface               Flags
+    00:00:00:00:00:82 172.16.243.82   172.16.243.82             vlan.1000               none
+
+  "sw2> show arp"              
+    MAC Address       Address         Name                      Interface               Flags
+    00:00:00:00:00:81 172.16.243.81   172.16.243.81             vlan.2000               none
+```
+</p>
+</details>
+
+#### Конфигурация - без указания влана
+
+```bash
+"set routing-instances Local bridge-domains BD-NORM vlan-id none"
+```
+
+##### Диагностика
+
+<details><summary>Diagnostic</summary>
+<p>
+
+```bash
+"Уберем влан нормализации внутри бридж домена"
+PE3
+"set routing-instances Local bridge-domains BD-NORM vlan-id none"
+тогда...
+
+    "PE1> show bridge mac-table instance Local bridge-domain BD-NORM"    
+      MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+          O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+      Routing instance : Local
+      Bridging domain : BD-NORM, VLAN : none
+        MAC                 MAC      Logical          NH     MAC         active
+        address             flags    interface        Index  property    source
+        00:00:00:00:00:81   D        ae1.1000        
+        00:00:00:00:00:82   D        ae2.2000        
+
+    "PE1> show interfaces ae1.1000"                                     
+      Logical interface ae1.1000 (Index 981) (SNMP ifIndex 1605)
+        Description: test normalization
+        "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.1000 ] In(pop) Out(push 0x0000.1000)"
+          "кадры пришедшие в бридж домен с тега 1000 попается и ходит без тега"
+          "кадры выходящие из бридж домена пушится тег 1000 и на выход идут уже с тегом 1000"
+          "соответственно внутри бридж домена ходят кадры БЕЗ ТЕГА" 
+        Encapsulation: VLAN-Bridge
+        Tenant Name: (null)
+        Statistics        Packets        pps         Bytes          bps
+        Bundle:
+            Input :             2          0           204            0
+            Output:             2          0           204            0
+        Adaptive Statistics:
+            Adaptive Adjusts:          0
+            Adaptive Scans  :          0
+            Adaptive Updates:          0
+        Protocol bridge, MTU: 9192
+
+    !PE1> show interfaces ae2.2000                                     
+      Logical interface ae2.2000 (Index 980) (SNMP ifIndex 1604)
+        Description: test normalization
+        "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.2000 ] In(pop) Out(push 0x0000.2000)"
+          "кадры пришедшие в бридж домен с тега 2000 попается и ходит без тега"
+          "кадры выходящие из бридж домена пушится тег 2000 и на выход идут уже с тегом 2000"
+          "соответственно внутри бридж домена ходят кадры БЕЗ ТЕГА" 
+        Encapsulation: VLAN-Bridge
+        Tenant Name: (null)
+        Statistics        Packets        pps         Bytes          bps
+        Bundle:
+            Input :             2          0           204            0
+            Output:             2          0           204            0
+        Adaptive Statistics:
+            Adaptive Adjusts:          0
+            Adaptive Scans  :          0
+            Adaptive Updates:          0
+        Protocol bridge, MTU: 9192
+```
+</p>
+</details>
 
 ## MPLS
 
