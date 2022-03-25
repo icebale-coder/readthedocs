@@ -306,6 +306,7 @@ set firewall policer 150Mbit_shared then discard
 #### Конфигурация - нормализуем по влану 2000
 
 ```bash
+"PE3"
 "set routing-instances Local bridge-domains BD-NORM vlan-id 2000"
 ```
 
@@ -376,6 +377,7 @@ set firewall policer 150Mbit_shared then discard
 #### Конфигурация - без указания влана
 
 ```bash
+"PE3"
 "set routing-instances Local bridge-domains BD-NORM vlan-id none"
 ```
 
