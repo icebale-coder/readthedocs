@@ -191,7 +191,7 @@ set firewall policer 150Mbit_shared then discard
 Пересказ статьи бормаглота из своей практики:
 [Оригинал статьи](https://habr.com/ru/post/322560/) 
 
-Имееется канал у которого в силу технических обстоятельств со стороны клиента разные вланы. 
+Имееется канал, у которого в силу технических обстоятельств со стороны клиента разные вланы. 
 
 В таком случае можно объединить данную схему в один Bridge Domain с нормализацией вланов.
 
@@ -268,7 +268,7 @@ set firewall policer 150Mbit_shared then discard
   "PE1> show interfaces ae1.1000"                                     
     Logical interface ae1.1000 (Index 981) (SNMP ifIndex 1605)
       Description: test normalization
-      !Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.1000 ]  Encapsulation: VLAN-Bridge
+      "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.1000 ]  Encapsulation: VLAN-Bridge"
         "для кадров, пришедших в бридж домен с тегом 1000 ничего не меняеся"
       Tenant Name: (null)
       Statistics        Packets        pps         Bytes          bps
@@ -284,7 +284,7 @@ set firewall policer 150Mbit_shared then discard
   "PE1> show interfaces ae2.2000"                                     
     Logical interface ae2.2000 (Index 980) (SNMP ifIndex 1604)
       Description: test normalization
-      !!!Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.2000 ] In(swap .1000) Out(swap .2000) 
+      "Flags: Up SNMP-Traps 0x20004000 VLAN-Tag [ 0x8100.2000 ] In(swap .1000) Out(swap .2000)"
         "кадры пришедшие в бридж домен с тега 2000 свапаются на тег 1000"
         "кадры выходящие из бридж домена с тега 1000 свапаются на тег 2000"
         "соответственно внутри бридж домена ходят кадры с тегом 1000" 
