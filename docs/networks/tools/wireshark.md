@@ -24,6 +24,7 @@ Flow graph - позволяет отображать графически эта
 
 ![wireshark-flow-graph](../img/wireshark-flow-graph.jpg)
 
+
 ### 2. Просмотр "packet diagram view"
 
 
@@ -136,3 +137,8 @@ bfd
 bfd_echo
 ```
 
+## Создать дамп для wireshark в Linux
+
+```bash
+  "tcpdump -i enp2s0 -s 65535 -w FILENAME.pcap"
+```
