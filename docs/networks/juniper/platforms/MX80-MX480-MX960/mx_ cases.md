@@ -482,7 +482,7 @@ PE1
     set protocols mpls interface ae2.333    
     ```
 
-=== BGP
+=== "BGP"
 
     ```bash
     "Для Kompell mode"
