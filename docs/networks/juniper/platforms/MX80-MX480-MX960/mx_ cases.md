@@ -447,7 +447,8 @@ PE1
 </details>
 
 ## MPLS
-[очень полезная статья]https://blog.marquis.co/layer-2-vpns-on-junos/
+
+[очень полезная статья](https://blog.marquis.co/layer-2-vpns-on-junos/)
 
 Для базовой настройки MPLS и работы технологий необходимы следующие настройки:
 
