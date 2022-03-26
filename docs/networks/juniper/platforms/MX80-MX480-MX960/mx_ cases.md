@@ -452,7 +452,7 @@ PE1
 
 Для базовой настройки MPLS и работы технологий необходимы следующие настройки:
 
-=== "Interface Config"
+=== "interfaces"
 
     ```bash
     "На участвующих в MPLS интерфесах настраивается тип инкапсуляции"
@@ -466,14 +466,6 @@ PE1
     set interfaces ae2 aggregated-ether-options lacp active
     ```
 
-=== "RSVP-TE"
-
-    ```bash
-    "На участвующих в RSVP-TE интерфесах"
-    set protocols rsvp interface xe-1/1/1
-    set protocols rsvp interface ae2.0
-    ```
-
 === "MPLS"
 
     ```bash
@@ -482,14 +474,22 @@ PE1
     set protocols mpls interface ae2.333    
     ```
 
-=== "BGP"
+=== "RSVP-TE"
 
     ```bash
-    "Для Kompell mode"
-    set protocols bgp group ibgp family l2vpn signaling
+    "На участвующих в RSVP-TE интерфесах"
+    set protocols rsvp interface xe-1/1/1
+    set protocols rsvp interface ae2.0
+    ```
 
-    "Для L3VPN"
-    set protocols bgp group ibgp family inet-vpn unicast
+=== "LDP"
+    
+    ```bash
+    "Возможна работа протокола LDP поверх протокола RSVP-TE"
+    "Классическая схема для Джунов"
+    set protocols ldp interface xe-1/1/1.333
+    set protocols ldp interface ae2.333
+    set protocols ldp interface lo0.0
     ```
 
 === "OSPF or IS-IS"
@@ -499,7 +499,6 @@ PE1
     "На соответствующих интерфейсах, где данный протокол должен быть настроен )))"
 
     "Настройки для OSPF c bfd тюнингом"
-
     set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 interface-type p2p
     set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 bfd-liveness-detection minimum-interval 500
     set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 bfd-liveness-detection multiplier 6
@@ -525,14 +524,14 @@ PE1
     set protocols isis traffic-engineering family inet shortcuts
     ```
 
-=== "LDP"
-    
+=== "BGP"
+
     ```bash
-    "Возможна работа протокола LDP поверх протокола RSVP-TE"
-    "Классическая схема для Джунов"
-    set protocols ldp interface xe-1/1/1.333
-    set protocols ldp interface ae2.333
-    set protocols ldp interface lo0.0
+    "Для Kompell mode"
+    set protocols bgp group ibgp family l2vpn signaling
+
+    "Для L3VPN"
+    set protocols bgp group ibgp family inet-vpn unicast
     ```
 
 ### L2VPN
