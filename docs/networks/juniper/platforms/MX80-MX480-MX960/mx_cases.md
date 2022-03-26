@@ -527,7 +527,7 @@ PE1
 === "BGP"
 
     ```bash
-    "Для Kompell mode"
+    "Для Kompella mode"
     set protocols bgp group ibgp family l2vpn signaling
 
     "Для L3VPN"
