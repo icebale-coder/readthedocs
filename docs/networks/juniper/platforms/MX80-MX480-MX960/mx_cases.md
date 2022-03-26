@@ -532,6 +532,9 @@ PE1
 
     "Для L3VPN"
     set protocols bgp group ibgp family inet-vpn unicast
+    
+    "Для EVPN"
+    set protocols bgp group ibgp family evpn signaling
     ```
 
 ### L2VPN
