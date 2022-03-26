@@ -1050,7 +1050,7 @@ Routing instance : VPLS_Kompella
 
 !!!warning "Важно"
         Если какое то оборудование, которое должно участвовать в vpls Kompella mode, но данный функционал не поддерживает,
-        а например умеет только l2curcuit, точнее xconnect - речь идет про модельный ряд оборудования cisco...
+        а например умеет только l2circuit, точнее xconnect - речь идет про модельный ряд оборудования cisco...
         В таком случае используется функционал juniper, так называемые "mesh-group", 
         с помощью которых можно включать l2circuit как интерфейсы в vpls домен, работающий в режиме Kompella mode.
  
@@ -1058,73 +1058,82 @@ Routing instance : VPLS_Kompella
 ![vpls-kompella-mode+mesh group](img/vpls-kompella-mode+mesh-group.jpg)
 
 C учетом всего сказанного конфигурация на PE1 будет следующей:
-```bash
-"PE-1"
 
-"Настройка интерфейсов, входящих в vpls домен"
-set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
-set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
-set interfaces xe-1/1/1 unit 333 vlan-id 333
-set interfaces xe-1/1/1 unit 333 input-vlan-map pop
-set interfaces xe-1/1/1 unit 333 output-vlan-map push
-set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
+=== "PE-1"
+  ```bash
+  "PE-1"
+  "Настройка интерфейсов, входящих в vpls домен"
+  set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
+  set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
+  set interfaces xe-1/1/1 unit 333 vlan-id 333
+  set interfaces xe-1/1/1 unit 333 input-vlan-map pop
+  set interfaces xe-1/1/1 unit 333 output-vlan-map push
+  set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
 
-set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
-set interfaces ae2 unit 333 encapsulation vlan-vpls
-set interfaces ae2 unit 333 vlan-id 333
-set interfaces ae2 unit 333 input-vlan-map pop
-set interfaces ae2 unit 333 output-vlan-map push
-set interfaces ae2 unit 333 family vpls policer input 200Mbit
+  set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
+  set interfaces ae2 unit 333 encapsulation vlan-vpls
+  set interfaces ae2 unit 333 vlan-id 333
+  set interfaces ae2 unit 333 input-vlan-map pop
+  set interfaces ae2 unit 333 output-vlan-map push
+  set interfaces ae2 unit 333 family vpls policer input 200Mbit
 
-"Настройка Route instance типа - instance-type vpls"
-set routing-instances VPLS_Kompella description "VPLS Kompella mode"
-set routing-instances VPLS_Kompella instance-type vpls
+  "Настройка Route instance типа - instance-type vpls"
+  set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+  set routing-instances VPLS_Kompella instance-type vpls
 
-set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
-set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+  set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+  set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
 
-"Идентификатор сайта - должен быть для участников vpls домена"
-set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
+  "Идентификатор сайта - должен быть для участников vpls домена"
+  set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
 
-"Добавляется дополнительный сайт - [site PE11],"
-"участник которого по сути mesh группа - [PE11_mesh],"
-"в которой находится xconnect(l2circuit)"
-"-----------------------------------------------------------------------"
-set routing-instances VPLS_Kompella protocols vpls site PE11 site-identifier 11
-set routing-instances VPLS_Kompella protocols vpls site PE11 mesh-group PE11_mesh
+  "Добавляется дополнительный сайт - [site PE11],"
+  "участник которого по сути mesh группа - [PE11_mesh],"
+  "в которой находится xconnect(l2circuit)"
+  "-----------------------------------------------------------------------"
+  set routing-instances VPLS_Kompella protocols vpls site PE11 site-identifier 11
+  set routing-instances VPLS_Kompella protocols vpls site PE11 mesh-group PE11_mesh
 
-set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh vpls-id 333
-set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh neighbor 11.11.11.11 encapsulation-type ethernet-vlan
-"-----------------------------------------------------------------------"
+  set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh vpls-id 333
+  set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh neighbor 11.11.11.11 encapsulation-type ethernet-vlan
+  "-----------------------------------------------------------------------"
 
-"Перечисление интерфейсов, входящих в vpls домен"
-set routing-instances VPLS_Kompella interface xe-1/1/1.333
-set routing-instances VPLS_Kompella interface ae2.333
-set routing-instances VPLS_Kompella interface ae4.3224
+  "Перечисление интерфейсов, входящих в vpls домен"
+  set routing-instances VPLS_Kompella interface xe-1/1/1.333
+  set routing-instances VPLS_Kompella interface ae2.333
+  set routing-instances VPLS_Kompella interface ae4.3224
 
-"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
-set routing-instances VPLS_Kompella vrf-target target:1111:123
-```
+  "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+  set routing-instances VPLS_Kompella vrf-target target:1111:123
+  ```
 
-```bash
-PE11
-"На стороне циски PE11 настраивается стандартный xconnect"
-pseudowire-class PE11_bcp
-  encapsulation l2tpv3
-  ip local interface Loopback0
-!
-interface GigabitEthernet0/0.333
-  description mesh_group_in_vpls
-  encapsulation dot1Q 333
-  xconnect 1.1.1.1 333 encapsulation mpls
-    mtu 1500
-  service-policy input 50Mbit
-  service-policy output 50Mbit
+=== "PE11"
+  ```bash
+  PE11
+  "На стороне циски PE11 настраивается стандартный xconnect"
+  pseudowire-class PE11_bcp
+    encapsulation l2tpv3
+    ip local interface Loopback0
+  !
+  interface GigabitEthernet0/0.333
+    description mesh_group_in_vpls
+    encapsulation dot1Q 333
+    xconnect 1.1.1.1 333 encapsulation mpls
+      mtu 1500
+    service-policy input 50Mbit
+    service-policy output 50Mbit
 
-```
+  ```
+
+!!!warning "Важное замечание:"
+          Само собой подразумевается, что для работы MPLS Kompella Mode должно уже быть настроен сам MPLS (LDP и/или RSVP-TE)
+          также должен быть настоен протокол IGP, например (OSPF или IS-IS), а так же настроен iBGP протокол между PE 
+          (full mesh или RR). Ну и конечно же включение в bgp отдельной address family (afi=25 / safi=65) - Kompell Mode
+          В нотации Juniper это - ""
+
 
 ##### Diagnostic
 
