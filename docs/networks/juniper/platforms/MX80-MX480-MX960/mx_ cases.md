@@ -251,7 +251,7 @@ set firewall policer 150Mbit_shared then discard
 <p>
 
 ```bash
-"PE3"
+"PE1"
 "Диагностика - все пингуется 172.16.243.81 и 172.16.243.82"
 
   "PE1> show bridge mac-table instance Local bridge-domain BD-NORM"
@@ -307,7 +307,7 @@ set firewall policer 150Mbit_shared then discard
 #### Конфигурация - нормализуем по влану 2000
 
 ```bash
-"PE3"
+"PE1"
 "set routing-instances Local bridge-domains BD-NORM vlan-id 2000"
 ```
 
@@ -379,7 +379,7 @@ set firewall policer 150Mbit_shared then discard
 #### Конфигурация - без указания влана
 
 ```bash
-"PE3"
+"PE1"
 "set routing-instances Local bridge-domains BD-NORM vlan-id none"
 ```
 
@@ -390,7 +390,7 @@ set firewall policer 150Mbit_shared then discard
 
 ```bash
 "Уберем влан нормализации внутри бридж домена"
-PE3
+PE1
 "set routing-instances Local bridge-domains BD-NORM vlan-id none"
 тогда...
 
@@ -783,7 +783,7 @@ Neighbor: 3.3.3.3
 
 ```bash
 "Описание схемы и принципа работы."
-Имеется 3 сайта присутствия услуги (PE1, PE2, PE3).
+Имеется 3 сайта присутствия услуги (PE1, PE2, PE1).
 В каждый сайт включено несколько интерфейсов.
 Все они в конечном счете объединяются в один броадкаст домен. 
 
