@@ -1062,6 +1062,13 @@ C учетом всего сказанного конфигурация на PE1
 === "Debian (apt)"
 
 	`apt install network-manager` - установка произведётся автоматически. Сам пакет и его зависимости присутствуют в стандартных Debian репозиториях.
+
+  ```bash
+  "PE-1"
+  "Настройка интерфейсов, входящих в vpls домен"
+  set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
+  set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
+  ```
 	
 	Вместе с ним будет установлен nmtui - графическая оболочка для него.
 
