@@ -447,6 +447,92 @@ PE1
 </details>
 
 ## MPLS
+[очень полезная статья]https://blog.marquis.co/layer-2-vpns-on-junos/
+
+Для базовой настройки MPLS и работы технологий необходимы следующие настройки:
+
+=== "Interface Config"
+
+    ```bash
+    "На участвующих в MPLS интерфесах настраивается тип инкапсуляции"
+    set interfaces xe-1/1/1 flexible-vlan-tagging
+    set interfaces xe-1/1/1 mtu 9216
+    set interfaces xe-1/1/1 encapsulation flexible-ethernet-services
+
+    set interfaces ae2 flexible-vlan-tagging
+    set interfaces ae2 mtu 9192
+    set interfaces ae2 encapsulation flexible-ethernet-services
+    set interfaces ae2 aggregated-ether-options lacp active
+    ```
+
+=== "RSVP-TE"
+
+    ```bash
+    "На участвующих в RSVP-TE интерфесах"
+    set protocols rsvp interface xe-1/1/1
+    set protocols rsvp interface ae2.0
+    ```
+
+=== "MPLS"
+
+    ```bash
+    "На участвующих в MPLS интерфесах"
+    set protocols mpls interface xe-1/1/1.333
+    set protocols mpls interface ae2.333    
+    ```
+
+=== BGP
+
+    ```bash
+    "Для Kompell mode"
+    set protocols bgp group ibgp family l2vpn signaling
+
+    "Для L3VPN"
+    set protocols bgp group ibgp family inet-vpn unicast
+    ```
+
+=== "OSPF or IS-IS"
+
+    ```bash
+    "Можно поднять любой из 2-х протоколов IGP"
+    "На соответствующих интерфейсах, где данный протокол должен быть настроен )))"
+
+    "Настройки для OSPF c bfd тюнингом"
+
+    set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 interface-type p2p
+    set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 bfd-liveness-detection minimum-interval 500
+    set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 bfd-liveness-detection multiplier 6
+    set protocols ospf area 0.0.0.0 interface ae2.0 interface-type p2p
+    set protocols ospf area 0.0.0.0 interface ae2.0 bfd-liveness-detection minimum-interval 500
+    set protocols ospf area 0.0.0.0 interface ae2.0 bfd-liveness-detection multiplier 6
+    "Для работы RSVP-TE включаеим в OSPF траффик инженеринг"
+    set protocols ospf traffic-engineering 
+
+
+    "Настройки для IS-IS"
+    set protocols isis reference-bandwidth 1000g
+    set protocols isis level 1 disable
+    set protocols isis level 2 wide-metrics-only
+    set protocols isis interface xe-1/1/1.0 ldp-synchronization
+    set protocols isis interface xe-1/1/1.0 point-to-point
+    set protocols isis interface xe-1/1/1.0 link-protection
+    set protocols isis interface ae2.0 ldp-synchronization
+    set protocols isis interface ae2.0 point-to-point
+    set protocols isis interface ae2.0 link-protection
+    set protocols isis interface lo0.0
+    "Для работы RSVP-TE включаеим в IS-IS траффик инженеринг"
+    set protocols isis traffic-engineering family inet shortcuts
+    ```
+
+=== "LDP"
+    
+    ```bash
+    "Возможна работа протокола LDP поверх протокола RSVP-TE"
+    "Классическая схема для Джунов"
+    set protocols ldp interface xe-1/1/1.333
+    set protocols ldp interface ae2.333
+    set protocols ldp interface lo0.0
+    ```
 
 ### L2VPN
 
@@ -1057,7 +1143,7 @@ Routing instance : VPLS_Kompella
 
 ![vpls-kompella-mode+mesh group](img/vpls-kompella-mode+mesh-group.jpg)
 
-C учетом всего сказанного конфигурация на PE1 будет следующей:
+C учетом всего сказанного конфигурация на PE1 и PE11 будет следующей:
 
 === "PE-1"
 
