@@ -1034,7 +1034,7 @@ set protocols bgp group Core neighbor 3.3.3.3 description PE-3
 ```
 
 ```bash
-"PE-2"
+"PE-3"
 "Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
 set protocols ldp interface ae22.22
 set protocols mpls interface ae22.22
