@@ -1536,6 +1536,7 @@ Routing instance : VPLS_Kompella
         set interfaces ae1 unit 100 vlan-id 100
         set interfaces ae1 unit 100 etree-ac-role root
 
+
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
           PE1-PE2-PE3 {        
@@ -1549,7 +1550,7 @@ Routing instance : VPLS_Kompella
                     }
                     interfaces xe-1/1/1.100;
                     interfaces ae1.100;
-                    evpn-etree;
+                    "evpn-etree;"
                 }
               }
             }
@@ -1579,7 +1580,6 @@ Routing instance : VPLS_Kompella
         set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
         "set routing-instances PE1-PE2-PE3 protocols evpn evpn-etree"
 
-
         "Настройка интерфейсов"
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
@@ -1589,6 +1589,7 @@ Routing instance : VPLS_Kompella
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
         set interfaces ae1 unit 100 etree-ac-role leaf
+
 
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
@@ -1643,6 +1644,7 @@ Routing instance : VPLS_Kompella
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
         set interfaces ae1 unit 100 etree-ac-role leaf
+
 
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
