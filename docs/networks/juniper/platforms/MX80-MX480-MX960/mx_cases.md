@@ -1499,52 +1499,55 @@ Routing instance : VPLS_Kompella
 
       set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
       set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+      
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
 
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 description "L2VPN 100"
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
 
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 description "L2VPN 200"
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
 
       set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
 
-    "Для наглядности конфиг в виде структуры:"
-    routing-instances PE1-PE2-PE3 {
+      "Для наглядности конфиг в виде структуры:"
+      routing-instances PE1-PE2-PE3 {
 
-      protocols {
-          evpn {
-              extended-vlan-list [ 10 100 200 ];
-          }
+        protocols {
+            evpn {
+                extended-vlan-list [ 10 100 200 ];
+            }
+        }
+        
+        description "PE1-PE2-PE3";
+        instance-type virtual-switch;
+        bridge-domains {
+            VL10 {
+                description "L2VPN 10";
+                vlan-id 10;
+                interface xe-1/1/1.10;
+                interface ae2.10;
+            }
+            VL100 {
+                description "L2VPN 100";
+                vlan-id 100;
+                interface xe-1/1/1.100;
+                interface ae2.100;
+            }
+            VL200 {
+                description "L2VPN 200";
+                vlan-id 10;
+                interface ae2.200;
+            }
+        }
+        vrf-target target:1111:2222;
       }
-      
-      description "PE1-PE2-PE3";
-      instance-type virtual-switch;
-      bridge-domains {
-          VL10 {
-              description "L2VPN 10";
-              vlan-id 10;
-              interface xe-1/1/1.10;
-              interface ae2.10;
-          }
-          VL100 {
-              description "L2VPN 100";
-              vlan-id 100;
-              interface xe-1/1/1.100;
-              interface ae2.100;
-          }
-          VL200 {
-              description "L2VPN 200";
-              vlan-id 10;
-              interface ae2.200;
-          }
-      }
-      vrf-target target:1111:2222;
-    }
     ```
 
 === "PE2"
@@ -1558,15 +1561,18 @@ Routing instance : VPLS_Kompella
 
       set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
       set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
 
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 description "L2VPN 100"
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
 
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 description "L2VPN 200"
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
 
@@ -1622,10 +1628,12 @@ Routing instance : VPLS_Kompella
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
       set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
 
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 description "L2VPN 100"
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
       set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
 
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 description "L2VPN 200"
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
 
