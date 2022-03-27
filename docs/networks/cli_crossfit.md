@@ -4,7 +4,44 @@ title: cli crossfit BGP
 
 Мой джентельменский набор команд по BGP
 
-## Просмотр соседей 
+## Просмотр таблицы BGP
+
+### Juniper
+```bash
+  "посмотреть таблицу BGP"
+  show route protocol bgp
+
+  "посмотреть маршрут в таблице BGP"
+  show route protocol bgp 1.0.0.0
+
+  "посмотреть маршрут в таблице BGP подробно"
+  "с блекджеком и балеринами (ц) Стас А."
+  show route protocol bgp 1.0.0.0 extensive
+
+```
+
+### Huawei
+```bash
+  "посмотреть таблицу BGP"
+  dis bgp routing-table 
+
+  "посмотреть маршрут в таблице BGP"
+  dis bgp routing-table 1.0.0.0
+```
+
+### Cisco IOS/IOS-XE
+```bash
+  "посмотреть таблицу BGP"
+  sh ip bgp 
+
+  "посмотреть маршрут в таблице BGP"
+  sh ip bgp 1.0.0.0
+
+  "посмотреть таблицу BGP по конкретному маршруту"
+  sh ip bgp 1.0.0.0/24 longer-prefixes
+```
+
+## Просмотр соседей по BGP
 
 ### Juniper
 ```bash
