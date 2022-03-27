@@ -1360,6 +1360,14 @@ Routing instance : VPLS_Kompella
         set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
         set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
 
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
           PE1-PE2-PE3 {        
@@ -1397,6 +1405,14 @@ Routing instance : VPLS_Kompella
         set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
         set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
 
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
           PE1-PE2-PE3 {        
@@ -1433,6 +1449,14 @@ Routing instance : VPLS_Kompella
         
         set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
         set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
 
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
@@ -1516,6 +1540,26 @@ Routing instance : VPLS_Kompella
 
       set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
 
+      "Настройка интерфейсов"
+      set interfaces xe-1/1/1 unit 10 description "L2VPN 10"
+      set interfaces xe-1/1/1 unit 10 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 10 vlan-id 10
+      set interfaces ae2 unit 10 description "L2VPN 10"
+      set interfaces ae2 unit 10 encapsulation vlan-bridge
+      set interfaces ae2 unit 10 vlan-id 10
+
+      set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+      set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 100 vlan-id 100
+      set interfaces ae2 unit 100 description "L2VPN 100"
+      set interfaces ae2 unit 100 encapsulation vlan-bridge
+      set interfaces ae2 unit 100 vlan-id 100
+
+      set interfaces ae2 unit 200 description "L2VPN 200"
+      set interfaces ae2 unit 200 encapsulation vlan-bridge
+      set interfaces ae2 unit 200 vlan-id 200
+
+
       "Для наглядности конфиг в виде структуры:"
       routing-instances PE1-PE2-PE3 {
 
@@ -1578,6 +1622,26 @@ Routing instance : VPLS_Kompella
 
       set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
 
+      "Настройка интерфейсов"
+      set interfaces xe-1/1/1 unit 10 description "L2VPN 10"
+      set interfaces xe-1/1/1 unit 10 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 10 vlan-id 10
+      set interfaces ae2 unit 10 description "L2VPN 10"
+      set interfaces ae2 unit 10 encapsulation vlan-bridge
+      set interfaces ae2 unit 10 vlan-id 10
+
+      set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+      set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 100 vlan-id 100
+      set interfaces ae2 unit 100 description "L2VPN 100"
+      set interfaces ae2 unit 100 encapsulation vlan-bridge
+      set interfaces ae2 unit 100 vlan-id 100
+
+      set interfaces ae2 unit 200 description "L2VPN 200"
+      set interfaces ae2 unit 200 encapsulation vlan-bridge
+      set interfaces ae2 unit 200 vlan-id 200
+
+
       "Для наглядности конфиг в виде структуры:"
       routing-instances PE1-PE2-PE3 {
 
@@ -1638,6 +1702,25 @@ Routing instance : VPLS_Kompella
       set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
 
       set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+      "Настройка интерфейсов"
+      set interfaces xe-1/1/1 unit 10 description "L2VPN 10"
+      set interfaces xe-1/1/1 unit 10 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 10 vlan-id 10
+      set interfaces ae2 unit 10 description "L2VPN 10"
+      set interfaces ae2 unit 10 encapsulation vlan-bridge
+      set interfaces ae2 unit 10 vlan-id 10
+
+      set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+      set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 100 vlan-id 100
+      set interfaces ae2 unit 100 description "L2VPN 100"
+      set interfaces ae2 unit 100 encapsulation vlan-bridge
+      set interfaces ae2 unit 100 vlan-id 100
+
+      set interfaces ae2 unit 200 description "L2VPN 200"
+      set interfaces ae2 unit 200 encapsulation vlan-bridge
+      set interfaces ae2 unit 200 vlan-id 200
 
       "Для наглядности конфиг в виде структуры:"
       routing-instances PE1-PE2-PE3 {
