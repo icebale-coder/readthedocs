@@ -1330,6 +1330,131 @@ Routing instance : VPLS_Kompella
 
 ### EVPN
 
+"50 оттенков EVPN"
+
+#### 1. "Классический" EVPN 
+```bash
+  В данном случае под словом "классический" подразумевается то, 
+  что тип routing-instance является "instance-type evpn"
+```
+##### Конфигурация 
+
+Так как порты здесь одни и те же, то и онфигурация EVPN Instance будет идентичная.
+
+Отличия только будут в bgp - будут разные bgp neighbor
+
+=== "PE1"
+
+    ```bash 
+      "PE1"
+      "Routing типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN classic"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+
+        ! Для наглядности конфиг в виде структуры:
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                }
+              }
+            }
+            description "EVPN classic";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+=== "PE2"
+
+    ```bash 
+      "PE2"
+      "Routing типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN classic"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+
+        ! Для наглядности конфиг в виде структуры:
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                }
+              }
+            }
+            description "EVPN classic";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+=== "PE3"
+
+    ```bash 
+      "PE3"
+      "Routing типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN classic"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+
+        ! Для наглядности конфиг в виде структуры:
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                }
+              }
+            }
+            description "EVPN classic";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
 
 ```bash
+
 ```
