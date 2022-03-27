@@ -1501,6 +1501,8 @@ Routing instance : VPLS_Kompella
 "Leaf-ы" не могут общаться между собой напрямую, а только через "root".
 ```
 
+[EVPN-Etree документацая](https://www.juniper.net/documentation/us/en/software/junos/evpn-vxlan/topics/example/example-etree-service-evpn-configuring.html#:~:text=The%20EVPN%2DETree%20service%20is,a%20root%20or%20a%20leaf.)
+
 ![evpn-etree](img/evpn-etree.jpg)
 
 ##### Конфигурация 
