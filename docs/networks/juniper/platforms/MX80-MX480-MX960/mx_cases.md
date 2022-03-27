@@ -1381,8 +1381,8 @@ Routing instance : VPLS_Kompella
                     interface-mac-limit {;
                         250;
                     }
-                    interfaces xe-1/1/1.100
-                    interfaces ae1.100
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
                 }
               }
             }
@@ -1430,8 +1430,8 @@ Routing instance : VPLS_Kompella
                     interface-mac-limit {;
                         250;
                     }
-                    interfaces xe-1/1/1.100
-                    interfaces ae1.100
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
                 }
               }
             }
@@ -1479,8 +1479,8 @@ Routing instance : VPLS_Kompella
                     interface-mac-limit {;
                         250;
                     }
-                    interfaces xe-1/1/1.100
-                    interfaces ae1.100
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
                 }
               }
             }
@@ -1494,23 +1494,20 @@ Routing instance : VPLS_Kompella
     ```
 
 #### 2. EVPN Etree
+
 ```bash
 При работе в режиме EVPN Etree - весь трафик проходит через центральный узел "root".
 Соответственно остальные учатники evpn нгазываются "leaf".
 "Leaf-ы" не могут общаться между собой напрямую, а только через "root".
-  ```
+```
 
-![evpn-classic](img/evpn-etree.jpg)
+![evpn-etree](img/evpn-etree.jpg)
 
 ##### Конфигурация 
 ```bash
 по сути добавляется только роль интерфейсов - "root" или "leaf", 
-а также в протоколе evpn добавляется сторока: "evpn-etree"
+а также в протоколе evpn добавляется сторока: "evpn-etree".
 ```
-
-Так как порты здесь одни и те же, то и конфигурация EVPN Instance будет идентичная.
-
-Отличия только будут в bgp - будут разные bgp neighbor
 
 === "PE1"
 
@@ -1533,9 +1530,11 @@ Routing instance : VPLS_Kompella
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
         set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 etree-ac-role leaf
         set interfaces ae1 unit 100 description "L2VPN 100"
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 etree-ac-role root
 
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
@@ -1548,8 +1547,8 @@ Routing instance : VPLS_Kompella
                     interface-mac-limit {;
                         250;
                     }
-                    interfaces xe-1/1/1.100
-                    interfaces ae1.100
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
                     evpn-etree;
                 }
               }
@@ -1585,9 +1584,11 @@ Routing instance : VPLS_Kompella
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
         set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces xe-1/1/1 unit 100 etree-ac-role leaf
         set interfaces ae1 unit 100 description "L2VPN 100"
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 etree-ac-role leaf
 
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
@@ -1597,11 +1598,11 @@ Routing instance : VPLS_Kompella
                     mac-table-size {
                         500;
                     }
-                    interface-mac-limit {;
+                    interface-mac-limit {
                         250;
                     }
-                    interfaces xe-1/1/1.100
-                    interfaces ae1.100
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
                     "evpn-etree;"
                 }
               }
@@ -1636,9 +1637,12 @@ Routing instance : VPLS_Kompella
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
         set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces xe-1/1/1 unit 100 etree-ac-role leaf
+        
         set interfaces ae1 unit 100 description "L2VPN 100"
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 etree-ac-role leaf
 
         "Для наглядности конфиг в виде структуры:"
         routing-instances {
@@ -1648,11 +1652,11 @@ Routing instance : VPLS_Kompella
                     mac-table-size {
                         500;
                     }
-                    interface-mac-limit {;
+                    interface-mac-limit {
                         250;
                     }
-                    interfaces xe-1/1/1.100
-                    interfaces ae1.100
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
                     "evpn-etree;"
                 }
               }
