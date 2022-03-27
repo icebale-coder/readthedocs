@@ -2,7 +2,7 @@ title: cli mikrotik
 
 !!!warning "Disclaimer"
           "В жизни каждого мужчины наступает момент когда он решительно рвет со своим прошлым
-          
+
           и дрожащей рукою приоткрывает вуаль будущего" (ц) Здравствуйте я Ваша Тётя...
           
           Вот и я по работе добрался таки и до микроты, прасти госпади... )
@@ -75,6 +75,7 @@ interface print
 Протокол EoIP - обеспечивает построение L2 туннуля между двумя маршрутизаторами микротик.
 
 [Дока1](https://wiki.mikrotik.com/wiki/Manual:Interface/EoIP)
+
 [Дока2](https://asp24.ru/mikrotik/sozdanie-domashney-seti-na-baze-ustroystv-mikrotik-chast-5-sozdanie-eoip-tunnelya/)
 
 ```bash
