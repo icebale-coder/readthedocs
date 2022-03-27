@@ -79,36 +79,36 @@ interface print
 [Дока2](https://asp24.ru/mikrotik/sozdanie-domashney-seti-na-baze-ustroystv-mikrotik-chast-5-sozdanie-eoip-tunnelya/)
 
 ```bash
-  "router1"
-  interface bridge add comment=router1 name=Bridge-eoip1000
+"router1"
+interface bridge add comment=router1 name=Bridge-eoip1000
 
-  interface eoip add comment=router1 name=eoip1000 remote-address=1.1.1.1 tunnel-id=1000
+interface eoip add comment=router1 name=eoip1000 remote-address=1.1.1.1 tunnel-id=1000
 
-  interface bridge port add bridge=Bridge-eoip1000 interface=eoip1000
-  interface bridge port add bridge=Bridge-eoip1000 interface=ether2
+interface bridge port add bridge=Bridge-eoip1000 interface=eoip1000
+interface bridge port add bridge=Bridge-eoip1000 interface=ether2
 
-  "router2"
-  interface bridge add comment=router2 name=bridge1000
+"router2"
+interface bridge add comment=router2 name=bridge1000
 
-  interface eoip add comment=router2 name=eoip-tunnel1000 remote-address=2.2.2.2 tunnel-id=1000
+interface eoip add comment=router2 name=eoip-tunnel1000 remote-address=2.2.2.2 tunnel-id=1000
 
-  interface vlan add comment=router2 interface=sfp4 name=vlan1000 vlan-id=1000
+interface vlan add comment=router2 interface=sfp4 name=vlan1000 vlan-id=1000
 
-  interface bridge port add bridge=bridge1000 interface=vlan1000
-  interface bridge port add bridge=bridge1000 interface=eoip-tunnel1000
+interface bridge port add bridge=bridge1000 interface=vlan1000
+interface bridge port add bridge=bridge1000 interface=eoip-tunnel1000
 
-  "Посмотреть информацию о статусе туннеля"
-  interface eoip print
-        Flags: X - disabled, R - running 
-        0  R ;;; router1
-              name="eoip1000" mtu=auto actual-mtu=1438 l2mtu=65535 mac-address=FE:0C:DE:AD:BE:EF arp=enabled arp-timeout=auto loop-protect=default loop-protect-status=off loop-protect-send-interval=5s loop-protect-disable-time=5m 
-              local-address=0.0.0.0 remote-address=2.2.2.2 tunnel-id=1000 keepalive=10s,10 dscp=inherit clamp-tcp-mss=yes dont-fragment=no allow-fast-path=yes 
+"Посмотреть информацию о статусе туннеля"
+interface eoip print
+      Flags: X - disabled, R - running 
+      0  R ;;; router1
+            name="eoip1000" mtu=auto actual-mtu=1438 l2mtu=65535 mac-address=FE:0C:DE:AD:BE:EF arp=enabled arp-timeout=auto loop-protect=default loop-protect-status=off loop-protect-send-interval=5s loop-protect-disable-time=5m 
+            local-address=0.0.0.0 remote-address=2.2.2.2 tunnel-id=1000 keepalive=10s,10 dscp=inherit clamp-tcp-mss=yes dont-fragment=no allow-fast-path=yes 
 
-  "Чтобы поменять ip адрес на EoIP туннеле надо изначально знать номер EoIP туннеля"
-  "просмотреть можно так: interface eoip print"
+"Чтобы поменять ip адрес на EoIP туннеле надо изначально знать номер EoIP туннеля"
+"просмотреть можно так: interface eoip print"
 
-  "Поменять адрес на EoIP туннеле"
-  interface eoip set name=eoip-tunnel1000 remote-address=3.3.3.3
-        numbers: 3
+"Поменять адрес на EoIP туннеле"
+interface eoip set name=eoip-tunnel1000 remote-address=3.3.3.3
+      numbers: 3
 ```
 
