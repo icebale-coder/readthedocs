@@ -1,5 +1,10 @@
 title: cli mikrotik
 
+!!!warning "Disclaimer"
+          "В жизни каждого мужчины насступает момент когла он рвет со своим прошлым
+          и дрожащей рукою приоткрывает вуаль будущего" (ц) Здравствуйте я Ваша Тётя...
+          Вот и я по работе добрался таки и до микротана, прасти госпади... )
+
 # Mikrotik cli
 
 [дока по cli](https://jcutrer.com/howto/networking/mikrotik/show-mac-address-table)
