@@ -1337,9 +1337,12 @@ Routing instance : VPLS_Kompella
   В данном случае под словом "классический" подразумевается то, 
   что тип routing-instance является "instance-type evpn"
 ```
+
+![evpn-classic](img/evpn-classic.jpg)
+
 ##### Конфигурация 
 
-Так как порты здесь одни и те же, то и онфигурация EVPN Instance будет идентичная.
+Так как порты здесь одни и те же, то и конфигурация EVPN Instance будет идентичная.
 
 Отличия только будут в bgp - будут разные bgp neighbor
 
