@@ -1530,11 +1530,11 @@ Routing instance : VPLS_Kompella
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
         set interfaces xe-1/1/1 unit 100 vlan-id 100
-        set interfaces ae1 unit 100 etree-ac-role leaf
+        "set interfaces xe-1/1/1 unit 100 etree-ac-role leaf"
         set interfaces ae1 unit 100 description "L2VPN 100"
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
-        set interfaces ae1 unit 100 etree-ac-role root
+        "set interfaces ae1 unit 100 etree-ac-role root"
 
 
         "Для наглядности конфиг в виде структуры:"
@@ -1584,11 +1584,11 @@ Routing instance : VPLS_Kompella
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
         set interfaces xe-1/1/1 unit 100 vlan-id 100
-        set interfaces xe-1/1/1 unit 100 etree-ac-role leaf
+        "set interfaces xe-1/1/1 unit 100 etree-ac-role leaf"
         set interfaces ae1 unit 100 description "L2VPN 100"
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
-        set interfaces ae1 unit 100 etree-ac-role leaf
+        "set interfaces ae1 unit 100 etree-ac-role leaf"
 
 
         "Для наглядности конфиг в виде структуры:"
@@ -1638,12 +1638,11 @@ Routing instance : VPLS_Kompella
         set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
         set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
         set interfaces xe-1/1/1 unit 100 vlan-id 100
-        set interfaces xe-1/1/1 unit 100 etree-ac-role leaf
-        
+        "set interfaces xe-1/1/1 unit 100 etree-ac-role leaf"
         set interfaces ae1 unit 100 description "L2VPN 100"
         set interfaces ae1 unit 100 encapsulation vlan-bridge
         set interfaces ae1 unit 100 vlan-id 100
-        set interfaces ae1 unit 100 etree-ac-role leaf
+        "set interfaces ae1 unit 100 etree-ac-role leaf"
 
 
         "Для наглядности конфиг в виде структуры:"
@@ -1693,7 +1692,6 @@ Routing instance : VPLS_Kompella
 ```
 
 ![evpn-classic](img/evpn-virtual-switch.jpg)
-
 
 ##### Конфигуарация
 
