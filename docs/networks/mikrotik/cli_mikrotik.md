@@ -101,8 +101,13 @@ interface bridge port add bridge=bridge1000 interface=eoip-tunnel1000
 interface eoip print
       Flags: X - disabled, R - running 
       0  R ;;; router1
-            name="eoip1000" mtu=auto actual-mtu=1438 l2mtu=65535 mac-address=FE:0C:DE:AD:BE:EF arp=enabled arp-timeout=auto loop-protect=default loop-protect-status=off loop-protect-send-interval=5s loop-protect-disable-time=5m 
-            local-address=0.0.0.0 remote-address=2.2.2.2 tunnel-id=1000 keepalive=10s,10 dscp=inherit clamp-tcp-mss=yes dont-fragment=no allow-fast-path=yes 
+        name="eoip1000" mtu=auto actual-mtu=1438 l2mtu=65535 
+        mac-address=FE:0C:DE:AD:BE:EF arp=enabled arp-timeout=auto 
+        loop-protect=default loop-protect-status=off 
+        loop-protect-send-interval=5s loop-protect-disable-time=5m 
+        local-address=0.0.0.0 remote-address=2.2.2.2 tunnel-id=1000 
+        keepalive=10s,10 dscp=inherit clamp-tcp-mss=yes 
+        dont-fragment=no allow-fast-path=yes 
 
 "Чтобы поменять ip адрес на EoIP туннеле надо изначально знать номер EoIP туннеля"
 "просмотреть можно так: interface eoip print"
