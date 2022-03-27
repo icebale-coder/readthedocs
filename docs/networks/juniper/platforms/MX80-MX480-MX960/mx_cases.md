@@ -1326,6 +1326,7 @@ Routing instance : VPLS_Kompella
 </details>
 
 #### vpls Martini mode
+[VPLS Configuration (BGP and LDP Interworking)](https://www.juniper.net/documentation/us/en/software/junos/vpn-l2/topics/example/vpls-bgp-ldp-configuring-detailed-solutions.html)
 
 
 ### EVPN
