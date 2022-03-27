@@ -2126,3 +2126,10 @@ Routing instance : VPLS_Kompella
 
 </p>
 </details>
+
+##### Очистить мак адрес в EVPN
+<details><summary>clear evpn mac-table instance Unisel 00:00:de:ed:be:ef</summary>
+<p>
+
+</p>
+</details>
