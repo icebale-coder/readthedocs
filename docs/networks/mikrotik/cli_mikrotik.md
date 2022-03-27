@@ -65,7 +65,7 @@ title: cli mikrotik
 ```bash
   interface ethernet print 
 ```
-### Просмотр статус и маки интерфейсов
+### Посмотреть статус и маки интерфейсов
 ```bash
 interface print          
 ```
