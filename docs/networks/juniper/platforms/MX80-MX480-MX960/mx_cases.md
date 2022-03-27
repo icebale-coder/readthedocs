@@ -1948,3 +1948,181 @@ Routing instance : VPLS_Kompella
 ```bash
 
 ```
+
+#### Диагностика EVPN
+
+##### Просмотр соседей
+<details><summary>show evpn instance PE1-PE2-PE3 neighbor-info</summary>
+<p>
+
+```bash
+  "PE3> show evpn instance PE1-PE2-PE3 neighbor-info"    
+  Instance: PE1-PE2-PE3
+    Number of neighbors: 3
+      Address               MAC    MAC+IP        AD        IM        ES Leaf-label
+      1.1.1.1           758       613         1         1         0       754
+      2.2.2.2            28        12         1         1         0        20
+```
+
+</p>
+</details>
+
+##### Просмотр мак адресов в EVPN
+<details><summary>show evpn mac-table instance PE1-PE2-PE3</summary>
+<p>
+        
+```bash
+  "PE3> show evpn mac-table instance PE1-PE2-PE3"        
+
+    MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+        O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+    Routing instance : PE1-PE2-PE3
+    Bridging domain : __PE1-PE2-PE3__, VLAN : 100
+      MAC                 MAC      Logical          NH     MAC         active
+      address             flags    interface        Index  property    source
+      00:00:40:11:7a:61   D        ge-11/2/1.1311          Leaf    
+      00:00:5e:00:01:08   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:09   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:1f   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:26   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:27   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:28   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:29   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:30   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:31   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:33   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:3a   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:3b   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:3c   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:3d   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:44   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:45   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:46   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:47   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:50   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:51   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:52   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:53   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:55   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:56   D        xe-1/1/1.100                Leaf    
+      "--- cut ---"
+```
+</p>
+</details>
+
+
+##### Просмотр таблицы EVPN
+<details><summary>show evpn database instance PE1-PE2-PE3</summary>
+<p>
+
+```bash
+  "PE1> show evpn database instance PE1-PE2-PE3"                             
+    Instance: PE1-PE2-PE3
+    VLAN  DomainId  MAC address        Active source                  Timestamp        IP address
+    100            00:00:40:11:7a:61  ae1.100                        Mar 25 07:56:22
+    100            00:00:5e:00:01:08  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.254
+    100            00:00:5e:00:01:26  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:28  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
+    100            00:00:5e:00:01:30  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.1
+    100            00:00:5e:00:01:31  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:00:5e:00:01:32  xe-1/1/1.100                   Mar 27 14:50:04
+    100            00:00:5e:00:01:33  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:50:c2:20:c5:a3  2.2.2.2                        Mar 27 14:48:08  172.16.111.69
+    100            00:50:c2:20:c5:bb  2.2.2.2                        Mar 27 14:25:51  172.16.111.86
+    100            00:50:c2:20:c5:c7  3.3.3.3                        Mar 27 14:53:44  172.16.111.149
+    --- cut ---
+```
+
+</p>
+</details>
+
+##### Просмотр таблицы EVPN для определенного интерфейса
+<details><summary>show evpn database instance PE1-PE2-PE3 interface xe-1/1/1.100</summary>
+<p>
+
+```bash
+  "PE1> show evpn database instance PE1-PE2-PE3 interface xe-1/1/1.100"                             
+    Instance: PE1-PE2-PE3
+    VLAN  DomainId  MAC address        Active source                  Timestamp        IP address
+    100            00:00:40:11:7a:61  ae1.100                        Mar 25 07:56:22
+    100            00:00:5e:00:01:08  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.254
+    100            00:00:5e:00:01:26  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:28  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
+    100            00:00:5e:00:01:30  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.1
+    100            00:00:5e:00:01:31  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:00:5e:00:01:32  xe-1/1/1.100                   Mar 27 14:50:04
+    100            00:00:5e:00:01:33  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:50:c2:20:c5:a3  2.2.2.2                        Mar 27 14:48:08  172.16.111.69
+    100            00:50:c2:20:c5:bb  2.2.2.2                        Mar 27 14:25:51  172.16.111.86
+    100            00:50:c2:20:c5:c7  3.3.3.3                        Mar 27 14:53:44  172.16.111.149
+    --- cut ---
+```
+</p>
+</details>
+
+
+##### Просмотр таблицы evpn - включая типы записей
+
+<details><summary>show route table PE1-PE2-PE3.evpn.0</summary>
+<p>
+
+```bash
+  PE1> show route table PE1-PE2-PE3.evpn.0     
+
+    PE1-PE2-PE3.evpn.0: 1527 destinations, 1527 routes (1527 active, 0 holddown, 0 hidden)
+    + = Active Route, - = Last Active, * = Both
+
+    1:77.94.160.2:0::0::FFFF:FFFF/192 AD/ESI        
+                      *[BGP/170] 2d 01:59:56, localpref 100, from 77.94.160.3
+                          AS path: I, validation-state: unverified
+                        >  to 77.94.160.72 via ae0.1003, Push 14483
+    1:77.94.160.3:0::0::FFFF:FFFF/192 AD/ESI        
+                      *[BGP/170] 2d 01:59:56, localpref 100, from 77.94.160.3
+                          AS path: I, validation-state: unverified
+                        >  to 77.94.160.72 via ae0.1003
+    1:77.94.160.4:0::0::FFFF:FFFF/192 AD/ESI        
+                      *[BGP/170] 2d 01:59:56, localpref 100, from 77.94.160.3
+                          AS path: I, validation-state: unverified
+                        >  to 77.94.160.72 via ae0.1003, Push 528
+    2:77.94.160.2:15::2568::00:0a:19:ca:a5:53/304 MAC/IP        
+                      *[BGP/170] 00:26:37, localpref 100, from 77.94.160.3
+                          AS path: I, validation-state: unverified
+                        >  to 77.94.160.72 via ae0.1003, Push 14483
+    2:77.94.160.2:15::2568::00:0a:19:ca:a7:30/304 MAC/IP        
+                      *[BGP/170] 00:23:43, localpref 100, from 77.94.160.3
+                          AS path: I, validation-state: unverified
+                        >  to 77.94.160.72 via ae0.1003, Push 14483
+```
+
+</p>
+</details>
+
+
+##### Диагностика RI virtual-switch 
+
+<details><summary>show bridge mac-table instance PE1-PE2-PE3 bridge-domain VL100</summary>
+<p>
+
+```bash
+  "PE1> show bridge mac-table instance PE1-PE2-PE3 bridge-domain VL100"
+
+  MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+      O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+  Routing instance : PE1-PE2-PE3
+  Bridging domain : VL100, VLAN : 100
+    MAC                 MAC      Logical          NH     MAC         active
+    address             flags    interface        Index  property    source
+    00:58:3f:11:5b:53   DC                        1048578            2.2.2.2                  
+    00:58:3f:13:90:0e   DC                        1048578            2.2.2.2                  
+    4c:4e:35:ae:4a:80   DC                        1048578            2.2.2.2                  
+    5c:5e:ab:6d:82:81   D        ae2.100        
+    b0:c6:9a:e3:c7:c4   D        ae2.100        
+    f8:f0:82:7d:74:f2   DC                        1048578            3.3.3.3  
+```
+
+</p>
+</details>
