@@ -1350,7 +1350,7 @@ Routing instance : VPLS_Kompella
 
     ```bash 
       "PE1"
-      "Routing типа evpn"
+      "Routing Instance типа evpn"
         set routing-instances PE1-PE2-PE3 instance-type evpn
         set routing-instances PE1-PE2-PE3 description "EVPN classic"
         set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
@@ -1360,7 +1360,7 @@ Routing instance : VPLS_Kompella
         set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
         set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
 
-        ! Для наглядности конфиг в виде структуры:
+        "Для наглядности конфиг в виде структуры:"
         routing-instances {
           PE1-PE2-PE3 {        
             protocols {
@@ -1387,7 +1387,7 @@ Routing instance : VPLS_Kompella
 
     ```bash 
       "PE2"
-      "Routing типа evpn"
+      "Routing Instance типа evpn"
         set routing-instances PE1-PE2-PE3 instance-type evpn
         set routing-instances PE1-PE2-PE3 description "EVPN classic"
         set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
@@ -1397,7 +1397,7 @@ Routing instance : VPLS_Kompella
         set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
         set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
 
-        ! Для наглядности конфиг в виде структуры:
+        "Для наглядности конфиг в виде структуры:"
         routing-instances {
           PE1-PE2-PE3 {        
             protocols {
@@ -1424,7 +1424,7 @@ Routing instance : VPLS_Kompella
 
     ```bash 
       "PE3"
-      "Routing типа evpn"
+      "Routing Instance типа evpn"
         set routing-instances PE1-PE2-PE3 instance-type evpn
         set routing-instances PE1-PE2-PE3 description "EVPN classic"
         set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
@@ -1434,7 +1434,7 @@ Routing instance : VPLS_Kompella
         set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
         set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
 
-        ! Для наглядности конфиг в виде структуры:
+        "Для наглядности конфиг в виде структуры:"
         routing-instances {
           PE1-PE2-PE3 {        
             protocols {
@@ -1457,6 +1457,213 @@ Routing instance : VPLS_Kompella
         }
     ```
 
+
+#### 2. EVPN в virtual-switch
+
+```bash
+При озникновении задачи передачи по EVPN несколько независимых влан.
+Чтобы не делать отдельные RI для каждого отдельного влана
+используется Route Instance типа virtual-switch, 
+внутри которого каждый влан заводится в свой бридж домен,
+таким образом изолируя разные вланы друг от друга.
+```
+
+
+```bash
+"Структурно данную конструкцию можно описать таким образом:"
+  virtual-switch {
+    bridge-domain {
+      vlan-id
+      interfaces
+    }
+  }
+```
+
+![evpn-classic](img/evpn-virtual-switch.jpg)
+
+
+##### Конфигуарация
+
+Так как номерация потров, участвующих в evpn одинаковая,
+то настройки Routing Instance на PE1, PE2, PE3 будут тоже одинаковые.
+Отличия только будут в bgp - будут разные bgp neighbor.
+
+=== "PE1"
+
+    ```bash 
+      "PE1"
+
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 10
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 100
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 200
+
+      set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
+      set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
+
+      set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+    "Для наглядности конфиг в виде структуры:"
+    routing-instances PE1-PE2-PE3 {
+
+      protocols {
+          evpn {
+              extended-vlan-list [ 10 100 200 ];
+          }
+      }
+      
+      description "PE1-PE2-PE3";
+      instance-type virtual-switch;
+      bridge-domains {
+          VL10 {
+              description "L2VPN 10";
+              vlan-id 10;
+              interface xe-1/1/1.10;
+              interface ae2.10;
+          }
+          VL100 {
+              description "L2VPN 100";
+              vlan-id 100;
+              interface xe-1/1/1.100;
+              interface ae2.100;
+          }
+          VL200 {
+              description "L2VPN 200";
+              vlan-id 10;
+              interface ae2.200;
+          }
+      }
+      vrf-target target:1111:2222;
+    }
+    ```
+
+=== "PE2"
+
+    ```bash 
+      "PE2"
+
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 10
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 100
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 200
+
+      set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
+      set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
+
+      set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+      "Для наглядности конфиг в виде структуры:"
+      routing-instances PE1-PE2-PE3 {
+
+        protocols {
+            evpn {
+                extended-vlan-list [ 10 100 200 ];
+            }
+        }
+        
+        description "PE1-PE2-PE3";
+        instance-type virtual-switch;
+        bridge-domains {
+            VL10 {
+                description "L2VPN 10";
+                vlan-id 10;
+                interface xe-1/1/1.10;
+                interface ae2.10;
+            }
+            VL100 {
+                description "L2VPN 100";
+                vlan-id 100;
+                interface xe-1/1/1.100;
+                interface ae2.100;
+            }
+            VL200 {
+                description "L2VPN 200";
+                vlan-id 10;
+                interface ae2.200;
+            }
+        }
+        vrf-target target:1111:2222;
+      }
+    ```
+
+=== "PE3"
+
+    ```bash 
+      "PE3"
+
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 10
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 100
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 200
+
+      set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
+      set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
+
+      set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+      "Для наглядности конфиг в виде структуры:"
+      routing-instances PE1-PE2-PE3 {
+
+        protocols {
+            evpn {
+                extended-vlan-list [ 10 100 200 ];
+            }
+        }
+        
+        description "PE1-PE2-PE3";
+        instance-type virtual-switch;
+        bridge-domains {
+            VL10 {
+                description "L2VPN 10";
+                vlan-id 10;
+                interface xe-1/1/1.10;
+                interface ae2.10;
+            }
+            VL100 {
+                description "L2VPN 100";
+                vlan-id 100;
+                interface xe-1/1/1.100;
+                interface ae2.100;
+            }
+            VL200 {
+                description "L2VPN 200";
+                vlan-id 10;
+                interface ae2.200;
+            }
+        }
+        vrf-target target:1111:2222;
+      }
+    ```
 
 ```bash
 
