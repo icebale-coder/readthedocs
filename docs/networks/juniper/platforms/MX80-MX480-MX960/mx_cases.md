@@ -251,7 +251,7 @@ set firewall policer 150Mbit_shared then discard
 <p>
 
 ```bash
-"PE3"
+"PE1"
 "Диагностика - все пингуется 172.16.243.81 и 172.16.243.82"
 
   "PE1> show bridge mac-table instance Local bridge-domain BD-NORM"
@@ -307,7 +307,7 @@ set firewall policer 150Mbit_shared then discard
 #### Конфигурация - нормализуем по влану 2000
 
 ```bash
-"PE3"
+"PE1"
 "set routing-instances Local bridge-domains BD-NORM vlan-id 2000"
 ```
 
@@ -379,7 +379,7 @@ set firewall policer 150Mbit_shared then discard
 #### Конфигурация - без указания влана
 
 ```bash
-"PE3"
+"PE1"
 "set routing-instances Local bridge-domains BD-NORM vlan-id none"
 ```
 
@@ -390,7 +390,7 @@ set firewall policer 150Mbit_shared then discard
 
 ```bash
 "Уберем влан нормализации внутри бридж домена"
-PE3
+PE1
 "set routing-instances Local bridge-domains BD-NORM vlan-id none"
 тогда...
 
@@ -447,6 +447,95 @@ PE3
 </details>
 
 ## MPLS
+
+[очень полезная статья](https://blog.marquis.co/layer-2-vpns-on-junos/)
+
+Для базовой настройки MPLS и работы технологий необходимы следующие настройки:
+
+=== "interfaces"
+
+    ```bash
+    "На участвующих в MPLS интерфесах настраивается тип инкапсуляции"
+    set interfaces xe-1/1/1 flexible-vlan-tagging
+    set interfaces xe-1/1/1 mtu 9216
+    set interfaces xe-1/1/1 encapsulation flexible-ethernet-services
+
+    set interfaces ae2 flexible-vlan-tagging
+    set interfaces ae2 mtu 9192
+    set interfaces ae2 encapsulation flexible-ethernet-services
+    set interfaces ae2 aggregated-ether-options lacp active
+    ```
+
+=== "MPLS"
+
+    ```bash
+    "На участвующих в MPLS интерфесах"
+    set protocols mpls interface xe-1/1/1.333
+    set protocols mpls interface ae2.333    
+    ```
+
+=== "RSVP-TE"
+
+    ```bash
+    "На участвующих в RSVP-TE интерфесах"
+    set protocols rsvp interface xe-1/1/1
+    set protocols rsvp interface ae2.0
+    ```
+
+=== "LDP"
+    
+    ```bash
+    "Возможна работа протокола LDP поверх протокола RSVP-TE"
+    "Классическая схема для Джунов"
+    set protocols ldp interface xe-1/1/1.333
+    set protocols ldp interface ae2.333
+    set protocols ldp interface lo0.0
+    ```
+
+=== "OSPF or IS-IS"
+
+    ```bash
+    "Можно поднять любой из 2-х протоколов IGP"
+    "На соответствующих интерфейсах, где данный протокол должен быть настроен )))"
+
+    "Настройки для OSPF c bfd тюнингом"
+    set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 interface-type p2p
+    set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 bfd-liveness-detection minimum-interval 500
+    set protocols ospf area 0.0.0.0 interface xe-1/1/1.0 bfd-liveness-detection multiplier 6
+    set protocols ospf area 0.0.0.0 interface ae2.0 interface-type p2p
+    set protocols ospf area 0.0.0.0 interface ae2.0 bfd-liveness-detection minimum-interval 500
+    set protocols ospf area 0.0.0.0 interface ae2.0 bfd-liveness-detection multiplier 6
+    "Для работы RSVP-TE включаеим в OSPF траффик инженеринг"
+    set protocols ospf traffic-engineering 
+
+
+    "Настройки для IS-IS"
+    set protocols isis reference-bandwidth 1000g
+    set protocols isis level 1 disable
+    set protocols isis level 2 wide-metrics-only
+    set protocols isis interface xe-1/1/1.0 ldp-synchronization
+    set protocols isis interface xe-1/1/1.0 point-to-point
+    set protocols isis interface xe-1/1/1.0 link-protection
+    set protocols isis interface ae2.0 ldp-synchronization
+    set protocols isis interface ae2.0 point-to-point
+    set protocols isis interface ae2.0 link-protection
+    set protocols isis interface lo0.0
+    "Для работы RSVP-TE включаеим в IS-IS траффик инженеринг"
+    set protocols isis traffic-engineering family inet shortcuts
+    ```
+
+=== "BGP"
+
+    ```bash
+    "Для Kompella mode"
+    set protocols bgp group ibgp family l2vpn signaling
+
+    "Для L3VPN"
+    set protocols bgp group ibgp family inet-vpn unicast
+    
+    "Для EVPN"
+    set protocols bgp group ibgp family evpn signaling
+    ```
 
 ### L2VPN
 
@@ -783,7 +872,7 @@ Neighbor: 3.3.3.3
 
 ```bash
 "Описание схемы и принципа работы."
-Имеется 3 сайта присутствия услуги (PE1, PE2, PE3).
+Имеется 3 сайта присутствия услуги (PE1, PE2, PE1).
 В каждый сайт включено несколько интерфейсов.
 Все они в конечном счете объединяются в один броадкаст домен. 
 
@@ -945,7 +1034,7 @@ set protocols bgp group Core neighbor 3.3.3.3 description PE-3
 ```
 
 ```bash
-"PE-2"
+"PE-3"
 "Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
 set protocols ldp interface ae22.22
 set protocols mpls interface ae22.22
@@ -1050,81 +1139,91 @@ Routing instance : VPLS_Kompella
 
 !!!warning "Важно"
         Если какое то оборудование, которое должно участвовать в vpls Kompella mode, но данный функционал не поддерживает,
-        а например умеет только l2curcuit, точнее xconnect - речь идет про модельный ряд оборудования cisco...
+        а например умеет только l2circuit, точнее xconnect - речь идет про модельный ряд оборудования cisco...
         В таком случае используется функционал juniper, так называемые "mesh-group", 
         с помощью которых можно включать l2circuit как интерфейсы в vpls домен, работающий в режиме Kompella mode.
  
 
 ![vpls-kompella-mode+mesh group](img/vpls-kompella-mode+mesh-group.jpg)
 
-C учетом всего сказанного конфигурация на PE1 будет следующей:
-```bash
-"PE-1"
+C учетом всего сказанного конфигурация на PE1 и PE11 будет следующей:
 
-"Настройка интерфейсов, входящих в vpls домен"
-set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
-set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
-set interfaces xe-1/1/1 unit 333 vlan-id 333
-set interfaces xe-1/1/1 unit 333 input-vlan-map pop
-set interfaces xe-1/1/1 unit 333 output-vlan-map push
-set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
+=== "PE-1"
 
-set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
-set interfaces ae2 unit 333 encapsulation vlan-vpls
-set interfaces ae2 unit 333 vlan-id 333
-set interfaces ae2 unit 333 input-vlan-map pop
-set interfaces ae2 unit 333 output-vlan-map push
-set interfaces ae2 unit 333 family vpls policer input 200Mbit
+    ```bash
+    "PE-1"
+    "Настройка интерфейсов, входящих в vpls домен"
+    set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
+    set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
+    set interfaces xe-1/1/1 unit 333 vlan-id 333
+    set interfaces xe-1/1/1 unit 333 input-vlan-map pop
+    set interfaces xe-1/1/1 unit 333 output-vlan-map push
+    set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
 
-"Настройка Route instance типа - instance-type vpls"
-set routing-instances VPLS_Kompella description "VPLS Kompella mode"
-set routing-instances VPLS_Kompella instance-type vpls
+    set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
+    set interfaces ae2 unit 333 encapsulation vlan-vpls
+    set interfaces ae2 unit 333 vlan-id 333
+    set interfaces ae2 unit 333 input-vlan-map pop
+    set interfaces ae2 unit 333 output-vlan-map push
+    set interfaces ae2 unit 333 family vpls policer input 200Mbit
 
-set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
-set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+    "Настройка Route instance типа - instance-type vpls"
+    set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+    set routing-instances VPLS_Kompella instance-type vpls
 
-"Идентификатор сайта - должен быть для участников vpls домена"
-set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
+    set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+    set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
 
-"Добавляется дополнительный сайт - [site PE11],"
-"участник которого по сути mesh группа - [PE11_mesh],"
-"в которой находится xconnect(l2circuit)"
-"-----------------------------------------------------------------------"
-set routing-instances VPLS_Kompella protocols vpls site PE11 site-identifier 11
-set routing-instances VPLS_Kompella protocols vpls site PE11 mesh-group PE11_mesh
+    "Идентификатор сайта - должен быть для участников vpls домена"
+    set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
+    set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
+    set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
+    set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
 
-set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh vpls-id 333
-set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh neighbor 11.11.11.11 encapsulation-type ethernet-vlan
-"-----------------------------------------------------------------------"
+    "Добавляется дополнительный сайт - [site PE11],"
+    "участник которого по сути mesh группа - [PE11_mesh],"
+    "в которой находится xconnect(l2circuit)"
+    "-----------------------------------------------------------------------"
+    set routing-instances VPLS_Kompella protocols vpls site PE11 site-identifier 11
+    set routing-instances VPLS_Kompella protocols vpls site PE11 mesh-group PE11_mesh
 
-"Перечисление интерфейсов, входящих в vpls домен"
-set routing-instances VPLS_Kompella interface xe-1/1/1.333
-set routing-instances VPLS_Kompella interface ae2.333
-set routing-instances VPLS_Kompella interface ae4.3224
+    set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh vpls-id 333
+    set routing-instances VPLS_Kompella protocols vpls mesh-group PE11_mesh neighbor 11.11.11.11 encapsulation-type ethernet-vlan
+    "-----------------------------------------------------------------------"
 
-"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
-set routing-instances VPLS_Kompella vrf-target target:1111:123
-```
+    "Перечисление интерфейсов, входящих в vpls домен"
+    set routing-instances VPLS_Kompella interface xe-1/1/1.333
+    set routing-instances VPLS_Kompella interface ae2.333
+    set routing-instances VPLS_Kompella interface ae4.3224
 
-```bash
-PE11
-"На стороне циски PE11 настраивается стандартный xconnect"
-pseudowire-class PE11_bcp
-  encapsulation l2tpv3
-  ip local interface Loopback0
-!
-interface GigabitEthernet0/0.333
-  description mesh_group_in_vpls
-  encapsulation dot1Q 333
-  xconnect 1.1.1.1 333 encapsulation mpls
-    mtu 1500
-  service-policy input 50Mbit
-  service-policy output 50Mbit
+    "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+    set routing-instances VPLS_Kompella vrf-target target:1111:123
+    ```
 
-```
+=== "PE-11"
+
+    ```bash
+    PE11
+    "На стороне циски PE11 настраивается стандартный xconnect"
+    pseudowire-class PE11_bcp
+      encapsulation l2tpv3
+      ip local interface Loopback0
+    !
+    interface GigabitEthernet0/0.333
+      description mesh_group_in_vpls
+      encapsulation dot1Q 333
+      xconnect 1.1.1.1 333 encapsulation mpls
+        mtu 1500
+      service-policy input 50Mbit
+      service-policy output 50Mbit
+    ```
+
+!!!warning "Важное замечание:"
+        Само собой подразумевается, что для работы MPLS Kompella Mode должно уже быть настроен сам MPLS (LDP и/или RSVP-TE)
+        также должен быть настоен протокол IGP, например (OSPF или IS-IS), а так же настроен iBGP протокол между PE 
+        (full mesh или RR). Ну и конечно же включение в bgp отдельной address family (afi=25 / safi=65) - Kompell Mode
+        В нотации Juniper это - ""
+
 
 ##### Diagnostic
 
@@ -1227,10 +1326,811 @@ Routing instance : VPLS_Kompella
 </details>
 
 #### vpls Martini mode
+[VPLS Configuration (BGP and LDP Interworking)](https://www.juniper.net/documentation/us/en/software/junos/vpn-l2/topics/example/vpls-bgp-ldp-configuring-detailed-solutions.html)
 
 
 ### EVPN
 
+"50 оттенков EVPN"
+
+#### 1. "Классический" EVPN 
+```bash
+  В данном случае под словом "классический" подразумевается то, 
+  что тип routing-instance является "instance-type evpn"
+```
+
+![evpn-classic](img/evpn-classic.jpg)
+
+##### Конфигурация 
+
+Так как порты здесь одни и те же, то и конфигурация EVPN Instance будет идентичная.
+
+Отличия только будут в bgp - будут разные bgp neighbor
+
+=== "PE1"
+
+    ```bash 
+      "PE1"
+      "Routing Instance типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN classic"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+        set routing-instances PE1-PE2-PE3 protocols evpn interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
+            
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+
+        "Для наглядности конфиг в виде структуры:"
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
+                }
+              }
+            }
+            description "EVPN classic";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+=== "PE2"
+
+    ```bash 
+      "PE2"
+      "Routing Instance типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN classic"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+        set routing-instances PE1-PE2-PE3 protocols evpn interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
+
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+
+        "Для наглядности конфиг в виде структуры:"
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
+                }
+              }
+            }
+            description "EVPN classic";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+=== "PE3"
+
+    ```bash 
+      "PE3"
+      "Routing Instance типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN classic"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+        set routing-instances PE1-PE2-PE3 protocols evpn interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
+
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+
+        "Для наглядности конфиг в виде структуры:"
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
+                }
+              }
+            }
+            description "EVPN classic";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+#### 2. EVPN Etree
 
 ```bash
+При работе в режиме EVPN Etree - весь трафик проходит через центральный узел "root".
+Соответственно остальные учатники evpn нгазываются "leaf".
+"Leaf-ы" не могут общаться между собой напрямую, а только через "root".
 ```
+
+[EVPN-Etree документацая](https://www.juniper.net/documentation/us/en/software/junos/evpn-vxlan/topics/example/example-etree-service-evpn-configuring.html#:~:text=The%20EVPN%2DETree%20service%20is,a%20root%20or%20a%20leaf.)
+
+![evpn-etree](img/evpn-etree.jpg)
+
+##### Конфигурация 
+```bash
+по сути добавляется только роль интерфейсов - "root" или "leaf", 
+а также в протоколе evpn добавляется сторока: "evpn-etree".
+```
+
+=== "PE1"
+
+    ```bash 
+      "PE1"
+      "Routing Instance типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN Etree"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+        set routing-instances PE1-PE2-PE3 protocols evpn interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
+        "set routing-instances PE1-PE2-PE3 protocols evpn evpn-etree"
+
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        "set interfaces xe-1/1/1 unit 100 etree-ac-role leaf"
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+        "set interfaces ae1 unit 100 etree-ac-role root"
+
+
+        "Для наглядности конфиг в виде структуры:"
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {;
+                        250;
+                    }
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
+                    "evpn-etree;"
+                }
+              }
+            }
+            description "EVPN Etree";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+=== "PE2"
+
+    ```bash 
+      "PE2"
+      "Routing Instance типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN Etree"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+        set routing-instances PE1-PE2-PE3 protocols evpn interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
+        "set routing-instances PE1-PE2-PE3 protocols evpn evpn-etree"
+
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        "set interfaces xe-1/1/1 unit 100 etree-ac-role leaf"
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+        "set interfaces ae1 unit 100 etree-ac-role leaf"
+
+
+        "Для наглядности конфиг в виде структуры:"
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {
+                        250;
+                    }
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
+                    "evpn-etree;"
+                }
+              }
+            }
+            description "EVPN Etree";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+=== "PE3"
+
+    ```bash 
+      "PE3"
+      "Routing Instance типа evpn"
+        set routing-instances PE1-PE2-PE3 instance-type evpn
+        set routing-instances PE1-PE2-PE3 description "EVPN Etree"
+        set routing-instances PE1-PE2-PE3 interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 interface ae1.100
+        set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+        
+        set routing-instances PE1-PE2-PE3 protocols evpn mac-table-size 500
+        set routing-instances PE1-PE2-PE3 protocols evpn interface-mac-limit 250
+        set routing-instances PE1-PE2-PE3 protocols evpn interface xe-1/1/1.100
+        set routing-instances PE1-PE2-PE3 protocols evpn interface ae1.100
+        "set routing-instances PE1-PE2-PE3 protocols evpn evpn-etree"
+
+        "Настройка интерфейсов"
+        set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+        set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+        set interfaces xe-1/1/1 unit 100 vlan-id 100
+        "set interfaces xe-1/1/1 unit 100 etree-ac-role leaf"
+        set interfaces ae1 unit 100 description "L2VPN 100"
+        set interfaces ae1 unit 100 encapsulation vlan-bridge
+        set interfaces ae1 unit 100 vlan-id 100
+        "set interfaces ae1 unit 100 etree-ac-role leaf"
+
+
+        "Для наглядности конфиг в виде структуры:"
+        routing-instances {
+          PE1-PE2-PE3 {        
+            protocols {
+                evpn {
+                    mac-table-size {
+                        500;
+                    }
+                    interface-mac-limit {
+                        250;
+                    }
+                    interfaces xe-1/1/1.100;
+                    interfaces ae1.100;
+                    "evpn-etree;"
+                }
+              }
+            }
+            description "EVPN Etree";
+            instance-type evpn;
+            interface xe-1/1/1.100;
+            interface ae1.100;
+            vrf-target target:1111:2222;
+          }
+        }
+    ```
+
+#### 3. EVPN в virtual-switch
+
+```bash
+При озникновении задачи передачи по EVPN несколько независимых влан.
+Чтобы не делать отдельные RI для каждого отдельного влана
+используется Route Instance типа virtual-switch, 
+внутри которого каждый влан заводится в свой бридж домен,
+таким образом изолируя разные вланы друг от друга.
+```
+
+```bash
+"Структурно данную конструкцию можно описать таким образом:"
+  virtual-switch {
+    bridge-domain {
+      vlan-id
+      interfaces
+    }
+  }
+```
+
+![evpn-classic](img/evpn-virtual-switch.jpg)
+
+##### Конфигуарация
+
+Так как номерация потров, участвующих в evpn одинаковая,
+то настройки Routing Instance на PE1, PE2, PE3 будут тоже одинаковые.
+Отличия только будут в bgp - будут разные bgp neighbor.
+
+=== "PE1"
+
+    ```bash 
+      "PE1"
+
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 10
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 100
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 200
+
+      set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
+      set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+      
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 description "L2VPN 100"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 description "L2VPN 200"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
+
+      set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+      "Настройка интерфейсов"
+      set interfaces xe-1/1/1 unit 10 description "L2VPN 10"
+      set interfaces xe-1/1/1 unit 10 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 10 vlan-id 10
+      set interfaces ae2 unit 10 description "L2VPN 10"
+      set interfaces ae2 unit 10 encapsulation vlan-bridge
+      set interfaces ae2 unit 10 vlan-id 10
+
+      set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+      set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 100 vlan-id 100
+      set interfaces ae2 unit 100 description "L2VPN 100"
+      set interfaces ae2 unit 100 encapsulation vlan-bridge
+      set interfaces ae2 unit 100 vlan-id 100
+
+      set interfaces ae2 unit 200 description "L2VPN 200"
+      set interfaces ae2 unit 200 encapsulation vlan-bridge
+      set interfaces ae2 unit 200 vlan-id 200
+
+
+      "Для наглядности конфиг в виде структуры:"
+      routing-instances PE1-PE2-PE3 {
+
+        protocols {
+            evpn {
+                extended-vlan-list [ 10 100 200 ];
+            }
+        }
+        
+        description "PE1-PE2-PE3";
+        instance-type virtual-switch;
+        bridge-domains {
+            VL10 {
+                description "L2VPN 10";
+                vlan-id 10;
+                interface xe-1/1/1.10;
+                interface ae2.10;
+            }
+            VL100 {
+                description "L2VPN 100";
+                vlan-id 100;
+                interface xe-1/1/1.100;
+                interface ae2.100;
+            }
+            VL200 {
+                description "L2VPN 200";
+                vlan-id 10;
+                interface ae2.200;
+            }
+        }
+        vrf-target target:1111:2222;
+      }
+    ```
+
+=== "PE2"
+
+    ```bash 
+      "PE2"
+
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 10
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 100
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 200
+
+      set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
+      set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 description "L2VPN 100"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 description "L2VPN 200"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
+
+      set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+      "Настройка интерфейсов"
+      set interfaces xe-1/1/1 unit 10 description "L2VPN 10"
+      set interfaces xe-1/1/1 unit 10 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 10 vlan-id 10
+      set interfaces ae2 unit 10 description "L2VPN 10"
+      set interfaces ae2 unit 10 encapsulation vlan-bridge
+      set interfaces ae2 unit 10 vlan-id 10
+
+      set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+      set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 100 vlan-id 100
+      set interfaces ae2 unit 100 description "L2VPN 100"
+      set interfaces ae2 unit 100 encapsulation vlan-bridge
+      set interfaces ae2 unit 100 vlan-id 100
+
+      set interfaces ae2 unit 200 description "L2VPN 200"
+      set interfaces ae2 unit 200 encapsulation vlan-bridge
+      set interfaces ae2 unit 200 vlan-id 200
+
+
+      "Для наглядности конфиг в виде структуры:"
+      routing-instances PE1-PE2-PE3 {
+
+        protocols {
+            evpn {
+                extended-vlan-list [ 10 100 200 ];
+            }
+        }
+        
+        description "PE1-PE2-PE3";
+        instance-type virtual-switch;
+        bridge-domains {
+            VL10 {
+                description "L2VPN 10";
+                vlan-id 10;
+                interface xe-1/1/1.10;
+                interface ae2.10;
+            }
+            VL100 {
+                description "L2VPN 100";
+                vlan-id 100;
+                interface xe-1/1/1.100;
+                interface ae2.100;
+            }
+            VL200 {
+                description "L2VPN 200";
+                vlan-id 10;
+                interface ae2.200;
+            }
+        }
+        vrf-target target:1111:2222;
+      }
+    ```
+
+=== "PE3"
+
+    ```bash 
+      "PE3"
+
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 10
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 100
+      set routing-instances PE1-PE2-PE3 protocols evpn extended-vlan-list 200
+
+      set routing-instances PE1-PE2-PE3 description "PE1-PE2-PE3"
+      set routing-instances PE1-PE2-PE3 instance-type virtual-switch
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 description "L2VPN 10"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 vlan-id 10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface xe-1/1/1.10
+      set routing-instances PE1-PE2-PE3 bridge-domains VL10 interface ae2.10
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 description "L2VPN 100"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 vlan-id 100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface xe-1/1/1.100
+      set routing-instances PE1-PE2-PE3 bridge-domains VL100 interface ae2.100
+
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 description "L2VPN 200"
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 vlan-id 200
+      set routing-instances PE1-PE2-PE3 bridge-domains VL200 interface ae2.200
+
+      set routing-instances PE1-PE2-PE3 vrf-target target:1111:2222
+
+      "Настройка интерфейсов"
+      set interfaces xe-1/1/1 unit 10 description "L2VPN 10"
+      set interfaces xe-1/1/1 unit 10 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 10 vlan-id 10
+      set interfaces ae2 unit 10 description "L2VPN 10"
+      set interfaces ae2 unit 10 encapsulation vlan-bridge
+      set interfaces ae2 unit 10 vlan-id 10
+
+      set interfaces xe-1/1/1 unit 100 description "L2VPN 100"
+      set interfaces xe-1/1/1 unit 100 encapsulation vlan-bridge
+      set interfaces xe-1/1/1 unit 100 vlan-id 100
+      set interfaces ae2 unit 100 description "L2VPN 100"
+      set interfaces ae2 unit 100 encapsulation vlan-bridge
+      set interfaces ae2 unit 100 vlan-id 100
+
+      set interfaces ae2 unit 200 description "L2VPN 200"
+      set interfaces ae2 unit 200 encapsulation vlan-bridge
+      set interfaces ae2 unit 200 vlan-id 200
+
+      "Для наглядности конфиг в виде структуры:"
+      routing-instances PE1-PE2-PE3 {
+
+        protocols {
+            evpn {
+                extended-vlan-list [ 10 100 200 ];
+            }
+        }
+        
+        description "PE1-PE2-PE3";
+        instance-type virtual-switch;
+        bridge-domains {
+            VL10 {
+                description "L2VPN 10";
+                vlan-id 10;
+                interface xe-1/1/1.10;
+                interface ae2.10;
+            }
+            VL100 {
+                description "L2VPN 100";
+                vlan-id 100;
+                interface xe-1/1/1.100;
+                interface ae2.100;
+            }
+            VL200 {
+                description "L2VPN 200";
+                vlan-id 10;
+                interface ae2.200;
+            }
+        }
+        vrf-target target:1111:2222;
+      }
+    ```
+
+```bash
+
+```
+
+#### Диагностика EVPN
+
+##### Просмотр соседей
+<details><summary>show evpn instance PE1-PE2-PE3 neighbor-info</summary>
+<p>
+
+```bash
+  "PE3> show evpn instance PE1-PE2-PE3 neighbor-info"    
+  Instance: PE1-PE2-PE3
+    Number of neighbors: 3
+      Address               MAC    MAC+IP        AD        IM        ES Leaf-label
+      1.1.1.1           758       613         1         1         0       754
+      2.2.2.2            28        12         1         1         0        20
+```
+
+</p>
+</details>
+
+##### Просмотр мак адресов в EVPN
+<details><summary>show evpn mac-table instance PE1-PE2-PE3</summary>
+<p>
+        
+```bash
+  "PE3> show evpn mac-table instance PE1-PE2-PE3"        
+
+    MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+        O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+    Routing instance : PE1-PE2-PE3
+    Bridging domain : __PE1-PE2-PE3__, VLAN : 100
+      MAC                 MAC      Logical          NH     MAC         active
+      address             flags    interface        Index  property    source
+      00:00:40:11:7a:61   D        ge-11/2/1.1311          Leaf    
+      00:00:5e:00:01:08   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:09   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:1f   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:26   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:27   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:28   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:29   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:30   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:31   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:33   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:3a   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:3b   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:3c   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:3d   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:44   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:45   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:46   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:47   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:50   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:51   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:52   DC                        1048581 Root       1.1.1.1                   
+      00:00:5e:00:01:53   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:55   D        xe-1/1/1.100                Leaf    
+      00:00:5e:00:01:56   D        xe-1/1/1.100                Leaf    
+      "--- cut ---"
+```
+</p>
+</details>
+
+
+##### Просмотр таблицы EVPN
+<details><summary>show evpn database instance PE1-PE2-PE3</summary>
+<p>
+
+```bash
+  "PE1> show evpn database instance PE1-PE2-PE3"                             
+    Instance: PE1-PE2-PE3
+    VLAN  DomainId  MAC address        Active source                  Timestamp        IP address
+    100            00:00:40:11:7a:61  ae1.100                        Mar 25 07:56:22
+    100            00:00:5e:00:01:08  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.254
+    100            00:00:5e:00:01:26  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:28  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
+    100            00:00:5e:00:01:30  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.1
+    100            00:00:5e:00:01:31  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:00:5e:00:01:32  xe-1/1/1.100                   Mar 27 14:50:04
+    100            00:00:5e:00:01:33  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:50:c2:20:c5:a3  2.2.2.2                        Mar 27 14:48:08  172.16.111.69
+    100            00:50:c2:20:c5:bb  2.2.2.2                        Mar 27 14:25:51  172.16.111.86
+    100            00:50:c2:20:c5:c7  3.3.3.3                        Mar 27 14:53:44  172.16.111.149
+    --- cut ---
+```
+
+</p>
+</details>
+
+##### Просмотр таблицы EVPN для определенного интерфейса
+<details><summary>show evpn database instance PE1-PE2-PE3 interface xe-1/1/1.100</summary>
+<p>
+
+```bash
+  "PE1> show evpn database instance PE1-PE2-PE3 interface xe-1/1/1.100"                             
+    Instance: PE1-PE2-PE3
+    VLAN  DomainId  MAC address        Active source                  Timestamp        IP address
+    100            00:00:40:11:7a:61  ae1.100                        Mar 25 07:56:22
+    100            00:00:5e:00:01:08  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.254
+    100            00:00:5e:00:01:26  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:28  xe-1/1/1.100                   Mar 27 14:42:33
+    100            00:00:5e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
+    100            00:00:5e:00:01:30  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.1
+    100            00:00:5e:00:01:31  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:00:5e:00:01:32  xe-1/1/1.100                   Mar 27 14:50:04
+    100            00:00:5e:00:01:33  xe-1/1/1.100                   Mar 27 13:56:35
+    100            00:50:c2:20:c5:a3  2.2.2.2                        Mar 27 14:48:08  172.16.111.69
+    100            00:50:c2:20:c5:bb  2.2.2.2                        Mar 27 14:25:51  172.16.111.86
+    100            00:50:c2:20:c5:c7  3.3.3.3                        Mar 27 14:53:44  172.16.111.149
+    --- cut ---
+```
+</p>
+</details>
+
+
+##### Просмотр таблицы evpn - включая типы записей
+
+<details><summary>show route table PE1-PE2-PE3.evpn.0</summary>
+<p>
+
+```bash
+  PE1> show route table PE1-PE2-PE3.evpn.0     
+
+    PE1-PE2-PE3.evpn.0: 1527 destinations, 1527 routes (1527 active, 0 holddown, 0 hidden)
+    + = Active Route, - = Last Active, * = Both
+
+    1:3.3.3.3:0::0::FFFF:FFFF/192 AD/ESI        
+                      *[BGP/170] 2d 01:59:56, localpref 100, from 1.1.1.1
+                          AS path: I, validation-state: unverified
+                        >  to 2.2.2.2 via ae0.1, Push 14483
+    1:1.1.1.1:0::0::FFFF:FFFF/192 AD/ESI        
+                      *[BGP/170] 2d 01:59:56, localpref 100, from 1.1.1.1
+                          AS path: I, validation-state: unverified
+                        >  to 2.2.2.2 via ae0.1
+    1:77.94.160.4:0::0::FFFF:FFFF/192 AD/ESI        
+                      *[BGP/170] 2d 01:59:56, localpref 100, from 1.1.1.1
+                          AS path: I, validation-state: unverified
+                        >  to 2.2.2.2 via ae0.1, Push 528
+    2:3.3.3.3:15::2568::00:0a:19:ca:a5:53/304 MAC/IP        
+                      *[BGP/170] 00:26:37, localpref 100, from 1.1.1.1
+                          AS path: I, validation-state: unverified
+                        >  to 2.2.2.2 via ae0.1, Push 14483
+    2:3.3.3.3:15::2568::00:0a:19:ca:a7:30/304 MAC/IP        
+                      *[BGP/170] 00:23:43, localpref 100, from 1.1.1.1
+                          AS path: I, validation-state: unverified
+                        >  to 2.2.2.2 via ae0.1, Push 14483
+```
+
+</p>
+</details>
+
+
+##### Диагностика RI virtual-switch 
+
+<details><summary>show bridge mac-table instance PE1-PE2-PE3 bridge-domain VL100</summary>
+<p>
+
+```bash
+  "PE1> show bridge mac-table instance PE1-PE2-PE3 bridge-domain VL100"
+
+  MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+      O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+  Routing instance : PE1-PE2-PE3
+  Bridging domain : VL100, VLAN : 100
+    MAC                 MAC      Logical          NH     MAC         active
+    address             flags    interface        Index  property    source
+    00:58:3f:11:5b:53   DC                        1048578            2.2.2.2                  
+    00:58:3f:13:90:0e   DC                        1048578            2.2.2.2                  
+    4c:4e:35:ae:4a:80   DC                        1048578            2.2.2.2                  
+    5c:5e:ab:6d:82:81   D        ae2.100        
+    b0:c6:9a:e3:c7:c4   D        ae2.100        
+    f8:f0:82:7d:74:f2   DC                        1048578            3.3.3.3  
+```
+
+</p>
+</details>
+
+##### Очистить мак адрес в EVPN
+<details><summary>clear evpn mac-table instance PE1-PE2-PE3 00:00:de:ed:be:ef</summary>
+<p>
+
+</p>
+</details>
