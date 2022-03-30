@@ -732,6 +732,12 @@ commit check
 commit
 ```
 
+#### commit full
+
+Скрытая команда нужна, чтобы проверить соответствие всего конфига - таким образом все демоны(сервисы) - проверяют корректность своих настроек в соответствии с конфигом.
+
+[commit full](https://kb.juniper.net/InfoCenter/index?page=content&id=KB15410#:~:text=Solution%3A,ve%20changed%20the%20config%20significantly.)
+
 #### commit confirm [minite]
 
 ```bash
