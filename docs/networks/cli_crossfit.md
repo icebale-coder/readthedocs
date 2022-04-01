@@ -1070,6 +1070,9 @@ AS31133 - это Мегафон, это конечная AS-ка, которая
   "Промотр мак адресов в EVPN"
   show evpn mac-table instance XXXX
 
+  "Просмотр таблицы EVPN включая историю появления маков на интах"
+  show evpn database instance XXXX extensive
+
   "Просмотр БД EVPN - по сути mac/arp таблицы"¶
   show evpn database instance XXXX
   
