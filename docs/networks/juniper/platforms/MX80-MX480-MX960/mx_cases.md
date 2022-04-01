@@ -71,6 +71,24 @@ Aggregated interface: ae0
 </details>
 
 
+## protocol l2-learning 
+Необходим для настройки параметров изучения mac-адресов
+
+[l2-learning-edit-protocols](https://www.juniper.net/documentation/us/en/software/junos/multicast-l2/topics/ref/statement/l2-learning-edit-protocols.html)
+
+```bash
+"Пример конфигурации"
+show configuration protocols l2-learning        
+  global-mac-move {
+      threshold-time 30;
+      reopen-time 30;
+      threshold-count 5;
+      log;
+  }
+  global-mac-table-aging-time 1200;
+  global-mac-ip-table-aging-time 600;
+```
+
 ## policer 
 policer vs shared-bandwidth-policer
 
@@ -2051,7 +2069,8 @@ Routing instance : VPLS_Kompella
     100            00:00:5e:00:01:08  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.254
     100            00:00:5e:00:01:26  xe-1/1/1.100                   Mar 27 14:42:33
     100            00:00:5e:00:01:28  xe-1/1/1.100                   Mar 27 14:42:33
-    100            00:00:5e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
+    100            00:00:5```
+e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
     100            00:00:5e:00:01:30  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.1
     100            00:00:5e:00:01:31  xe-1/1/1.100                   Mar 27 13:56:35
     100            00:00:5e:00:01:32  xe-1/1/1.100                   Mar 27 14:50:04
