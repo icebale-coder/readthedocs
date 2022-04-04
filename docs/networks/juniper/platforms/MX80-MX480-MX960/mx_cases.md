@@ -65,7 +65,7 @@ Aggregated interface: ae0
       xe-2/0/0                  Current   Fast periodic Collecting distributing
       xe-2/0/1                  Current   Fast periodic Collecting distributing
       xe-3/1/0                  Current   Fast periodic Collecting distributing
-      xe-3/1/1                  Current   Fast periodic Collecting distributing
+      xe-3/1/1                  Current   Fast periodic Collecting distributing 
 ```
 </p>
 </details>
