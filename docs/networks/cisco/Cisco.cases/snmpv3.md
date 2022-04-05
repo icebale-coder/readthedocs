@@ -8,36 +8,35 @@ title: snmpv3
 ### без шифрования
 
 ```bash
-  "можно указать какие oid-ы доступны для просмотра"
-  snmp-server view DeviceView iso.3.6.1.2.1.2.2.1.2 included
-  snmp-server group snmp_group v3 noauth read DeviceView 
-  snmp-server user USER_NAME1 snmp_group v3 auth md5 MY_PASSWORD
+"можно указать какие oid-ы доступны для просмотра"
+snmp-server view DeviceView iso.3.6.1.2.1.2.2.1.2 included
+snmp-server group snmp_group v3 noauth read DeviceView 
+snmp-server user USER_NAME1 snmp_group v3 auth md5 MY_PASSWORD
 ```
 
 ```bash
-  "проверка работоспособности:"
-  "snmpwalk -v 3 -u имя_пользователя -A ПАРОЛЬ -l authNoPriv хост"
-  snmpwalk -v 3 -u USER_NAME1 -A MY_PASSWORD -l authNoPriv 1.1.1.1
+"проверка работоспособности:"
+"snmpwalk -v 3 -u имя_пользователя -A ПАРОЛЬ -l authNoPriv хост"
+snmpwalk -v 3 -u USER_NAME1 -A MY_PASSWORD -l authNoPriv 1.1.1.1
 ```
 
 ### с шифроваением
 
 ```bash
-  snmp-server group snmp_group v3 auth read DeviceView
-  snmp-server view DeviceView ifTable included
-  snmp-server user USER_NAME1 snmp_group v3 auth md5 MY_PASSWORD_AUTH priv des MY_PASSWORD_CRYPT
-  
-  "или во втором случае пример с другими параметрами авторизации и протоколом шифрования"
-  snmp-server user USER_NAME1 snmp_group v3 auth sha MY_PASSWORD_AUTH priv aes 128 MY_PASSWORD_CRYPT
+snmp-server group snmp_group v3 auth read DeviceView
+snmp-server view DeviceView ifTable included
+snmp-server user USER_NAME1 snmp_group v3 auth md5 MY_PASSWORD_AUTH priv des MY_PASSWORD_CRYPT
+
+"или во втором случае пример с другими параметрами авторизации и протоколом шифрования"
+snmp-server user USER_NAME1 snmp_group v3 auth sha MY_PASSWORD_AUTH priv aes 128 MY_PASSWORD_CRYPT
 ```
 
 ```bash
-  "проверка работоспособности:"
-  snmpwalk -v 3 -a MD5 -A MY_PASSWORD_AUTH -l authPriv -u USER_NAME1 -x DES -X MY_PASSWORD_CRYPT
-  
-  "или во втором случае:"
-  snmpwalk -v 3 -a SHA -A MY_PASSWORD_AUTH -l authPriv -u имя_пользователя -x AES 128 -X MY_PASSWORD_CRYPT
-  
+"проверка работоспособности:"
+snmpwalk -v 3 -a MD5 -A MY_PASSWORD_AUTH -l authPriv -u USER_NAME1 -x DES -X MY_PASSWORD_CRYPT
+
+"или во втором случае:"
+snmpwalk -v 3 -a SHA -A MY_PASSWORD_AUTH -l authPriv -u имя_пользователя -x AES 128 -X MY_PASSWORD_CRYPT
 ```
 
 ### Diagnostic
