@@ -41,7 +41,7 @@ set interfaces xe-3/1/1 gigether-options 802.3ad ae0
 <p>
 
 ```bash
-"Диагностика--"
+"Диагностика"
 
 "show lacp interfaces ae0"
 Aggregated interface: ae0
