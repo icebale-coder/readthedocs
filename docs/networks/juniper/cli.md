@@ -1171,6 +1171,348 @@ commit complete
 что делает просто "commit"
 ```
 
+#### Прмер commit full 
+<details><summary>commit full | display detail</summary>
+<p>
+
+
+```bash
+"Можно посмотреть в деталях,"
+"что происходит под капотом внутри коробки при применения commit full"
+"Там еще больше интересного, чем в commit )"
+
+"commit full | display detail"
+2023-01-07 15:20:42 GMT-3: Obtaining lock for commit
+2023-01-07 15:20:42 GMT-3: merging latest committed configuration
+2023-01-07 15:20:42 GMT-3: Using fast-diff method to generate diff
+2023-01-07 15:20:43 GMT-3: start loading commit script changes
+2023-01-07 15:20:43 GMT-3: no commit script changes
+2023-01-07 15:20:43 GMT-3: no transient commit script changes
+2023-01-07 15:20:43 GMT-3: finished loading commit script changes
+2023-01-07 15:20:43 GMT-3: copying juniper.db to juniper.data+
+2023-01-07 15:20:43 GMT-3: finished copying juniper.db to juniper.data+
+2023-01-07 15:20:43 GMT-3: exporting juniper.conf
+2023-01-07 15:20:43 GMT-3: expanding interface-ranges
+2023-01-07 15:20:43 GMT-3: finished expanding interface-ranges
+2023-01-07 15:20:43 GMT-3: expanding groups
+2023-01-07 15:20:43 GMT-3: finished expanding groups
+2023-01-07 15:20:43 GMT-3: setup foreign files
+2023-01-07 15:20:47 GMT-3: update license counters
+2023-01-07 15:20:47 GMT-3: finish license counters
+2023-01-07 15:20:47 GMT-3: propagating foreign files
+2023-01-07 15:20:47 GMT-3: cdg returns = 8(Can not execute binary)
+2023-01-07 15:20:49 GMT-3: complete foreign files
+2023-01-07 15:20:49 GMT-3: dropping unchanged foreign files
+2023-01-07 15:20:49 GMT-3: executing 'ffp propagate'
+2023-01-07 15:20:49 GMT-3: daemons checking new configuration
+2023-01-07 15:20:49 GMT-3: Spawning Routing protocols process to check new configuration
+2023-01-07 15:20:49 GMT-3: Collecting status of Routing protocols process
+2023-01-07 15:20:49 GMT-3: Spawning Init daemon to check new configuration
+2023-01-07 15:20:49 GMT-3: Collecting status of Init daemon
+2023-01-07 15:20:49 GMT-3: Spawning Chassis control process to check new configuration
+2023-01-07 15:20:50 GMT-3: Collecting status of Chassis control process
+2023-01-07 15:20:50 GMT-3: Spawning Booting daemon to check new configuration
+2023-01-07 15:20:50 GMT-3: Collecting status of Booting daemon
+2023-01-07 15:20:50 GMT-3: Spawning IPSec Key Management daemon to check new configuration
+2023-01-07 15:20:50 GMT-3: Collecting status of IPSec Key Management daemon
+2023-01-07 15:20:50 GMT-3: Spawning PKI service daemon to check new configuration
+2023-01-07 15:20:50 GMT-3: Collecting status of PKI service daemon
+2023-01-07 15:20:50 GMT-3: Spawning Secure Neighbor Discovery Protocol process to check new configuration
+2023-01-07 15:20:50 GMT-3: Collecting status of Secure Neighbor Discovery Protocol process
+2023-01-07 15:20:50 GMT-3: Spawning Firewall process to check new configuration
+2023-01-07 15:20:50 GMT-3: Collecting status of Firewall process
+2023-01-07 15:20:50 GMT-3: sending commit-check command to Interface control process(1443)
+2023-01-07 15:20:51 GMT-3: Collecting status of Interface control process
+2023-01-07 15:20:51 GMT-3: Spawning Simple Network Management Protocol process to check new configuration
+2023-01-07 15:20:51 GMT-3: Collecting status of Simple Network Management Protocol process
+2023-01-07 15:20:51 GMT-3: Spawning Management Information Base II process to check new configuration
+2023-01-07 15:20:51 GMT-3: Collecting status of Management Information Base II process
+2023-01-07 15:20:51 GMT-3: Spawning Virtual Router Redundancy Protocol process to check new configuration
+2023-01-07 15:20:51 GMT-3: Collecting status of Virtual Router Redundancy Protocol process
+2023-01-07 15:20:51 GMT-3: Spawning Alarm control process to check new configuration
+2023-01-07 15:20:51 GMT-3: Collecting status of Alarm control process
+2023-01-07 15:20:51 GMT-3: Spawning Packet Forwarding Engine statistics management process to check new configuration
+2023-01-07 15:20:51 GMT-3: Collecting status of Packet Forwarding Engine statistics management process
+2023-01-07 15:20:51 GMT-3: Spawning Remote operations process to check new configuration
+2023-01-07 15:20:51 GMT-3: Collecting status of Remote operations process
+2023-01-07 15:20:51 GMT-3: Spawning Class-of-service process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Class-of-service process
+2023-01-07 15:20:52 GMT-3: Spawning Port forwarding process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Port forwarding process
+2023-01-07 15:20:52 GMT-3: Spawning Web management gatekeeper process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Web management gatekeeper process
+2023-01-07 15:20:52 GMT-3: Spawning Dynamic Host Configuration Protocol process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Dynamic Host Configuration Protocol process
+2023-01-07 15:20:52 GMT-3: Spawning Redundancy interface management process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Redundancy interface management process
+2023-01-07 15:20:52 GMT-3: Spawning Link Aggregation Control Protocol process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Link Aggregation Control Protocol process
+2023-01-07 15:20:52 GMT-3: Spawning Connectivity fault management process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Connectivity fault management process
+2023-01-07 15:20:52 GMT-3: Spawning Junos Dynamic Host Configuration Protocol process to check new configuration
+2023-01-07 15:20:52 GMT-3: Collecting status of Junos Dynamic Host Configuration Protocol process
+2023-01-07 15:20:52 GMT-3: Spawning General authentication process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of General authentication process
+2023-01-07 15:20:53 GMT-3: Spawning Database Replication process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Database Replication process
+2023-01-07 15:20:53 GMT-3: Spawning Resource cleanup process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Resource cleanup process
+2023-01-07 15:20:53 GMT-3: Spawning Shared memory routing socket message database process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Shared memory routing socket message database process
+2023-01-07 15:20:53 GMT-3: Spawning Subscriber management process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Subscriber management process
+2023-01-07 15:20:53 GMT-3: Spawning Flow Sampling (Sflow) Daemon to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Flow Sampling (Sflow) Daemon
+2023-01-07 15:20:53 GMT-3: Spawning Port based Network Access Control to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Port based Network Access Control
+2023-01-07 15:20:53 GMT-3: Spawning Unified access control daemon to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Unified access control daemon
+2023-01-07 15:20:53 GMT-3: Spawning Uplink failure detection process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Uplink failure detection process
+2023-01-07 15:20:53 GMT-3: Spawning Logical system multiplexer process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Logical system multiplexer process
+2023-01-07 15:20:53 GMT-3: Spawning Pragmatic General Multicast process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Pragmatic General Multicast process
+2023-01-07 15:20:53 GMT-3: Spawning Bidirectional Forwarding Detection process to check new configuration
+2023-01-07 15:20:53 GMT-3: Collecting status of Bidirectional Forwarding Detection process
+2023-01-07 15:20:53 GMT-3: Spawning Service Deployment System (SDX) process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Service Deployment System (SDX) process
+2023-01-07 15:20:54 GMT-3: Spawning Audit process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Audit process
+2023-01-07 15:20:54 GMT-3: Spawning Event processing process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Event processing process
+2023-01-07 15:20:54 GMT-3: Spawning Multicast Snooping process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Multicast Snooping process
+2023-01-07 15:20:54 GMT-3: Spawning Feature license management process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Feature license management process
+2023-01-07 15:20:54 GMT-3: Spawning Junos node unifier process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Junos node unifier process
+2023-01-07 15:20:54 GMT-3: Spawning Link Layer Discovery Protocol to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Link Layer Discovery Protocol
+2023-01-07 15:20:54 GMT-3: Spawning Ethernet Switching Process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Ethernet Switching Process
+2023-01-07 15:20:54 GMT-3: Spawning Port based Network Access Control to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Port based Network Access Control
+2023-01-07 15:20:54 GMT-3: Spawning Autoinstallation process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Autoinstallation process
+2023-01-07 15:20:54 GMT-3: Spawning Connectivity fault management process to check new configuration
+2023-01-07 15:20:54 GMT-3: Collecting status of Connectivity fault management process
+2023-01-07 15:20:54 GMT-3: Spawning PKI service daemon to check new configuration
+2023-01-07 15:20:55 GMT-3: Collecting status of PKI service daemon
+2023-01-07 15:20:55 GMT-3: Spawning Chassis Manager to check new configuration
+2023-01-07 15:20:55 GMT-3: Collecting status of Chassis Manager
+2023-01-07 15:20:55 GMT-3: Spawning Virtual Chassis Control Protocol to check new configuration
+2023-01-07 15:20:55 GMT-3: Collecting status of Virtual Chassis Control Protocol
+2023-01-07 15:20:55 GMT-3: updating shared candidate configuration
+2023-01-07 15:20:55 GMT-3: updating commit revision
+configuration check succeeds
+2023-01-07 15:20:55 GMT-3: executing 'ffp synchronize'
+2023-01-07 15:20:55 GMT-3: commit wrapup...
+2023-01-07 15:20:55 GMT-3: activating '/var/etc/init.inc'
+2023-01-07 15:20:56 GMT-3: activating '/var/etc/ntp.conf'
+2023-01-07 15:20:56 GMT-3: activating '/var/etc/bootpd.conf'
+2023-01-07 15:20:56 GMT-3: activating '/var/etc/cosd.conf'
+2023-01-07 15:20:57 GMT-3: start ffp activate
+2023-01-07 15:20:57 GMT-3: executing 'ffp activate'
+2023-01-07 15:20:57 GMT-3: activating '/var/etc/master.passwd'
+2023-01-07 15:20:58 GMT-3: activating '/var/etc/inetd.conf'
+2023-01-07 15:20:59 GMT-3: activating '/var/etc/rc.conf.inc'
+2023-01-07 15:20:59 GMT-3: activating '/var/etc/keyadmin.conf'
+2023-01-07 15:20:59 GMT-3: activating '/var/etc/sysids'
+2023-01-07 15:20:59 GMT-3: activating '/var/etc/login.conf'
+2023-01-07 15:21:00 GMT-3: activating '/var/etc/ttys'
+2023-01-07 15:21:00 GMT-3: activating '/var/etc/resolv.conf'
+2023-01-07 15:21:01 GMT-3: activating '/var/etc/hosts'
+2023-01-07 15:21:01 GMT-3: activating '/var/etc/group'
+2023-01-07 15:21:01 GMT-3: activating '/var/etc/ntp.keys'
+2023-01-07 15:21:01 GMT-3: activating '/var/etc/newsyslog.conf'
+2023-01-07 15:21:01 GMT-3: activating '/var/etc/pam.conf'
+2023-01-07 15:21:02 GMT-3: activating '/var/etc/pam_radius.conf'
+2023-01-07 15:21:02 GMT-3: activating '/var/etc/pam_tacplus.conf'
+2023-01-07 15:21:03 GMT-3: activating '/var/etc/ifinfo.conf'
+2023-01-07 15:21:04 GMT-3: activating '/var/etc/issue'
+2023-01-07 15:21:04 GMT-3: activating '/var/etc/sshd_conf'
+2023-01-07 15:21:04 GMT-3: activating '/var/etc/ssh_config'
+2023-01-07 15:21:04 GMT-3: activating '/var/etc/certs'
+2023-01-07 15:21:08 GMT-3: activating '/var/etc/motd'
+2023-01-07 15:21:09 GMT-3: activating '/var/etc/tzset'
+2023-01-07 15:21:09 GMT-3: activating '/var/etc/cosd.conf.id'
+2023-01-07 15:21:10 GMT-3: activating '/var/etc/named.conf'
+2023-01-07 15:21:10 GMT-3: activating '/var/etc/crontab'
+2023-01-07 15:21:10 GMT-3: activating '/var/etc/ifmdata.conf'
+2023-01-07 15:21:10 GMT-3: activating '/var/etc/max-db-size-cfg'
+2023-01-07 15:21:10 GMT-3: activating '/var/etc/subs-mgmt-cfg'
+2023-01-07 15:21:11 GMT-3: activating '/var/etc/vmm.conf'
+2023-01-07 15:21:11 GMT-3: activating '/var/etc/db_ext-cfg'
+2023-01-07 15:21:12 GMT-3: activating '/var/etc/stunnel.conf'
+2023-01-07 15:21:14 GMT-3: activating '/var/etc/lighttpd.conf'
+2023-01-07 15:21:14 GMT-3: activating '/var/etc/lighttpd.server.pem'
+2023-01-07 15:21:14 GMT-3: activating '/var/etc/lighttpd.ca.cert'
+2023-01-07 15:21:14 GMT-3: activating '/var/etc/lighttpd.addresses'
+2023-01-07 15:21:15 GMT-3: activating '/var/etc/ephinst.conf'
+2023-01-07 15:21:15 GMT-3: executing foreign_commands
+2023-01-07 15:21:15 GMT-3: /bin/sh /etc/rc.ui ui_setup_users (sh)
+2023-01-07 15:21:15 GMT-3: executing ui_commit in rc.ui
+2023-01-07 15:21:20 GMT-3: finish ffp activate
+2023-01-07 15:21:20 GMT-3: copying configuration to juniper.save
+2023-01-07 15:21:20 GMT-3: db_check_constraint_ids_clear start
+2023-01-07 15:21:20 GMT-3: db_check_constraint_ids_clear done
+2023-01-07 15:21:20 GMT-3: db_groups_info_clear start
+2023-01-07 15:21:20 GMT-3: db_groups_info_clear done
+2023-01-07 15:21:20 GMT-3: activating '/var/run/db/juniper.data'
+2023-01-07 15:21:20 GMT-3: Rotate backup configs
+2023-01-07 15:21:26 GMT-3: ssync begins
+2023-01-07 15:21:26 GMT-3: ssync ends
+2023-01-07 15:21:26 GMT-3: notifying daemons of new configuration
+2023-01-07 15:21:26 GMT-3:  notifying none(0)
+2023-01-07 15:21:26 GMT-3: cannot signal 'None process', signal 1, no pid
+2023-01-07 15:21:26 GMT-3:  notifying mgd(1)
+2023-01-07 15:21:26 GMT-3: signaling 'Management process', pid 1421, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:26 GMT-3:  notifying rpd(2)
+2023-01-07 15:21:26 GMT-3: signaling 'Routing protocols process', pid 1452, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:26 GMT-3:  notifying cli(3)
+2023-01-07 15:21:26 GMT-3: cannot signal 'Command-line interface', signal 1, no pid
+2023-01-07 15:21:26 GMT-3:  notifying init(4)
+2023-01-07 15:21:26 GMT-3: signaling 'Init daemon', pid 1, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:26 GMT-3:  notifying chassisd(5)
+2023-01-07 15:21:28 GMT-3: signaling 'Chassis control process', pid 1444, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying xntpd(6)
+2023-01-07 15:21:28 GMT-3: signaling 'Network time process', pid 1449, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying bootpd(7)
+2023-01-07 15:21:28 GMT-3: cannot signal 'Booting daemon', signal 1, no pid
+2023-01-07 15:21:28 GMT-3:  notifying kmd(8)
+2023-01-07 15:21:28 GMT-3: cannot signal 'IPSec Key Management daemon', signal 1, no pid
+2023-01-07 15:21:28 GMT-3:  notifying pkid(10)
+2023-01-07 15:21:28 GMT-3: signaling 'PKI service daemon', pid 1468, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying sendd(11)
+2023-01-07 15:21:28 GMT-3: signaling 'Secure Neighbor Discovery Protocol process', pid 1465, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying dfwd(12)
+2023-01-07 15:21:28 GMT-3: signaling 'Firewall process', pid 1458, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying dcd(13)
+2023-01-07 15:21:28 GMT-3: signaling 'Interface control process', pid 1443, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying snmpd(14)
+2023-01-07 15:21:28 GMT-3: signaling 'Simple Network Management Protocol process', pid 1450, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:28 GMT-3:  notifying mib2d(15)
+2023-01-07 15:21:29 GMT-3: signaling 'Management Information Base II process', pid 1451, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:29 GMT-3:  notifying vrrpd(16)
+2023-01-07 15:21:30 GMT-3: cannot signal 'Virtual Router Redundancy Protocol process', signal 1, no pid
+2023-01-07 15:21:30 GMT-3:  notifying alarmd(17)
+2023-01-07 15:21:30 GMT-3: signaling 'Alarm control process', pid 1445, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:30 GMT-3:  notifying pfed(18)
+2023-01-07 15:21:31 GMT-3: signaling 'Packet Forwarding Engine statistics management process', pid 1454, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:31 GMT-3:  notifying rmopd(21)
+2023-01-07 15:21:32 GMT-3: signaling 'Remote operations process', pid 1455, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:32 GMT-3:  notifying cosd(22)
+2023-01-07 15:21:32 GMT-3: signaling 'Class-of-service process', pid 1456, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:32 GMT-3:  notifying fud(23)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Port forwarding process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying ksyncd(24)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Kernel replication process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying inetd(25)
+2023-01-07 15:21:33 GMT-3: signaling 'Inet process', pid 1422, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying httpd-gk(26)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Web management gatekeeper process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying dhcpd(27)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Dynamic Host Configuration Protocol process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying rdd(28)
+2023-01-07 15:21:33 GMT-3: signaling 'Redundancy interface management process', pid 1461, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying lacpd(29)
+2023-01-07 15:21:33 GMT-3: signaling 'Link Aggregation Control Protocol process', pid 1464, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying lfmd(30)
+2023-01-07 15:21:33 GMT-3: signaling 'Ethernet OAM Link-Fault-Management process', pid 1447, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying tnetd(32)
+2023-01-07 15:21:33 GMT-3: cannot signal 'TNP process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying cfmd(33)
+2023-01-07 15:21:33 GMT-3: signaling 'Connectivity fault management process', pid 1448, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying jdhcpd(34)
+2023-01-07 15:21:33 GMT-3: signaling 'Junos Dynamic Host Configuration Protocol process', pid 1469, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying authd(35)
+2023-01-07 15:21:33 GMT-3: signaling 'General authentication process', pid 1470, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying rpcbind(36)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Service for rpc requests', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying mountd(37)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Service for NFS mounts requests', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying bdbrepd(38)
+2023-01-07 15:21:33 GMT-3: signaling 'Database Replication process', pid 1462, signal 1, status 0 with notification errors disabled
+2023-01-07 15:21:33 GMT-3:  notifying res-cleanupd(39)
+2023-01-07 15:21:33 GMT-3: cannot signal 'Resource cleanup process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying shm-rtsdbd(40)
+2023-01-07 15:21:33 GMT-3: signaling 'Shared memory routing socket message database process', pid 1467, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying datapath-traced(41)
+2023-01-07 15:21:33 GMT-3: cannot signal 'DATAPATH Trace process', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying smid(42)
+2023-01-07 15:21:33 GMT-3: signaling 'Subscriber management process', pid 1460, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying gstatd(44)
+2023-01-07 15:21:33 GMT-3: cannot signal 'geom-device performance monitoring daemon', signal 1, no pid
+2023-01-07 15:21:33 GMT-3:  notifying sflowd(45)
+2023-01-07 15:21:33 GMT-3: signaling 'Flow Sampling (Sflow) Daemon', pid 1473, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying dot1xd(46)
+2023-01-07 15:21:33 GMT-3: signaling 'Port based Network Access Control', pid 1474, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:33 GMT-3:  notifying uacd(47)
+2023-01-07 15:21:34 GMT-3: cannot signal 'Unified access control daemon', signal 1, no pid
+2023-01-07 15:21:34 GMT-3:  notifying ufdd(50)
+2023-01-07 15:21:34 GMT-3: cannot signal 'Uplink failure detection process', signal 1, no pid
+2023-01-07 15:21:34 GMT-3:  notifying ppmd(52)
+2023-01-07 15:21:34 GMT-3: signaling 'Periodic packet management process', pid 1457, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:34 GMT-3:  notifying lrmuxd(54)
+2023-01-07 15:21:34 GMT-3: cannot signal 'Logical system multiplexer process', signal 1, no pid
+2023-01-07 15:21:34 GMT-3:  notifying pgmd(57)
+2023-01-07 15:21:34 GMT-3: cannot signal 'Pragmatic General Multicast process', signal 1, no pid
+2023-01-07 15:21:34 GMT-3:  notifying bfdd(58)
+2023-01-07 15:21:34 GMT-3: signaling 'Bidirectional Forwarding Detection process', pid 1459, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:34 GMT-3:  notifying sdxd(59)
+2023-01-07 15:21:34 GMT-3: cannot signal 'Service Deployment System (SDX) process', signal 1, no pid
+2023-01-07 15:21:34 GMT-3:  notifying auditd(60)
+2023-01-07 15:21:34 GMT-3: signaling 'Audit process', pid 1463, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:34 GMT-3:  notifying eventd(62)
+2023-01-07 15:21:34 GMT-3: signaling 'Event processing process', pid 1070, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:34 GMT-3:  notifying mcsnoopd(63)
+2023-01-07 15:21:34 GMT-3: signaling 'Multicast Snooping process', pid 1475, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:34 GMT-3:  notifying license-check(65)
+2023-01-07 15:21:34 GMT-3: signaling 'Feature license management process', pid 1476, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:34 GMT-3:  notifying commitd(66)
+2023-01-07 15:21:35 GMT-3: cannot signal 'Ephemeral Controller Daemon', signal 1, no pid
+2023-01-07 15:21:35 GMT-3:  notifying jnud(67)
+2023-01-07 15:21:35 GMT-3: cannot signal 'Junos node unifier process', signal 1, no pid
+2023-01-07 15:21:35 GMT-3:  notifying rest-api(68)
+2023-01-07 15:21:35 GMT-3: cannot signal 'REST Application Programming Interface process', signal 1, no pid
+2023-01-07 15:21:35 GMT-3:  notifying ntad(69)
+2023-01-07 15:21:36 GMT-3: cannot signal 'Network Topology Abstraction Daemon', signal 1, no pid
+2023-01-07 15:21:36 GMT-3:  notifying lldpd(70)
+2023-01-07 15:21:36 GMT-3: signaling 'Link Layer Discovery Protocol', pid 1477, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:36 GMT-3:  notifying lfmd(71)
+2023-01-07 15:21:37 GMT-3: signaling 'Ethernet OAM Link-Fault-Management process', pid 1447, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:37 GMT-3:  notifying eswd(72)
+2023-01-07 15:21:37 GMT-3: signaling 'Ethernet Switching Process', pid 1466, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:37 GMT-3:  notifying dot1xd(73)
+2023-01-07 15:21:38 GMT-3: signaling 'Port based Network Access Control', pid 1474, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:38 GMT-3:  notifying autod(74)
+2023-01-07 15:21:38 GMT-3: cannot signal 'Autoinstallation process', signal 1, no pid
+2023-01-07 15:21:38 GMT-3:  notifying cfmd(75)
+2023-01-07 15:21:38 GMT-3: signaling 'Connectivity fault management process', pid 1448, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:38 GMT-3:  notifying pkid(76)
+2023-01-07 15:21:38 GMT-3: signaling 'PKI service daemon', pid 1468, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:38 GMT-3:  notifying chassism(77)
+2023-01-07 15:21:38 GMT-3: signaling 'Chassis Manager', pid 1424, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:38 GMT-3:  notifying sfid(78)
+2023-01-07 15:21:38 GMT-3: signaling 'Software Forwarding', pid 1425, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:38 GMT-3:  notifying vccpd(79)
+2023-01-07 15:21:39 GMT-3: signaling 'Virtual Chassis Control Protocol', pid 1426, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:39 GMT-3:  notifying pfem(80)
+2023-01-07 15:21:39 GMT-3: signaling 'Packet Forwarding Engine Manager', pid 1427, signal 1, status 0 with notification errors enabled
+2023-01-07 15:21:40 GMT-3: ssync begins
+2023-01-07 15:21:41 GMT-3: ssync ends
+2023-01-07 15:21:41 GMT-3: gram_private_edit - start
+2023-01-07 15:21:43 GMT-3: gram_private_edit - done
+2023-01-07 15:21:43 GMT-3: commit complete
+commit complete
+
+```
+
+</p>
+</details>
+
+
 [дока про "commit full"](https://kb.juniper.net/InfoCenter/index?page=content&id=KB15410#:~:text=Solution%3A,ve%20changed%20the%20config%20significantly.)
 
 
