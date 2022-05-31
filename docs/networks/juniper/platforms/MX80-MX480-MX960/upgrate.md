@@ -33,12 +33,6 @@ admin@MBR> show version
 </p>
 </details>
 
-##  2. Через флешку - копируем пакет обновлений в /var/tmp 
-<details><summary>jinstall-ppc-19.4R3.11-signed.tgz</summary>
-<p>
-</p>
-</details>
-
 ##  2. Через shell - копируем образ с флешки на диск 
 <details><summary>start shell</summary>
 <p>
