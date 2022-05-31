@@ -1,4 +1,4 @@
-# upgate MX80
+# upgrade MX80
 
 Процесс обновление JunOS Juniper MX80  
 
@@ -33,19 +33,23 @@ admin@MBR> show version
 </p>
 </details>
 
-##  2. Через scp - копируем пакет обновлений в /var/tmp 
+##  2. Через флешку - копируем пакет обновлений в /var/tmp 
 <details><summary>jinstall-ppc-19.4R3.11-signed.tgz</summary>
 <p>
 </p>
 </details>
 
-##  3. Вход в шел freebsd - посмотреть размер свободного места
+##  2. Через shell - копируем образ с флешки на диск 
 <details><summary>start shell</summary>
 <p>
-
 ```bash
-admin@MBR> start shell    
-	% ls -la /var/tmp
+	!!!По факту прсто попадаешь в shell FreeBSD!!!
+	!!!Тут действует большинство команд FreeBSD!!!
+	admin@MBR> start shell
+		%su root
+	
+	!Просмотр содержимого /var/tmp
+	ls -la /var/tmp
 		total 789184
 		drwxrwxrwt   7 root   field        512 Feb 15 18:53 .
 		drwxr-xr-x  34 root   wheel       1024 Feb 16  2020 ..
@@ -56,7 +60,9 @@ admin@MBR> start shell
 		-r--r--r--   1 root   field        237 Jan 24  2019 preinstall_boot_loader.conf
 		drwxr-xr-x   2 root   field        512 Feb 15 17:23 rtsdb
 		drwxrwxrwt   2 root   wheel        512 Jan 24  2019 vi.recover
-	% df -h
+	
+	!Проверяем свободное место 
+	df -h
 		Filesystem             Size    Used   Avail Capacity  Mounted on
 		/dev/da0s1a            885M    226M    588M    28%    /
 		devfs                  1.0K    1.0K      0B   100%    /dev
@@ -78,9 +84,23 @@ admin@MBR> start shell
 		/var/log               2.8G    437M    2.2G    17%    /packages/mnt/jweb-ppc-15.1R7.8/jail/var/log
 		devfs                  1.0K    1.0K      0B   100%    /packages/mnt/jweb-ppc-15.1R7.8/jail/dev
 
-```
+	!Создаем директроию для монитровние флешки
+		mkdir /var/tmp/usb
+
+	!Монтируем флешку 
+		mount -t msdos /dev/da1s1 /var/tmp/usb
+
+	!Копируем ПО в /var/tmp
+		cp /var/tmp/usb/jinstall-ppc-19.4R3.11-signed.tgz
+	
+	!Размонтируем флешку
+		unmount /var/tmp/usb
+
+	!Возвращаемся в cli Juniper-a
+		cli
 </p>
 </details>
+
 
 ##  4. Очищаем логи - удаляем ненужные файлы, чтобы освободить место
 <details><summary>request system storage cleanup</summary>
@@ -92,7 +112,7 @@ admin@MBR> start shell
 <details><summary>request system snapshot </summary>
 <p>
 ```bash
-> request system snapshot 
+	request system snapshot 
 	Verifying compatibility of destination media partitions...
 	Running newfs (899MB) on internal media  / partition (da1s1a)...
 	Running newfs (100MB) on internal media  /config partition (da1s1e)...
@@ -180,10 +200,36 @@ admin@MBR> request system software validate /var/tmp/jinstall-ppc-19.4R3.11-sign
 </p>
 </details>
 
+!!!warning "Важно"
+          Бывает ситуация, что сбито время и не валидиуется сертификат, 
+					тогда надо руками задать текущее время, чтобы пакет обновления установился успешно
+
+
 ##  7. Устанавливаем новый инсталляционный пакет Junos
 <details><summary>request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz</summary>
 <p>
 ```bash
+!Ошибка проверки сертификата из-за непрваильного времени в коробке
+admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz          
+	[Jan 20 13:28:06]: Checking pending install on fpc0
+
+	[Jan 20 13:28:06]: Validating on fpc0
+	[Jan 20 13:28:24]: Done with validate on all virtual chassis members
+
+	fpc0:
+	Verify the signature of the new package
+	verify-sig: cannot validate certs.pem
+	certificate is not yet valid: 
+	/C=US/ST=CA/L=Sunnyvale/O=Juniper Networks/OU=Juniper 
+	CA/CN=PackageProductionSHA1RSACA/emailAddress=ca@juniper.net
+
+	ERROR: Package signature validation failed.  Aborting install.
+
+!Для устранения данной ошибки устанавливаем текущее время в ручную
+admin@MBR> set date 202206011436.00 
+  Wed Jun  1 14:36:00 GMT-3 2022
+
+!После этого процесс установки проходит без ошибок
 admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz          
 	NOTICE: Validating configuration against jinstall-ppc-19.4R3.11-signed.tgz.
 	NOTICE: Use the 'no-validate' option to skip this if desired.
