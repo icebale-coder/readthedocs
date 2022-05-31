@@ -1678,7 +1678,7 @@ show system rollback compare 2 1
 
 ##### Без матчинга
 
-<details><summary>show chassis hardware </summary>
+<details><summary>show interfaces diagnostics optics ge-0/0/1 </summary>
 <p>
 
 ```bash
