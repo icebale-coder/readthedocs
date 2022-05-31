@@ -36,13 +36,14 @@ admin@MBR> show version
 ##  2. Через shell - копируем образ с флешки на диск 
 <details><summary>start shell</summary>
 <p>
+
 ```bash
-	!!!По факту прсто попадаешь в shell FreeBSD!!!
-	!!!Тут действует большинство команд FreeBSD!!!
+	"!!!По факту просто попадаешь в shell FreeBSD!!!"
+	"!!!тут действует большинство команд FreeBSD!!!"
 	admin@MBR> start shell
 		%su root
 	
-	!Просмотр содержимого /var/tmp
+	"Просмотр содержимого /var/tmp"
 	ls -la /var/tmp
 		total 789184
 		drwxrwxrwt   7 root   field        512 Feb 15 18:53 .
@@ -55,7 +56,7 @@ admin@MBR> show version
 		drwxr-xr-x   2 root   field        512 Feb 15 17:23 rtsdb
 		drwxrwxrwt   2 root   wheel        512 Jan 24  2019 vi.recover
 	
-	!Проверяем свободное место 
+	"Проверяем свободное место"
 	df -h
 		Filesystem             Size    Used   Avail Capacity  Mounted on
 		/dev/da0s1a            885M    226M    588M    28%    /
@@ -78,19 +79,19 @@ admin@MBR> show version
 		/var/log               2.8G    437M    2.2G    17%    /packages/mnt/jweb-ppc-15.1R7.8/jail/var/log
 		devfs                  1.0K    1.0K      0B   100%    /packages/mnt/jweb-ppc-15.1R7.8/jail/dev
 
-	!Создаем директроию для монитровние флешки
+	"Создаем директорию для монтирование флешки"
 		mkdir /var/tmp/usb
 
-	!Монтируем флешку 
+	"Монтируем флешку" 
 		mount -t msdos /dev/da1s1 /var/tmp/usb
 
-	!Копируем ПО в /var/tmp
+	"Копируем ПО в /var/tmp"
 		cp /var/tmp/usb/jinstall-ppc-19.4R3.11-signed.tgz
 	
-	!Размонтируем флешку
+	"Размонтируем флешку"
 		unmount /var/tmp/usb
 
-	!Возвращаемся в cli Juniper-a
+	"Возвращаемся в cli Juniper-a"
 		cli
 </p>
 </details>
@@ -202,8 +203,9 @@ admin@MBR> request system software validate /var/tmp/jinstall-ppc-19.4R3.11-sign
 ##  7. Устанавливаем новый инсталляционный пакет Junos
 <details><summary>request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz</summary>
 <p>
+
 ```bash
-!Ошибка проверки сертификата из-за непрваильного времени в коробке
+"Может возникнуть ошибка проверки сертификата из-за неправильного времени в коробке"
 admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz          
 	[Jan 20 13:28:06]: Checking pending install on fpc0
 
@@ -219,11 +221,11 @@ admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tg
 
 	ERROR: Package signature validation failed.  Aborting install.
 
-!Для устранения данной ошибки устанавливаем текущее время в ручную
+"Для устранения данной ошибки устанавливаем текущее время в ручную"
 admin@MBR> set date 202206011436.00 
   Wed Jun  1 14:36:00 GMT-3 2022
 
-!После этого процесс установки проходит без ошибок
+"После этого процесс установки проходит без ошибок"
 admin@MBR> request system software add /var/tmp/jinstall-ppc-19.4R3.11-signed.tgz          
 	NOTICE: Validating configuration against jinstall-ppc-19.4R3.11-signed.tgz.
 	NOTICE: Use the 'no-validate' option to skip this if desired.

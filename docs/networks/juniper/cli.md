@@ -1171,7 +1171,7 @@ commit complete
 что делает просто "commit"
 ```
 
-#### Прмер commit full 
+#### Пример commit full 
 <details><summary>commit full | display detail</summary>
 <p>
 
