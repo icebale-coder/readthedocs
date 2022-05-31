@@ -65,11 +65,29 @@ Aggregated interface: ae0
       xe-2/0/0                  Current   Fast periodic Collecting distributing
       xe-2/0/1                  Current   Fast periodic Collecting distributing
       xe-3/1/0                  Current   Fast periodic Collecting distributing
-      xe-3/1/1                  Current   Fast periodic Collecting distributing
+      xe-3/1/1                  Current   Fast periodic Collecting distributing 
 ```
 </p>
 </details>
 
+
+## protocol l2-learning 
+Необходим для настройки параметров изучения mac-адресов
+
+[l2-learning-edit-protocols](https://www.juniper.net/documentation/us/en/software/junos/multicast-l2/topics/ref/statement/l2-learning-edit-protocols.html)
+
+```bash
+"Пример конфигурации"
+show configuration protocols l2-learning        
+  global-mac-move {
+      threshold-time 30;
+      reopen-time 30;
+      threshold-count 5;
+      log;
+  }
+  global-mac-table-aging-time 1200;
+  global-mac-ip-table-aging-time 600;
+```
 
 ## policer 
 policer vs shared-bandwidth-policer
@@ -1982,7 +2000,7 @@ Routing instance : VPLS_Kompella
     Bridging domain : __PE1-PE2-PE3__, VLAN : 100
       MAC                 MAC      Logical          NH     MAC         active
       address             flags    interface        Index  property    source
-      00:00:40:11:7a:61   D        ge-11/2/1.1311          Leaf    
+      00:00:40:11:7a:61   D        xe-1/1/1/1.1311          Leaf    
       00:00:5e:00:01:08   D        xe-1/1/1.100                Leaf    
       00:00:5e:00:01:09   D        xe-1/1/1.100                Leaf    
       00:00:5e:00:01:1f   D        xe-1/1/1.100                Leaf    
@@ -2051,7 +2069,8 @@ Routing instance : VPLS_Kompella
     100            00:00:5e:00:01:08  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.254
     100            00:00:5e:00:01:26  xe-1/1/1.100                   Mar 27 14:42:33
     100            00:00:5e:00:01:28  xe-1/1/1.100                   Mar 27 14:42:33
-    100            00:00:5e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
+    100            00:00:5```
+e:00:01:29  xe-1/1/1.100                   Mar 27 13:56:35  172.16.111.33
     100            00:00:5e:00:01:30  xe-1/1/1.100                   Mar 27 14:50:04  172.16.111.1
     100            00:00:5e:00:01:31  xe-1/1/1.100                   Mar 27 13:56:35
     100            00:00:5e:00:01:32  xe-1/1/1.100                   Mar 27 14:50:04
@@ -2064,6 +2083,75 @@ Routing instance : VPLS_Kompella
 </p>
 </details>
 
+
+##### Просмотр таблицы EVPN включая историю появления маков на интах
+<details><summary>show evpn database instance PE1-PE2-PE3 extensive</summary>
+<p>
+
+  ```bash
+  За счет истории появления маков на интах можно понять,
+  когда что флапало или петляло
+  "PE1> show evpn database instance PE1-PE2-PE3 extensive"
+  Instance: PE1-PE2-PE3
+
+  VLAN ID: 100, MAC address: 00:00:40:11:7a:61
+  State: 0x0
+  Source: xe-1/1/1/1.1311, Rank: 1, Status: Active
+    Mobility sequence number: 0 (minimum origin address 77.94.160.13)
+    Timestamp: Mar 31 22:44:21.742770 (0x62460495)
+    State: <Local-MAC-Only Local-To-Remote-Adv-Allowed Local-Leaf>
+    MAC advertisement route status: Created
+    History db: <No entries>
+
+  VLAN ID: 100, MAC address: 00:00:5e:00:01:08
+  Nexthop ID: 1048581
+  State: 0x1 <Duplicate-Detected>
+  Mobility history
+    Mobility event time     Type    Source           Seq num
+    Mar 14 19:53:55.509276  Local   ae2.100          13
+    Mar 14 19:53:56.681165  Remote  2.2.2.2          14
+    Mar 14 19:53:57.535553  Local   ae2.100          15
+    Mar 14 19:53:58.477264  Remote  2.2.2.2          16
+    Mar 14 19:56:54.055096  Local   ae2.100          17
+  Source: 2.2.2.2, Rank: 1, Status: Active
+    MAC label: 750
+    Mobility sequence number: 16 (minimum origin address 2.2.2.2)
+    Timestamp: Mar 14 19:53:59.200082 (0x622f7327)
+    State: <Remote-To-Local-Adv-Done>
+    MAC advertisement route status: Not created (no local state present)
+    IP address: 10.1.8.254
+    History db: <No entries>
+
+  VLAN ID: 100, MAC address: 00:00:5e:00:01:14
+  Nexthop ID: 1048581
+  State: 0x1 <Duplicate-Detected>
+  Mobility history
+    Mobility event time     Type    Source           Seq num
+    Mar 14 19:53:55.509451  Local   ae2.100          13
+    Mar 14 19:53:56.681240  Remote  2.2.2.2          14
+    Mar 14 19:53:57.535724  Local   ae2.100          15
+    Mar 14 19:53:58.478198  Remote  2.2.2.2          16
+    Mar 14 19:56:54.055374  Local   ae2.100          17
+  Source: 2.2.2.2, Rank: 1, Status: Active
+    MAC label: 750
+    Mobility sequence number: 16 (minimum origin address 2.2.2.2)
+    Timestamp: Mar 14 19:53:59.200398 (0x622f7327)
+    State: <Remote-To-Local-Adv-Done>
+    MAC advertisement route status: Not created (no local state present)
+    IP address: 10.1.128.1
+    History db: <No entries>
+
+  VLAN ID: 100, MAC address: 00:00:5e:00:01:1f
+  Nexthop ID: 1048581
+  State: 0x1 <Duplicate-Detected>
+  Mobility history
+    Mobility event time     Type    Source           Seq num
+    Mar 14 19:53:55.509622  Local   ae2.100          13
+    Mar 14 19:53:56.681455  Remote  2.2.2.2          14
+    --- cut ---
+  ```
+</p>
+</details>
 
 ##### Просмотр таблицы evpn - включая типы записей
 
@@ -2088,11 +2176,11 @@ Routing instance : VPLS_Kompella
                       *[BGP/170] 2d 01:59:56, localpref 100, from 1.1.1.1
                           AS path: I, validation-state: unverified
                         >  to 2.2.2.2 via ae0.1, Push 528
-    2:3.3.3.3:15::2568::00:0a:19:ca:a5:53/304 MAC/IP        
+    2:3.3.3.3:15::100::00:0a:19:ca:a5:53/304 MAC/IP        
                       *[BGP/170] 00:26:37, localpref 100, from 1.1.1.1
                           AS path: I, validation-state: unverified
                         >  to 2.2.2.2 via ae0.1, Push 14483
-    2:3.3.3.3:15::2568::00:0a:19:ca:a7:30/304 MAC/IP        
+    2:3.3.3.3:15::100::00:0a:19:ca:a7:30/304 MAC/IP        
                       *[BGP/170] 00:23:43, localpref 100, from 1.1.1.1
                           AS path: I, validation-state: unverified
                         >  to 2.2.2.2 via ae0.1, Push 14483
@@ -2100,6 +2188,7 @@ Routing instance : VPLS_Kompella
 
 </p>
 </details>
+
 
 
 ##### Диагностика RI virtual-switch 
