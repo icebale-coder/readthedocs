@@ -1576,99 +1576,99 @@ show system rollback compare 2 1
 <p>
 
 ```bash
-show chassis hardware 
-Hardware inventory:
-Item             Version  Part number  Serial number     Description
-Chassis                                xxxxxxxxxxxxx     MX960
-Midplane         REV 04   750-047853   ACRC5864          Enhanced MX960 Backplane
-Fan Extender     REV 02   710-018051   CACF3080          Extended Cable Manager
-FPM Board        REV 03   710-014974   CACW7761          Front Panel Display
-PDM              Rev 03   740-013110   QCS1743504L       Power Distribution Module
-PEM 0            Rev 11   740-027760   QCS1740N1AF       PS 4.1kW; 200-240V AC in
-PEM 1            Rev 11   740-027760   QCS1810N02J       PS 4.1kW; 200-240V AC in
-PEM 2            Rev 11   740-027760   QCS1828N0M4       PS 4.1kW; 200-240V AC in
-PEM 3            Rev 11   740-027760   QCS1803N06W       PS 4.1kW; 200-240V AC in
-Routing Engine 0 REV 08   750-072923   CARM8425          RE-S-2X00x6
-Routing Engine 1 REV 08   750-072923   CARX5296          RE-S-2X00x6
-CB 0             REV 13   750-062572   CARP0477          Enhanced MX SCB 2
-CB 1             REV 15   750-062572   CARZ5165          Enhanced MX SCB 2
-FPC 0            REV 10   750-063181   CAJM4835          MPC3E NG PQ & Flex Q
-  CPU            REV 13   711-045719   CAJL1109          RMPC PMB
-  MIC 0          REV 36   750-028392   CAHP1766          3D 20x 1GE(LAN) SFP
-    PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-      Xcvr 0              NON-JNPR     PC3K350482        SFP-LX10
-      Xcvr 1              NON-JNPR     W1806262166       SFP-FC1G-LW
-      Xcvr 2     }        NON-JNPR     W20042016938      SFP-FC1G-LW
-      Xcvr 3              NON-JNPR     PB8V093240        SFP-LX10
-      Xcvr 4              NON-JNPR     H17A16130281      SFP-LX10
-      Xcvr 5              NON-JNPR     P13A00500167      SFP-LX10
-      Xcvr 6              NON-JNPR     C17A11050035      SFP-LX10
-      Xcvr 7              NON-JNPR     S14A05420163      SFP-LX10
-      Xcvr 8     2K       NON-JNPR     W2104080422       SFP-FC1G-LW
-      Xcvr 9     tPh      NON-JNPR     W19111207024      SFP-FC1G-LW
-    PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-      Xcvr 0              NON-JNPR     C1005040443       UNSUPPORTED
-      Xcvr 1     v        NON-JNPR     C1102180518       SFP-LR
-      Xcvr 2              NON-JNPR     SAAA410006        UNSUPPORTED
-      Xcvr 3              NON-JNPR     C1012010120       UNSUPPORTED
-      Xcvr 4              NON-JNPR     SD4G670550        SFP-LX10
-      Xcvr 5     ,        NON-JNPR     W2108246604       SFP-FC1G-LW
-      Xcvr 6     O[Y+     NON-JNPR     5300048           SFP-EX
-      Xcvr 7              NON-JNPR     C16A08390084      SFP-LX10
-      Xcvr 8              NON-JNPR     PB8P170054        SFP-LX10
-      Xcvr 9              NON-JNPR     0711021785        SFP-1000BASE-BX10-U
-  MIC 1          REV 36   750-028392   CAHA0737          3D 20x 1GE(LAN) SFP
-    PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-      Xcvr 5              NON-JNPR     C16A08390098      SFP-LX10
-      Xcvr 6              NON-JNPR     SD6V310622        SFP-LX10
-      Xcvr 7     OMPATI   NON-JNPR     9420989017        SFP-EX
-      Xcvr 8     g        NON-JNPR     FT201310171745    SFP-FC1G-LW
-    PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-FPC 1            REV 10   750-063181   CAJK5471          MPC3E NG PQ & Flex Q
-  CPU            REV 13   711-045719   CAJK0087          RMPC PMB
-  MIC 0          REV 25   750-028392   ZB3807            3D 20x 1GE(LAN) SFP
-    PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-    PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-  MIC 1          REV 22   750-028392   YM6347            3D 20x 1GE(LAN) SFP
-    PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-    PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
-FPC 3            REV 31   750-037358   CAEH9485          MPC4E 3D 32XGE
-  CPU            REV 10   711-035209   CAEN7738          HMPC PMB 2G 
-  PIC 0                   BUILTIN      BUILTIN           8X10GE SFPP                                                                                                                                                                
-    Xcvr 0       REV 01   740-021308   PM2NG41211        SFP+-10G-LR
-    Xcvr 1       REV 01   740-021308   PM2NG41213        SFP+-10G-LR
-    Xcvr 2       REV 01   740-021308   PM2NG41212        SFP+-10G-LR
-    Xcvr 3       REV 01   740-021308   PM2NG41218        SFP+-10G-LR
-  PIC 1                   BUILTIN      BUILTIN           8X10GE SFPP
-    Xcvr 0       REV 01   740-021309   W2112140548       SFP+-10G-LR
-    Xcvr 1       REV 01   740-021309   ASELRN109         SFP+-10G-LR
-  PIC 2                   BUILTIN      BUILTIN           8X10GE SFPP
-    Xcvr 0       REV 01   740-021308   PM2NG41216        SFP+-10G-LR
-  PIC 3                   BUILTIN      BUILTIN           8X10GE SFPP
-    Xcvr 0                NON-JNPR     SD7W300018        SFP+-10G-SR
-FPC 9            REV 09   750-063181   CAJF3149          MPC3E NG PQ & Flex Q
-  CPU            REV 13   711-045719   CAJE9808          RMPC PMB
-  MIC 0          REV 15   750-028390   CABE1696          3D 40x 1GE(LAN) RJ45
-    PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-FPC 10           REV 10   750-063181   CAJM4603          MPC3E NG PQ & Flex Q
-  CPU            REV 13   711-045719   CAJL1464          RMPC PMB
-  MIC 0          REV 15   750-028390   CABE1690          3D 40x 1GE(LAN) RJ45
-    PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-FPC 11           REV 10   750-063181   CAJM4545          MPC3E NG PQ & Flex Q
-  CPU            REV 13   711-045719   CAJL1494          RMPC PMB
-  MIC 0          REV 15   750-028390   CABE1693          3D 40x 1GE(LAN) RJ45
-    PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-    PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
-Fan Tray 0       REV 08   740-031521   ACDB2692          Enhanced Fan Tray
-Fan Tray 1       REV 08   740-031521   ACDB2398          Enhanced Fan Tray
+"show chassis hardware"
+    Hardware inventory:
+    Item             Version  Part number  Serial number     Description
+    Chassis                                xxxxxxxxxxxxx     MX960
+    Midplane         REV 04   750-047853   ACRC5864          Enhanced MX960 Backplane
+    Fan Extender     REV 02   710-018051   CACF3080          Extended Cable Manager
+    FPM Board        REV 03   710-014974   CACW7761          Front Panel Display
+    PDM              Rev 03   740-013110   QCS1743504L       Power Distribution Module
+    PEM 0            Rev 11   740-027760   QCS1740N1AF       PS 4.1kW; 200-240V AC in
+    PEM 1            Rev 11   740-027760   QCS1810N02J       PS 4.1kW; 200-240V AC in
+    PEM 2            Rev 11   740-027760   QCS1828N0M4       PS 4.1kW; 200-240V AC in
+    PEM 3            Rev 11   740-027760   QCS1803N06W       PS 4.1kW; 200-240V AC in
+    Routing Engine 0 REV 08   750-072923   CARM8425          RE-S-2X00x6
+    Routing Engine 1 REV 08   750-072923   CARX5296          RE-S-2X00x6
+    CB 0             REV 13   750-062572   CARP0477          Enhanced MX SCB 2
+    CB 1             REV 15   750-062572   CARZ5165          Enhanced MX SCB 2
+    FPC 0            REV 10   750-063181   CAJM4835          MPC3E NG PQ & Flex Q
+    CPU            REV 13   711-045719   CAJL1109          RMPC PMB
+    MIC 0          REV 36   750-028392   CAHP1766          3D 20x 1GE(LAN) SFP
+        PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+        Xcvr 0              NON-JNPR     PC3K350482        SFP-LX10
+        Xcvr 1              NON-JNPR     W1806262166       SFP-FC1G-LW
+        Xcvr 2     }        NON-JNPR     W20042016938      SFP-FC1G-LW
+        Xcvr 3              NON-JNPR     PB8V093240        SFP-LX10
+        Xcvr 4              NON-JNPR     H17A16130281      SFP-LX10
+        Xcvr 5              NON-JNPR     P13A00500167      SFP-LX10
+        Xcvr 6              NON-JNPR     C17A11050035      SFP-LX10
+        Xcvr 7              NON-JNPR     S14A05420163      SFP-LX10
+        Xcvr 8     2K       NON-JNPR     W2104080422       SFP-FC1G-LW
+        Xcvr 9     tPh      NON-JNPR     W19111207024      SFP-FC1G-LW
+        PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+        Xcvr 0              NON-JNPR     C1005040443       UNSUPPORTED
+        Xcvr 1     v        NON-JNPR     C1102180518       SFP-LR
+        Xcvr 2              NON-JNPR     SAAA410006        UNSUPPORTED
+        Xcvr 3              NON-JNPR     C1012010120       UNSUPPORTED
+        Xcvr 4              NON-JNPR     SD4G670550        SFP-LX10
+        Xcvr 5     ,        NON-JNPR     W2108246604       SFP-FC1G-LW
+        Xcvr 6     O[Y+     NON-JNPR     5300048           SFP-EX
+        Xcvr 7              NON-JNPR     C16A08390084      SFP-LX10
+        Xcvr 8              NON-JNPR     PB8P170054        SFP-LX10
+        Xcvr 9              NON-JNPR     0711021785        SFP-1000BASE-BX10-U
+    MIC 1          REV 36   750-028392   CAHA0737          3D 20x 1GE(LAN) SFP
+        PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+        Xcvr 5              NON-JNPR     C16A08390098      SFP-LX10
+        Xcvr 6              NON-JNPR     SD6V310622        SFP-LX10
+        Xcvr 7     OMPATI   NON-JNPR     9420989017        SFP-EX
+        Xcvr 8     g        NON-JNPR     FT201310171745    SFP-FC1G-LW
+        PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+    FPC 1            REV 10   750-063181   CAJK5471          MPC3E NG PQ & Flex Q
+    CPU            REV 13   711-045719   CAJK0087          RMPC PMB
+    MIC 0          REV 25   750-028392   ZB3807            3D 20x 1GE(LAN) SFP
+        PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+        PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+    MIC 1          REV 22   750-028392   YM6347            3D 20x 1GE(LAN) SFP
+        PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+        PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) SFP
+    FPC 3            REV 31   750-037358   CAEH9485          MPC4E 3D 32XGE
+    CPU            REV 10   711-035209   CAEN7738          HMPC PMB 2G 
+    PIC 0                   BUILTIN      BUILTIN           8X10GE SFPP                                                                                                                                                                
+        Xcvr 0       REV 01   740-021308   PM2NG41211        SFP+-10G-LR
+        Xcvr 1       REV 01   740-021308   PM2NG41213        SFP+-10G-LR
+        Xcvr 2       REV 01   740-021308   PM2NG41212        SFP+-10G-LR
+        Xcvr 3       REV 01   740-021308   PM2NG41218        SFP+-10G-LR
+    PIC 1                   BUILTIN      BUILTIN           8X10GE SFPP
+        Xcvr 0       REV 01   740-021309   W2112140548       SFP+-10G-LR
+        Xcvr 1       REV 01   740-021309   ASELRN109         SFP+-10G-LR
+    PIC 2                   BUILTIN      BUILTIN           8X10GE SFPP
+        Xcvr 0       REV 01   740-021308   PM2NG41216        SFP+-10G-LR
+    PIC 3                   BUILTIN      BUILTIN           8X10GE SFPP
+        Xcvr 0                NON-JNPR     SD7W300018        SFP+-10G-SR
+    FPC 9            REV 09   750-063181   CAJF3149          MPC3E NG PQ & Flex Q
+    CPU            REV 13   711-045719   CAJE9808          RMPC PMB
+    MIC 0          REV 15   750-028390   CABE1696          3D 40x 1GE(LAN) RJ45
+        PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+    FPC 10           REV 10   750-063181   CAJM4603          MPC3E NG PQ & Flex Q
+    CPU            REV 13   711-045719   CAJL1464          RMPC PMB
+    MIC 0          REV 15   750-028390   CABE1690          3D 40x 1GE(LAN) RJ45
+        PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+    FPC 11           REV 10   750-063181   CAJM4545          MPC3E NG PQ & Flex Q
+    CPU            REV 13   711-045719   CAJL1494          RMPC PMB
+    MIC 0          REV 15   750-028390   CABE1693          3D 40x 1GE(LAN) RJ45
+        PIC 0                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 1                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 2                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+        PIC 3                 BUILTIN      BUILTIN           10x 1GE(LAN) RJ45
+    Fan Tray 0       REV 08   740-031521   ACDB2692          Enhanced Fan Tray
+    Fan Tray 1       REV 08   740-031521   ACDB2398          Enhanced Fan Tray
 ```
 
 </p>
@@ -1677,6 +1677,10 @@ Fan Tray 1       REV 08   740-031521   ACDB2398          Enhanced Fan Tray
 #### Просмотр уровней для оптических модулей
 
 ##### Без матчинга
+
+<details><summary>show chassis hardware </summary>
+<p>
+
 ```bash
 "show interfaces diagnostics optics ge-0/0/1"                      
     Physical interface: ge-0/0/1
@@ -1748,7 +1752,7 @@ show interfaces diagnostics optics ge-0/0/1 | match "rece|rx"
 </p>
 </details>
 
-<details><summary>show interfaces diagnostics optics ge-0/0/1 | match "rece|rx"</summary>
+<details><summary>show interfaces diagnostics optics ge-0/0/1 | match "Laser o"</summary>
 <p>
 
 ```bash
