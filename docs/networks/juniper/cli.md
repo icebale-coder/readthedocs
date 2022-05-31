@@ -1772,3 +1772,101 @@ show interfaces diagnostics optics ge-0/0/1 | match "Laser o"
 </details>
 
 
+#### Сохранения конфига:
+
+##### Способ №1
+<details><summary> request system configuration rescue save</summary>
+<p>
+
+```bash
+  "request system configuration rescue save"
+
+  "сохраняет в /config"
+  ls -la /config | grep rescue.conf.gz
+    -rw-r-----   1 root  wheel  3030 Jan  3 11:33 rescue.conf.gz
+```
+</p>
+</details>
+
+##### Способ №2
+<details><summary>save</summary>
+<p>
+
+```bash
+    configure private
+    save /var/tmp/ex-4200-24t.conf
+```
+</p>
+</details>
+
+#### Загрузка конфига из файла.
+[лит-ра](https://www.juniper.net/documentation/ru/ru/software/junos/cli/topics/topic-map/junos-config-files-loading.html)
+  
+```bash  
+"Из конфигурационного режима"
+   load override /var/tmp/ex-4200-24t.conf
+   show | compare 
+```
+
+#### Очистка конфига.
+[лит-ра](https://nastroisam.ru/sbros-juniper-zavodskie-nastroyki/)
+  
+##### Способ №1
+<details><summary>load factory defaults</summary>
+<p>
+
+```bash
+  "Очищает только конфиг на дефолт"
+  "load factory defaults"
+    commit check 
+    [edit]
+      'system'
+        Missing mandatory statement: 'root-authentication'
+    error: configuration check-out failed: (missing mandatory statements)
+
+    "нельзя провести коммит если не задан root учетка"
+    set system root-authentication plain-text-password
+    commit 
+
+    "Не пускает под рутом, надо перезагрузиться тогда все будет ок"
+    start shell          
+        % su root
+        su: who are you?
+        % exit
+```
+</p>
+</details>
+
+
+##### Способ №2
+<details><summary> request system zeroize</summary>
+<p>
+
+```bash
+  "Очищает только конфиг + чистит диск от лишнего"
+
+    "request system zeroize"
+      warning: System will be rebooted and may not boot without configuration
+      Erase all data, including configuration and log files? [yes,no] (no) yes 
+
+      warning: ipsec-key-management subsystem not running - not needed by configuration.
+      warning: zeroizing fpc0
+
+      "!!! после перезагрузки пароль root пустой..."
+      "для задания пароля после входя надо"
+      "set system root-authentication plain-text-password"
+```
+</p>
+</details>
+
+
+#### Заведение нового пользователя
+```bash
+    set system login user bar class super-user
+    set system login user bar authentication plain-text-password
+```
+
+#### Корректно потушить Juniper
+```bash
+ request system halt
+```
