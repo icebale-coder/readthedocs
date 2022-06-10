@@ -1023,50 +1023,55 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
           Также необходимо, чтобы в протоколе bgp была настроена соответствующая "address family"
           в данном случае: "family l2vpn signaling"
 
-```bash
-"PE-1"
-"Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
-set protocols ldp interface ae11.11
-set protocols mpls interface ae11.11
 
-"Настройка аddress family в протоколе BGP"
-set protocols bgp group Core type internal
-set protocols bgp group Core local-address 1.1.1.1
-set protocols bgp group Core family l2vpn signaling
-"Указание соседей по BGP"
-set protocols bgp group Core neighbor 2.2.2.2 description PE-2
-set protocols bgp group Core neighbor 3.3.3.3 description PE-3
-```
+=== "PE-1"
 
-```bash
-"PE-2"
-"Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
-set protocols ldp interface ae22.22
-set protocols mpls interface ae22.22
+  ```bash
+  "Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
+  set protocols ldp interface ae11.11
+  set protocols mpls interface ae11.11
 
-"Настройка аddress family в протоколе BGP"
-set protocols bgp group Core type internal
-set protocols bgp group Core local-address 2.2.2.2
-set protocols bgp group Core family l2vpn signaling
-"Указание соседей по BGP"
-set protocols bgp group Core neighbor 1.1.1.1 description PE-1
-set protocols bgp group Core neighbor 3.3.3.3 description PE-3
-```
+  "Настройка аddress family в протоколе BGP"
+  set protocols bgp group Core type internal
+  set protocols bgp group Core local-address 1.1.1.1
+  set protocols bgp group Core family l2vpn signaling
+  "Указание соседей по BGP"
+  set protocols bgp group Core neighbor 2.2.2.2 description PE-2
+  set protocols bgp group Core neighbor 3.3.3.3 description PE-3
+  ```
 
-```bash
-"PE-3"
-"Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
-set protocols ldp interface ae22.22
-set protocols mpls interface ae22.22
+=== "PE-2"
 
-"Настройка аddress family в протоколе BGP"
-set protocols bgp group Core type internal
-set protocols bgp group Core local-address 3.3.3.3
-set protocols bgp group Core family l2vpn signaling
-"Указание соседей по BGP"
-set protocols bgp group Core neighbor 1.1.1.1 description PE-1
-set protocols bgp group Core neighbor 2.2.2.2 description PE-2
-```
+  ```bash
+  "Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
+  set protocols ldp interface ae22.22
+  set protocols mpls interface ae22.22
+
+  "Настройка аddress family в протоколе BGP"
+  set protocols bgp group Core type internal
+  set protocols bgp group Core local-address 2.2.2.2
+  set protocols bgp group Core family l2vpn signaling
+  "Указание соседей по BGP"
+  set protocols bgp group Core neighbor 1.1.1.1 description PE-1
+  set protocols bgp group Core neighbor 3.3.3.3 description PE-3
+  ```
+
+=== "PE-3"
+
+  ```bash
+  "Настройка mpls и ldp на интерфейсах, смотрящих в сторонц ядра сети"
+  set protocols ldp interface ae22.22
+  set protocols mpls interface ae22.22
+
+  "Настройка аddress family в протоколе BGP"
+  set protocols bgp group Core type internal
+  set protocols bgp group Core local-address 3.3.3.3
+  set protocols bgp group Core family l2vpn signaling
+  "Указание соседей по BGP"
+  set protocols bgp group Core neighbor 1.1.1.1 description PE-1
+  set protocols bgp group Core neighbor 2.2.2.2 description PE-2
+  ```
+
 ##### Diagnostic
 
 <details><summary>show vpls connections instance VPLS_Kompella</summary>
@@ -1284,9 +1289,7 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
     set routing-instances VPLS_Kompella interface xe-3/1/1.333
     set routing-instances VPLS_Kompella interface ae3.333
 
-    "!!!нормализация вПосмотрим. что происходит с вланами на входе и на выходе из интерфейса,
-в котором влан не соответвует vlan-id vpls домена
-ланов внетри vpls домена!!!"
+    "!!!нормализация вланов внетри vpls домена!!!"
     set routing-instances VPLS_Kompella vlan-id 333
 
     "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
