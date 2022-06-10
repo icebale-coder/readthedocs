@@ -908,112 +908,114 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
 
 ![vpls-kompella-mode](img/vpls-kompella-mode.jpg)
 
-```bash
-"PE-1"
 
-"Настройка интерфейсов, входящих в vpls домен"
-set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
-set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
-set interfaces xe-1/1/1 unit 333 vlan-id 333
-set interfaces xe-1/1/1 unit 333 input-vlan-map pop
-set interfaces xe-1/1/1 unit 333 output-vlan-map push
-set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
+=== "PE-1"
 
-set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
-set interfaces ae2 unit 333 encapsulation vlan-vpls
-set interfaces ae2 unit 333 vlan-id 333
-set interfaces ae2 unit 333 input-vlan-map pop
-set interfaces ae2 unit 333 output-vlan-map push
-set interfaces ae2 unit 333 family vpls policer input 200Mbit
+  ```bash
+  "Настройка интерфейсов, входящих в vpls домен"
+  set interfaces xe-1/1/1 unit 333 description "VPLS VPLS_Kompella int xe-1/1/1.333"
+  set interfaces xe-1/1/1 unit 333 encapsulation vlan-vpls
+  set interfaces xe-1/1/1 unit 333 vlan-id 333
+  set interfaces xe-1/1/1 unit 333 input-vlan-map pop
+  set interfaces xe-1/1/1 unit 333 output-vlan-map push
+  set interfaces xe-1/1/1 unit 333 family vpls policer input 100Mbit
 
-"Настройка Route instance типа - instance-type vpls"
-set routing-instances VPLS_Kompella description "VPLS Kompella mode"
-set routing-instances VPLS_Kompella instance-type vpls
+  set interfaces ae2 unit 333 description "VPLS Kompella mode int ae2.333"
+  set interfaces ae2 unit 333 encapsulation vlan-vpls
+  set interfaces ae2 unit 333 vlan-id 333
+  set interfaces ae2 unit 333 input-vlan-map pop
+  set interfaces ae2 unit 333 output-vlan-map push
+  set interfaces ae2 unit 333 family vpls policer input 200Mbit
 
-set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
-set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+  "Настройка Route instance типа - instance-type vpls"
+  set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+  set routing-instances VPLS_Kompella instance-type vpls
 
-"Идентификатор сайта - должен быть для участников vpls домена"
-set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
+  set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+  set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
 
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
+  "Идентификатор сайта - должен быть для участников vpls домена"
+  set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 1
 
-"Перечисление интерфейсов, входящих в vpls домен"
-set routing-instances VPLS_Kompella interface xe-1/1/1.333
-set routing-instances VPLS_Kompella interface ae2.333
-set routing-instances VPLS_Kompella interface ae4.3224
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae2.333
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-1/1/1.333
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae4.444
 
-"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
-set routing-instances VPLS_Kompella vrf-target target:1111:123
-```
+  "Перечисление интерфейсов, входящих в vpls домен"
+  set routing-instances VPLS_Kompella interface xe-1/1/1.333
+  set routing-instances VPLS_Kompella interface ae2.333
+  set routing-instances VPLS_Kompella interface ae4.3224
 
-```bash
-"PE-2"
+  "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+  set routing-instances VPLS_Kompella vrf-target target:1111:123
+  ```
 
-"Настройка интерфейсов, входящих в vpls домен"
-set interfaces ae2 unit 333 description "VPLS Kompella mode"
-set interfaces ae2 unit 333 encapsulation vlan-vpls
-set interfaces ae2 unit 333 vlan-id 333
-set interfaces ae2 unit 333 input-vlan-map pop
-set interfaces ae2 unit 333 output-vlan-map push
-set interfaces ae2 unit 333 family vpls policer input 100Mbit
+=== "PE-2"
 
-"Настройка Route instance типа - instance-type vpls"
-set routing-instances VPLS_Kompella description "VPLS Kompella mode"
-set routing-instances VPLS_Kompella instance-type vpls
+  ```bash
+  "Настройка интерфейсов, входящих в vpls домен"
+  set interfaces ae2 unit 333 description "VPLS Kompella mode"
+  set interfaces ae2 unit 333 encapsulation vlan-vpls
+  set interfaces ae2 unit 333 vlan-id 333
+  set interfaces ae2 unit 333 input-vlan-map pop
+  set interfaces ae2 unit 333 output-vlan-map push
+  set interfaces ae2 unit 333 family vpls policer input 100Mbit
 
-set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
-set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+  "Настройка Route instance типа - instance-type vpls"
+  set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+  set routing-instances VPLS_Kompella instance-type vpls
 
-"Идентификатор сайта - должен быть для участников vpls домена"
-set routing-instances VPLS_Kompella protocols vpls site PE2 site-identifier 2
-set routing-instances VPLS_Kompella protocols vpls site PE2 interface ae2.333
+  set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+  set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
 
-"Перечисление интерфейсов, входящих в vpls домен"
-set routing-instances VPLS_Kompella interface ae2.333
+  "Идентификатор сайта - должен быть для участников vpls домена"
+  set routing-instances VPLS_Kompella protocols vpls site PE2 site-identifier 2
+  set routing-instances VPLS_Kompella protocols vpls site PE2 interface ae2.333
 
-"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
-set routing-instances VPLS_Kompella vrf-target target:1111:123
-```
+  "Перечисление интерфейсов, входящих в vpls домен"
+  set routing-instances VPLS_Kompella interface ae2.333
 
-```bash
-"PE-3"
-"Настройка интерфейсов, входящих в vpls домен"
-set interfaces xe-3/1/1 unit 333 description "VPLS VPLS_Kompella int xe-3/1/1.333"
-set interfaces xe-3/1/1 unit 333 encapsulation vlan-vpls
-set interfaces xe-3/1/1 unit 333 vlan-id 333
-set interfaces xe-3/1/1 unit 333 input-vlan-map pop
-set interfaces xe-3/1/1 unit 333 output-vlan-map push
-set interfaces xe-3/1/1 unit 333 family vpls policer input 200Mbit
+  "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+  set routing-instances VPLS_Kompella vrf-target target:1111:123
+  ```
 
-set interfaces ae3 unit 333 description "VPLS Kompella mode int ae3.333"
-set interfaces ae3 unit 333 encapsulation vlan-vpls
-set interfaces ae3 unit 333 vlan-id 333
-set interfaces ae3 unit 333 input-vlan-map pop
-set interfaces ae3 unit 333 output-vlan-map push
-set interfaces ae3 unit 333 family vpls policer input 200Mbit
+=== "PE-3"
 
-"Настройка Route instance типа - instance-type vpls"
-set routing-instances VPLS_Kompella description "VPLS Kompella mode"
-set routing-instances VPLS_Kompella instance-type vpls
+  ```bash
+  "Настройка интерфейсов, входящих в vpls домен"
+  set interfaces xe-3/1/1 unit 333 description "VPLS VPLS_Kompella int xe-3/1/1.333"
+  set interfaces xe-3/1/1 unit 333 encapsulation vlan-vpls
+  set interfaces xe-3/1/1 unit 333 vlan-id 333
+  set interfaces xe-3/1/1 unit 333 input-vlan-map pop
+  set interfaces xe-3/1/1 unit 333 output-vlan-map push
+  set interfaces xe-3/1/1 unit 333 family vpls policer input 200Mbit
 
-set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
-set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
+  set interfaces ae3 unit 333 description "VPLS Kompella mode int ae3.333"
+  set interfaces ae3 unit 333 encapsulation vlan-vpls
+  set interfaces ae3 unit 333 vlan-id 333
+  set interfaces ae3 unit 333 input-vlan-map pop
+  set interfaces ae3 unit 333 output-vlan-map push
+  set interfaces ae3 unit 333 family vpls policer input 200Mbit
 
-"Идентификатор сайта - должен быть для участников vpls домена"
-set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 3
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-3/1/1.333
-set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae3.333
+  "Настройка Route instance типа - instance-type vpls"
+  set routing-instances VPLS_Kompella description "VPLS Kompella mode"
+  set routing-instances VPLS_Kompella instance-type vpls
 
-"Перечисление интерфейсов, входящих в vpls домен"
-set routing-instances VPLS_Kompella interface xe-3/1/1.333
-set routing-instances VPLS_Kompella interface ae3.333
+  set routing-instances VPLS_Kompella protocols vpls mac-table-size 1024
+  set routing-instances VPLS_Kompella protocols vpls no-tunnel-services
 
-"RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
-set routing-instances VPLS_Kompella vrf-target target:1111:123
-```
+  "Идентификатор сайта - должен быть для участников vpls домена"
+  set routing-instances VPLS_Kompella protocols vpls site PE1 site-identifier 3
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface xe-3/1/1.333
+  set routing-instances VPLS_Kompella protocols vpls site PE1 interface ae3.333
+
+  "Перечисление интерфейсов, входящих в vpls домен"
+  set routing-instances VPLS_Kompella interface xe-3/1/1.333
+  set routing-instances VPLS_Kompella interface ae3.333
+
+  "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
+  set routing-instances VPLS_Kompella vrf-target target:1111:123
+  ```
 
 !!!warning "Важно"
           Для нормальной работы, необходимо также предварительно настроить протоколы LDP и/или RSVP-TE
@@ -1153,14 +1155,16 @@ Routing instance : VPLS_Kompella
 </details>
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #### vpls Kompella mode (Advanced Edition)"
 
 !!!warning "Принцип Advanced Edition"
         Более продвинутый вариант, чтобы не плодить "пуш-попов" а интерфейсах
         достаточно просто нормализовать вланы внутри Routing-Instance
         для этого просто прописывается vlan-id:
-        "set routing-instances VPLS_Kompella vlan-id 333"
+        
+```bash
+"set routing-instances VPLS_Kompella vlan-id 333"
+```
 
 ```bash
 "Описание схемы и принципа работы."
@@ -1280,7 +1284,9 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
     set routing-instances VPLS_Kompella interface xe-3/1/1.333
     set routing-instances VPLS_Kompella interface ae3.333
 
-    "!!!нормализация вланов внетри vpls домена!!!"
+    "!!!нормализация вПосмотрим. что происходит с вланами на входе и на выходе из интерфейса,
+в котором влан не соответвует vlan-id vpls домена
+ланов внетри vpls домена!!!"
     set routing-instances VPLS_Kompella vlan-id 333
 
     "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
@@ -1291,10 +1297,11 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
 
 <details><summary>show interfaces ae4.3224 extensive</summary>
 <p>
+
+```bash
 Посмотрим. что происходит с вланами на входе и на выходе из интерфейса,
 в котором влан не соответвует vlan-id vpls домена
-```bash
-PE1> show interfaces ae4.3224 extensive                      
+"PE1> show interfaces ae4.3224 extensive"                      
   Logical interface ae4.3224 (Index 1228) (SNMP ifIndex 1891) (Generation 1536)
     Description: VPLS VPLS_Kompella; s145707
     Flags: Up SNMP-Traps 0x4000 VLAN-Tag [ 0x8100.3224 ] In(swap .333) Out(swap .3224)  Encapsulation: VLAN-VPLS
@@ -1320,6 +1327,8 @@ PE1> show interfaces ae4.3224 extensive
 </p>
 </details>
 
+Посмотрим. что происходит с вланами на входе и на выходе из интерфейса,
+в котором влан не соответвует vlan-id vpls домена
 
 <details><summary>show interfaces xe-1/1/1.333 extensive</summary>
 <p>
