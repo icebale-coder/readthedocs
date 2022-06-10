@@ -789,55 +789,55 @@ Neighbor: 2.2.2.2
 
 ![local-l2circuit](img/l2circuit+backup.jpg)
 
-```bash
-"PE-1"
-set interfaces ae2 unit 333 description "L2VPN l2circuit+backup"
-set interfaces ae2 unit 333 encapsulation vlan-ccc
-set interfaces ae2 unit 333 vlan-id 333
-set interfaces ae2 unit 333 family ccc policer input 150Mbit_shared
-set interfaces ae2 unit 333 family ccc policer output 150Mbit_shared
+=== "PE-1"
+    ```bash
+    set interfaces ae2 unit 333 description "L2VPN l2circuit+backup"
+    set interfaces ae2 unit 333 encapsulation vlan-ccc
+    set interfaces ae2 unit 333 vlan-id 333
+    set interfaces ae2 unit 333 family ccc policer input 150Mbit_shared
+    set interfaces ae2 unit 333 family ccc policer output 150Mbit_shared
 
-set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 virtual-circuit-id 333
-set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 description "L2VPN l2circuit+backup"
-set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 mtu 1500
-set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 pseudowire-status-tlv
+    set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 virtual-circuit-id 333
+    set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 description "L2VPN l2circuit+backup"
+    set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 mtu 1500
+    set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 pseudowire-status-tlv
 
-"Время перестроения обратно на основной канал, если основной канал заработал"
-"В данном случае основной канал это PE1 - PE2"
-"[задается в секундах - в данном случае время перестроения на основной канал задано разным - 5 мин]"
-set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 revert-time 300
+    "Время перестроения обратно на основной канал, если основной канал заработал"
+    "В данном случае основной канал это PE1 - PE2"
+    "[задается в секундах - в данном случае время перестроения на основной канал задано разным - 5 мин]"
+    set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 revert-time 300
 
-"Задание backup соседа"
-set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 backup-neighbor 3.3.3.3 standby
+    "Задание backup соседа"
+    set protocols l2circuit neighbor 2.2.2.2 interface ae1.333 backup-neighbor 3.3.3.3 standby
 
-"полисер по скорости для LAG интерфейса"
-set firewall policer 150Mbit_shared shared-bandwidth-policer
-set firewall policer 150Mbit_shared if-exceeding bandwidth-limit 150m
-set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
-set firewall policer 150Mbit_shared then discard
-```
+    "полисер по скорости для LAG интерфейса"
+    set firewall policer 150Mbit_shared shared-bandwidth-policer
+    set firewall policer 150Mbit_shared if-exceeding bandwidth-limit 150m
+    set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
+    set firewall policer 150Mbit_shared then discard
+    ```
 
-```bash
-"PE-2"
-set interfaces ae0 unit 333 description "L2VPN l2circuit+backup"
-set interfaces ae0 unit 333 encapsulation vlan-ccc
-set interfaces ae0 unit 333 vlan-id 333
-set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 virtual-circuit-id 333
-set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 description "L2VPN l2circuit+backup"
-set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 mtu 1500
-set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 pseudowire-status-tlv
-```
+=== "PE-2"
+    ```bash
+    set interfaces ae0 unit 333 description "L2VPN l2circuit+backup"
+    set interfaces ae0 unit 333 encapsulation vlan-ccc
+    set interfaces ae0 unit 333 vlan-id 333
+    set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 virtual-circuit-id 333
+    set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 description "L2VPN l2circuit+backup"
+    set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 mtu 1500
+    set protocols l2circuit neighbor 1.1.1.1 interface ae1.333 pseudowire-status-tlv
+    ```
 
-```bash
-"PE-3"
-set interfaces xe-3/0/1 unit 333 description "L2VPN l2circuit+backup"
-set interfaces xe-3/0/1 unit 333 encapsulation vlan-ccc
-set interfaces xe-3/0/1 unit 333 vlan-id 333
-set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 virtual-circuit-id 333
-set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 description "L2VPN l2circuit+backup"
-set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 mtu 1500
-set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 pseudowire-status-tlv
-```
+=== "PE-3"
+    ```bash
+    set interfaces xe-3/0/1 unit 333 description "L2VPN l2circuit+backup"
+    set interfaces xe-3/0/1 unit 333 encapsulation vlan-ccc
+    set interfaces xe-3/0/1 unit 333 vlan-id 333
+    set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 virtual-circuit-id 333
+    set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 description "L2VPN l2circuit+backup"
+    set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 mtu 1500
+    set protocols l2circuit neighbor 1.1.1.1 interface xe-3/0/1.333 pseudowire-status-tlv
+    ```
 
 ##### Diagnostic
 <details><summary>show l2circuit connections interface xe-1/1/1.333</summary>
@@ -1160,7 +1160,7 @@ Routing instance : VPLS_Kompella
 </details>
 
 
-#### vpls Kompella mode (Advanced Edition)"
+#### vpls Kompella mode (Advanced Edition)
 
 !!!warning "Принцип Advanced Edition"
         Более продвинутый вариант, чтобы не плодить "пуш-попов" а интерфейсах
@@ -1222,7 +1222,7 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
     set routing-instances VPLS_Kompella interface ae2.333
     set routing-instances VPLS_Kompella interface ae4.3224
 
-    "!!!нормализация вланов внетри vpls домена!!!"
+    "!!!нормализация вланов внутри vpls домена!!!"
     set routing-instances VPLS_Kompella vlan-id 333
 
     "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
@@ -1252,7 +1252,7 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
     "Перечисление интерфейсов, входящих в vpls домен"
     set routing-instances VPLS_Kompella interface ae2.333
 
-    "!!!нормализация вланов внетри vpls домена!!!"
+    "!!!нормализация вланов внутри vpls домена!!!"
     set routing-instances VPLS_Kompella vlan-id 333
 
     "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vpls домену"
@@ -1289,7 +1289,7 @@ vrf-target target:1111:123 - RT - определяет принадлежнос�
     set routing-instances VPLS_Kompella interface xe-3/1/1.333
     set routing-instances VPLS_Kompella interface ae3.333
 
-    "!!!нормализация вланов внетри vpls домена!!!"
+    "!!!нормализация вланов внутри vpls домена!!!"
     set routing-instances VPLS_Kompella vlan-id 333
 
     "RT (Route Target) - определяет принадлежность в BGP принадлежность к одному vplsd домену"
