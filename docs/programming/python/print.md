@@ -1,6 +1,6 @@
 title: print "format/f-строка"
 
-# Python работа с функцией print
+# Python работа с функцией print + "format/f-строка"
 
 ## Назначение
 
