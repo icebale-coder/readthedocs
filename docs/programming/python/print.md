@@ -148,6 +148,30 @@ Last update               10.0.13.3
 Outbound Interface        3d18h
 ```
 
+## Шаблон для format с указанием индексов значений
+
+```py
+"По сути если значение используется несколько рахз в шаблоне. "
+"то достаточно указать его индекс в шаблоне в нужногм месте"
+
+ip = "192.168.3.1"
+
+template = """
+{0:<8}  {1:<8}  {2:<8}  {3:<8}
+{0:>08b}  {1:>08b}  {2:>08b}  {3:>08b}
+"""
+
+l = ip.split(".")
+
+print(template.format(int(l[0]), int(l[1]), int(l[2]), int(l[3])))
+
+"output"
+192       168       3         1       
+11000000  10101000  00000011  00000001
+```
+
+
+
 ## Литература
 
 - [Python для сетевых инженеров: Форматирование строк ](https://pyneng.readthedocs.io/ru/latest/book/04_data_structures/string_format.html?highlight=format#format)
