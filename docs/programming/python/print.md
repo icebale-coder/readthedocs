@@ -1,4 +1,4 @@
-title: print
+title: print "format/f-строка"
 
 # Python работа с функцией print
 
