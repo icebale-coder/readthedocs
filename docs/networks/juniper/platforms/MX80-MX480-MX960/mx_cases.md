@@ -202,6 +202,110 @@ set firewall policer 150Mbit_shared if-exceeding bandwidth-limit 150m
 set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
 set firewall policer 150Mbit_shared then discard      
 ```
+
+## Configure/Configure private
+Принцип работы БД конфигурации Juniper...
+
+## Dynamic-DB
+Если кратко, то dynamic-db используется для ускорения выполнения операций коммита для определенных сущностей, в частности секции "policy-options".
+
+<details><summary>Пример вариантов сущностей которые можно конфигурить в "configure dynamic"</summary>
+<p>
+
+``` bash
+"MX> configure dynamic"
+  Entering configuration mode
+  {master}[edit dynamic]
+
+"MX# show ?"
+Possible completions:
+  <[Enter]>            Execute this command
+> logical-systems      Logical systems
+> policy-options       Policy option configuration
+  |                    Pipe through a command
+
+"MX# show policy-options ?"         
+  Possible completions:
+    <[Enter]>            Execute this command
+  > as-path              BGP autonomous system path regular expression
+  > as-path-group        Group a set of AS paths
+  > community            BGP community information
+  > condition            Define a route advertisement condition
+  > mac-list             Define a named set of mac addresses
+  > policy-statement     Routing policy
+  > prefix-list          Define a named set of address prefixes
+  > route-distinguisher  Route-distinguisher information
+  > route-filter-list    Define a named set of route-filter address prefixes
+  > source-address-filter-list  Define a named set of source address filter address prefixes
+    |                    Pipe through a command
+  {master}[edit dynamic]
+
+"MX# show logical-systems ?"                         
+  Possible completions:
+    <[Enter]>            Execute this command
+    <name>               Logical system name
+    |                    Pipe through a command
+  {master}[edit dynamic]
+
+"MX# show logical-systems TEST ?"           
+  Possible completions:
+    <[Enter]>            Execute this command
+  > policy-options       Policy option configuration
+    |                    Pipe through a command
+  {master}[edit dynamic]
+
+|"MX# show logical-systems TEST policy-options ?"
+  Possible completions:
+    <[Enter]>            Execute this command
+  > as-path              BGP autonomous system path regular expression
+  > as-path-group        Group a set of AS paths
+  > community            BGP community information
+  > condition            Define a route advertisement condition
+  > mac-list             Define a named set of mac addresses
+  > policy-statement     Routing policy
+  > prefix-list          Define a named set of address prefixes
+  > route-distinguisher  Route-distinguisher information
+  > route-filter-list    Define a named set of route-filter address prefixes
+  > source-address-filter-list  Define a named set of source address filter address prefixes
+    |                    Pipe through a command
+```
+
+</p>
+</details>
+
+
+Содержимое dynamic-db находится в отдельном файле /var/run/db/juniper.dyn.
+При редактировании динамической конфигурации не происходит глобальная проверка всего конфига джунипера, что существенно ускоряет время коммита. Данная система полезна/используется при частой модификации в основном префикс листов, которые периодически обновляюся в соответствии фильтрации префиксов с общедоступных БД, таких как RIPE, RADB, https://www.ididb.ru/, ect...
+
+В основной конфигурации просто делается ссылка на названия в dynamic-db.
+
+<details><summary>Пример конфигурации prefix-list AS1111</summary>
+<p>
+
+```bash
+MX> show configuration policy-options prefix-list AS1111 | display set 
+  set policy-options prefix-list AS1111 dynamic-db
+                                                                                                               
+MX> configure dynamic 
+  Entering configuration mode
+  {master}[edit dynamic]
+
+MX# show policy-options prefix-list AS1111 | display set 
+  set policy-options prefix-list AS1111 1.1.0.0/22;
+  set policy-options prefix-list AS1111 11.11.0.0/23;
+  set policy-options prefix-list AS1111  111.111.111.0/24;
+```
+
+</p>
+</details>
+
+
+
+Лит-ра:
+[Understanding Dynamic Routing Policies](https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/concept/policy-dynamic-understanding.html) 
+
+
+
 ## Bridge Domain
 ### Нормализация вланов внутри Bridge Domain
 Как обычно изобретаю свой "велосипед"
