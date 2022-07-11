@@ -70,6 +70,43 @@ Aggregated interface: ae0
 </p>
 </details>
 
+## monitor interface
+Полезная команда для просмотра текущего трафика на интерфейсе.
+
+<details><summary>monitor interface et-0/0/0.1111</summary>
+<p>
+
+```bash
+Interface: et-0/0/0.1111, Enabled, Link is Up
+Flags: SNMP-Traps 0x4000
+Encapsulation: ENET0
+VLAN-Tag [ 0x8100.1111 ]
+Local statistics:                                                Current delta
+  Input bytes:                6114379118                                [5543]
+  Output bytes:               1634279431                                [1629]
+  Input packets:                19245465                                  [25]
+  Output packets:               19009869                                  [23]
+Remote statistics:
+  Input bytes:          18127645978833589 (11754587224 bps)      [24021808840]
+  Output bytes:         1760683485458425 (1235757384 bps)         [2669082378]
+  Input packets:          16972537566537 (1471883 pps)              [23845815]
+  Output packets:          3862189819944 (353879 pps)                [5829571]
+IPv6 statistics:
+  Input bytes:             4472221468558 (13210160 bps)             [14292195]
+  Output bytes:             410218938007 (30824 bps)                   [30460]
+  Input packets:              8531742751 (1303 pps)                    [30135]
+  Output packets:              383253185 (7 pps)                         [118]
+Traffic statistics:
+  Input bytes:          18127652093212707                        [24021814383]
+  Output bytes:         1760685119737856                          [2669084007]
+  Input packets:          16972556812002                            [23845840]
+  Output packets:          3862208829813                             [5829594]
+Protocol: inet, MTU: 1500, Flags: 0x800
+
+```
+</p>
+</details>
+
 
 ## protocol l2-learning 
 Необходим для настройки параметров изучения mac-адресов
