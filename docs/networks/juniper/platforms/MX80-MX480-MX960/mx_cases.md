@@ -203,8 +203,27 @@ set firewall policer 150Mbit_shared if-exceeding burst-size-limit 14400000
 set firewall policer 150Mbit_shared then discard      
 ```
 
-## Configure/Configure private
-Принцип работы БД конфигурации Juniper...
+## configure/configure private/configure exclusive
+Принцип работы c БД конфигурации Juniper...
+
+ ### configure
+ При работе просто в режиме "configure" по сути все пользователи разделяют одну конфигурацию и при коммите применяю все изменения сделанные в конфиге, всеми пользователями...
+ Данный режим работы можно назвать "depricated" при многопользовательской работе, т.к. будет вносить "неразбериху и сумятицу" в работу...
+ 
+ ### configure private
+ При работе в таком режиме возможно многопользовательская работа с конфигурацией за счет того, что каждый пользователь работает со своей приватной копией кандидата конфигурации.
+ При применении коннфигурации комиттится только дифф. с рабочим конфигом. Тут тоже может быть ньюанс, если оба пользователя в своей приватной конфигурации правят одни и теже секции конфига... 
+
+ ![configure-private](img/configure_private.jpg)
+
+ ### configure exclusive
+ По сути при входе в "configure exclusive" пользователь монопольно забирает права на редактирование и коммитта конфига.
+ Конфигурации всех остальных пользоватей не могут примениться в данном режиме.
+
+![configure-exclusive](img/configure_exclusive.jpg)
+
+
+[лит-ра](https://supportportal.juniper.net/s/article/Junos-How-can-multiple-users-edit-different-parts-of-a-configuration-simultaneously?language=en_US)
 
 ## Dynamic-DB
 Если кратко, то dynamic-db используется для ускорения выполнения операций коммита для определенных сущностей, в частности секции "policy-options".
@@ -277,23 +296,23 @@ Possible completions:
 Содержимое dynamic-db находится в отдельном файле /var/run/db/juniper.dyn.
 При редактировании динамической конфигурации не происходит глобальная проверка всего конфига джунипера, что существенно ускоряет время коммита. Данная система полезна/используется при частой модификации в основном префикс листов, которые периодически обновляюся в соответствии фильтрации префиксов с общедоступных БД, таких как RIPE, RADB, https://www.ididb.ru/, ect...
 
-В основной конфигурации просто делается ссылка на названия в dynamic-db.
+В глобальной конфигурации просто делается ссылка на названия в dynamic-db.
 
 <details><summary>Пример конфигурации prefix-list AS1111</summary>
 <p>
 
 ```bash
-MX> show configuration policy-options prefix-list AS1111 | display set 
+"MX> show configuration policy-options prefix-list AS1111 | display set"
   set policy-options prefix-list AS1111 dynamic-db
                                                                                                                
-MX> configure dynamic 
+"MX> configure dynamic" 
   Entering configuration mode
   {master}[edit dynamic]
 
-MX# show policy-options prefix-list AS1111 | display set 
+"MX# show policy-options prefix-list AS1111 | display set"
   set policy-options prefix-list AS1111 1.1.0.0/22;
   set policy-options prefix-list AS1111 11.11.0.0/23;
-  set policy-options prefix-list AS1111  111.111.111.0/24;
+  set policy-options prefix-list AS1111 111.111.111.0/24;
 ```
 
 </p>
