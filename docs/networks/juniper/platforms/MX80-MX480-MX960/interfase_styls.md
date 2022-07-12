@@ -110,7 +110,7 @@ title: Enterprise vs Provider
     set interfaces xe-1/0/1 unit 2001 description "L2VPN"
     set interfaces xe-1/0/1 unit 2001 family bridge policer input 100Mbit
     set interfaces xe-1/0/1 unit 2001 family bridge interface-mode trunk
-    set interfaces xe-1/0/1 unit 2001 family bridge vge-2/2/2.2000lan-id-list 2001
+    set interfaces xe-1/0/1 unit 2001 family bridge vlan-id-list 2001
 
     set interfaces ge-2/2/2 unit 2001 description "L2VPN"
     set interfaces ge-2/2/2 unit 2001 family bridge policer input 100Mbit
