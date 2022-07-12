@@ -4,7 +4,7 @@ title: Enterprise vs Provider
 В джунипере есть 2 стиля описания интерфейсов: Enterprise style и Provider style 
 
 
- ## Enterprise style
+## Enterprise style
 ```bash
   MX> show configuration | display set | match 2000                
     set interfaces xe-1/0/1 unit 2000 description "L2VPN"
@@ -83,7 +83,6 @@ title: Enterprise vs Provider
     00:00:f3:65:ea:34   D        ae1.2000        
 ```
 
-```bash
 !!!warning "Важно"
       "Описание прозой"
       По факту имеются 3 интерфейса (xe-1/0/1, ge-2/2/2, ae1) на каждом из них присутствет 2 влана (2000,2001)
@@ -92,6 +91,7 @@ title: Enterprise vs Provider
       И таким образом по сути будет получаться, 
       что В ОДНОМ САБИНТЕРФЕЙСЕ МОЖЕТ ПРИСУТСТВОВАТЬ СРАЗУ НЕСКОЛЬКО ВЛАНОВ - ТАКОЙ ФОКУС в cisco или huawei не удастся!!!
       "set interfaces ae1 unit 2000 family bridge interface-mode trunk - как тебе такое Илон Маск (ц)"
+
 
 ```bash
 !Логичнее было бы каждый влан засунуть в свой сабик. Обединение в один юнит просто сокращает конфиг (при этом усложняя логику понимания)...
@@ -127,7 +127,7 @@ title: Enterprise vs Provider
     set routing-instances Local interface xe-1/0/1.2000
     set routing-instances Local interface ge-2/2/2.2000
     set routing-instances Local interface ae1.2000
-
+Enterprise style vs Provider style
     set routing-instances Local bridge-domains VL2001 description "L2VPN"
     set routing-instances Local bridge-domains VL2001 vlan-id-list 2001
     set routing-instances Local interface xe-1/0/1.2001
