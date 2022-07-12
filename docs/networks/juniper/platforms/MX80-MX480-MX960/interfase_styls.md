@@ -89,6 +89,7 @@ title: Enterprise vs Provider
 для объединения их в бридж домене в "enterprise" стиле нужно в одном и том же сабинтенрфейсе прописать vlan-id-list.
 Также в RI сабинтерфейс добавляется не в бридж-домен, а просто в интерфейсы RI
 
+```
 И таким образом по сути будет получаться, 
 что В ОДНОМ САБИНТЕРФЕЙСЕ МОЖЕТ ПРИСУТСТВОВАТЬ СРАЗУ НЕСКОЛЬКО ВЛАНОВ - ТАКОЙ ФОКУС в cisco или huawei не удастся!!!
 
@@ -219,7 +220,10 @@ title: Enterprise vs Provider
     set routing-instances Local bridge-domains VL2001 interface xe-1/0/1.2001
 ```
 
-"+/-"
+## "+/-"
+
+
+### "Enterprise style"
 
 ```bash
 "Enterprise style"
@@ -234,6 +238,8 @@ title: Enterprise vs Provider
     set forwarding-options storm-control-profiles sc_broadcast_1m all no-multicast
   2. Нельзя производить push/pop/swap 
 ```    
+
+### "Provider style"
 
 ```bash
 "Provider style"
