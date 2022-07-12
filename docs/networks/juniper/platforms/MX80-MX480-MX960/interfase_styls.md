@@ -4,7 +4,7 @@ title: Enterprise vs Provider
 В джунипере есть 2 стиля описания интерфейсов: Enterprise style и Provider style 
 
 
- ## 1. Enterprise style
+ ## Enterprise style
 ```bash
   MX> show configuration | display set | match 2000                
     set interfaces xe-1/0/1 unit 2000 description "L2VPN"
