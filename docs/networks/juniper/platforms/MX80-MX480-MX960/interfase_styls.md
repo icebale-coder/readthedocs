@@ -29,6 +29,8 @@ title: Enterprise vs Provider
     set routing-instances Local interface ae1.2000
 ```
 
+￼
+!Логичнее было бы каждый влан засунуть в свой сабик. Обединение в один юнит просто сокращает конфиг (при этом усложня
 ### Diagnostic
 ```bash
 "MX> show bridge mac-table instance Local | match 2000"
@@ -53,7 +55,9 @@ title: Enterprise vs Provider
 
 ```bash    
 "MX> show bridge mac-table instance Local bridge-domain VL2000-vlan-2000"
-  MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+  MAC flags       (S -static MAC, D -dynamic MAC, L -locall
+￼
+!Логичнее было бы каждый влан засунуть в свой сабик. Обединение в один юнит просто сокращает конфиг (при этом усложняy learned, C -Control MAC
       O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
 
   Routing instance : Local
@@ -86,10 +90,12 @@ title: Enterprise vs Provider
 ```bash
 "Описание прозой"
   По факту имеются 3 интерфейса (xe-1/0/1, ge-2/2/2, ae1) на каждом из них присутствет 2 влана (2000,2001)
-  для объединения их в бридж домене в enterprise стиле нужно в одном и том же сабинтенрфейсе прописать vlan-id-list.
+  для объединения их в бридж домене в enterprise стиле нужно 
+  в одном и том же сабинтерфейсе прописать vlan-id-list.
   Также в RI сабинтерфейс добавляется не в бридж-домен, а просто в интерфейсы RI.
   И таким образом по сути будет получаться, что 
-  "В ОДНОМ САБИНТЕРФЕЙСЕ МОЖЕТ ПРИСУТСТВОВАТЬ СРАЗУ НЕСКОЛЬКО ВЛАНОВ" - ТАКОЙ ФОКУС в cisco или huawei не удастся!!!
+  "В ОДНОМ САБИНТЕРФЕЙСЕ МОЖЕТ ПРИСУТСТВОВАТЬ СРАЗУ НЕСКОЛЬКО ВЛАНОВ" 
+  - ТАКОЙ ФОКУС в cisco или huawei не удастся!!!
   "set interfaces ae1 unit 2000 family bridge interface-mode trunk" - "как тебе такое Илон Маск (ц)"
 ```
 
@@ -128,7 +134,9 @@ title: Enterprise vs Provider
   set routing-instances Local interface ge-2/2/2.2000
   set routing-instances Local interface ae1.2000
 
-  set routing-instances Local bridge-domains VL2001 description "L2VPN"
+  set routing-instances Local bridge-domains VL2001 descr
+￼
+!Логичнее было бы каждый влан засунуть в свой сабик. Обединение в один юнит просто сокращает конфиг (при этом усложняiption "L2VPN"
   set routing-instances Local bridge-domains VL2001 vlan-id-list 2001
   set routing-instances Local interface xe-1/0/1.2001
   set routing-instances Local interface ge-2/2/2.2001
