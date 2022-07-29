@@ -1,6 +1,7 @@
 title: MX
 arrange:
     - mx_cases.md
+    - interface_styles.md
     - upgrade.md
     - netflow_v5.md
     - tcpdump.md
