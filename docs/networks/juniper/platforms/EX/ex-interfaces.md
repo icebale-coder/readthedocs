@@ -155,11 +155,6 @@ user@EX4500_Test> show configuration | display set | match "0/0/14"
   set interfaces xe-0/0/14 description test_10g
 
 !user@EX4500_Test> show interfaces descriptions | match "0/0/1 |0/0/14"     
-  ge-0/0/1                   test_1g
-  xe-0/0/1     up    up      test_10g
-  xe-0/0/14    up    up      test_10g
-
-!user@EX4500_Test> show interfaces descriptions | match "0/0/1 |0/0/14"     
   ge-0/0/1        up    up   test_1g
   xe-0/0/1                   test_10g
   xe-0/0/14                  test_10g
