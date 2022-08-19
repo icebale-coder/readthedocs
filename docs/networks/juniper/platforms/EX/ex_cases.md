@@ -21,6 +21,42 @@ title: EX cases
     set interfaces ae0 unit 0 family ethernet-switching vlan members VL1000
 ```
 
+## Настройка LAG между EX-MX
+
+```bash
+  "MX> show configuration | display set | match ae0"         
+    set interfaces xe-0/0/1 description "!L2 sw4500 xe-0/0/36; Part of ae0"
+    set interfaces xe-0/0/1 gigether-options 802.3ad ae0
+    set interfaces xe-1/0/1 description "!L2 sw4500 xe-0/0/37; Part of ae0"
+    set interfaces xe-1/0/1 gigether-options 802.3ad ae0
+    set interfaces xe-3/0/1 description "!L2 sw4500 xe-0/0/38; Part of ae0"
+    set interfaces xe-3/0/1 gigether-options 802.3ad ae0
+    set interfaces xe-4/0/4 description "!L2 sw4500 xe-0/0/39; Part of ae0"
+    set interfaces xe-4/0/4 gigether-options 802.3ad ae0
+
+    set interfaces ae0 description "!L2 sw4500_ae0 #LAG_40G#"
+    set interfaces ae0 flexible-vlan-tagging
+    set interfaces ae0 mtu 9216
+    set interfaces ae0 encapsulation flexible-ethernet-services
+    set interfaces ae0 aggregated-ether-options link-speed 10g
+    set interfaces ae0 aggregated-ether-options lacp passive
+
+  "EX-4500> show configuration | display set | match ae0"
+    set interfaces xe-0/0/36 description "!UL2 MX_xe-0/0/1; Part of ae0"
+    set interfaces xe-0/0/36 ether-options 802.3ad ae0
+    set interfaces xe-0/0/37 description "!UL2 MX_xe-1/0/1; Part of ae0"
+    set interfaces xe-0/0/37 ether-options 802.3ad ae0
+    set interfaces xe-0/0/38 description "!UL2 MX_xe-3/0/1; Part of ae0"
+    set interfaces xe-0/0/38 ether-options 802.3ad ae0
+    set interfaces xe-0/0/39 description "!UL2 MX_xe-4/0/4; Part of ae0"
+    set interfaces xe-0/0/39 ether-options 802.3ad ae0
+
+    set interfaces ae0 description "!UL2 MX_ae9 #LAG_40G#"
+    set interfaces ae0 mtu 9216
+    set interfaces ae0 aggregated-ether-options link-speed 10g
+    set interfaces ae0 aggregated-ether-options lacp active
+    set interfaces ae0 unit 0 family ethernet-switching port-mode trunk
+```
 
 ## ERPS 
 
