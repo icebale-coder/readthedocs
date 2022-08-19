@@ -1870,3 +1870,31 @@ show interfaces diagnostics optics ge-0/0/1 | match "Laser o"
 ```bash
  request system halt
 ```
+
+## Мелкие "приколюхи"
+
+### Чат между пользователями коробки
+
+Список пользователей
+```bash
+"alex@Juniper> show system users"                                              
+ 5:40PM  up 458 days, 15:20, 6 users, load averages: 0.76, 0.88, 0.77
+USER     TTY      FROM                              LOGIN@  IDLE WHAT
+alex     pts/0    1.1.1.1                           10:41AM  3:09 -cl           
+max      pts/1    1.1.1.1                           10:56AM  6:44 -cl           
+vova     pts/2    1.1.1.1                           10:49AM  6:47 -cl           
+```
+
+Пользоваьтель alex отправляет пользователь kirill сообщение:
+```bash
+"alex@Juniper> request message  message "hi there!" kirill"
+```
+
+Пользоваьтель kirill получает сообщение:
+```bash
+kirill@Juniper> request message terminal                                              
+Message from kgr@atlant-re0 on pts/5 at 17:14 ...
+Hello
+EOF
+?
+```
