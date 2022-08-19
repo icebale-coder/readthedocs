@@ -57,6 +57,67 @@ title: EX cases
     set interfaces ae0 aggregated-ether-options lacp active
     set interfaces ae0 unit 0 family ethernet-switching port-mode trunk
 ```
+### Diagnostic
+
+<details><summary> sw4500> show lacp interfaces ae0</summary>
+<p>
+
+```bash
+"sw4500> show lacp interfaces ae0"       
+  Aggregated interface: ae0
+      LACP state:       Role   Exp   Def  Dist  Col  Syn  Aggr  Timeout  Activity
+        xe-0/0/36      Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-0/0/36    Partner    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-0/0/37      Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-0/0/37    Partner    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-0/0/38      Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-0/0/38    Partner    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-0/0/39      Actor    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-0/0/39    Partner    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+      LACP protocol:        Receive State  Transmit State          Mux State 
+        xe-0/0/36                 Current   Fast periodic Collecting distributing
+        xe-0/0/37                 Current   Fast periodic Collecting distributing
+        xe-0/0/38                 Current   Fast periodic Collecting distributing
+        xe-0/0/39                 Current   Fast periodic Collecting distributing
+```
+</p>
+</details>
+
+<details><summary> MX> show lacp interfaces ae0 extensive </summary>
+<p>
+
+```bash
+"MX> show lacp interfaces ae0 extensive"
+  Aggregated interface: ae0
+      LACP state:       Role   Exp   Def  Dist  Col  Syn  Aggr  Timeout  Activity
+        xe-1/0/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-1/0/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-2/0/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-2/0/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-3/0/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-3/0/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+        xe-4/0/1       Actor    No    No   Yes  Yes  Yes   Yes     Fast   Passive
+        xe-4/0/1     Partner    No    No   Yes  Yes  Yes   Yes     Fast    Active
+      LACP protocol:        Receive State  Transmit State          Mux State 
+        xe-1/0/1                  Current   Fast periodic Collecting distributing
+        xe-2/0/1                  Current   Fast periodic Collecting distributing
+        xe-3/0/1                  Current   Fast periodic Collecting distributing
+        xe-4/0/1                  Current   Fast periodic Collecting distributing
+      LACP info:        Role     System             System       Port     Port    Port 
+                              priority         identifier   priority   number     key 
+        xe-1/0/1       Actor        127  e8:a2:45:c7:7f:c4        127       34       8
+        xe-1/0/1     Partner        127  78:fe:3d:d3:b6:80        127        1       1
+        xe-2/0/1       Actor        127  e8:a2:45:c7:7f:c4        127       35       8
+        xe-2/0/1     Partner        127  78:fe:3d:d3:b6:80        127        3       1
+        xe-3/0/1       Actor        127  e8:a2:45:c7:7f:c4        127       36       8
+        xe-3/0/1     Partner        127  78:fe:3d:d3:b6:80        127        2       1
+        xe-4/0/1       Actor        127  e8:a2:45:c7:7f:c4        127       37       8
+        xe-4/0/1     Partner        127  78:fe:3d:d3:b6:80        127        4       1
+```
+</p>
+</details>
+
+
 
 ## ERPS 
 
