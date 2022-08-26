@@ -2023,6 +2023,7 @@ USER     TTY      FROM                              LOGIN@  IDLE WHAT
 alex     pts/0    1.1.1.1                           10:41AM  3:09 -cl           
 max      pts/1    1.1.1.1                           10:56AM  6:44 -cl           
 vova     pts/2    1.1.1.1                           10:49AM  6:47 -cl           
+kirill     pts/2    1.1.1.1                         10:49AM  6:47 -cl           
 ```
 
 Пользоваьтель alex отправляет пользователь kirill сообщение:
@@ -2030,11 +2031,11 @@ vova     pts/2    1.1.1.1                           10:49AM  6:47 -cl
 "alex@Juniper> request message  message "hi there!" kirill"
 ```
 
-Пользоваьтель kirill получает сообщение:
+Пользоваьтель kirill получает сообщение от пользователя alex:
 ```bash
 kirill@Juniper> request message terminal                                              
-Message from kgr@atlant-re0 on pts/5 at 17:14 ...
-Hello
+Message from alex@Juniper on pts/5 at 17:14 ...
+Hello WTFIGO! )
 EOF
 ?
 ```
