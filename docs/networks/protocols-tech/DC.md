@@ -2,12 +2,6 @@ title: DC и все, все, все...
 
 # DC
 
-Disclaimer:
-
-```bash
-  Especially for glazgoo for continue our incomplited conversation...
-```
-
 
 ## Рассматриваемые темы
 
