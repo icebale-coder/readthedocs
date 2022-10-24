@@ -581,11 +581,165 @@ source:         [mandatory]  [single]     [ ]
 </p>
 </details>
 
+```bash
+
+"whois -i" - инверсный поиск. Ищет объекты у которых есть определеные поля.
+```
+
+[Inverse Queries](https://apps.db.ripe.net/docs/13.Types-of-Queries/05-Inverse-Queries.html)
+
+```bash
+All objects where contact person (or role) is XY-RIPE    	"-i person XY-RIPE"
+All objects that are protected by XY-MNT	                "-i mnt-by XY-MNT"
+All objects that have XY-MNT as mnt-lower	                "-i mnt-lower XY-MNT"
+All objects that have XY-MNT as mnt-routes	                "-i mnt-routes XY-MNT"
+All objects that have ORG-XYZ-RIPE as their organisation object	"-i org ORG-XYZ-RIPE"
+All route/route6 objects that are originated by ASx	        "-i origin ASx"
+```
+
+```bash
+Например:
+"whois -i mnt-by NAUKANET-MNT | grep as-set"  - выведет список as-set для об
+
+Объяснение действий:
+выведет все объекты БД RIPE, у которых есть mnt-by NAUKANET-MNT
++
+grep по поля вхождения as-set
+
+whois -i mnt-by NAUKANET-MNT | grep as-set
+as-set:         AS-Don-plus
+as-set:         AS-KONTAKT
+as-set:         AS-NS-Luxoft
+as-set:         AS-Nauka
+as-set:         AS-NaukaCustomers
+as-set:         AS-NaukaNet
+as-set:         AS-NaukaNet6
+as-set:         AS-NaukaV6
+
+Далее уже можно смотреть содержимое непосредственно каждого объекта as-set:
+"whois AS-NaukaNet"
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to 'AS-NaukaNet'
+
+as-set:         AS-NaukaNet
+descr:          NaukaNet and customers
+descr:          ********** Backbone AS *********
+members:        AS8641
+remarks:        =================================================
+remarks:        ********** Global IP Transit Customers AS-SETs *********
+remarks:        =================================================
+members:        AS-NaukaCustomers
+members:        AS-A2Customers
+members:        AS-Sits
+members:        AS-USACOV
+members:        AS-ALFA-TELECOM
+members:        AS-CITYCONNECT
+members:        AS-FLEX
+members:        AS-FTELECOM
+members:        AS-GT
+members:        AS-GT-IPV6
+members:        AS-KOMDIV
+members:        as-KOS-transit
+members:        AS-LINENEW
+members:        AS-LOFISNET
+members:        AS-LOGIKA
+members:        AS-Micron-Media
+members:        AS-MOSINTER
+members:        AS-NETORN
+members:        AS-NEWAGE
+members:        AS-RC
+members:        AS-RINOKOM
+members:        AS-SET-PlatinumOdin-NET
+members:        AS-VILTEL
+members:        AS-KONTAKT
+members:        AS-Unittel
+members:        AS-BIZTEL
+members:        AS-SUN-TEL
+members:        AS-ADMTEL
+members:        AS-NORCOM
+members:        AS-TEL-NET
+members:        AS-EST
+members:        AS-MOSLINE
+members:        AS-LOGIX
+members:        AS-STKTEL
+members:        AS-BELRTS
+members:        AS-BEGET
+members:        AS-TOPTELECOM
+members:        AS-TMPK
+members:        AS-UTEX
+members:        AS-SOUTHTEL
+members:        AS-GPTEL
+members:        AS-SPARKTELL
+members:        AS-TransKom-VD
+members:        AS-INN361
+members:        AS-CDNNOW
+members:        AS-EXPERTTELECOM
+members:        AS-CSTNET
+members:        AS-CGNET
+members:        AS-SHARK
+members:        AS-Summit-Systems
+members:        AS-POZITIS-RU
+members:        AS-FLYTELECOM
+members:        AS-SSERVICE
+members:        AS-ANT
+members:        AS-TERATEL-SET
+members:        AS-ASSIST24LTD
+members:        AS-IMSYS
+members:        AS-ODTV
+members:        AS-ICEWOOD
+members:        AS-MARYNONET
+members:        AS-CHIP-TELECOM
+members:        AS-OPCOM
+members:        AS-PervajaBaza
+members:        AS-BLIZCO16:11 $
+last-modified:  2022-10-21T12:47:19Z
+source:         RIPE # Filtered
+
+role:           Nauka Telecom network NOC
+address:        LLC Nauka Svyaz
+address:        3-d Yamskogo Polya street, vladenie 2
+address:        125124 Moscow Russia
+phone:          +7 495 502 9092
+fax-no:         +7 495 937 3412
+nic-hdl:        NTnN1-RIPE
+admin-c:        YG1510-RIPE
+tech-c:         YG1510-RIPE
+tech-c:         AB41990-RIPE
+remarks:        +-----------------------------------------------------------
+remarks:        ! Operation time:
+remarks:        ! NOC: 5x8 (09:30-18:30) MSK
+remarks:        ! customers support: 24x7
+remarks:        +-----------------------------------------------------------
+remarks:        ! Contacts:
+remarks:        ! noc@naukanet.ru - for routing and peering questions
+remarks:        ! abuse@naukanet.ru - for SPAM and abuse security issues
+remarks:        ! helpdesk@naukanet.ru - for customers support
+remarks:        ! sales@naukanet.ru - for sales questions
+remarks:        ! http://www.naukanet.ru - official site
+remarks:        +-----------------------------------------------------------
+mnt-by:         NAUKANET-MNT
+created:        2010-04-13T13:46:30Z
+last-modified:  2021-06-04T09:18:42Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.104 (WAGYU)
+```
+
+
 
 ```bash
 #узнать все объекты, которые защищены объектом «maintainer_name».
 whois -i mnt-by maintainer_name
 ```
+
 
 ```bash
 #узнать, на какие более мелкие подсети поделена подсеть «subnet».
@@ -613,6 +767,18 @@ route:          109.226.248.0/24
 #узнать, из какой более крупной подсети образована подсеть «subnet».
 whois -L subnet
 ```
+
+Для того, чтобы узнай ip адреса dns серверов, которые закреплены за лукап реверсных зон можно использовать команду
+```bash
+"whois -xd 77.94.166.0/24 | grep nserver"
+
+whois -xd 77.94.166.0/24 | grep nserver
+nserver:        ns.naukanet.ru
+nserver:        ns2.naukanet.ru
+nserver:        ns3.naukanet.ru
+
+```
+
 
 Пример:  узнать, из какой более крупной подсети образована подсеть 109.226.192.0/19
 

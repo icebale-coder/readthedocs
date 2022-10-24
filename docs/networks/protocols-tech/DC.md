@@ -17,7 +17,7 @@ title: DC и все, все, все...
   2.2. eBGP
   2.3. iBGP + eBGP
 
-3. Технологии и эволюция DC (oberlay/underlay)
+3. Технологии и эволюция DC (overlay/underlay)
   3.1. EVPN/MPLS vs EVPN/VxLAN
   3.2. Оверлей от хоста/Чистый L3 (MPLSoverGRE, MPLSoverUDP)
   3.3. SR
