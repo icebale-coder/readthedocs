@@ -12,7 +12,7 @@ Jinja2==2.11.2
 joblib==0.16.0
 git+https://github.com/serenecloud/jsmin@6467320#egg=jsmin
 livereload==2.6.2
-Markdown==3.2.2
+Markdown==3.3.4
 MarkupSafe==1.1.1
 mkdocs==1.1.2
 mkdocs-awesome-pages-plugin==2.5.0
