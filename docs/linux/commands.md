@@ -581,8 +581,8 @@ source:         [mandatory]  [single]     [ ]
 </p>
 </details>
 
-```bash
 
+```bash
 "whois -i" - инверсный поиск. Ищет объекты у которых есть определеные поля.
 ```
 
@@ -597,9 +597,18 @@ All objects that have ORG-XYZ-RIPE as their organisation object	"-i org ORG-XYZ-
 All route/route6 objects that are originated by ASx	        "-i origin ASx"
 ```
 
+Например:
+
+"whois -i mnt-by NAUKANET-MNT | grep as-set"  - выведет список as-set для объектов,
+у которых майнтейнером является NAUKANET-MNT
+
+<details><summary>whois -i mnt-by NAUKANET-MNT | grep as-set</summary>
+<p>
+
 ```bash
 Например:
-"whois -i mnt-by NAUKANET-MNT | grep as-set"  - выведет список as-set для об
+"whois -i mnt-by NAUKANET-MNT | grep as-set"  - выведет список as-set для объектов,
+у которых майнтейнером является NAUKANET-MNT
 
 Объяснение действий:
 выведет все объекты БД RIPE, у которых есть mnt-by NAUKANET-MNT
@@ -615,9 +624,16 @@ as-set:         AS-NaukaCustomers
 as-set:         AS-NaukaNet
 as-set:         AS-NaukaNet6
 as-set:         AS-NaukaV6
+```
+</p>
+</details>
+
 
 Далее уже можно смотреть содержимое непосредственно каждого объекта as-set:
-"whois AS-NaukaNet"
+<details><summary>whois AS-NaukaNet</summary>
+<p>
+
+```bash
 % This is the RIPE Database query service.
 % The objects are in RPSL format.
 %
@@ -732,7 +748,8 @@ source:         RIPE # Filtered
 
 % This query was served by the RIPE Database Query Service version 1.104 (WAGYU)
 ```
-
+</p>
+</details>
 
 
 ```bash
