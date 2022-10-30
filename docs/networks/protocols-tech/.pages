@@ -1,12 +1,10 @@
 title: Protocols & Tech
 arrange:
-    - OSI-anatomy.md 
-    - TCP.md
-    - UDP.md
-    - BGP
     - ARP.md 
+    - BGP
     - BFD.md
     - DHCP.md
+    - DC.md
     - DNS.md
     - HTTP.md
     - ICMP.md
@@ -15,7 +13,10 @@ arrange:
     - LAG.md
     - MPLS.md
     - NAT.md
+    - OSI-anatomy.md 
     - OSPF.md
     - RIP.md
     - STP.md
+    - TCP.md
+    - UDP.md
     - VxLAN.md
