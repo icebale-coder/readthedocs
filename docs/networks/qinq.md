@@ -1,5 +1,5 @@
 
-title: QinQ Dlink
+title: QinQ crossfit Dlink/Cisco/Mikrotik/Juniper
 
 # Настройка QinQ base 
 на Dlink DGS-1100-06/ME
@@ -97,4 +97,30 @@ config port_vlan 4 pvid 1000
 enable qinq
 config qinq ports 1-3,5-6 role nni outer_tpid 0x8100
 config qinq ports 4 role uni outer_tpid 0x8100
+```
+
+# Настройка QinQ на cisco
+```bash
+"77711" - номер сабика для примера (необязательно именно такой...)
+
+interface GigabitEthernet0/0.77711
+   description QinQ-sub 
+   encapsulation dot1Q 777 second-dot1q 11
+   ip address  172.16.1.1 255.255.255.252
+   no ip redirects
+   no ip proxy-arp
+```
+
+# Настройка QinQ на mikrorik
+```bash
+   interface vlan add comment="QinQ c-tag 11" interface=vlan777 mtu=1600 name=vlan77711 vlan-id=11
+   ip address add address=172.16.1.2/30 comment="QinQ" interface=vlan77711 network=172.16.1.0
+```
+
+# Juniper MX
+```bash
+  set interfaces ae0 unit 77711 vlan-tags outer 0x8100.777
+  set interfaces ae0 unit 77711 vlan-tags inner 0x8100.11
+  set interfaces ae0 unit 77711 family inet mtu 1600
+  set interfaces ae0 unit 77711 family inet address 172.16.1.1/30
 ```
