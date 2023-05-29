@@ -85,7 +85,7 @@ Arista(config-s-sess-2-if-Et22)#sh session-config diffs
 </details>
 
 #### Просмотр сохрненных конфигураций
-<details><summary>sh configuration checkpoints</summary>
+<details><summary>Просмотр сохрненных конфигураций</summary>
 <p>
 
 ```bash
@@ -114,9 +114,7 @@ Arista(config-s-sess-2-if-Et22)#sh session-config diffs
     ckp-20221111-0    2021-07-07 15:26:48      user3 
     ckp-20221125-0    2021-08-08 13:50:00      user4 
 
-```
 
-```bash
 "Текущая конфигурация"               
 "Arista#sh run int e22"
     interface Ethernet22
@@ -172,6 +170,9 @@ Arista#sh run int e22
   Arista(config-s-sess-2-if-Et22)#commit ?
       timer  commit session with a timeout. If not committed within this time, config will be reverted.
 ```
+</p>
+</details>
+
 
 ## Arista - что "под капотом"
 Как и в Джуне на ARIST-e можно провалиться в шелл:
