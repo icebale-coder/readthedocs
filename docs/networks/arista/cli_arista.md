@@ -1,4 +1,4 @@
-title: cli mikrotik
+title: Arista cli
 
 !!!warning "Disclaimer"
           Перейдя работать в DС довелось наконец первый раз пощупать Arist-ы
