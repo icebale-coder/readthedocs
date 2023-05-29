@@ -3,6 +3,7 @@ arrange:
     - index.md 
     - cli_crossfit.md
     - protocols-tech
+    - arista
     - cisco
     - juniper
     - huawei
