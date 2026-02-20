@@ -93,7 +93,8 @@ LISTEN   0        100            127.0.0.1:25            0.0.0.0:*       users:(
 LISTEN   0        100                [::1]:25               [::]:*       users:(("master",pid=1336,fd=14))                                                                                                           
 LISTEN   0        2048                [::]:22               [::]:*       users:(("sshd",pid=1439,fd=4),("systemd",pid=1,fd=91))                                                                                      
 LISTEN   0        2048                   *:9094                *:*       users:(("alertmanager",pid=1422,fd=3)) 
-```
+
+
 
 # С помощью ss -K можно убить процесс, например к dst_ip 192.168.0.138 и dport 40648
 ss -K dst 192.168.0.138 dport = 40648
