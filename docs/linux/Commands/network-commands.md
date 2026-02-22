@@ -1,8 +1,8 @@
 title: Linux network commands
 
-Disclaimer 1:
+Disclaimer:
 ```bash
-Всё что есть в сетевых вендорах не более чем форк Linux 
+Всё что есть в сетевых вендорах не более чем форк *nix...
 ```
 
 !!! note "JFYI"
@@ -18,7 +18,7 @@ Disclaimer 1:
 
 ## Команды для работы с VxLAN 
 
-## Понятие namespace bего настройка
+## Понятие namespace и его настройка
 
 ## Команды диагностики сети
 ```bash

@@ -1,6 +1,6 @@
-title: cli crossfit BGP & MPLS
+title: vendor crossfit cli BGP & MPLS
 
-#JuniperHuaweiCiscoBGPcli 
+#JuniperHuaweiCiscoBGPMPLScli 
 
 Мой джентельменский набор команд по BGP
 
