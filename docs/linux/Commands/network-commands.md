@@ -13,10 +13,10 @@ Disclaimer:
 ## Команды работы с интефейсами
 
 ### 1. Просмотр состояния интерфейсов 
-!!! NB
-  команды
-  ifconfig          - depricated
-  ip (из iproute2)  - current 
+!!! note "NB"
+    команды
+    ifconfig          - depricated
+    ip (из iproute2)  - current 
 
 
 #### 1.1. Просмотр состояния всех интерфейсов
