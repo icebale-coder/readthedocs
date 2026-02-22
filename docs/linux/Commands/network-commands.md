@@ -14,9 +14,11 @@ Disclaimer:
 
 ### 1. Просмотр состояния интерфейсов 
 !!! note "NB"
+```bash
     команды
     ifconfig          - depricated
-    ip (из iproute2)  - current 
+    ip (из iproute2)  - current
+``` 
 
 
 #### 1.1. Просмотр состояния всех интерфейсов
