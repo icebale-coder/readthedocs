@@ -1,5 +1,4 @@
-title: Fortigae cli
-
+title: Fortigate
 
 ## Работа с cli
 
