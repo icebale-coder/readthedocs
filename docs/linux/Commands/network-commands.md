@@ -500,13 +500,189 @@ Disclaimer:
 </p>
 </details>
 
+#### 5.5. Просмотр существующих VRF
 
+<details><summary>ip vrf</summary>
+<p>
+```bash
+    r1:/# ip vrf
+     Name              Table
+     -----------------------
+     VRF_RED           1001 
+```
+</p>
+</details>
 
-## Команды для работы с бриджами
+### 6. Создание/удаление subinterface 
+```bash
+ "Пример создание subinterface eth1.111 в vrf VFR_RED  назначить мак адрес"    
+  ip link set dev eth1 up
+  ip link add eth1.111 link eth1 type vlan id 111
+  ip link set dev eth1.111 up
+  ip link set dev eth1.111 master VRF_RED
+  ip addr add 192.168.0.1/24 dev eth1.111
+  ip link set dev eth1.111 address de:ad:be:ef:ca:fe
+```
+
+```bash
+ "Удалить subinterface"
+  ip link del eth1.111 link eth1
+```
+
+## 7. Команды для работы с бриджами
+### 7.1. Через iproute2
+```bash
+   "Пример добавление в бридж eth0 и eth1"
+    ip link add name br0 type bridge
+    ip link set eth0 master br0
+    ip link set eth1 master br0
+    ip link set br0 up
+```
+
+```bash
+   "Проверка bridge" 
+    bridge link show
+     r1:/# bridge link show
+      22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+      37: eth1@if36: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9500 master br0 state forwarding priority 32 cost 2 
+
+    !r1:/# ip a show br0
+     5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+         link/ether 00:11:22:33:44:55 brd ff:ff:ff:ff:ff:ff
+         inet6 fe80::211:22ff:fe33:4455/64 scope link proto kernel_ll 
+            valid_lft forever preferred_lft forever
+            
+    !r1:/# ip a | grep br0
+     5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+     22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br0 state UP group default 
+     37: eth1@if36: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9500 qdisc noqueue master br0 state UP group default 
+```
+
+### 7.2 Через brctl
+```bash
+   brctl addbr br0
+   brctl addif br0 eth0
+   brctl addif br0 eth1
+   ip link set br0 up
+   brctl show
+    r1:/# brctl show
+     bridge name     bridge id               STP enabled     interfaces
+     br0             8000.001122334455       no              eth0
+                                                             eth1
+  !Удаление бриджа
+   brctl addbr br0
+```
+
+### 7.3. Просмотр fdb (forwarding data base)"
+<details><summary>bridge fdb show br br0</summary>
+<p>
+```bash
+   bridge fdb show br br0
+    r1:/# bridge fdb show br br0
+     33:33:00:00:00:01 dev br0 self permanent
+     33:33:00:00:00:02 dev br0 self permanent
+     01:00:5e:00:00:6a dev br0 self permanent
+     33:33:00:00:00:6a dev br0 self permanent
+     01:00:5e:00:00:01 dev br0 self permanent
+     33:33:ff:33:44:55 dev br0 self permanent
+     33:33:ff:00:00:00 dev br0 self permanent
+     00:11:22:33:44:55 dev eth0 vlan 1 master br0 permanent
+     00:11:22:33:44:55 dev eth0 master br0 permanent
+     01:00:5e:00:00:01 dev eth0 self permanent
+     33:33:00:00:00:02 dev eth0 self permanent
+     33:33:00:00:00:01 dev eth0 self permanent
+     33:33:ff:33:44:55 dev eth0 self permanent
+     33:33:ff:00:00:00 dev eth0 self permanent
+     aa:c1:ab:1b:26:1a dev eth1 vlan 1 master br0 permanent
+     aa:c1:ab:1b:26:1a dev eth1 master br0 permanent
+     01:00:5e:00:00:01 dev eth1 self permanent
+     33:33:00:00:00:02 dev eth1 self permanent
+     33:33:00:00:00:01 dev eth1 self permanent
+     33:33:ff:1b:26:1a dev eth1 self permanent
+     33:33:ff:00:00:02 dev eth1 self permanent
+     33:33:ff:00:00:00 dev eth1 self permanent
+```
+</p>
+</details>
+ 
 
 ## Команды для работы с вланами
 
 ## Команды для работы с VxLAN 
+
+
+## PBR 
+  Policy Base Route - механизм, позволдяющий маршрутизировать пакет взависимости от адреса источника
+
+  Для работы PBR используется мехагнимзм таблиц, куда перенаправляются пакеты по правилам маршрутизации.
+  Внутри каждой таблицы своя маршрутная табица маршрутов.
+
+```bash
+  Названия таблиц и их номер хранится в файле
+   /etc/iproute2/rt_tables
+
+  "ip rule show" Просмотреть текущие таблицы
+  "ip rule list" Просмотреть текущие таблицы
+   r1:/# ip rule show
+    0:      from all lookup local
+    1000:   from all lookup [l3mdev-table]
+    32766:  from all lookup main
+    32767:  from all lookup default
+
+  "ip route show table <имя/номер>" Просмотреть конкретную таблицу.
+   r1:/# ip route show table 0
+    192.168.1.0/24 dev eth0 table 1001 proto kernel scope link src 192.168.1.1 
+    local 192.168.1.1 dev eth0 table 1001 proto kernel scope host src 192.168.1.1 
+    broadcast 192.168.1.255 dev eth0 table 1001 proto kernel scope link src 192.168.1.1 
+    192.168.3.0/24 dev eth1 table 1001 proto kernel scope link src 192.168.3.1 
+    local 192.168.3.1 dev eth1 table 1001 proto kernel scope host src 192.168.3.1 
+    broadcast 192.168.3.255 dev eth1 table 1001 proto kernel scope link src 192.168.3.1 
+    local 127.0.0.0/8 dev lo table local proto kernel scope host src 127.0.0.1 
+    local 127.0.0.1 dev lo table local proto kernel scope host src 127.0.0.1 
+    broadcast 127.255.255.255 dev lo table local proto kernel scope link src 127.0.0.1 
+    local 192.168.2.1 dev eth2 table local proto kernel scope host src 192.168.2.1 
+    anycast fd01:: dev eth1 table 1001 proto kernel metric 0 pref medium
+    local fd01::2 dev eth1 table 1001 proto kernel metric 0 pref medium
+    fd01::/64 dev eth1 table 1001 proto kernel metric 256 pref medium
+    anycast fe80:: dev eth0 table 1001 proto kernel metric 0 pref medium
+    anycast fe80:: dev eth1 table 1001 proto kernel metric 0 pref medium
+    local fe80::211:22ff:fe33:4455 dev eth0 table 1001 proto kernel metric 0 pref medium
+    local fe80::a8c1:abff:fe1b:261a dev eth1 table 1001 proto kernel metric 0 pref medium
+    fe80::/64 dev eth0 table 1001 proto kernel metric 256 pref medium
+    fe80::/64 dev eth1 table 1001 proto kernel metric 256 pref medium
+    multicast ff00::/8 dev eth0 table 1001 proto kernel metric 256 pref medium
+    multicast ff00::/8 dev eth1 table 1001 proto kernel metric 256 pref medium
+    fd02::/64 nhid 17 via fdc0:192:168::2 dev eth2 proto bgp metric 20 pref medium
+    fdc0:192:168::/64 dev eth2 proto kernel metric 256 pref medium
+    fe80::/64 dev eth2 proto kernel metric 256 pref medium
+    local ::1 dev lo table local proto kernel metric 0 pref medium
+    anycast fdc0:192:168:: dev eth2 table local proto kernel metric 0 pref medium
+    local fdc0:192:168::1 dev eth2 table local proto kernel metric 0 pref medium
+    anycast fe80:: dev eth2 table local proto kernel metric 0 pref medium
+    local fe80::a8c1:abff:fe60:5edb dev eth2 table local proto kernel metric 0 pref medium
+    multicast ff00::/8 dev eth2 table local proto kernel metric 256 pref medium
+
+  "ip rule add from <IP> table <N>" Добавить правило маршрутизации, для обработки определенных пакетов в других таблицах
+
+  "Пример: для scr_ip 192.168.100.51 перенапрявлять пакеты в ens18 на gw 192.168.0.21" 
+   echo 100 prov2 >> /etc/iproute2/rt_tables 
+   ip route add default via 192.168.0.21 dev ens18 table prov2
+   ip rule add from 192.168.100.51 lookup prov2
+
+  "Правила можно посмотреть так:" 
+   !root@clab:/home/icebale/clab/bgp-ula# ip rule list
+    0:      from all lookup local
+    32764:  from 192.168.100.51 lookup prov2
+    32766:  from all lookup main
+    32767:  from all lookup default
+
+  "Таблица марщрутизации для таблицы 100 (proiv2) можно посмотреть так:"
+   root@clab:/home/icebale/clab/bgp-ula# ip route show table 100
+    default via 192.168.0.21 dev ens18 
+
+  "Итого: при поступлении пакета с адресом источника 192.168.100.51" 
+  "будет производиться lookup не по дефолтовой тааблице маршрутизации, а по таблице prov2 (100)"
+```
 
 ## Понятие namespace и его настройка
 
