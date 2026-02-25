@@ -1,7 +1,7 @@
-title: Linux network commands
+title: Network commands
 
 
-# Linux network commands
+# Network commands
 Disclaimer:
 ```bash
 Всё что есть в сетевых вендорах не более чем форк *nix...
