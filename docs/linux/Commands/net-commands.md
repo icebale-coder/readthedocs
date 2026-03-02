@@ -572,7 +572,7 @@ Disclaimer:
      br0             8000.001122334455       no              eth0
                                                              eth1
   !Удаление бриджа
-   brctl addbr br0
+   brctl delbr br0
 ```
 
 ### 7.3. Просмотр fdb (forwarding data base)"
