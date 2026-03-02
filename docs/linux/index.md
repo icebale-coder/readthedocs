@@ -1,6 +1,6 @@
 title: Disclaimer
 
 # Linux
-...Nothing else metter...
+...And Nothing Else Matters...
 
 ![linux-tree](img/linux-tree.png)
