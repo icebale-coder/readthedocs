@@ -889,7 +889,7 @@ netstat -anp | grep EST
 ```
 netstat -anp | grep LIST
 ```
-<details><summary>bridge fdb show br br0</summary>
+<details><summary>netstat -anp | grep LIST</summary>
 <p>
 ```bash
  netstat -anp | grep LIST
@@ -966,7 +966,7 @@ netstat -anp | grep LIST
 ```
 ss -ltnp
 ```
-<details><summary>bridge fdb show br br0</summary>
+<details><summary>ss -ltnp</summary>
 <p>
 ```bash
  "ss -ltnp"
