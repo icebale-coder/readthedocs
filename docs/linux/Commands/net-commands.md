@@ -830,20 +830,191 @@ sshpass -p "MYPASS" ssh -q user@192.168.0.1 " echo 'MYPASS' | sudo -S ip netns e
 </details>
 
 
-## Команды диагностики сети
-```bash
-"ps -ef"
+## 9.Команды диагностики сети
+
+### 9.1. netstat
+
+Показывает список соединений
+
+netstat является уже устаревшей командой 
 ```
-
-### netstat
-```bash
-#Показывает список соединений
-
 "netstat" - deprecated 
-Заменяем на "ss"
+"ss" - current
+```
 
 Примеры использования
-"netstat -anp | grep EST"
+#### 9.1.1. netstat -anp | grep EST
+Показывает все установленные соединения  
 ```
+netstat -anp | grep EST
+```
+
+<details><summary>netstat -anp | grep EST</summary>
+<p>
+```bash
+ netstat -anp | grep EST
+  (Not all processes could be identified, non-owned process info
+   will not be shown, you would have to be root to see it all.)
+  tcp        0      0 127.0.0.1:10808         127.0.0.1:44072         ESTABLISHED 1526027/xray        
+  tcp        0      0 127.0.0.1:10808         127.0.0.1:47818         ESTABLISHED 1526027/xray        
+  tcp        0      0 127.0.0.1:33840         127.0.0.1:10808         ESTABLISHED -                   
+  tcp        0      0 127.0.0.1:10808         127.0.0.1:33840         ESTABLISHED 1526027/xray        
+  tcp        0      0 192.168.0.138:41380     208.123.190.202:443     ESTABLISHED 1526027/xray        
+  tcp        0      0 192.168.0.138:46052     192.168.0.20:22         ESTABLISHED 4140849/ssh         
+  tcp        0      0 127.0.0.1:44072         127.0.0.1:10808         ESTABLISHED -                   
+  tcp        0      0 192.168.0.138:34582     192.168.0.20:22         ESTABLISHED 4112162/SecureCRT   
+  tcp        0      0 10.33.0.2:47896         213.180.193.234:443     ESTABLISHED 438978/yandex_brows 
+  tcp        0      0 127.0.0.1:10808         127.0.0.1:38646         ESTABLISHED 1526027/xray        
+  tcp        0      0 10.33.0.2:42184         140.82.112.26:443       ESTABLISHED 16098/chrome --type 
+  tcp        0      0 10.33.0.2:50488         213.180.204.82:443      ESTABLISHED 438978/yandex_brows 
+  tcp        0      0 127.0.0.1:60922         127.0.0.1:10808         ESTABLISHED -                   
+  tcp        0      0 10.33.0.2:48364         142.251.1.188:5228      ESTABLISHED 16098/chrome --type 
+  tcp        0      0 10.33.0.2:38794         149.154.167.51:443      ESTABLISHED 410110/Telegram     
+  tcp        0      0 127.0.0.1:10808         127.0.0.1:60922         ESTABLISHED 1526027/xray        
+  tcp        0      0 127.0.0.1:47818         127.0.0.1:10808         ESTABLISHED -                   
+  tcp        0      0 192.168.0.138:33720     208.123.190.202:443     ESTABLISHED 1526027/xray        
+  tcp        0      0 192.168.0.138:48594     208.123.190.202:443     ESTABLISHED 1526027/xray        
+  tcp        0      0 192.168.0.138:60294     208.123.190.202:443     ESTABLISHED 1526027/xray        
+  tcp        0      0 127.0.0.1:38646         127.0.0.1:10808         ESTABLISHED -                   
+  tcp        0      0 192.168.0.138:52228     208.123.190.202:443     ESTABLISHED 1526027/xray        
+  tcp        0      0 192.168.0.138:60302     208.123.190.202:443     ESTABLISHED 1526027/xray        
+  udp        0      0 192.168.0.138:68        192.168.0.1:67          ESTABLISHED -                   
+```
+</p>
+</details>
+
+
+#### 9.1.2. netstat -anp | grep LIST
+Показывает все порты в состоянии LISTENED  
+```
+netstat -anp | grep LIST
+```
+<details><summary>bridge fdb show br br0</summary>
+<p>
+```bash
+ netstat -anp | grep LIST
+  (Not all processes could be identified, non-owned process info
+   will not be shown, you would have to be root to see it all.)
+  tcp        0      0 127.0.0.1:10808         0.0.0.0:*               LISTEN      1526027/xray        
+  tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -                   
+  tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -                   
+  unix  2      [ ACC ]     STREAM     LISTENING     635986   2860/gvfsd-trash     /run/user/1000/gvfsd/socket-XF4gywAV
+  unix  2      [ ACC ]     STREAM     LISTENING     16637    -                    /run/containerd/s/6160a0cb6e37eea062ecca71cd03a536dcdad1ba040ead73a656701e1a294f5c
+  unix  2      [ ACC ]     STREAM     LISTENING     7726     -                    /run/irqbalance/irqbalance757.sock
+  unix  2      [ ACC ]     STREAM     LISTENING     20782    2591/Xorg            /tmp/.X11-unix/X1
+  unix  2      [ ACC ]     STREAM     LISTENING     851879   2860/gvfsd-trash     /run/user/1000/gvfsd/socket-5WW7Mo4g
+  unix  2      [ ACC ]     STREAM     LISTENING     17935    2737/gnome-session-  /tmp/.ICE-unix/2737
+  unix  2      [ ACC ]     STREAM     LISTENING     3955     -                    /tmp/.EkolCb/s
+  unix  2      [ ACC ]     STREAM     LISTENING     112372   16051/chrome         /tmp/.com.google.Chrome.pExDoT/SingletonSocket
+  unix  2      [ ACC ]     STREAM     LISTENING     19203    2515/systemd         /run/user/1000/systemd/private
+  unix  2      [ ACC ]     STREAM     LISTENING     19209    2515/systemd         /run/user/1000/bus
+  unix  2      [ ACC ]     STREAM     LISTENING     19211    2515/systemd         /run/user/1000/gnupg/S.dirmngr
+  unix  2      [ ACC ]     STREAM     LISTENING     19213    2515/systemd         /run/user/1000/gnupg/S.gpg-agent.browser
+  unix  2      [ ACC ]     STREAM     LISTENING     19215    2515/systemd         /run/user/1000/gnupg/S.gpg-agent.extra
+  unix  2      [ ACC ]     STREAM     LISTENING     19217    2515/systemd         /run/user/1000/gnupg/S.gpg-agent.ssh
+  unix  2      [ ACC ]     STREAM     LISTENING     19219    2515/systemd         /run/user/1000/gnupg/S.gpg-agent
+  unix  2      [ ACC ]     STREAM     LISTENING     19221    2515/systemd         /run/user/1000/pulse/native
+  unix  2      [ ACC ]     STREAM     LISTENING     19223    2515/systemd         /run/user/1000/pipewire-0
+  unix  2      [ ACC ]     STREAM     LISTENING     19225    2515/systemd         /run/user/1000/pk-debconf-socket
+  unix  2      [ ACC ]     STREAM     LISTENING     19227    2515/systemd         /run/user/1000/snapd-session-agent.socket
+  unix  2      [ ACC ]     STREAM     LISTENING     17800    2540/gnome-keyring-  /run/user/1000/keyring/control
+  unix  2      [ ACC ]     STREAM     LISTENING     2524091  -                    /run/user/1000/.KKoIll/s
+```
+</p>
+</details>
+
+
+### 9.2. ss
+Показывает список соединений
+
+#### 9.2.1 ss -etnp
+Показывет список процессов ESTABLISHED, tcp, порты в number, имена процессов 
+```
+"ss -etnp"
+```
+
+<details><summary>ss -etnp</summary>
+<p>
+```bash
+"ss -etnp"
+ State   Recv-Q   Send-Q       Local Address:Port         Peer Address:Port    Process                                                                                                                                           
+ ESTAB   0        0                127.0.0.1:9090            127.0.0.1:36792    users:(("prometheus",pid=1410,fd=51)) timer:(keepalive,,0) uid:993 ino:13688 sk:1001 cgroup:/gitlab.slice/gitlab-runsvdir.service <->            
+ ESTAB   0        0                127.0.0.1:9229            127.0.0.1:47306    users:(("gitlab-workhors",pid=1413,fd=7)) timer:(keepalive,192ms,0) uid:996 ino:14651 sk:1002 cgroup:/gitlab.slice/gitlab-runsvdir.service <->   
+ ESTAB   0        0                127.0.0.1:9100            127.0.0.1:56398    users:(("node_exporter",pid=1409,fd=6)) timer:(keepalive,5.934ms,0) uid:993 ino:18826 sk:1003 cgroup:/gitlab.slice/gitlab-runsvdir.service <->   
+ ESTAB   0        0                127.0.0.1:9168            127.0.0.1:39950    users:(("gitlab-exporter",pid=1411,fd=8)) uid:996 ino:13691 sk:1004 cgroup:/gitlab.slice/gitlab-runsvdir.service <->                             
+ ESTAB   0        0                127.0.0.1:8082            127.0.0.1:48086    users:(("ruby",pid=1790,fd=13)) uid:996 ino:14654 sk:1005 cgroup:/gitlab.slice/gitlab-runsvdir.service <->                                       
+ ESTAB   0        0                127.0.0.1:39950           127.0.0.1:9168     users:(("prometheus",pid=1410,fd=54)) timer:(keepalive,2.377ms,0) uid:993 ino:7529 sk:1006 cgroup:/gitlab.slice/gitlab-runsvdir.service <->      
+ ESTAB   0        0             192.168.0.32:80          192.168.0.138:34812    users:(("nginx",pid=1464,fd=11)) uid:999 ino:439823 sk:4001 cgroup:/gitlab.slice/gitlab-runsvdir.service <->                                     
+ ESTAB   0        0                127.0.0.1:51206           127.0.0.1:9121     users:(("prometheus",pid=1410,fd=48)) timer:(keepalive,10sec,0) uid:993 ino:5748 sk:1007 cgroup:/gitlab.slice/gitlab-runsvdir.service <->        
+ ESTAB   0        0                127.0.0.1:36210           127.0.0.1:8060     users:(("prometheus",pid=1410,fd=11)) timer:(keepalive,,0) uid:993 ino:425716 sk:1008 cgroup:/gitlab.slice/gitlab-runsvdir.service <->           
+ ESTAB   0        0                127.0.0.1:42654           127.0.0.1:9187     users:(("prometheus",pid=1410,fd=49)) timer:(keepalive,10sec,0) uid:993 ino:11651 sk:1009 cgroup:/gitlab.slice/gitlab-runsvdir.service <->       
+ ESTAB   0        0                127.0.0.1:47306           127.0.0.1:9229     users:(("prometheus",pid=1410,fd=53)) timer:(keepalive,192ms,0) uid:993 ino:7528 sk:100a cgroup:/gitlab.slice/gitlab-runsvdir.service <->        
+ ESTAB   0        0                127.0.0.1:56398           127.0.0.1:9100     users:(("prometheus",pid=1410,fd=56)) timer:(keepalive,5.934ms,0) uid:993 ino:7531 sk:100b cgroup:/gitlab.slice/gitlab-runsvdir.service <->      
+ ESTAB   0        0                127.0.0.1:39964           127.0.0.1:9168     users:(("prometheus",pid=1410,fd=57)) timer:(keepalive,6.924ms,0) uid:993 ino:2490 sk:100c cgroup:/gitlab.slice/gitlab-runsvdir.service <->      
+ ESTAB   0        0             192.168.0.32:80          192.168.0.138:34814    users:(("nginx",pid=1464,fd=20)) uid:999 ino:445222 sk:4002 cgroup:/gitlab.slice/gitlab-runsvdir.service <->                                     
+ ESTAB   0        0                127.0.0.1:39966           127.0.0.1:9168     users:(("prometheus",pid=1410,fd=58)) timer:(keepalive,7.316ms,0) uid:993 ino:13999 sk:100d cgroup:/gitlab.slice/gitlab-runsvdir.service <->     
+ ESTAB   0        0                127.0.0.1:48086           127.0.0.1:8082     users:(("prometheus",pid=1410,fd=55)) timer:(keepalive,4.141ms,0) uid:993 ino:7530 sk:100e cgroup:/gitlab.slice/gitlab-runsvdir.service <->      
+ ESTAB   0        0             192.168.0.32:80          192.168.0.138:34826    users:(("nginx",pid=1464,fd=24)) uid:999 ino:433016 sk:4003 cgroup:/gitlab.slice/  
+```
+</p>
+</details>
+
+      
+
+#### 9.2.2 ss -ltnp
+Показывет список процессов LISTEN, tcp, порты в number, имена процессов 
+```
+ss -ltnp
+```
+<details><summary>bridge fdb show br br0</summary>
+<p>
+```bash
+ "ss -ltnp"
+  State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process                                                                                                                                      
+  LISTEN   0        2048           127.0.0.1:8155          0.0.0.0:*       users:(("gitlab-kas",pid=1420,fd=8))                                                                                                        
+  LISTEN   0        2048           127.0.0.1:8154          0.0.0.0:*       users:(("gitlab-kas",pid=1420,fd=13))                                                                                                       
+  LISTEN   0        2048           127.0.0.1:8153          0.0.0.0:*       users:(("gitlab-kas",pid=1420,fd=11))                                                                                                       
+  LISTEN   0        2048           127.0.0.1:8151          0.0.0.0:*       users:(("gitlab-kas",pid=1420,fd=10))                                                                                                       
+  LISTEN   0        2048           127.0.0.1:8150          0.0.0.0:*       users:(("gitlab-kas",pid=1420,fd=12))                                                                                                       
+  LISTEN   0        2048           127.0.0.1:8092          0.0.0.0:*       users:(("bundle",pid=1788,fd=24))                                                                                                           
+  LISTEN   0        2048           127.0.0.1:8082          0.0.0.0:*       users:(("ruby",pid=1790,fd=10))                                                                                                             
+  LISTEN   0        1024           127.0.0.1:8080          0.0.0.0:*       users:(("bundle",pid=1885,fd=19),("bundle",pid=1883,fd=19),("bundle",pid=1881,fd=19),("bundle",pid=1879,fd=19),("bundle",pid=1384,fd=19))   
+  LISTEN   0        511              0.0.0.0:8060          0.0.0.0:*       users:(("nginx",pid=1464,fd=8),("nginx",pid=1463,fd=8),("nginx",pid=1462,fd=8),("nginx",pid=1461,fd=8),("nginx",pid=1401,fd=8))             
+  LISTEN   0        2048       127.0.0.53%lo:53            0.0.0.0:*       users:(("systemd-resolve",pid=729,fd=15))                                                                                                   
+  LISTEN   0        2048          127.0.0.54:53            0.0.0.0:*       users:(("systemd-resolve",pid=729,fd=17))                                                                                                   
+  LISTEN   0        2048           127.0.0.1:9236          0.0.0.0:*       users:(("gitaly",pid=1482,fd=9),("gitaly",pid=1482,fd=8))                                                                                   
+  LISTEN   0        2048           127.0.0.1:9229          0.0.0.0:*       users:(("gitlab-workhors",pid=1413,fd=3))                                                                                                   
+  LISTEN   0        2048           127.0.0.1:9168          0.0.0.0:*       users:(("gitlab-exporter",pid=1411,fd=5))                                                                                                   
+  LISTEN   0        2048           127.0.0.1:9187          0.0.0.0:*       users:(("postgres_export",pid=1421,fd=3))                                                                                                   
+  LISTEN   0        2048           127.0.0.1:9100          0.0.0.0:*       users:(("node_exporter",pid=1409,fd=3))                                                                                                     
+  LISTEN   0        2048           127.0.0.1:9090          0.0.0.0:*       users:(("prometheus",pid=1410,fd=6))                                                                                                        
+  LISTEN   0        2048           127.0.0.1:9093          0.0.0.0:*       users:(("alertmanager",pid=1422,fd=7))                                                                                                      
+  LISTEN   0        2048           127.0.0.1:9121          0.0.0.0:*       users:(("redis_exporter",pid=1423,fd=3))                                                                                                    
+  LISTEN   0        511              0.0.0.0:80            0.0.0.0:*       users:(("nginx",pid=1464,fd=7),("nginx",pid=1463,fd=7),("nginx",pid=1462,fd=7),("nginx",pid=1461,fd=7),("nginx",pid=1401,fd=7))             
+  LISTEN   0        2048             0.0.0.0:22            0.0.0.0:*       users:(("sshd",pid=1439,fd=3),("systemd",pid=1,fd=90))                                                                                      
+  LISTEN   0        100            127.0.0.1:25            0.0.0.0:*       users:(("master",pid=1336,fd=13))                                                                                                           
+  LISTEN   0        100                [::1]:25               [::]:*       users:(("master",pid=1336,fd=14))                                                                                                           
+  LISTEN   0        2048                [::]:22               [::]:*       users:(("sshd",pid=1439,fd=4),("systemd",pid=1,fd=91))                                                                                      
+  LISTEN   0        2048                   *:9094                *:*       users:(("alertmanager",pid=1422,fd=3)) 
+```
+</p>
+</details>
+
+
+#### 9.2.3. ss -K dst 192.168.0.138 dport = 40648
+С помощью ss -K можно убить процесс, например к dst_ip 192.168.0.138 и dport 40648
+```
+ss -K dst 192.168.0.138 dport = 40648
+```
+
+<details><summary>ss -K dst 192.168.0.138 dport = 40648</summary>
+<p>
+```bash
+ "ss -K dst 192.168.0.138 dport = 40648"
+  Netid                  State                  Recv-Q                  Send-Q                                   Local Address:Port                                    Peer Address:Port                  Process                 
+  tcp                    ESTAB                  0                       0                                         192.168.0.32:http                                   192.168.0.138:40648     
+```
+</p>
+</details>
 
 ## Понятие namespace и его настройка
