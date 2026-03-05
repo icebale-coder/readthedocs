@@ -532,10 +532,8 @@ Disclaimer:
 ```
 
 ## 7. Команды для работы с бриджами
-### 7.1. Через iproute2
+### 7.1. Через iproute2 ip link add/ip link set 
 Пример добавление в бридж eth0 и eth1
-
-ip link add/ip link set 
 
 <details><summary>добавление в бридж</summary>
 <p>
