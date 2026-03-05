@@ -94,6 +94,9 @@ theme:
 # Used plugins
 plugins:
   - search
+      lang:
+        - en  # Английский (латиница)
+        - ru  # Русский (кириллица)  
   - minify:
       minify_html: true
   - git-revision-date-localized:
