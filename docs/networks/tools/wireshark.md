@@ -172,9 +172,13 @@ tcpdump -s 0 -vi eth0 -w file.pcap
 
 
 ### tcpdump - перенаправление в wireshark локально
-sudo tcpdump -s 0 -Uli eth0  -w - | wireshark -k -i -
-
 ```
+sudo tcpdump -s 0 -Uli eth0  -w - | wireshark -k -i -
+```
+
+<details><summary>Разбор компонентов</summary>
+<p>
+```bash
 sudo tcpdump -s 0 -Uli eth0  -w - | wireshark -k -i -
 
 sudo: выполнение с правами суперпользователя (необходимо для доступа к сетевому интерфейсу).
@@ -190,17 +194,16 @@ wireshark -k -i -: запускает Wireshark, где -k означает не
 для того, чтобы зайти в режим sudo надо изначально авторизоваться командами 
 "sudo su" - зайти как  su 
 "exit" - выход из su после
-```
+</p>
+</details>
 
 ### tcpdump - перенаправление в wireshark удаленно
 Если tcpdump снимается с удаленного хоста, то можно организовать перенаправление сразу в локальный wireshark
 
 Следующий набор команд позволяет перенаправить дамп с хоста удаленного интерейса на локальный wireshark
-sshpass -p "MYPASS" ssh -q user@192.168.0.1 " echo 'MYPASS' | sudo -S tcpdump -s 0 -Uli ens18 -w - " | wireshark -k -i -
-
-
 ```
 sshpass -p "MYPASS" ssh -q user@192.168.0.1 " echo 'MYPASS' | sudo -S tcpdump -s 0 -Uli ens18 -w - " | wireshark -k -i -
+```
 
 <details><summary>Разбор компонентов</summary>
 <p>
@@ -246,7 +249,6 @@ sshpass -p "MYPASS" ssh -q user@192.168.0.1 " echo 'MYPASS' | sudo -S ip netns e
 <p>
 
 ```bash
-
  Объяснение выполнения данного набора команд - сгенерировано ИИ. 
  Проверил - всё верно!) 
 
