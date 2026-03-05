@@ -533,6 +533,12 @@ Disclaimer:
 
 ## 7. Команды для работы с бриджами
 ### 7.1. Через iproute2
+Пример добавление в бридж eth0 и eth1
+
+ip link add/ip link set 
+
+<details><summary>добавление в бридж</summary>
+<p>
 ```bash
    "Пример добавление в бридж eth0 и eth1"
     ip link add name br0 type bridge
@@ -540,25 +546,51 @@ Disclaimer:
     ip link set eth1 master br0
     ip link set br0 up
 ```
+</p>
+</details>
 
+Проверка bridge 
+
+```
+bridge link show
+ip a show br0
+ip a | grep br0
+```
+
+<details><summary>bridge link show</summary>
+<p>
 ```bash
-   "Проверка bridge" 
     bridge link show
      r1:/# bridge link show
       22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
       37: eth1@if36: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9500 master br0 state forwarding priority 32 cost 2 
+```
+</p>
+</details>
 
-    !r1:/# ip a show br0
+<details><summary>ip a show br0</summary>
+<p>
+```bash
+    ip a show br0
      5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
          link/ether 00:11:22:33:44:55 brd ff:ff:ff:ff:ff:ff
          inet6 fe80::211:22ff:fe33:4455/64 scope link proto kernel_ll 
             valid_lft forever preferred_lft forever
-            
-    !r1:/# ip a | grep br0
+```
+</p>
+</details>
+
+<details><summary>ip a | grep br0</summary>
+<p>
+```bash
+     ip a | grep br0
      5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
      22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br0 state UP group default 
      37: eth1@if36: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9500 qdisc noqueue master br0 state UP group default 
 ```
+</p>
+</details>
+
 
 ### 7.2 Через brctl
 ```bash
