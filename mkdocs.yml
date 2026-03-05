@@ -93,10 +93,10 @@ theme:
 
 # Used plugins
 plugins:
-  - search
+  - search:
       lang:
-        - en  # Английский (латиница)
-        - ru  # Русский (кириллица)  
+        - en  
+        - ru 
   - minify:
       minify_html: true
   - git-revision-date-localized:
